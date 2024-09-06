@@ -1,0 +1,22 @@
+/* Fonts */
+
+@font-face {
+    font-family: 'roboto';
+    src: url(/fonts/roboto-regular-webfont.woff) format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'roboto-bold';
+    src: url(/fonts/roboto-bold-webfont.woff) format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'jura';
+    src: url(/fonts/jura.woff2) format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
