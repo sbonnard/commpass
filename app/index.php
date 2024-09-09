@@ -63,8 +63,8 @@
         </section>
 
         <h2 class="ttl" id="report">
-        <span class="ttl--tertiary">Comptes rendus</span>
-        EN TEMPS RÉEL
+            <span class="ttl--tertiary">Comptes rendus</span>
+            EN TEMPS RÉEL
         </h2>
         <section class="section" aria-labelledby="report">
             <img src="img/working-team.webp" alt="Équipe travaillant avec des graphiques">
@@ -74,7 +74,14 @@
     </main>
 
     <footer class="footer">
-
+        <nav>
+            <ul class="footer__nav">
+                <li>Politique de confidentialité</li>
+                <span>|</span>
+                <li>Mentions légales</li>
+            </ul>
+        </nav>
+        <p>©copyright</p>
     </footer>
 </body>
 

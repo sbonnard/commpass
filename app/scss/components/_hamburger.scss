@@ -6,7 +6,7 @@
         &__menu {
             z-index: 1;
             min-width: 100%;
-            min-height: 10rem;
+            min-height: 100vh;
             position: fixed;
             top: 5rem;
             left: 0;
@@ -16,6 +16,9 @@
             text-align: left;
             padding: 0rem 0rem 0rem 1.5rem;
             transition: all 0.3s ease-in-out;
+            border-bottom: 2px solid transparent;
+            border-image: linear-gradient(to right, $primary, $tertiary);
+            border-image-slice: 1;
         }
     
         &__menu.overlay {

@@ -1,9 +1,14 @@
 .header {
     display: flex;
+    position: fixed;
+    width: 100%;
     align-items: center;
     justify-content: space-between;
     padding: 1.5rem;
     background-color: $white;
+    // border-bottom: 2px solid transparent;
+    // border-image: linear-gradient(to right, $primary, $tertiary);
+    // border-image-slice: 1;
 
     &__ttl {
             color: $primary;
@@ -12,5 +17,7 @@
             background: linear-gradient(0.25turn, $primary 40%, $tertiary 80%);
             background-clip: text;
           -webkit-text-fill-color: transparent;
-    }    
+    }
+
+
 }
