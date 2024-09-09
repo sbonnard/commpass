@@ -11,7 +11,7 @@ require_once "includes/templates/_header.php";
 require_once "includes/templates/_footer.php";
 
 generateToken();
-checkConnection($_SESSION);
+// checkConnection($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +30,10 @@ checkConnection($_SESSION);
     </header>
 
     <main class="container container__flex">
-
+        <h2 class="ttl" id="take-control">
+            Bonjour Julie
+            <span class="ttl--tertiary">FakeBusiness</span>
+        </h2>
     </main>
 
     <footer class="footer">
