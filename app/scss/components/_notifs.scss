@@ -1,0 +1,14 @@
+.notif {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.25rem;
+
+    &--error {
+        color: $error;
+    }
+
+    &--success {
+        color: $primary;
+    }
+}

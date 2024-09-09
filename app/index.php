@@ -1,9 +1,17 @@
 <?php
 session_start();
 
+require_once "includes/_config.php";
+require_once "includes/_database.php";
+require_once "includes/_functions.php";
+require_once "includes/_security.php";
+require_once "includes/_message.php";
 require_once "includes/templates/_head.php";
 require_once "includes/templates/_header.php";
 require_once "includes/templates/_footer.php";
+
+generateToken();
+
 ?>
 
 <!DOCTYPE html>
@@ -18,11 +26,17 @@ require_once "includes/templates/_footer.php";
     <header class="header">
         <?php
         echo fetchIndexHeader();
-        echo fetchLogInForm();
+        echo fetchLogInForm($_SESSION);
         ?>
     </header>
 
     <main class="container container__flex">
+        <div class="notifs">
+            <?php
+            echo getErrorMessage($errors);
+            echo getSuccessMessage($messages);
+            ?>
+        </div>
         <h2 class="ttl" id="take-control">
             Prenez le contrôle
             de votre budget
