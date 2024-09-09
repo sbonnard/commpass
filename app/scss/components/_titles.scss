@@ -1,7 +1,5 @@
 .ttl {
     color: $primary;
     font-family: 'jura';
-    background: linear-gradient(0.25turn, $primary 40%, $tertiary 80%);
-    -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+    font-size: 1.875rem;
 }

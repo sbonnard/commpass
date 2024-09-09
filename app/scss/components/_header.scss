@@ -1,0 +1,16 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    background-color: $white;
+
+    &__ttl {
+            color: $primary;
+            font-family: 'jura';
+            font-size: 2rem;
+            background: linear-gradient(0.25turn, $primary 40%, $tertiary 80%);
+            -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+    }    
+}
