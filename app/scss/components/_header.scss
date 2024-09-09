@@ -10,7 +10,7 @@
             font-family: 'jura';
             font-size: 2rem;
             background: linear-gradient(0.25turn, $primary 40%, $tertiary 80%);
-            -webkit-background-clip: text;
+            background-clip: text;
           -webkit-text-fill-color: transparent;
     }    
 }

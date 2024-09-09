@@ -2,4 +2,10 @@
     color: $primary;
     font-family: 'jura';
     font-size: 1.875rem;
+    text-transform: uppercase;
+    text-align: center;
+
+    &--tertiary {
+      color: $tertiary;
+    }
 }
