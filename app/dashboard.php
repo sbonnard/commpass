@@ -42,6 +42,10 @@ $campaigns = getCompanyCampaigns($dbCo, $_SESSION);
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>
 
+        <?php
+        var_dump($campaigns);
+        ?>
+
         <section class="card campaign">
             <h2 class="ttl ttl--secondary">
                 Campagnes 2024

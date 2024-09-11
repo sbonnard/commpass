@@ -108,8 +108,7 @@ VALUES
 
 INSERT INTO users (username, firstname, lastname, password, email, phone, client, id_company)
 VALUES 
-("alemaitre2", "Alain", "Lemaître", "$2y$10$ebV/iVLbDG46ifm89nk4Me49kWhpbjiZ7Kx2qKt2Q8Fd4HN66B/3W", "alain.lemaitre@comtogether.com", "0600102030", 0, 1),
-("jcarriere3", "Julie", "Carrière", "$2y$10$cCubd56otzIKiNdKRj3i.u4Crxaxz586Ygn5QmVszFF91z2SgMqFS", "julie.carriere@fakebusiness.com", "0600102030", 1, 1);
+("mchampion", "Manon", "Champion", "$2y$10$cCubd56otzIKiNdKRj3i.u4Crxaxz586Ygn5QmVszFF91z2SgMqFS", "manon.champion@fakebusiness.com", "0600102030", 1, 1);
 
 INSERT INTO target (target_com)
 VALUES ("Faire connaître"), ("Faire aimer"), ("Faire agir");

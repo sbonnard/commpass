@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'log-in') {
         $_SESSION['lastname'] = $user['lastname'];
         $_SESSION['email'] = $user['email'];
         $_SESSION['client'] = $user['client'];
+        $_SESSION['boss'] = $user['boss'];
         $_SESSION['id_company'] = $user['id_company'];
         redirectTo('dashboard.php');
         exit();

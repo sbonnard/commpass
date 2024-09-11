@@ -69,9 +69,17 @@ function getCompanyName(PDO $dbCo, array $session): string
     return implode($companyDatas);
 };
 
-function getCompanyCampaigns(PDO $dbCo, array $session)
+
+/**
+ * Get communication campaigns considering your status of client or not, your company and if you are the inrlocutor or not.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $session - Superglobal $_SESSION.
+ * @return array $campaignDatas - An array containing all your campaigns datas.
+ */
+function getCompanyCampaigns(PDO $dbCo, array $session): array
 {
-    if (isset($session['client']) && $session['client'] === 0) {
+    if (isset($session['client']) && $session['client'] === 0 && $session['boss'] === 1) {
         $queryCampaigns = $dbCo->prepare(
             'SELECT id_campaign, campaign_name, budget, date
             FROM campaign;'
@@ -80,8 +88,7 @@ function getCompanyCampaigns(PDO $dbCo, array $session)
         $queryCampaigns->execute();
 
         $campaignDatas = $queryCampaigns->fetchAll();
-
-    } else {
+    } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
         $queryCampaigns = $dbCo->prepare(
             'SELECT id_campaign, campaign_name, budget, date
             FROM campaign
@@ -89,7 +96,23 @@ function getCompanyCampaigns(PDO $dbCo, array $session)
         );
 
         $bindValues = [
-            'id' => intval($session['id_company'])
+            'id' => intval($session['id_company']),
+            'id_user' => intval($session['id_user'])
+        ];
+
+        $queryCampaigns->execute($bindValues);
+
+        $campaignDatas = $queryCampaigns->fetchAll();
+    } else {
+        $queryCampaigns = $dbCo->prepare(
+            'SELECT id_campaign, campaign_name, budget, date
+            FROM campaign
+            WHERE id_company = :id AND id_user = :id_user;'
+        );
+
+        $bindValues = [
+            'id' => intval($session['id_company']),
+            'id_user' => intval($session['id_user'])
         ];
 
         $queryCampaigns->execute($bindValues);
