@@ -1,15 +1,24 @@
 .container {
     padding: 1.5rem 1rem;
+    max-width: 84.375rem;
 
     &__flex {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 2.5rem;
     }
 
     @media screen and (max-width: 768px) {
         & {
-            padding: 7rem 1rem 1.5rem 1rem;
+            padding: 6rem 1rem 1.5rem 1rem;
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        & {
+            flex-direction: row;
+            margin: auto;
+            align-items: end;
         }
     }
 }
