@@ -1,0 +1,39 @@
+.vignettes-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.vignette {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: $white;
+    padding: 0.5rem;
+    border-radius: 0.75rem 0.75rem 0.75rem 0;
+    height: fit-content;
+
+    &__ttl {
+        font-family: 'jura';
+        font-size: 1rem;
+    }
+
+    &__price {
+        font-family: 'jura';
+        font-size: 1.25rem;
+    }
+
+    &--primary {
+        background: linear-gradient(to right, $black80, $primary90);
+    }
+
+    &--secondary {
+        background: linear-gradient(to right, $black80, $secondary90);
+
+    }
+
+    &--tertiary {
+        background: linear-gradient(to right, $black80, $tertiary90);
+
+    }
+}

@@ -1,0 +1,37 @@
+.campaign {
+    padding-top: 1rem;
+    border-top: 1px solid transparent;
+    border-image: linear-gradient(to right, $primary, $tertiary);
+    border-image-slice: 1;
+
+    &__ttl {
+        display: flex;
+        flex-direction: column;
+        align-self: start;
+    }
+
+    &__stats {
+        display: flex;
+        gap: 1rem;
+    }
+
+    &__legend-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    &__legend {
+        display: flex;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    &__legend::before {
+        content: '';
+        display: block;
+        width: 1rem;
+        aspect-ratio: 1;
+        background-color: $primary;
+    }
+}

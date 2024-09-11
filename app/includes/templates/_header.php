@@ -3,11 +3,16 @@
 /**
  * Template for header's index.
  *
+ * @param string $url - The url the header title will lead you too.
+ * @param string|null $linkTitle - The <a> title so people now where the link leads when they mouseover it.
  * @return string - header's content for index.php, HTML elements
  */
-function fetchIndexHeader():string {
+function fetchHeader(string $url, string $linkTitle = null): string
+{
     return '
-        <h1 class="header__ttl">WellComm</h1>
+        <a href="' . $url . '" title="' . $linkTitle . '">
+            <h1 class="header__ttl">WellComm</h1>
+        </a>
         <div class="hamburger">
             <a href="#menu" id="hamburger-menu-icon">
                 <img src="img/hamburger.svg" alt="Menu Hamburger">
@@ -16,13 +21,15 @@ function fetchIndexHeader():string {
     ';
 }
 
+
 /**
  * Template for a login form.
  *
  * @param array $session - Superglobal $_SESSION.
  * @return string - HTML element to construct login form.
  */
-function fetchLogInForm (array $session):string {
+function fetchLogInForm(array $session): string
+{
     return '
     <form class="form login__menu" action="login.php" id="connection-form" aria-label="Formulaire de connexion">
         <div class="login__section">

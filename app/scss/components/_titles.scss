@@ -5,6 +5,20 @@
     text-transform: uppercase;
     text-align: center;
 
+    &--small {
+      font-size: 1.5rem;
+      text-align: left;
+      color: $black;
+
+      &-lowercase {
+        text-transform: capitalize;
+      }
+    }
+
+    &--secondary {
+      color: $secondary;
+    }
+
     &--tertiary {
       color: $tertiary;
     }
