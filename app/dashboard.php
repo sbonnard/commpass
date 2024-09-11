@@ -43,10 +43,8 @@ $campaigns = getCompanyCampaigns($dbCo, $_SESSION);
         </h2>
 
         <section class="card campaign">
-            <h2 class="ttl ttl--secondary">
-                Campagnes 2024
-            </h2>
-            <?= getCampaignTemplate($campaigns, $_SESSION); ?>
+            <?= getMessageIfNoCampaign($campaigns) ?>
+            <?= getCampaignTemplate($campaigns, $_SESSION) ?>
         </section>
     </main>
 

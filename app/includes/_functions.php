@@ -80,6 +80,7 @@ function getCompanyName(PDO $dbCo, array $session): string
 function getCompanyCampaigns(PDO $dbCo, array $session): array
 {
     if (isset($session['client']) && $session['client'] === 0 && $session['boss'] === 1) {
+        // Si l'utilisateur est le gérant de l'entreprise Toile de Com.
         $queryCampaigns = $dbCo->prepare(
             'SELECT id_campaign, campaign_name, budget, date, company_name, YEAR(date) AS year
             FROM campaign
@@ -90,7 +91,9 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
         $queryCampaigns->execute();
 
         $campaignDatas = $queryCampaigns->fetchAll();
+
     } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
+        // Si l'utilisateur est un client mais qu'il est aussi le gérant de l'entreprise cliente.
         $queryCampaigns = $dbCo->prepare(
             'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year
             FROM campaign
@@ -107,6 +110,7 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
 
         $campaignDatas = $queryCampaigns->fetchAll();
     } else {
+        // Si l'utilisateur est un client mais qu'il n'est pas gérant de l'entreprise. Il est donc simple interlocuteur sur ses campagnes.
         $queryCampaigns = $dbCo->prepare(
             'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year
             FROM campaign
@@ -198,4 +202,40 @@ function getCampaignTemplate(array $campaigns, array $session): string
     }
 
     return $campaignList;
+}
+
+
+function getCampaignsByYear(array $campaigns, array $session, int $year)
+{
+    $campaignList = '';
+    
+    foreach ($campaigns as $campaign) {
+        if (isset($campaign['year']) && $campaign['year'] == $year) {
+            $campaignList .= '
+                <h2 class="ttl ttl--secondary">
+                    Campagnes ' . $year . '
+                </h2>'
+                . getCampaignTemplate($campaign, $session);
+        }
+    }
+    
+    return $campaignList;
+}
+
+/**
+ * Get a message if you don't have any campaign on your dashboard
+ *
+ * @param array $campaigns - Array containing all campaigns.
+ * @return string - HTML to display a message.
+ */
+function getMessageIfNoCampaign(array $campaigns): string {
+    if(empty($campaigns)) {
+        return '
+        <div class="card card__section">
+            <p class="big-text">Vous n\'avez pas encore de campagnes de comm\' !</p>
+        </div>
+        ';
+    }
+
+    return '';
 }
