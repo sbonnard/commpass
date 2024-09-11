@@ -8,7 +8,8 @@ $errors = [
     'csrf' => 'Votre session est invalide.',
     'referer' => 'D\'où venez vous ?',
     'no_action' => 'Aucune action détectée.',
-    'please_connect' => 'Vous devez être connecté pour accéder à cette page'
+    'please_connect' => 'Vous devez être connecté pour accéder à cette page',
+    'login_fail' => 'Les identifiants renseignés sont incorrects.'
 ];
 
 

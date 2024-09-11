@@ -12,7 +12,7 @@ require_once "includes/templates/_footer.php";
 require_once "includes/templates/_nav.php";
 
 generateToken();
-// checkConnection($_SESSION);
+checkConnection($_SESSION);
 ?>
 
 <!DOCTYPE html>

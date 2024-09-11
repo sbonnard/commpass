@@ -118,3 +118,39 @@ INSERT INTO campaign (campaign_name, budget, date, id_user, id_target, id_compan
 VALUES ("Soldes d'été", 25000, "2024-06-27", 3, 3, 2),
 ("Promos d'hiver", 18000, "2023-11-14", 3, 3, 2),
 ("Tous plus verts", 25000, "2024-02-01", 3, 2, 2);
+
+INSERT INTO operation (description, price, date_, id_campaign)
+VALUES 
+("Impression et livraison des PLV", 4725.95, "2024-06-29", 1),
+("Impression et livraison des PLV", 4725.95, "2023-11-29", 2),
+("Flocage de totebags", 690, "2024-07-12", 1),
+("Flocage de totebags", 690, "2023-11-12", 2),
+("Flyers soldes d'été, 1000 exemplaires", 300.25, "2024-06-12", 1),
+("Flyers soldes d'hiver, 1000 exemplaires", 300.25, "2023-11-12", 2),
+("Vitrine web mise à jour", 227.92, "2024-06-29", 1),
+("Vitrine web mise à jour", 227.92, "2023-11-29", 2),
+("Avatars du personnel", 205, "2024-01-15", 3),
+("Encart presse dans la Manche Libre", 75, "2024-02-05", 3),
+("Réseaux sociaux", 144.85, "2024-03-02", 3);
+
+INSERT INTO operation_brand (id_operation, id_brand)
+VALUES 
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 1),
+(2, 2),
+(2, 4),
+(3, 4),
+(3, 3),
+(4, 4),
+(4, 1),
+(5, 1),
+(6, 1),
+(7, 2),
+(7, 3),
+(8, 1),
+(8, 4),
+(9, 1),
+(10, 1),
+(11, 1);

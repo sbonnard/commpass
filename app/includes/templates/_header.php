@@ -31,7 +31,7 @@ function fetchHeader(string $url, string $linkTitle = null): string
 function fetchLogInForm(array $session): string
 {
     return '
-    <form class="form login__menu" action="login.php" id="connection-form" aria-label="Formulaire de connexion">
+    <form class="form login__menu" action="login.php" method="post" id="connection-form" aria-label="Formulaire de connexion">
         <div class="login__section">
             <h2 class="header__ttl login__ttl">WellComm</h2>
             <a class="button--close" href="index.php" aria-label="Fermer le formulaire de connexion">
