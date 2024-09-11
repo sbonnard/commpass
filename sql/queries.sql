@@ -92,4 +92,29 @@ CREATE TABLE operation_brand(
 -- INSERTS 
 
 INSERT INTO company (company_name) 
-VALUES ("Toile de Com"), ("FakeBusiness"), ("Luminase"), ("Groupe Pignon"), ("Nerexam Solutions")
+VALUES ("Toile de Com"), ("FakeBusiness"), ("Luminase"), ("Groupe Pignon"), ("Nerexam Solutions");
+
+INSERT INTO brand (brand_name) 
+VALUES ("Lumosphère"), ("Vélocitix"), ("Stellar Threads"), ("Aurélys"), ("Nexmus"), ("Cafés Geronimo"), ("Fripig"), ("Maxstock");
+
+INSERT INTO users (username, firstname, lastname, password, email, phone, id_company)
+VALUES ("sbonnard94", "Sébastien", "Bonnard", "$2y$10$ZMkpWcRvhkY0PHUZPlb8COU3sCBTRqIKdvvK4sZd2U84wH2HHNPwK", "sebastien.bonnard94@gmail.com", "0608118078", 0, 1);
+
+INSERT INTO users (username, firstname, lastname, password, email, phone, client, id_company)
+VALUES 
+("alemaitre2", "Alain", "Lemaître", "$2y$10$ebV/iVLbDG46ifm89nk4Me49kWhpbjiZ7Kx2qKt2Q8Fd4HN66B/3W", "alain.lemaitre@comtogether.com", "0600102030", 0, 1),
+("jcarriere3", "Julie", "Carrière", "$2y$10$cCubd56otzIKiNdKRj3i.u4Crxaxz586Ygn5QmVszFF91z2SgMqFS", "julie.carriere@fakebusiness.com", "0600102030", 1, 1);
+
+INSERT INTO target (target_com)
+VALUES ("Faire connaître"), ("Faire aimer"), ("Faire agir");
+
+INSERT INTO partner_sector (sector)
+VALUES ("presse"), ("radio");
+
+INSERT INTO partner (partner_name, id_partner_sector)
+VALUES ("La Manche Libre", 1), ("Ouest France", 1), ("Tendance Ouest", 2);
+
+INSERT INTO campaign (campaign_name, budget, date, id_user, id_target, id_company)
+VALUES ("Soldes d'été", 25000, "2024-06-27", 3, 3, 2),
+("Promos d'hiver", 18000, "2023-11-14", 3, 3, 2),
+("Tous plus verts", 25000, "2024-02-01", 3, 2, 2);
