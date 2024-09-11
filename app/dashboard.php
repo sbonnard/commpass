@@ -13,6 +13,8 @@ require_once "includes/templates/_nav.php";
 
 generateToken();
 checkConnection($_SESSION);
+
+$campaigns = getCompanyCampaigns($dbCo, $_SESSION);
 ?>
 
 <!DOCTYPE html>

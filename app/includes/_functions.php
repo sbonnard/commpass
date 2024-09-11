@@ -50,7 +50,8 @@ function redirectTo(?string $url = null): void
  * @param array $session - Superglobal $_SESSION.
  * @return string - The name of the company.
  */
-function getCompanyName(PDO $dbCo, array $session):string {
+function getCompanyName(PDO $dbCo, array $session): string
+{
     $query = $dbCo->prepare(
         'SELECT company_name
         FROM company
@@ -61,14 +62,40 @@ function getCompanyName(PDO $dbCo, array $session):string {
         'id' => intval($session['id_company'])
     ];
 
-    $datas = $query->execute($bindValues);
+    $query->execute($bindValues);
 
     $companyDatas = $query->fetch();
 
     return implode($companyDatas);
 };
 
+function getCompanyCampaigns(PDO $dbCo, array $session)
+{
+    if (isset($session['client']) && $session['client'] === 0) {
+        $queryCampaigns = $dbCo->prepare(
+            'SELECT id_campaign, campaign_name, budget, date
+            FROM campaign;'
+        );
 
-// function getAllCampaigns(PDO $dbCo, array $session):string {
-//     $queryCampaigns = $dbCo->prepare();
-// }
+        $queryCampaigns->execute();
+
+        $campaignDatas = $queryCampaigns->fetchAll();
+
+    } else {
+        $queryCampaigns = $dbCo->prepare(
+            'SELECT id_campaign, campaign_name, budget, date
+            FROM campaign
+            WHERE id_company = :id;'
+        );
+
+        $bindValues = [
+            'id' => intval($session['id_company'])
+        ];
+
+        $queryCampaigns->execute($bindValues);
+
+        $campaignDatas = $queryCampaigns->fetchAll();
+    }
+
+    return $campaignDatas;
+}
