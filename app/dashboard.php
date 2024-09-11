@@ -36,8 +36,8 @@ checkConnection($_SESSION);
 
     <main class="container container__flex">
         <h2 class="ttl">
-            Bonjour Julie
-            <span class="ttl--tertiary">FakeBusiness</span>
+            Bonjour <?= $_SESSION['firstname'] ?><br>
+            <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>
 
         <section class="card campaign">

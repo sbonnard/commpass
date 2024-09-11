@@ -23,6 +23,7 @@ function generateToken()
     }
 }
 
+
 /**
  * Redirect to the given URL or to the previous page if no URL is provided.
  *
@@ -41,3 +42,33 @@ function redirectTo(?string $url = null): void
     header('Location: ' . $url);
     exit;
 }
+
+/**
+ * Get company name with a query to server and by checking $_SESSION datas.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $session - Superglobal $_SESSION.
+ * @return string - The name of the company.
+ */
+function getCompanyName(PDO $dbCo, array $session):string {
+    $query = $dbCo->prepare(
+        'SELECT company_name
+        FROM company
+        WHERE id_company = :id;'
+    );
+
+    $bindValues = [
+        'id' => intval($session['id_company'])
+    ];
+
+    $datas = $query->execute($bindValues);
+
+    $companyDatas = $query->fetch();
+
+    return implode($companyDatas);
+};
+
+
+// function getAllCampaigns(PDO $dbCo, array $session):string {
+//     $queryCampaigns = $dbCo->prepare();
+// }

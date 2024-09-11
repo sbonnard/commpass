@@ -97,8 +97,14 @@ VALUES ("Toile de Com"), ("FakeBusiness"), ("Luminase"), ("Groupe Pignon"), ("Ne
 INSERT INTO brand (brand_name) 
 VALUES ("Lumosphère"), ("Vélocitix"), ("Stellar Threads"), ("Aurélys"), ("Nexmus"), ("Cafés Geronimo"), ("Fripig"), ("Maxstock");
 
-INSERT INTO users (username, firstname, lastname, password, email, phone, id_company)
+INSERT INTO users (username, firstname, lastname, password, email, phone, client, id_company)
 VALUES ("sbonnard94", "Sébastien", "Bonnard", "$2y$10$ZMkpWcRvhkY0PHUZPlb8COU3sCBTRqIKdvvK4sZd2U84wH2HHNPwK", "sebastien.bonnard94@gmail.com", "0608118078", 0, 1);
+
+INSERT INTO users (username, firstname, lastname, password, email, phone, client, id_company)
+VALUES 
+("mhamelin4", "Marius", "Hamelin", "$2y$10$ZMkpWcRvhkY0PHUZPlb8COU3sCBTRqIKdvvK4sZd2U84wH2HHNPwK", "marius.hamelin@luminase.com", "0600102030", 1, 3),
+("ppignon5", "Pascale", "Pignon", "$2y$10$ZMkpWcRvhkY0PHUZPlb8COU3sCBTRqIKdvvK4sZd2U84wH2HHNPwK", "pascale.pignon@pignon-group.com", "0600102030", 1, 4)
+;
 
 INSERT INTO users (username, firstname, lastname, password, email, phone, client, id_company)
 VALUES 
@@ -118,6 +124,11 @@ INSERT INTO campaign (campaign_name, budget, date, id_user, id_target, id_compan
 VALUES ("Soldes d'été", 25000, "2024-06-27", 3, 3, 2),
 ("Promos d'hiver", 18000, "2023-11-14", 3, 3, 2),
 ("Tous plus verts", 25000, "2024-02-01", 3, 2, 2);
+
+INSERT INTO campaign (campaign_name, budget, date, id_user, id_target, id_company)
+VALUES ("Salon du luminaire", 178000, "2022-05-05", 4, 1, 3),
+("Lancement Groupe Pignon", 21000, "2023-05-14", 5, 1, 4),
+("Tous plus verts", 25000, "2022-02-01", 3, 2, 2);
 
 INSERT INTO operation (description, price, date_, id_campaign)
 VALUES 

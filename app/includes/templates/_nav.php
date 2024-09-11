@@ -6,7 +6,7 @@
  * @return string
  */
 function fetchNav():string {
-    if(isset($_SESSION['id_user']) && ($_SESSION['client']) == 1) {
+    if(isset($_SESSION['id_user'])) {
         return '
             <ul class="nav__lst" id="nav-list">
                 <li class="nav__itm">
