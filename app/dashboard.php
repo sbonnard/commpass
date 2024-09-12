@@ -12,7 +12,10 @@ require_once "includes/templates/_footer.php";
 require_once "includes/templates/_nav.php";
 
 generateToken();
+
 checkConnection($_SESSION);
+
+$user = fetchUserDatas($dbCo, $_SESSION);
 
 $campaigns = getCompanyCampaigns($dbCo, $_SESSION);
 
@@ -35,12 +38,12 @@ $brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav() ?>
+        <?= fetchNav('nav__itm--active') ?>
     </nav>
 
     <main class="container container--campaigns container__flex">
         <h2 class="ttl">
-            Bonjour <?= $_SESSION['firstname'] ?><br>
+            Bonjour <?= $user['firstname'] ?><br>
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>
 

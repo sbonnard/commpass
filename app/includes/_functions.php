@@ -21,6 +21,24 @@ function redirectTo(?string $url = null): void
     exit;
 }
 
+function fetchUserDatas(PDO $dbCo, array $session): array {
+    $query = $dbCo->prepare(
+        'SELECT id_user, username, firstname, lastname, email, phone, client, boss, id_company
+        FROM users
+        WHERE id_user = :id;'
+    );
+
+    $bindValues = [
+        'id' => intval($session['id_user'])
+    ];
+
+    $query->execute($bindValues);
+
+    $userData = $query->fetch();
+
+    return $userData;
+}
+
 /**
  * Get company name with a query to server and by checking $_SESSION datas.
  *

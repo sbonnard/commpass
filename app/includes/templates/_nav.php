@@ -3,16 +3,18 @@
 /**
  * Fetch a different nav if the user is connected or not.
  *
- * @return string
+ * @param string $dashboardActive - Makes dashboard active.
+ * @param string $profilActive - Makes profil active.
+ * @return string - Class name that will be applied to the navigation menu.
  */
-function fetchNav():string {
+function fetchNav(string $dashboardActive = '', string $profilActive = ''):string {
     if(isset($_SESSION['id_user'])) {
         return '
             <ul class="nav__lst" id="nav-list">
-                <li class="nav__itm">
-                    <a href="campaigns.php" class="nav__lnk" aria-label="Lien vers mes campagnes de communications">Mes campagnes</a>
+                <li class="nav__itm '.$dashboardActive.'">
+                    <a href="dashboard.php" class="nav__lnk" aria-label="Lien vers le tableau de bord contenant les campagnes de communications">Tableau de bord</a>
                 </li>
-                <li class="nav__itm">
+                <li class="nav__itm '.$profilActive.'">
                     <a href="profil.php" class="nav__lnk" aria-label="Lien vers mon profil d\'utilisateur">Mon profil</a>
                 </li>
                 <li class="nav__itm">

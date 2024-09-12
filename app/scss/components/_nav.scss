@@ -3,6 +3,14 @@
 
     &__itm {
         color: $primary;
+
+        &:hover {
+            color: $tertiary;
+        }
+
+        &--active {
+            color: $tertiary;
+        }
     }
     
     &__lnk {

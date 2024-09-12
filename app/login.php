@@ -29,9 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'log-in') {
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['username'] = $user['username'];
         $_SESSION['id_user'] = $user['id_user'];
-        $_SESSION['firstname'] = $user['firstname'];
-        $_SESSION['lastname'] = $user['lastname'];
-        $_SESSION['email'] = $user['email'];
         $_SESSION['client'] = $user['client'];
         $_SESSION['boss'] = $user['boss'];
         $_SESSION['id_company'] = $user['id_company'];

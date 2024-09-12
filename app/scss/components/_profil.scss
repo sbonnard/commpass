@@ -1,0 +1,20 @@
+.profil {
+    align-items: flex-start;
+    font-size: 1.25rem;
+    padding: 1rem 1.25rem;
+    line-height: 2;
+
+    &__info {
+        color: $primary;
+    }
+
+    &__modify {
+        display: flex;
+        flex-direction: row;
+    }
+
+    &__lnk {
+        font-family: 'roboto';
+        font-size: 1rem;
+    }
+}
