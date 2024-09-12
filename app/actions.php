@@ -40,6 +40,50 @@ if ($_POST['action'] === 'modify-pwd') {
     } else {
         $_SESSION['error'] = "update_ko_pwd";
     }
+} else if ($_POST['action'] === 'modify-email') {
+    if (!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['error'] = "invalid_email";
+
+        redirectTo('profil.php');
+        exit;
+    }
+
+    $queryEmail = $dbCo->prepare('UPDATE users SET email = :email WHERE id_user = :id_user;');
+
+    $bindValues = [
+        'email' => strip_tags($_POST['email']),
+        'id_user' => strip_tags($_SESSION['id_user']),
+    ];
+
+    $isUpdateOk = $queryEmail->execute($bindValues);
+
+    if ($isUpdateOk) {
+        $_SESSION['msg'] = "update_ok_email";
+    } else {
+        $_SESSION['error'] = "update_ko_email";
+    }
+} else if ($_POST['action'] === 'modify-phone') {
+    if (!isset($_POST['phone']) || !preg_match('/^[0-9]{10}$/', $_POST['phone'])) {
+        $_SESSION['error'] = "invalid_phone";
+
+        redirectTo('profil.php');
+        exit;
+    }
+
+    $queryPhone = $dbCo->prepare('UPDATE users SET phone = :phone WHERE id_user = :id_user;');
+
+    $bindValues = [
+        'phone' => strip_tags($_POST['phone']),
+        'id_user' => strip_tags($_SESSION['id_user']),
+    ];
+
+    $isUpdateOk = $queryPhone->execute($bindValues);
+
+    if ($isUpdateOk) {
+        $_SESSION['msg'] = "update_ok_phone";
+    } else {
+        $_SESSION['error'] = "update_ko_phone";
+    }
 }
 
 redirectTo('profil.php');

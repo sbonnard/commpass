@@ -1,7 +1,9 @@
 <?php
 
 $messages = [
-    'update_ok_pwd' => 'Mot de passe mis à jour !'
+    'update_ok_pwd' => 'Mot de passe mis à jour !',
+    'update_ok_email' => 'Email mis à jour!',
+    'update_ok_phone' => 'Numéro de téléphone mis à jour!'
 ];
 
 $errors = [
@@ -11,7 +13,11 @@ $errors = [
     'please_connect' => 'Vous devez être connecté pour accéder à cette page',
     'login_fail' => 'Les identifiants renseignés sont incorrects.',
     'update_ko_pwd' => 'Échec lors du changement de mot de passe.',
-    'unmatched_pwd' => 'Les mots de passe ne correspondent pas.'
+    'unmatched_pwd' => 'Les mots de passe ne correspondent pas.',
+    'invalid_email' => 'L\'adresse email est invalide.',
+    'update_ko_email' => 'Échec de la mise à jour de l\'email.',
+    'invalid_phone' => 'Le numéro de téléphone est invalide.',
+    'update_ko_phone' => 'Échec de la mise à jour du numéro de téléphone.'
 ];
 
 

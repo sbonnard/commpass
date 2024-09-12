@@ -72,7 +72,7 @@ function getModifyPhoneForm(): string
         <ul class="form__lst form__lst--profil">
             <li class="form__itm form__itm--profil">
                 <label class="form__label" for="phone" aria-label="Saississez votre nouvel phone">Modifier le numéro de téléphone</label>
-                <input class="form__input" type="tel" name="phone" id="phone" placeholder="mon-phone@exemple.fr" required>
+                <input class="form__input" type="tel" name="phone" id="phone" placeholder="0607080910" required>
             </li>
             <input class="button button--confirm" type="submit" value="Confirmer" aria-label="Confirmer la modification du numéro de téléphone">
             <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
