@@ -249,7 +249,7 @@ function getMessageIfNoCampaign(array $campaigns): string
  */
 function formatPrice(float|int $price, string $currency): string
 {
-    if (intval($price)) {
+    if ($price == (int)$price) {
         return number_format($price, 0, ',', ' ') . ' ' . $currency;
     } else {
         return number_format($price, 2, ',', ' ') . ' ' . $currency;
