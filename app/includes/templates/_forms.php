@@ -93,16 +93,16 @@ function getModifyPwdForm(): string
     <form class="form" action="actions.php" method="post" id="pwd_form" aria-label="Formulaire de modification du mot de passe">
         <ul class="form__lst form__lst--profil">
             <li class="form__itm form__itm--profil">
-                <label class="form__label" for="pwd" aria-label="Saississez votre nouveau mot de passe">Nouveau mot de passe</label>
-                <input class="form__input" type="password" name="pwd" id="pwd" placeholder="•••••••••••" required>
+                <label class="form__label" for="password" aria-label="Saississez votre nouveau mot de passe">Nouveau mot de passe</label>
+                <input class="form__input" type="password" name="password" id="password" placeholder="•••••••••••" required>
             </li>
             <li class="form__itm form__itm--profil">
-                <label class="form__label" for="pwd" aria-label="Confirmer votre nouveau mot de passe">Confirmer mot de passe</label>
-                <input class="form__input" type="password" name="pwd-confirm" id="pwd-confirm" placeholder="•••••••••••" required>
+                <label class="form__label" for="password" aria-label="Confirmer votre nouveau mot de passe">Confirmer mot de passe</label>
+                <input class="form__input" type="password" name="password-confirm" id="password-confirm" placeholder="•••••••••••" required>
             </li>
             <input class="button button--confirm" type="submit" value="Confirmer" aria-label="Confirmer la modification du mot de passe">
             <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
-            <input type="hidden" name="action" value="modify-pwd">
+            <input type="hidden" name="action" value="modify-password">
         </ul>
     </form>';
 }

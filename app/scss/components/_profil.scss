@@ -11,7 +11,7 @@
     &__modify {
         display: flex;
         flex-direction: column;
-        
+
         &--lnk-list {
             display: flex;
             flex-direction: row;
@@ -22,6 +22,10 @@
     &__lnk {
         font-family: 'roboto';
         font-size: 1rem;
+
+        &--active {
+            color: $tertiary;
+        }
 
         &:hover {
             color: $tertiary;

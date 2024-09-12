@@ -58,11 +58,11 @@ $brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);
             <h2 class="ttl" id="modify-infos">Modifier</h2>
             <section class="card__section profil__modify" aria-labelledby="profil">
                 <div class="profil__modify--lnk-list">
-                    <button class="profil__lnk" id="modify-mail">email</button>
+                    <button class="profil__lnk" id="button-email">email</button>
                     <span aria-hidden="true"> | </span>
-                    <button class="profil__lnk" id="modify-tel">téléphone</button>
+                    <button class="profil__lnk" id="button-tel">téléphone</button>
                     <span aria-hidden="true"> | </span>
-                    <button class="profil__lnk" id="modify-pwd">mot de passe</button>
+                    <button class="profil__lnk profil__lnk--active" id="button-pwd">mot de passe</button>
                 </div>
                 <?= getModifyEmailForm() ?>
                 <?= getModifyPhoneForm() ?>
@@ -78,6 +78,6 @@ $brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);
 </body>
 
 <script type="module" src="js/script.js"></script>
-<script type="module" src="js/password.js"></script>
+<script type="module" src="js/profil-forms.js"></script>
 
 </html>

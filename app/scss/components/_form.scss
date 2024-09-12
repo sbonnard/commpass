@@ -58,6 +58,10 @@
             border: 2px solid $secondary;
         }
 
+        &:active {
+            border: 2px solid $secondary;
+        }
+
         @media screen and (min-width: 768px) {
             & {
                 width: 18.75rem;
