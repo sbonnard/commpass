@@ -1,7 +1,7 @@
 <?php
 
 $messages = [
-
+    'update_ok_pwd' => 'Mot de passe mis à jour !'
 ];
 
 $errors = [
@@ -9,7 +9,8 @@ $errors = [
     'referer' => 'D\'où venez vous ?',
     'no_action' => 'Aucune action détectée.',
     'please_connect' => 'Vous devez être connecté pour accéder à cette page',
-    'login_fail' => 'Les identifiants renseignés sont incorrects.'
+    'login_fail' => 'Les identifiants renseignés sont incorrects.',
+    'update_ko_pwd' => 'Échec lors du changement de mot de passe.'
 ];
 
 
@@ -63,7 +64,7 @@ function getErrorMessage(array $errors) :string
     if (isset($_SESSION['error'])) {
         $e = ($_SESSION['error']);
         unset($_SESSION['error']);
-        return '<p class="notif notif--error">' . $errors[$e] . '</p>';
+        return '<p class="notif notif--error" id="error-message">' . $errors[$e] . '</p>';
     }
     return '';
 }
@@ -78,7 +79,7 @@ function getSuccessMessage(array $messages) :string
     if (isset($_SESSION['msg'])) {
         $m = ($_SESSION['msg']);
         unset($_SESSION['msg']);
-        return '<p class="notif notif--success">' . $messages[$m] . '</p>';
+        return '<p class="notif notif--success" id="success-message">' . $messages[$m] . '</p>';
     }
     return '';
 }

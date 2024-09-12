@@ -42,7 +42,15 @@ $brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);
         <?= fetchNav('', 'nav__itm--active') ?>
     </nav>
 
+    
     <main class="container container--campaigns container__flex">
+        <div class="notifs">
+            <?php
+            echo getErrorMessage($errors);
+            echo getSuccessMessage($messages);
+            ?>
+        </div>
+        
         <div class="card">
             <h2 class="ttl" id="profil">Mon profil</h2>
 

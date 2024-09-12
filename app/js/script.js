@@ -24,4 +24,3 @@ ConnectionLink.addEventListener('click', function () {
     overlay.classList.remove("overlay");
     overlayConnection.classList.toggle("overlay");
 });
-

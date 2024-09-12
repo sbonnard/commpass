@@ -102,7 +102,7 @@ function getModifyPwdForm(): string
             </li>
             <input class="button button--confirm" type="submit" value="Confirmer" aria-label="Confirmer la modification du mot de passe">
             <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
-            <input type="hidden" name="action" value="modify-password">
+            <input type="hidden" name="action" value="modify-pwd">
         </ul>
     </form>';
 }
