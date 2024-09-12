@@ -47,6 +47,11 @@ $brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>
 
+        <div class="button__section">
+            <button class="button button--new-campaign">Nouvelle campagne</button>
+            <button class="button button--filter">Filtres</button>
+        </div>
+
         <section class="card campaign">
             <?= getMessageIfNoCampaign($campaigns) ?>
             <?= getCampaignTemplate($dbCo, $campaigns, $brands, $_SESSION) ?>

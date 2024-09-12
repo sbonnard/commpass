@@ -1,13 +1,12 @@
 .button {
     width: 15rem;
     font-size: 1.25rem;
-    padding: 0.75rem 0.75rem 0.75rem 3rem;
+    padding: 0.6rem 0.75rem 0.75rem 3rem;
     border-radius: 0.70rem;
     border: 0px;
     font-family: 'roboto';
     color: $white;
     background-repeat: no-repeat;
-    background-size: cover;
     transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out; // Ajout de la transition
 
     &--connection {
@@ -23,6 +22,24 @@
 
         &:hover {
             background-image: url(../../img/cta-confirm-hover.svg);
+        }
+    }
+
+    &--new-campaign {
+        background-image: url(../../img/cta-new_campaign.svg);
+
+        &:hover {
+            background-image: url(../../img/cta-new_campaign-hover.svg);
+        }
+    }
+
+    &--filter {
+        width: 11.125rem;
+        color: $tertiary;
+        background-image: url(../../img/filter-btn.svg);
+
+        &:hover {
+            // background-image: url(../../img/filter-btn-active.svg);
         }
     }
 
@@ -55,4 +72,18 @@
             background-image: url(../../img/eye-active.svg);
         }
     }
+
+   &__section {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+
+    @media screen and (max-width: 768px) {
+        & {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+   }
 }
