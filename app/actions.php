@@ -19,6 +19,13 @@ if (!isset($_REQUEST['action'])) {
 preventFromCSRF();
 
 if ($_POST['action'] === 'modify-pwd') {
+    if (!isset($_POST['password']) || !isset($_POST['password-confirm']) || $_POST['password'] !== $_POST['password-confirm']) {
+        $_SESSION['error'] = "unmatched_pwd";
+
+        redirectTo('profil.php');
+        exit;
+    }
+
     $queryPWD = $dbCo->prepare('UPDATE users SET password = :password WHERE id_user = :id_user;');
 
     $bindValues = [
@@ -31,7 +38,7 @@ if ($_POST['action'] === 'modify-pwd') {
     if ($isUpdateOk) {
         $_SESSION['msg'] = "update_ok_pwd";
     } else {
-        $_SESSION['msg'] = "update_ko_pwd";
+        $_SESSION['error'] = "update_ko_pwd";
     }
 }
 
