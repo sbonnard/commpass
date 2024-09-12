@@ -27,5 +27,10 @@
       border-image: linear-gradient(to right, $primary, $tertiary);
       border-image-slice: 1;
     }
+
+    // &__container {
+    //   max-width: 95rem;
+    //   margin: auto;
+    // }
   }
 }

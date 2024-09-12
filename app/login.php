@@ -19,7 +19,7 @@ preventFromCSRF('index.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'log-in') {
 
-    $username = $_POST['username'];
+    $username = trim($_POST['username']);
     $password = $_POST['password'];
 
     $query = $dbCo->prepare('SELECT * FROM users WHERE username = :username');

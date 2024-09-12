@@ -35,13 +35,14 @@ generateToken();
         <?= fetchNav() ?>
     </nav>
 
+    <div class="notifs">
+        <?php
+        echo getErrorMessage($errors);
+        echo getSuccessMessage($messages);
+        ?>
+    </div>
+    
     <main class="container container__flex">
-        <div class="notifs">
-            <?php
-            echo getErrorMessage($errors);
-            echo getSuccessMessage($messages);
-            ?>
-        </div>
 
         <div class="card">
             <h2 class="ttl" id="take-control">

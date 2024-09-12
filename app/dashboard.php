@@ -15,6 +15,7 @@ generateToken();
 checkConnection($_SESSION);
 
 $campaigns = getCompanyCampaigns($dbCo, $_SESSION);
+$brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +37,7 @@ $campaigns = getCompanyCampaigns($dbCo, $_SESSION);
         <?= fetchNav() ?>
     </nav>
 
-    <main class="container container__flex">
+    <main class="container container--campaigns container__flex">
         <h2 class="ttl">
             Bonjour <?= $_SESSION['firstname'] ?><br>
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
@@ -44,7 +45,13 @@ $campaigns = getCompanyCampaigns($dbCo, $_SESSION);
 
         <section class="card campaign">
             <?= getMessageIfNoCampaign($campaigns) ?>
-            <?= getCampaignTemplate($dbCo, $campaigns, $_SESSION) ?>
+            <?= getCampaignTemplate($dbCo, $campaigns, $brands, $_SESSION) ?>
+
+            <?php 
+            // var_dump($brands);
+            // var_dump($campaigns);
+             ?>
+
         </section>
     </main>
 

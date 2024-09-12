@@ -20,5 +20,10 @@
             margin: auto;
             align-items: end;
         }
+
+        &--campaigns {
+            flex-direction: column;
+            align-items: center;
+        }
     }
 }
