@@ -240,7 +240,7 @@ function formatPrice(float|int $price, string $currency): string
  *
  * @param PDO $dbCo - Connection to database.
  * @param array $campaigns - The array containing all campaigns datas.
- * @return void
+ * @return string - A price formated thanks to formatPrice() function.
  */
 function calculateSpentBudget(PDO $dbCo, array $campaigns):string
 {
