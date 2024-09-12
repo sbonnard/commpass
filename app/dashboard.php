@@ -15,6 +15,7 @@ generateToken();
 checkConnection($_SESSION);
 
 $campaigns = getCompanyCampaigns($dbCo, $_SESSION);
+
 $brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);
 ?>
 

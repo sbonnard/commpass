@@ -57,44 +57,49 @@ function getCompanyName(PDO $dbCo, array $session): string
  */
 function getCompanyCampaigns(PDO $dbCo, array $session): array
 {
-    $query = 'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year
-                FROM campaign';
-
-    $join = '';
-    $where = '';
-    $bindValues = [];
-
     if (isset($session['client']) && $session['client'] === 0 && $session['boss'] === 1) {
-        $join = 'JOIN company c USING (id_company)';
-    } elseif (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
-        $where = 'id_company = :id';
-        $bindValues['id'] = intval($session['id_company']);
-    } else {
-        $where = 'id_company = :id AND id_user = :id_user';
-        $bindValues['id'] = intval($session['id_company']);
-        $bindValues['id_user'] = intval($session['id_user']);
-    }
+        // Si l'utilisateur est le gérant de l'entreprise Toile de Com.
+        $queryCampaigns = $dbCo->prepare(
+            'SELECT id_campaign, campaign_name, budget, date, company_name, YEAR(date) AS year
+            FROM campaign
+                JOIN company USING (id_company)
+            ORDER BY date DESC;'
+        );
+        $queryCampaigns->execute();
 
-    $query .= $join;
+        $campaignDatas = $queryCampaigns->fetchAll();
 
-    if (!empty($where)) {
-        $query .= ' WHERE ' . $where;
-    }
-
-    $query .= ' ORDER BY date DESC;';
-
-    $queryCampaigns = $dbCo->prepare($query);
-
-    try {
+    } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
+        // Si l'utilisateur est un client mais qu'il est aussi le gérant de l'entreprise cliente.
+        $queryCampaigns = $dbCo->prepare(
+            'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year
+            FROM campaign
+            WHERE id_company = :id
+            ORDER BY date DESC;'
+        );
+        $bindValues = [
+            'id' => intval($session['id_company']),
+            'id_user' => intval($session['id_user'])
+        ];
         $queryCampaigns->execute($bindValues);
-        $campaigns = $queryCampaigns->fetchAll();
-    } catch (PDOException $e) {
-        // Handle the error, for example log it or return a meaningful message
-        error_log('Error executing query: ' . $e->getMessage());
-        return [];
-    }
 
-    return $campaigns;
+        $campaignDatas = $queryCampaigns->fetchAll();
+    } else {
+        // Si l'utilisateur est un client mais qu'il n'est pas gérant de l'entreprise. Il est donc simple interlocuteur sur ses campagnes.
+        $queryCampaigns = $dbCo->prepare(
+            'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year
+            FROM campaign
+            WHERE id_company = :id AND id_user = :id_user
+            ORDER BY date DESC;'
+        );
+        $bindValues = [
+            'id' => intval($session['id_company']),
+            'id_user' => intval($session['id_user'])
+        ];
+        $queryCampaigns->execute($bindValues);
+        $campaignDatas = $queryCampaigns->fetchAll();
+    }
+    return $campaignDatas;
 }
 
 /**
@@ -289,23 +294,25 @@ function calculateRemainingBudget(PDO $dbCo, array $campaigns): string
 function getCampaignsBrands(PDO $dbCo, array $session, array $campaigns): array
 {
     if (isset($session['id_company']) && intval($session['id_company'])) {
-        $queryBrands = $dbCo->prepare(
-            'SELECT *
-            FROM brand
-            WHERE id_company = :id_company;'
-        );
-
         if ($session['client'] === 1) {
+            $queryBrands = $dbCo->prepare(
+                'SELECT *
+                FROM brand
+                WHERE id_company = :id_company;'
+            );
+
             $bindValues = [
                 'id_company' => intval($session['id_company'])
             ];
+
+            $queryBrands->execute($bindValues);
         } else {
-            $bindValues = [
-                'id_company' => intval($campaigns['id_company'])
-            ];
+            $queryBrands = $dbCo->query(
+                'SELECT *
+                FROM brand;)'
+            );
         }
 
-        $queryBrands->execute($bindValues);
 
         $brands = $queryBrands->fetchAll(PDO::FETCH_ASSOC);
 
