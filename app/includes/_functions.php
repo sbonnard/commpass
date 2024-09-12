@@ -242,7 +242,7 @@ function formatPrice(float|int $price, string $currency): string
  * @param array $campaigns - The array containing all campaigns datas.
  * @return void
  */
-function calculateSpentBudget(PDO $dbCo, array $campaigns)
+function calculateSpentBudget(PDO $dbCo, array $campaigns):string
 {
     $querySum = $dbCo->prepare(
         'SELECT SUM(price) AS total_cost
