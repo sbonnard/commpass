@@ -162,7 +162,7 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $session): strin
                             <h4 class="vignette__ttl">
                                 Budget restant
                             </h4>
-                            <p class="vignette__price">14 437.95 €</p>
+                            <p class="vignette__price">' . calculateRemainingBudget($dbCo, $campaign) . '</p>
                         </div>
                     </div>
                 </div>
@@ -242,7 +242,7 @@ function formatPrice(float|int $price, string $currency): string
  * @param array $campaigns - The array containing all campaigns datas.
  * @return string - A price formated thanks to formatPrice() function.
  */
-function calculateSpentBudget(PDO $dbCo, array $campaigns):string
+function calculateSpentBudget(PDO $dbCo, array $campaigns): string
 {
     $querySum = $dbCo->prepare(
         'SELECT SUM(price) AS total_cost
@@ -259,4 +259,32 @@ function calculateSpentBudget(PDO $dbCo, array $campaigns):string
     $result = $querySum->fetch(PDO::FETCH_ASSOC);
 
     return formatPrice(floatval($result['total_cost'] ?? 0), '€');
+}
+
+/**
+ * Calculates remaining budget of a campaign.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $campaigns - The array containing all campaigns datas. 
+ * @return string - A price formated thanks to formatPrice() function.
+ */
+function calculateRemainingBudget(PDO $dbCo, array $campaigns): string
+{
+    $queryRemaining = $dbCo->prepare(
+        'SELECT c.id_campaign, (c.budget - IFNULL(SUM(o.price), 0)) AS total_remaining 
+        FROM campaign c
+            LEFT JOIN operation o ON c.id_campaign = o.id_campaign
+        WHERE c.id_campaign = :id_campaign
+        GROUP BY c.id_campaign;'
+    );
+
+    $bindValues = [
+        'id_campaign' => intval($campaigns['id_campaign'])
+    ];
+
+    $queryRemaining->execute($bindValues);
+
+    $result = $queryRemaining->fetch(PDO::FETCH_ASSOC);
+
+    return formatPrice(floatval($result['total_remaining'] ?? 0), '€');
 }
