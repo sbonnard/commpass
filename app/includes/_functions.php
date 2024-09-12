@@ -91,7 +91,6 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
         $queryCampaigns->execute();
 
         $campaignDatas = $queryCampaigns->fetchAll();
-
     } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
         // Si l'utilisateur est un client mais qu'il est aussi le gérant de l'entreprise cliente.
         $queryCampaigns = $dbCo->prepare(
@@ -173,7 +172,7 @@ function getCampaignTemplate(array $campaigns, array $session): string
                             <h4 class="vignette__ttl">
                                 Budget attribué
                             </h4>
-                            <p class="vignette__price">' . $campaign['budget'] . ' €</p>
+                            <p class="vignette__price">' . formatPrice($campaign['budget'], "€") . '</p>
                         </div>
                         <div class="vignette vignette--secondary">
                             <h4 class="vignette__ttl">
@@ -208,7 +207,7 @@ function getCampaignTemplate(array $campaigns, array $session): string
 function getCampaignsByYear(array $campaigns, array $session, int $year)
 {
     $campaignList = '';
-    
+
     foreach ($campaigns as $campaign) {
         if (isset($campaign['year']) && $campaign['year'] == $year) {
             $campaignList .= '
@@ -218,7 +217,7 @@ function getCampaignsByYear(array $campaigns, array $session, int $year)
                 . getCampaignTemplate($campaign, $session);
         }
     }
-    
+
     return $campaignList;
 }
 
@@ -228,8 +227,9 @@ function getCampaignsByYear(array $campaigns, array $session, int $year)
  * @param array $campaigns - Array containing all campaigns.
  * @return string - HTML to display a message.
  */
-function getMessageIfNoCampaign(array $campaigns): string {
-    if(empty($campaigns)) {
+function getMessageIfNoCampaign(array $campaigns): string
+{
+    if (empty($campaigns)) {
         return '
         <div class="card card__section">
             <p class="big-text">Vous n\'avez pas encore de campagnes de comm\' !</p>
@@ -238,4 +238,20 @@ function getMessageIfNoCampaign(array $campaigns): string {
     }
 
     return '';
+}
+
+/**
+ * Formats a price in a specific way. Example : 25000.00 -> 25 000 € OR 18000.50 -> 18 000,50 €.
+ *
+ * @param float $price - The price to format.
+ * @param string $currency - The currency you want to apply to the price.
+ * @return string - The price formated.
+ */
+function formatPrice(float|int $price, string $currency): string
+{
+    if (intval($price)) {
+        return number_format($price, 0, ',', ' ') . ' ' . $currency;
+    } else {
+        return number_format($price, 2, ',', ' ') . ' ' . $currency;
+    }
 }
