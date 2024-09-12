@@ -44,7 +44,7 @@ $campaigns = getCompanyCampaigns($dbCo, $_SESSION);
 
         <section class="card campaign">
             <?= getMessageIfNoCampaign($campaigns) ?>
-            <?= getCampaignTemplate($campaigns, $_SESSION) ?>
+            <?= getCampaignTemplate($dbCo, $campaigns, $_SESSION) ?>
         </section>
     </main>
 

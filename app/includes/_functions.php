@@ -2,28 +2,6 @@
 
 global $dbCo;
 
-// $RPG = fetchRPG($dbCo);
-// $parties = getPartyDatas($dbCo);
-// $partiesDatas = getPartyDatasOnly($dbCo);
-
-/**
- * Generates a random token for forms to prevent from CSRF. It also generate a new token after 15 minutes.
- *
- * @return void
- */
-function generateToken()
-{
-    if (
-        !isset($_SESSION['token'])
-        || !isset($_SESSION['tokenExpire'])
-        || $_SESSION['tokenExpire'] < time()
-    ) {
-        $_SESSION['token'] = md5(uniqid(mt_rand(), true));
-        $_SESSION['tokenExpire'] = time() + 60 * 15;
-    }
-}
-
-
 /**
  * Redirect to the given URL or to the previous page if no URL is provided.
  *
@@ -152,7 +130,7 @@ function getCompanyNameIfTDC(array $campaigns, array $session): string
  * @param array $session - Superglobal $_SESSION.
  * @return string - HTML code that constitutes the template.
  */
-function getCampaignTemplate(array $campaigns, array $session): string
+function getCampaignTemplate(PDO $dbCo, array $campaigns, array $session): string
 {
     $campaignList = '';
 
@@ -178,7 +156,7 @@ function getCampaignTemplate(array $campaigns, array $session): string
                             <h4 class="vignette__ttl">
                                 Budget dépensé
                             </h4>
-                            <p class="vignette__price">13 562.05 €</p>
+                            <p class="vignette__price">' . calculateSpentBudget($dbCo, $campaign) . '</p>
                         </div>
                         <div class="vignette vignette--tertiary">
                             <h4 class="vignette__ttl">
@@ -203,23 +181,24 @@ function getCampaignTemplate(array $campaigns, array $session): string
     return $campaignList;
 }
 
+//  Not working for now.
+// function getCampaignsByYear(array $campaigns, array $session, string $date)
+// {
+//     $campaignList = '';
 
-function getCampaignsByYear(array $campaigns, array $session, int $year)
-{
-    $campaignList = '';
+//     foreach ($campaigns as $campaign) {
+//             if(str_contains($campaign['date'], $date)) {
+//                 $campaignList .= '
+//                     <h2 class="ttl ttl--secondary">
+//                         Campagnes ' . $date . '
+//                     </h2>'
+//                     . getCampaignTemplate($campaign, $session);
+//             }
+//         }
 
-    foreach ($campaigns as $campaign) {
-        if (isset($campaign['year']) && $campaign['year'] == $year) {
-            $campaignList .= '
-                <h2 class="ttl ttl--secondary">
-                    Campagnes ' . $year . '
-                </h2>'
-                . getCampaignTemplate($campaign, $session);
-        }
-    }
+//     return $campaignList;
+// }
 
-    return $campaignList;
-}
 
 /**
  * Get a message if you don't have any campaign on your dashboard
@@ -254,4 +233,30 @@ function formatPrice(float|int $price, string $currency): string
     } else {
         return number_format($price, 2, ',', ' ') . ' ' . $currency;
     }
+}
+
+/**
+ * Calculates the sum that is already spent for a campaign.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $campaigns - The array containing all campaigns datas.
+ * @return void
+ */
+function calculateSpentBudget(PDO $dbCo, array $campaigns)
+{
+    $querySum = $dbCo->prepare(
+        'SELECT SUM(price) AS total_cost
+        FROM operation
+        WHERE id_campaign = :id_campaign;'
+    );
+
+    $bindValues = [
+        'id_campaign' => intval($campaigns['id_campaign'])
+    ];
+
+    $querySum->execute($bindValues);
+
+    $result = $querySum->fetch(PDO::FETCH_ASSOC);
+
+    return formatPrice(floatval($result['total_cost'] ?? 0), '€');
 }

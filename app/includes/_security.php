@@ -84,3 +84,21 @@ function checkConnection(array $session) {
         exit();
     }
 }
+
+
+/**
+ * Generates a random token for forms to prevent from CSRF. It also generate a new token after 15 minutes.
+ *
+ * @return void
+ */
+function generateToken()
+{
+    if (
+        !isset($_SESSION['token'])
+        || !isset($_SESSION['tokenExpire'])
+        || $_SESSION['tokenExpire'] < time()
+    ) {
+        $_SESSION['token'] = md5(uniqid(mt_rand(), true));
+        $_SESSION['tokenExpire'] = time() + 60 * 15;
+    }
+}
