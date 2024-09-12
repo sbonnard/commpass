@@ -24,7 +24,11 @@ button {
     cursor: pointer;
 }
 
-input[type="checkbox"]{
+input[type="checkbox"] {
     appearance: none;
+    cursor: pointer;
+}
+
+input[type="submit"] {
     cursor: pointer;
 }

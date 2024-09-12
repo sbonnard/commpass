@@ -8,6 +8,7 @@ require_once "includes/_security.php";
 require_once "includes/_message.php";
 require_once "includes/templates/_head.php";
 require_once "includes/templates/_header.php";
+require_once "includes/templates/_forms.php";
 require_once "includes/templates/_footer.php";
 require_once "includes/templates/_nav.php";
 
@@ -56,13 +57,16 @@ $brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);
         <div class="card">
             <h2 class="ttl" id="modify-infos">Modifier</h2>
             <section class="card__section profil__modify" aria-labelledby="profil">
-                <div>
-                    <button class="profil__lnk" href="">email</button>
+                <div class="profil__modify--lnk-list">
+                    <button class="profil__lnk" id="modify-mail">email</button>
                     <span aria-hidden="true"> | </span>
-                    <button class="profil__lnk" href="">téléphone</button>
+                    <button class="profil__lnk" id="modify-tel">téléphone</button>
                     <span aria-hidden="true"> | </span>
-                    <button class="profil__lnk" href="">mot de passe</button>
+                    <button class="profil__lnk" id="modify-pwd">mot de passe</button>
                 </div>
+                <?= getModifyEmailForm() ?>
+                <?= getModifyPhoneForm() ?>
+                <?= getModifyPwdForm() ?>
             </section>
         </div>
 

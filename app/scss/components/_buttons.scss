@@ -8,9 +8,22 @@
     color: $white;
     background-repeat: no-repeat;
     background-size: cover;
-    
+    transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out; // Ajout de la transition
+
     &--connection {
         background-image: url(../../img/cta-connection.svg);
+
+        &:hover {
+            background-image: url(../../img/cta-connection-hover.svg);
+        }
+    }
+
+    &--confirm {
+        background-image: url(../../img/cta-confirm.svg);
+
+        &:hover {
+            background-image: url(../../img/cta-confirm-hover.svg);
+        }
     }
 
     &--close {
@@ -28,9 +41,18 @@
         right: 5%;
         top: 22%;
         filter: drop-shadow(0.25rem 0.25rem 0.25rem $shadow);
+        transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out; // Ajout de la transition
 
         &--inactive {
             background-image: url(../../img/eye-inactive.svg);
         }
-}
+
+        &--active {
+            background-image: url(../../img/eye-active.svg);
+        }
+
+        &:hover {
+            background-image: url(../../img/eye-active.svg);
+        }
+    }
 }

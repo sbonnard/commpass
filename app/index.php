@@ -8,6 +8,7 @@ require_once "includes/_security.php";
 require_once "includes/_message.php";
 require_once "includes/templates/_head.php";
 require_once "includes/templates/_header.php";
+require_once "includes/templates/_forms.php";
 require_once "includes/templates/_footer.php";
 require_once "includes/templates/_nav.php";
 
