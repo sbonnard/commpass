@@ -10,6 +10,13 @@ require_once "includes/_functions.php";
 require_once "includes/_security.php";
 require_once "includes/_message.php";
 
+// CLASSES
+
+require_once "includes/classes/class.brand.php";
+require_once "includes/classes/class.campaign.php";
+require_once "includes/classes/class.company.php";
+require_once "includes/classes/class.user.php";
+
 // DATAS
 require_once "includes/_datas.php";
 
