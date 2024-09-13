@@ -11,4 +11,6 @@ $companies = fetchAllCompanies($dbCo, $_SESSION);
 
 $campaigns = getCompanyCampaigns($dbCo, $_SESSION);
 
+$selectedCampaign = getOneCampaignDatas($dbCo, $_GET);
+
 $brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);

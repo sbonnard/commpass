@@ -74,7 +74,7 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $brands, array $
 
     foreach ($campaigns as $campaign) {
         $campaignList .= '
-        <a href="?campaign=' . $campaign['id_campaign'] . '">
+        <a href="campaign.php?myc=' . $campaign['id_campaign'] . '">
             <div class="card__section" data-campaign="">
                 <div class="campaign__ttl">
                     <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>'
@@ -288,4 +288,29 @@ function filterCampaigns(PDO $dbCo, array $campaigns)
     $campaigns = $queryFilter->fetchAll();
 
     echo json_encode($campaigns);
+}
+
+
+function getOneCampaignDatas(PDO $dbCo, array $get): array
+{
+    $queryCampaigns = [];
+
+    if (isset($get['myc'])) {
+        $queryOneCampaign = $dbCo->prepare(
+            'SELECT id_campaign, campaign_name, date, budget, c.id_user, firstname, lastname
+            FROM campaign c
+            JOIN users u ON c.id_user = u.id_user
+            WHERE id_campaign = :id_campaign;'
+        );
+
+        $bindValues = [
+            'id_campaign' => intval($get['myc'])
+        ];
+
+        $queryOneCampaign->execute($bindValues);
+
+        return $queryOneCampaign->fetch(PDO::FETCH_ASSOC);
+    }
+
+    return $queryCampaigns; // Retourne un tableau vide si 'myc' n'est pas défini
 }

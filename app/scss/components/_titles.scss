@@ -15,6 +15,11 @@
       }
     }
 
+    &--smaller {
+      font-size: 1.25rem;
+      font-family: 'jura';
+    }
+
     &--secondary {
       color: $secondary;
     }

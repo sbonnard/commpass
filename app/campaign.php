@@ -48,7 +48,7 @@ checkConnection($_SESSION);
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav('nav__itm--active') ?>
+        <?= fetchNav() ?>
     </nav>
 
     <main class="container container--campaigns container__flex">
@@ -64,12 +64,14 @@ checkConnection($_SESSION);
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>
 
+        <div class="card">
+            <section class="card__section">
+                <p class="ttl--smaller">Campagne : <?= $selectedCampaign['campaign_name'] ?></p>
+                <p class="campaign__interlocutor">Interlocuteur : <?= $selectedCampaign['firstname'] . ' ' . $selectedCampaign['lastname'] ?></p>
+            </section>
+        </div>
+
         <div class="button__section">
-            <?php
-            if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                echo '<a href="new-campaign.php" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>';
-            }
-            ?>
             <button class="button button--filter" id="filter-button" aria-label="Ouvre un formulaire de filtres">Filtres</button>
         </div>
 
@@ -89,17 +91,35 @@ checkConnection($_SESSION);
             </form>
         </div>
 
-        <section class="card campaign">
-            <?= getMessageIfNoCampaign($campaigns) ?>
-            <?= getCampaignTemplate($dbCo, $campaigns, $brands, $_SESSION) ?>
+        <h2 class="ttl">Données globales</h2>
 
-            <?php
-            // var_dump($_SESSION);
-            // var_dump($brands);
-            // var_dump($campaigns);
-            ?>
+        <div class="card">
+            <section class="card__section">
+            <div class="campaign__stats">
+                    <div class="vignettes-section">
+                        <div class="vignette vignette--primary vignette--big">
+                            <h4 class="vignette__ttl vignette__ttl--big">
+                                Budget attribué
+                            </h4>
+                            <p class="vignette__price vignette__price--big"><?= formatPrice($selectedCampaign['budget'], "€") ?></p>
+                        </div>
+                        <div class="vignette vignette--secondary vignette--big">
+                            <h4 class="vignette__ttl vignette__ttl--big">
+                                Budget dépensé
+                            </h4>
+                            <p class="vignette__price vignette__price--big"><?= calculateSpentBudget($dbCo, $selectedCampaign) ?></p>
+                        </div>
+                        <div class="vignette vignette--tertiary vignette--big">
+                            <h4 class="vignette__ttl vignette__ttl--big">
+                                Budget restant
+                            </h4>
+                            <p class="vignette__price vignette__price--big"><?= calculateRemainingBudget($dbCo, $selectedCampaign) ?></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
 
-        </section>
     </main>
 
     <footer class="footer">

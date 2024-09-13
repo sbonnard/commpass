@@ -17,10 +17,26 @@
     &__ttl {
         font-family: 'jura';
         font-size: 1rem;
+
+        &--big {
+            font-size: 1.25rem;
+            text-transform: uppercase;
+        }
     }
 
     &__price {
         font-family: 'jura';
+        font-size: 1.25rem;
+
+        &--big {
+            font-size: 2rem;
+            text-align: center;
+        }
+    }
+
+    &--big {
+        width: 14.875rem;
+        gap: 1.5rem;
         font-size: 1.25rem;
     }
 
