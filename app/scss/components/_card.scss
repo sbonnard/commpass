@@ -13,6 +13,10 @@
         border-radius: 0.75rem;
         gap: 0.625rem;
         padding: 1rem 0.625rem;
+
+        &--vignettes {
+            padding: 1rem 3.125rem;
+        }
     }
 
     &--over {
@@ -36,6 +40,14 @@
             /* Opera */
             -o-transform: scale(1.10);
             transform: scale(1.10);
+        }
+    }
+
+    
+    @media screen and (min-width: 768px) {
+        &--grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; // ou 31 rem
         }
     }
 }

@@ -10,9 +10,6 @@ require_once "includes/_functions.php";
 require_once "includes/_security.php";
 require_once "includes/_message.php";
 
-// DATAS
-require_once "includes/_datas.php";
-
 // TEMPLATES
 require_once "includes/templates/_head.php";
 require_once "includes/templates/_header.php";
@@ -49,7 +46,7 @@ generateToken();
         echo getSuccessMessage($messages);
         ?>
     </div>
-    
+
     <main class="container container__flex">
 
         <div class="card">
@@ -83,7 +80,6 @@ generateToken();
 </body>
 
 <script type="module" src="js/script.js"></script>
-<script type="module" src="js/login.js"></script>
 <script type="module" src="js/password.js"></script>
 
 </html>

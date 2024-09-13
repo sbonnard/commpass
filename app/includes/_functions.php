@@ -70,3 +70,31 @@ function formatPrice(float|int $price, string $currency): string
 function sanitizeInput(string $input): string {
     return trim(htmlspecialchars($input, ENT_QUOTES, 'UTF-8'));
 }
+
+/**
+ * Format a month and year into a readable French format. Example : '2024-12' -> 'Décembre 2024'.
+ *
+ * @param string $yearAndMonth - The year and month to format.
+ * @return string - The formatted date string.
+ */
+function formatMonthYear(string $yearAndMonth): string {
+    [$year, $month] = explode('-', $yearAndMonth);
+
+    $months = [
+        '01' => 'Janvier',
+        '02' => 'Février',
+        '03' => 'Mars',
+        '04' => 'Avril',
+        '05' => 'Mai',
+        '06' => 'Juin',
+        '07' => 'Juillet',
+        '08' => 'Août',
+        '09' => 'Septembre',
+        '10' => 'Octobre',
+        '11' => 'Novembre',
+        '12' => 'Décembre'
+    ];
+
+    $monthName = $months[$month] ?? 'Mois inconnu';
+    return $monthName . ' ' . $year;
+}

@@ -226,7 +226,6 @@ function getCampaignsBrands(PDO $dbCo, array $session, array $campaigns): array
 
     if (isset($session['id_company']) && intval($session['id_company'])) {
         if ($session['client'] === 1) {
-            // Requête pour les clients, en utilisant id_company depuis la session
             $queryBrands = $dbCo->prepare(
                 'SELECT *
                 FROM brand
@@ -239,9 +238,6 @@ function getCampaignsBrands(PDO $dbCo, array $session, array $campaigns): array
 
             $queryBrands->execute($bindValues);
         } else {
-            // Requête pour les utilisateurs de Toile de Com, en utilisant les campagnes
-            // Supposons que vous souhaitez obtenir les marques en fonction des campagnes
-            // Vous pouvez adapter cette requête selon votre logique spécifique
             $queryBrands = $dbCo->prepare(
                 'SELECT DISTINCT brand.*
                 FROM brand
@@ -252,11 +248,10 @@ function getCampaignsBrands(PDO $dbCo, array $session, array $campaigns): array
             $queryBrands->execute();
         }
 
-        // Récupérer les résultats
         $brands = $queryBrands->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    return $brands; // Retourner un tableau même si aucune marque n'est trouvée
+    return $brands;
 }
 
 
@@ -290,7 +285,13 @@ function filterCampaigns(PDO $dbCo, array $campaigns)
     echo json_encode($campaigns);
 }
 
-
+/**
+ * Get datas from a specific campaign.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $get - Superglobal $_GET.
+ * @return array - An array containing datas from a specific campaign.
+ */
 function getOneCampaignDatas(PDO $dbCo, array $get): array
 {
     $queryCampaigns = [];
@@ -299,7 +300,7 @@ function getOneCampaignDatas(PDO $dbCo, array $get): array
         $queryOneCampaign = $dbCo->prepare(
             'SELECT id_campaign, campaign_name, date, budget, c.id_user, firstname, lastname
             FROM campaign c
-            JOIN users u ON c.id_user = u.id_user
+                JOIN users u ON c.id_user = u.id_user
             WHERE id_campaign = :id_campaign;'
         );
 
@@ -312,5 +313,52 @@ function getOneCampaignDatas(PDO $dbCo, array $get): array
         return $queryOneCampaign->fetch(PDO::FETCH_ASSOC);
     }
 
-    return $queryCampaigns; // Retourne un tableau vide si 'myc' n'est pas défini
+    return $queryCampaigns;
+}
+
+/**
+ * Get all operations linked to a specific campaign.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $get - Superglobal $_GET.
+ * @return array - array of operations.
+ */
+function getCampaignOperations(PDO $dbCo, array $get): array
+{
+    $operations = [];
+
+    $queryOperations = $dbCo->prepare(
+        'SELECT o.id_operation, o.price, o.date_, o.description, b.brand_name, b.id_brand
+        FROM operation o
+            JOIN operation_brand ob ON o.id_operation = ob.id_operation
+            JOIN brand b ON ob.id_brand = b.id_brand
+        WHERE o.id_campaign = :id_campaign
+        GROUP BY o.id_operation, b.id_brand
+        ORDER BY o.date_ DESC;'
+    );
+
+    $bindValues = [
+        'id_campaign' => htmlspecialchars($get['myc'])
+    ];
+
+    $queryOperations->execute($bindValues);
+
+    $operations = $queryOperations->fetchAll(PDO::FETCH_ASSOC);
+
+    return $operations;
+}
+
+
+function getCampaignOperationsAsList(array $operations): string
+{
+    $operationsList = '';
+
+    foreach ($operations as $operation) {
+        $operationsList .= '
+            <li>' . formatMonthYear($operation['date_']) . ': ' . $operation['description'] . 
+            ' avec la marque ' . $operation['brand_name'] . 
+            ' -> ' . formatPrice(floatval($operation['price']), '€') . ' H.T.</li>';
+    }
+
+    return $operationsList;
 }

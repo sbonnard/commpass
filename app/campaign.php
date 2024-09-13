@@ -93,10 +93,14 @@ checkConnection($_SESSION);
 
         <h2 class="ttl">Données globales</h2>
 
+        <?php  
+        // var_dump(getMonthlyCampaignOperations($dbCo, $_GET, '2024-06'));
+        ?>
+
         <div class="card">
-            <section class="card__section">
-            <div class="campaign__stats">
-                    <div class="vignettes-section">
+            <section class="card__section card__section--vignettes">
+                <div class="campaign__stats">
+                    <div class="vignettes-section vignettes-section--big">
                         <div class="vignette vignette--primary vignette--big">
                             <h4 class="vignette__ttl vignette__ttl--big">
                                 Budget attribué
@@ -119,6 +123,25 @@ checkConnection($_SESSION);
                 </div>
             </section>
         </div>
+
+        <div class="card card--grid">
+
+            <div class="card">
+                <section class="card__section">
+                    <img src="img/chart.webp" alt="Graphique camembert récapitulatif de la campagne <?= $selectedCampaign['campaign_name'] ?>">
+                    <ul class="campaign__legend-section">
+                        <?= getBrandsAsList($brands) ?>
+                        <li class="campaign__legend">Toutes les marques</li>
+                    </ul>
+                </section>
+            </div>
+            <div class="card">
+                <section class="card__section">
+                    <ul>
+                        <?= getCampaignOperationsAsList($campaignOperations) ?>
+                    </ul>
+                </section>
+            </div>
 
     </main>
 
