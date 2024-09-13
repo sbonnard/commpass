@@ -21,21 +21,29 @@ function redirectTo(?string $url = null): void
     exit;
 }
 
-function fetchUserDatas(PDO $dbCo, array $session): array
+function fetchUserDatas(PDO $dbCo, array $session): array|bool
 {
+    // Vérifier si la clé 'id_user' existe dans $session
+    if (!isset($session['id_user'])) {
+        return false; // Ou une autre gestion d'erreur
+    }
+
     $query = $dbCo->prepare(
         'SELECT id_user, username, firstname, lastname, email, phone, client, boss, id_company
         FROM users
         WHERE id_user = :id;'
     );
 
+    // Préparer les valeurs pour la requête
     $bindValues = [
         'id' => intval($session['id_user'])
     ];
 
+    // Exécuter la requête
     $query->execute($bindValues);
 
-    $userData = $query->fetch();
+    // Récupérer les données utilisateur
+    $userData = $query->fetch(PDO::FETCH_ASSOC);
 
     return $userData;
 }
@@ -151,6 +159,10 @@ function getDatasAsHTMLOptions(array $datas, string $placeholder, string $id, st
  */
 function getCompanyCampaigns(PDO $dbCo, array $session): array
 {
+    if (!isset($session['client'], $session['boss'], $session['id_company'], $session['id_user'])) {
+        return [];
+    }
+
     if (isset($session['client']) && $session['client'] === 0 && $session['boss'] === 1) {
         // Si l'utilisateur est le gérant de l'entreprise Toile de Com.
         $queryCampaigns = $dbCo->prepare(
@@ -172,8 +184,8 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
         );
         $bindValues = [
             'id' => intval($session['id_company']),
-            'id_user' => intval($session['id_user'])
         ];
+
         $queryCampaigns->execute($bindValues);
 
         $campaignDatas = $queryCampaigns->fetchAll();
@@ -192,6 +204,7 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
         $queryCampaigns->execute($bindValues);
         $campaignDatas = $queryCampaigns->fetchAll();
     }
+    
     return $campaignDatas;
 }
 
@@ -377,7 +390,8 @@ function calculateRemainingBudget(PDO $dbCo, array $campaigns): string
 
 /**
  * Get brands that were spotlighted during a campaign. 
- * If user is a client, id_company is taken from $_SESSION whereas id_company is taken from $campaigns if user is from Toile de Com.
+ * If the user is a client, id_company is taken from $_SESSION; 
+ * otherwise, id_company is taken from $campaigns if the user is from Toile de Com.
  *
  * @param PDO $dbCo - Connection to database.
  * @param array $session - Superglobal $_SESSION
@@ -386,8 +400,11 @@ function calculateRemainingBudget(PDO $dbCo, array $campaigns): string
  */
 function getCampaignsBrands(PDO $dbCo, array $session, array $campaigns): array
 {
+    $brands = []; // Initialisation du tableau de retour
+
     if (isset($session['id_company']) && intval($session['id_company'])) {
         if ($session['client'] === 1) {
+            // Requête pour les clients, en utilisant id_company depuis la session
             $queryBrands = $dbCo->prepare(
                 'SELECT *
                 FROM brand
@@ -400,19 +417,24 @@ function getCampaignsBrands(PDO $dbCo, array $session, array $campaigns): array
 
             $queryBrands->execute($bindValues);
         } else {
-            $queryBrands = $dbCo->query(
-                'SELECT *
-                FROM brand;)'
+            // Requête pour les utilisateurs de Toile de Com, en utilisant les campagnes
+            // Supposons que vous souhaitez obtenir les marques en fonction des campagnes
+            // Vous pouvez adapter cette requête selon votre logique spécifique
+            $queryBrands = $dbCo->prepare(
+                'SELECT DISTINCT brand.*
+                FROM brand
+                JOIN campaign ON brand.id_company = campaign.id_company
+                WHERE campaign.id_campaign IN (' . implode(',', array_map('intval', array_column($campaigns, 'id_campaign'))) . ');'
             );
+
+            $queryBrands->execute();
         }
 
-
+        // Récupérer les résultats
         $brands = $queryBrands->fetchAll(PDO::FETCH_ASSOC);
-
-        return $brands;
-    } else {
-        return '';
     }
+
+    return $brands; // Retourner un tableau même si aucune marque n'est trouvée
 }
 
 /**

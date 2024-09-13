@@ -45,13 +45,24 @@ checkConnection($_SESSION);
     </nav>
 
     <main class="container container--campaigns container__flex">
+        <div class="notifs">
+            <?php
+            echo getErrorMessage($errors);
+            echo getSuccessMessage($messages);
+            ?>
+        </div>
+
         <h2 class="ttl">
             Bonjour <?= $user['firstname'] ?><br>
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>
 
         <div class="button__section">
-            <a href="new-campaign.php" class="button button--new-campaign">Nouvelle campagne</a>
+            <?php 
+            if(isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+                echo '<a href="new-campaign.php" class="button button--new-campaign">Nouvelle campagne</a>';
+            }
+            ?>
             <button class="button button--filter">Filtres</button>
         </div>
 
@@ -59,10 +70,11 @@ checkConnection($_SESSION);
             <?= getMessageIfNoCampaign($campaigns) ?>
             <?= getCampaignTemplate($dbCo, $campaigns, $brands, $_SESSION) ?>
 
-            <?php 
+            <?php
+            // var_dump($_SESSION);
             // var_dump($brands);
             // var_dump($campaigns);
-             ?>
+            ?>
 
         </section>
     </main>

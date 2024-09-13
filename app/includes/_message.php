@@ -3,7 +3,8 @@
 $messages = [
     'update_ok_pwd' => 'Mot de passe mis à jour !',
     'update_ok_email' => 'Email mis à jour!',
-    'update_ok_phone' => 'Numéro de téléphone mis à jour!'
+    'update_ok_phone' => 'Numéro de téléphone mis à jour!',
+    'campaign_created_ok' => 'Nouvelle campagne créée.'
 ];
 
 $errors = [
@@ -17,7 +18,13 @@ $errors = [
     'invalid_email' => 'L\'adresse email est invalide.',
     'update_ko_email' => 'Échec de la mise à jour de l\'email.',
     'invalid_phone' => 'Le numéro de téléphone est invalide.',
-    'update_ko_phone' => 'Échec de la mise à jour du numéro de téléphone.'
+    'update_ko_phone' => 'Échec de la mise à jour du numéro de téléphone.',
+    'campaign_name_ko' => 'Veuillez saisir un nom de campagne valide.',
+    'campaign_company_ko' => 'Veuillez sélectionner une entreprise.',
+    'campaign_interlocutor_ko' => 'Veuillez sélectionner un interlocuteur.',
+    'budget_ko' => 'Veuillez saisir un budget valide, en chiffre uniquement et sans espaces.',
+    'campaign_target_ko' => 'Veuillez sélectionner un objectif de campagne.',
+    'campaign_created_ko' => 'Échec de la création de la campagne.'
 ];
 
 
@@ -66,7 +73,7 @@ function addMessage(string $message): void
  *
  * @return string The error message.
  */
-function getErrorMessage(array $errors) :string
+function getErrorMessage(array $errors): string
 {
     if (isset($_SESSION['error'])) {
         $e = ($_SESSION['error']);
@@ -81,7 +88,7 @@ function getErrorMessage(array $errors) :string
  *
  * @return string The success message.
  */
-function getSuccessMessage(array $messages) :string
+function getSuccessMessage(array $messages): string
 {
     if (isset($_SESSION['msg'])) {
         $m = ($_SESSION['msg']);

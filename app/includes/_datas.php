@@ -1,4 +1,7 @@
 <?php
+require_once '_config.php';
+require_once '_database.php';
+require_once '_functions.php';
 
 $user = fetchUserDatas($dbCo, $_SESSION);
 

@@ -5,10 +5,14 @@ session_start();
 require_once "includes/_config.php";
 require_once "includes/_database.php";
 
+// DATAS
+require_once "includes/_datas.php";
+
 // FUNCTIONS
 require_once "includes/_functions.php";
 require_once "includes/_security.php";
 require_once "includes/_message.php";
+
 
 header('Content-type:application/json');
 

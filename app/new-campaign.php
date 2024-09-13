@@ -45,6 +45,12 @@ checkConnection($_SESSION);
     </nav>
 
     <main class="container container--campaigns container__flex">
+        <div class="notifs">
+            <?php
+            echo getErrorMessage($errors);
+            echo getSuccessMessage($messages);
+            ?>
+        </div>
 
         <div class="card">
             <h2 class="ttl" id="new-campaign-ttl">Nouvelle Campagne</h2>
@@ -57,15 +63,24 @@ checkConnection($_SESSION);
                             <input class="form__input" type="text" name="campaign_name" id="campaign_name" placeholder="Soldes d'Hiver" required aria-label="Saississez le nom de la nouvelle campagne">
                         </li>
                         <li class="form__itm form__itm--app">
-                            <label class="form__label" for="company" aria-label="Sélectionner l'entreprise concernée">Entreprise</label>
-                            <select class="form__input form__input--select" type="text" name="company" id="company" required aria-label="Sélectionner l'entreprise lançant une nouvelle campagne">
+                            <label class="form__label" for="campaign_target">Objectif de la campagne</label>
+                            <select class="form__input form__input--select" type="text" name="campaign_target" id="campaign_target" required aria-label="Sélectionner l'objectif de la campagne de communication">
+                                <option class="form__input__placeholder" value="">- Sélectionnez un objectif -</option>
+                                <option value="1">Faire connaître</option>
+                                <option value="2">Faire aimer</option>
+                                <option value="3">Faire agir</option>
+                            </select>
+                        </li>
+                        <li class="form__itm form__itm--app">
+                            <label class="form__label" for="campaign_company" aria-label="Sélectionner l'entreprise concernée">Entreprise</label>
+                            <select class="form__input form__input--select" type="text" name="campaign_company" id="campaign_company" required aria-label="Sélectionner l'entreprise lançant une nouvelle campagne">
                                 <?= getDatasAsHTMLOptions($companies, 'Sélectionner une entreprise', 'id_company', 'company_name'); ?>
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">
-                            <label class="form__label" for="interlocutor">Interlocuteur</label>
-                            <select class="form__input form__input--select" type="text" name="interlocutor" id="interlocutor" required aria-label="Sélectionner l'interlocuteur au sein de l'entreprise">
-
+                            <label class="form__label" for="campaign_interlocutor">Interlocuteur</label>
+                            <select class="form__input form__input--select" type="text" name="campaign_interlocutor" id="campaign_interlocutor" required aria-label="Sélectionner l'interlocuteur au sein de l'entreprise">
+                                <!-- Les options sont automatiquement générées en javascript quand l'entreprise est sélectionnée. -->
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">
