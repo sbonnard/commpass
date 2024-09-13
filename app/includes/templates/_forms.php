@@ -97,7 +97,7 @@ function getModifyPwdForm(): string
                 <input class="form__input" type="password" name="password" id="password" placeholder="•••••••••••" required aria-label="Saississez votre nouveau mot de passe">
             </li>
             <li class="form__itm form__itm--app">
-                <label class="form__label" for="password">Confirmer mot de passe</label>
+                <label class="form__label" for="password-confirm">Confirmer mot de passe</label>
                 <input class="form__input" type="password" name="password-confirm" id="password-confirm" placeholder="•••••••••••" required aria-label="Confirmer votre nouveau mot de passe">
             </li>
             <input class="button button--confirm" type="submit" value="Confirmer" aria-label="Confirmer la modification du mot de passe">

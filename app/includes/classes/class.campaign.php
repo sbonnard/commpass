@@ -258,3 +258,34 @@ function getCampaignsBrands(PDO $dbCo, array $session, array $campaigns): array
 
     return $brands; // Retourner un tableau même si aucune marque n'est trouvée
 }
+
+
+function filterCampaigns(PDO $dbCo, array $campaigns)
+{
+    if (!isset($_POST['date-from'], $_POST['date-to'])) {
+        addError('date_ko');
+        redirectTo();
+        exit;
+    }
+
+    $dateFrom = sanitizeInput($_POST['date-from']);
+    $dateTo = sanitizeInput($_POST['date-to']);
+
+    $queryFilter = $dbCo->prepare(
+        'SELECT * 
+        FROM campaigns 
+        WHERE date 
+        BETWEEN :dateFrom AND :dateTo;'
+    );
+
+    $bindValues = [
+        'dateFrom' => $dateFrom,
+        'dateTo' => $dateTo
+    ];
+
+    $queryFilter->execute($bindValues);
+
+    $campaigns = $queryFilter->fetchAll();
+
+    echo json_encode($campaigns);
+}

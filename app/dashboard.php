@@ -75,16 +75,16 @@ checkConnection($_SESSION);
 
         <div class="hidden" id="filter-container">
             <form class="card__section form hidden" action="api.php" method="post" id="filter-form">
-                <ul>
+                <ul class="form__lst form__lst--app">
                     <li>
-                        <input class="form__input form__input--from" type="date" name="" id="">
+                        <input class="form__input form__input--from" type="date" name="date-from" id="date-from">
                     </li>
                     <li>
-                        <input class="form__input form__input--to" type="date" name="" id="">
+                        <input class="form__input form__input--to" type="date" name="date-to" id="date-to">
                     </li>
-                    <input class="button button--new-campaign" type="submit" value="Créer la campagne" aria-label="Valider la création de la nouvelle campagne">
+                    <input class="button button--filter button--filter--primary" type="submit" value="Filtrer" aria-label="Valider la création de la nouvelle campagne">
                     <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                    <input type="hidden" name="action" value="create-campaign">
+                    <input type="hidden" name="action" value="filter-campaigns">
                 </ul>
             </form>
         </div>

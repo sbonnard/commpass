@@ -24,7 +24,8 @@ $errors = [
     'campaign_interlocutor_ko' => 'Veuillez sélectionner un interlocuteur.',
     'budget_ko' => 'Veuillez saisir un budget valide, en chiffre uniquement et sans espaces.',
     'campaign_target_ko' => 'Veuillez sélectionner un objectif de campagne.',
-    'campaign_created_ko' => 'Échec de la création de la campagne.'
+    'campaign_created_ko' => 'Échec de la création de la campagne.',
+    'date_ko' => 'Veuillez saisir une date valide.'
 ];
 
 
