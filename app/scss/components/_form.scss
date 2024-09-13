@@ -87,8 +87,18 @@
             appearance: none;
         }
 
-        &__placeholder {
-            color: $shadow;
+        &--from {
+            padding-left: 4rem;
+            background-image: url(../../img/input-from.svg);
         }
+
+        &--to {
+            padding-left: 4rem;
+            background-image: url(../../img/input-to.svg);
+        }
+    }
+
+    &__placeholder {
+        color: $shadow;
     }
 }

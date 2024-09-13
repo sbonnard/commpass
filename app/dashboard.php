@@ -65,12 +65,28 @@ checkConnection($_SESSION);
         </h2>
 
         <div class="button__section">
-            <?php 
-            if(isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                echo '<a href="new-campaign.php" class="button button--new-campaign">Nouvelle campagne</a>';
+            <?php
+            if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+                echo '<a href="new-campaign.php" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>';
             }
             ?>
-            <button class="button button--filter">Filtres</button>
+            <button class="button button--filter" id="filter-button" aria-label="Ouvre un formulaire de filtres">Filtres</button>
+        </div>
+
+        <div class="hidden" id="filter-container">
+            <form class="card__section form hidden" action="api.php" method="post" id="filter-form">
+                <ul>
+                    <li>
+                        <input class="form__input form__input--from" type="date" name="" id="">
+                    </li>
+                    <li>
+                        <input class="form__input form__input--to" type="date" name="" id="">
+                    </li>
+                    <input class="button button--new-campaign" type="submit" value="Créer la campagne" aria-label="Valider la création de la nouvelle campagne">
+                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                    <input type="hidden" name="action" value="create-campaign">
+                </ul>
+            </form>
         </div>
 
         <section class="card campaign">
@@ -92,5 +108,6 @@ checkConnection($_SESSION);
 </body>
 
 <script type="module" src="js/script.js"></script>
+<script type="module" src="js/filter.js"></script>
 
 </html>
