@@ -21,7 +21,8 @@ function redirectTo(?string $url = null): void
     exit;
 }
 
-function fetchUserDatas(PDO $dbCo, array $session): array {
+function fetchUserDatas(PDO $dbCo, array $session): array
+{
     $query = $dbCo->prepare(
         'SELECT id_user, username, firstname, lastname, email, phone, client, boss, id_company
         FROM users
@@ -37,6 +38,59 @@ function fetchUserDatas(PDO $dbCo, array $session): array {
     $userData = $query->fetch();
 
     return $userData;
+}
+
+
+/**
+ * Fetch all users from the database.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @return array - User datas.
+ */
+function fetchAllUsers(PDO $dbCo): array
+{
+    $query = $dbCo->prepare(
+        'SELECT id_user, username, firstname, lastname, email, phone, client, boss, id_company
+        FROM users;'
+    );
+
+    $query->execute();
+
+    $userData = $query->fetchAll();
+
+    return $userData;
+}
+
+
+/**
+ * Fetch all companies from the database.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $session - Superglobal $_SESSION.
+ * @return array - Company datas.
+ */
+function fetchAllCompanies(PDO $dbCo, array $session): array
+{
+    $companyDatas = [];
+
+    // The user only has access to datas if he is not a client.
+    if (isset($session['client']) && $session['client'] === 0) {
+        try {
+            $query = $dbCo->prepare(
+                'SELECT id_company, company_name
+                FROM company;'
+            );
+
+            $query->execute();
+
+            $companyDatas = $query->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Erreur lors de la récupération des entreprises : " . $e->getMessage());
+            return [];
+        }
+    }
+
+    return $companyDatas;
 }
 
 /**
@@ -65,6 +119,27 @@ function getCompanyName(PDO $dbCo, array $session): string
     return implode($companyDatas);
 };
 
+/**
+ * Get options for whatever datas you set as parameters.
+ *
+ * @param array $datas - The array containing the datas.
+ * @param string $id - The id field in the array.
+ * @param string $dataName - The name of the the interlocutor or company.
+ * @return string - The HTML options for the select field.
+ */
+function getDatasAsHTMLOptions(array $datas, string $placeholder, string $id, string $dataName): string
+{
+    $htmlOptions = '<option class="form__input__placeholder" value="">- ' . $placeholder . ' -</option>';
+
+    foreach ($datas as $data) {
+        $htmlOptions .=
+            '<option value="' . htmlspecialchars($data[$id], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($data[$dataName], ENT_QUOTES, 'UTF-8') .
+            '</option>';
+    }
+
+    return $htmlOptions;
+}
+
 
 /**
  * Get communication campaigns considering your status of client or not, your company and if you are the inrlocutor or not.
@@ -86,7 +161,6 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
         $queryCampaigns->execute();
 
         $campaignDatas = $queryCampaigns->fetchAll();
-
     } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
         // Si l'utilisateur est un client mais qu'il est aussi le gérant de l'entreprise cliente.
         $queryCampaigns = $dbCo->prepare(

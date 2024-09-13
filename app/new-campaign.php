@@ -59,7 +59,7 @@ checkConnection($_SESSION);
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="company" aria-label="Sélectionner l'entreprise concernée">Entreprise</label>
                             <select class="form__input form__input--select" type="text" name="company" id="company" required aria-label="Sélectionner l'entreprise lançant une nouvelle campagne">
-
+                                <?= getDatasAsHTMLOptions($companies, 'Sélectionner une entreprise', 'id_company', 'company_name'); ?>
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">
@@ -88,5 +88,6 @@ checkConnection($_SESSION);
 </body>
 
 <script type="module" src="js/script.js"></script>
+<script type="module" src="js/ajax.js"></script>
 
 </html>
