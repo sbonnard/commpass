@@ -19,8 +19,8 @@ function fetchLogInForm(array $session): string
 
         <ul class="form__lst">
             <li class="form__itm">
-                <label for="username" aria-label="Saississez votre nom d\'ilisateur">Nom d\'utilisateur</label>
-                <input class="form__input" type="text" name="username" id="username" placeholder="alemaitre78" required>
+                <label for="username">Nom d\'utilisateur</label>
+                <input class="form__input" type="text" name="username" id="username" placeholder="alemaitre78" required aria-label="Saississez votre nom d\'ilisateur">
             </li>
             <li class="form__itm">
                 <label for="password" aria-label="Saississez votre mot de passe">Mot de passe</label>
@@ -47,10 +47,10 @@ function getModifyEmailForm(): string
 {
     return '
     <form class="form hidden" action="actions.php" method="post" id="email_form" aria-label="Formulaire de modification de l\'email utilisateur">
-        <ul class="form__lst form__lst--profil">
-            <li class="form__itm form__itm--profil">
-                <label class="form__label" for="email" aria-label="Saississez votre nouvel email">Nouvel email</label>
-                <input class="form__input" type="text" name="email" id="email" placeholder="mon-email@exemple.fr" required>
+        <ul class="form__lst form__lst--app">
+            <li class="form__itm form__itm--app">
+                <label class="form__label" for="email">Nouvel email</label>
+                <input class="form__input" type="text" name="email" id="email" placeholder="mon-email@exemple.fr" required aria-label="Saississez votre nouvel email">
             </li>
             <input class="button button--confirm" type="submit" value="Confirmer" aria-label="Confirmer la modification de l\'email">
             <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
@@ -69,10 +69,10 @@ function getModifyPhoneForm(): string
 {
     return '
     <form class="form hidden" action="actions.php" method="post" id="phone_form" aria-label="Formulaire de modification du numéro de téléphone">
-        <ul class="form__lst form__lst--profil">
-            <li class="form__itm form__itm--profil">
-                <label class="form__label" for="phone" aria-label="Saississez votre nouvel phone">Modifier le numéro de téléphone</label>
-                <input class="form__input" type="tel" name="phone" id="phone" placeholder="0607080910" required>
+        <ul class="form__lst form__lst--app">
+            <li class="form__itm form__itm--app">
+                <label class="form__label" for="phone">Modifier le numéro de téléphone</label>
+                <input class="form__input" type="tel" name="phone" id="phone" placeholder="0607080910" required aria-label="Saississez votre nouvel phone">
             </li>
             <input class="button button--confirm" type="submit" value="Confirmer" aria-label="Confirmer la modification du numéro de téléphone">
             <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
@@ -91,14 +91,14 @@ function getModifyPwdForm(): string
 {
     return '
     <form class="form" action="actions.php" method="post" id="pwd_form" aria-label="Formulaire de modification du mot de passe">
-        <ul class="form__lst form__lst--profil">
-            <li class="form__itm form__itm--profil">
-                <label class="form__label" for="password" aria-label="Saississez votre nouveau mot de passe">Nouveau mot de passe</label>
-                <input class="form__input" type="password" name="password" id="password" placeholder="•••••••••••" required>
+        <ul class="form__lst form__lst--app">
+            <li class="form__itm form__itm--app">
+                <label class="form__label" for="password">Nouveau mot de passe</label>
+                <input class="form__input" type="password" name="password" id="password" placeholder="•••••••••••" required aria-label="Saississez votre nouveau mot de passe">
             </li>
-            <li class="form__itm form__itm--profil">
-                <label class="form__label" for="password" aria-label="Confirmer votre nouveau mot de passe">Confirmer mot de passe</label>
-                <input class="form__input" type="password" name="password-confirm" id="password-confirm" placeholder="•••••••••••" required>
+            <li class="form__itm form__itm--app">
+                <label class="form__label" for="password">Confirmer mot de passe</label>
+                <input class="form__input" type="password" name="password-confirm" id="password-confirm" placeholder="•••••••••••" required aria-label="Confirmer votre nouveau mot de passe">
             </li>
             <input class="button button--confirm" type="submit" value="Confirmer" aria-label="Confirmer la modification du mot de passe">
             <input type="hidden" name="token" value="' . $_SESSION['token'] . '">

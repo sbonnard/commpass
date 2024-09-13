@@ -1,11 +1,19 @@
 <?php
 session_start();
 
+//CONFIG AND CONNECTION
 require_once "includes/_config.php";
 require_once "includes/_database.php";
+
+// FUNCTIONS
 require_once "includes/_functions.php";
 require_once "includes/_security.php";
 require_once "includes/_message.php";
+
+// DATAS
+require_once "includes/_datas.php";
+
+// TEMPLATES
 require_once "includes/templates/_head.php";
 require_once "includes/templates/_header.php";
 require_once "includes/templates/_forms.php";
@@ -15,12 +23,6 @@ require_once "includes/templates/_nav.php";
 generateToken();
 
 checkConnection($_SESSION);
-
-$user = fetchUserDatas($dbCo, $_SESSION);
-
-$campaigns = getCompanyCampaigns($dbCo, $_SESSION);
-
-$brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);
 ?>
 
 <!DOCTYPE html>

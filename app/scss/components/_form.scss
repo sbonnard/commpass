@@ -22,7 +22,7 @@
             }
         }
 
-        &--profil {
+        &--app {
             flex-direction: column;
             align-items: center;
             gap: 2rem;
@@ -34,7 +34,7 @@
         flex-direction: column;
         gap: 0.5rem;
 
-        &--profil {
+        &--app {
             width: 100%;
         }
     }
@@ -71,6 +71,20 @@
         &--password {
             display: flex;
             position: relative;
+        }
+
+        &--select {
+            background-image: url(../../img/select-background.svg);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: right center;
+            -webkit-appearance-: none;
+            appearance: none;
+        }
+
+        &--number {
+            -webkit-appearance-: none;
+            appearance: none;
         }
     }
 }

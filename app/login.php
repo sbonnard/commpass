@@ -1,13 +1,16 @@
 <?php
 session_start();
 
-require_once 'includes/_config.php';
-require_once 'includes/_functions.php';
-require_once 'includes/_database.php';
-require_once 'includes/_message.php';
-require_once 'includes/_security.php';
+//CONFIG AND CONNECTION
+require_once "includes/_config.php";
+require_once "includes/_database.php";
 
-// header('Content-type:application/json');
+// FUNCTIONS
+require_once "includes/_functions.php";
+require_once "includes/_security.php";
+require_once "includes/_message.php";
+
+header('Content-type:application/json');
 
 
 if (!isset($_POST['action'])) {

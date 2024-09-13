@@ -1,25 +1,28 @@
 <?php
 session_start();
 
+//CONFIG AND CONNECTION
 require_once "includes/_config.php";
 require_once "includes/_database.php";
+
+// FUNCTIONS
 require_once "includes/_functions.php";
 require_once "includes/_security.php";
 require_once "includes/_message.php";
+
+// DATAS
+require_once "includes/_datas.php";
+
+// TEMPLATES
 require_once "includes/templates/_head.php";
 require_once "includes/templates/_header.php";
+require_once "includes/templates/_forms.php";
 require_once "includes/templates/_footer.php";
 require_once "includes/templates/_nav.php";
 
 generateToken();
 
 checkConnection($_SESSION);
-
-$user = fetchUserDatas($dbCo, $_SESSION);
-
-$campaigns = getCompanyCampaigns($dbCo, $_SESSION);
-
-$brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +51,7 @@ $brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);
         </h2>
 
         <div class="button__section">
-            <button class="button button--new-campaign">Nouvelle campagne</button>
+            <a href="new-campaign.php" class="button button--new-campaign">Nouvelle campagne</a>
             <button class="button button--filter">Filtres</button>
         </div>
 
@@ -70,6 +73,5 @@ $brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);
 </body>
 
 <script type="module" src="js/script.js"></script>
-<script type="module" src="js/password.js"></script>
 
 </html>
