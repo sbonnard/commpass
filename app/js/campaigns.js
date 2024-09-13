@@ -1,3 +1,5 @@
+// Animate campaign cards on hover //
+
 let campaignsCards = document.querySelectorAll('[data-campaign]');
 
 console.log(campaignsCards);
