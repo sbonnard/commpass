@@ -13,7 +13,8 @@ if (isset($_POST['id_company'])) {
     $query = $dbCo->prepare(
         'SELECT id_user, firstname, lastname
         FROM users
-        WHERE id_company = :idCompany'
+        WHERE id_company = :idCompany
+        ORDER BY firstname;'
     );
     $query->execute(['idCompany' => $idCompany]);
 

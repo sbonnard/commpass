@@ -16,6 +16,8 @@ document.getElementById('company').addEventListener('change', function() {
                 var option = document.createElement('option');
                 option.value = user.id_user;
                 option.textContent = user.firstname;
+                option.textContent += ' ';
+                option.textContent += user.lastname;
                 select.appendChild(option);
             });
         }

@@ -78,7 +78,8 @@ function fetchAllCompanies(PDO $dbCo, array $session): array
         try {
             $query = $dbCo->prepare(
                 'SELECT id_company, company_name
-                FROM company;'
+                FROM company
+                ORDER BY company_name;'
             );
 
             $query->execute();
