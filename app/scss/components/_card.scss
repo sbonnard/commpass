@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    transition: transform 5s ease-in-out;
 
     &__section {
         display: flex;
@@ -12,5 +13,29 @@
         border-radius: 0.75rem;
         gap: 0.625rem;
         padding: 1rem 0.625rem;
+    }
+
+    &--over {
+        /* Safari and Chrome */
+        -webkit-transition: all 0.8s ease;
+        /* Firefox */
+        -moz-transition: all 0.8s ease;
+        /* IE 9 */
+        -ms-transition: all 0.8s ease;
+        /* Opera */
+        -o-transition: all 0.8s ease;
+        transition: all 0.8s ease;
+
+        &:hover {
+            /* Safari and Chrome */
+            -webkit-transform: scale(1.10);
+            /* Firefox */
+            -moz-transform: scale(1.10);
+            /* IE 9 */
+            -ms-transform: scale(1.10);
+            /* Opera */
+            -o-transform: scale(1.10);
+            transform: scale(1.10);
+        }
     }
 }

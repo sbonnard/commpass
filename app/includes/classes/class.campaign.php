@@ -75,7 +75,7 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $brands, array $
     foreach ($campaigns as $campaign) {
         $campaignList .= '
         <a href="?campaign=' . $campaign['id_campaign'] . '">
-            <div class="card__section">
+            <div class="card__section" data-campaign="">
                 <div class="campaign__ttl">
                     <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>'
             . getCompanyNameIfTDC($campaign, $session) .

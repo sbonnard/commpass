@@ -108,6 +108,7 @@ checkConnection($_SESSION);
 </body>
 
 <script type="module" src="js/script.js"></script>
+<script type="module" src="js/campaigns.js"></script>
 <script type="module" src="js/filter.js"></script>
 
 </html>

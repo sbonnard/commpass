@@ -1,6 +1,6 @@
 <?php
 
-'<div class="card__section">
+'<div class="card__section" data-campaign="">
 <div class="campaign__ttl">
     <h3 class="ttl ttl--small">Campagne Truc</h3>
     <!-- H4 UNIQUEMENT POUR TOILE DE COM  -->
