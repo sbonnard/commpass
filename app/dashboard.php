@@ -30,6 +30,22 @@ require_once "includes/templates/_nav.php";
 generateToken();
 
 checkConnection($_SESSION);
+
+$campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
+
+$chartData = [];
+foreach ($campaignResults as $campaignData) {
+    foreach ($campaignData as $data) {
+        $campaignId = $data['id_campaign'];
+        if (!isset($chartData[$campaignId])) {
+            $chartData[$campaignId] = [];
+        }
+        $chartData[$campaignId][] = [$data['brand_name'], $data['total_spent']];
+    }
+}
+
+// Conversion des données en format JSON pour l'utiliser en JavaScript
+$jsonChartData = json_encode($chartData);
 ?>
 
 <!DOCTYPE html>
@@ -111,5 +127,33 @@ checkConnection($_SESSION);
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/campaigns.js"></script>
 <script type="module" src="js/filter.js"></script>
+<script>
+    // Récupération des données PHP
+    var chartData = <?php echo json_encode($jsonChartData); ?>;
+
+    // Fonction pour générer les graphiques
+    function generateCharts() {
+        // Boucle sur chaque graphique
+        document.querySelectorAll('.chart').forEach(function(chartElement) {
+            var campaignId = chartElement.id.split('-')[1];
+            var data = chartData[campaignId];
+
+            // Génération du graphique
+            c3.generate({
+                bindto: '#' + chartElement.id,
+                data: {
+                    columns: data,
+                    type: 'donut'
+                },
+                donut: {
+                    title: "Graphique " + campaignId
+                }
+            });
+        });
+    }
+
+    // Appelle la fonction pour générer les graphiques
+    generateCharts();
+</script>
 
 </html>

@@ -30,6 +30,20 @@ require_once "includes/templates/_nav.php";
 generateToken();
 
 checkConnection($_SESSION);
+
+if (!isset($_GET['myc'])) {
+    header('Location: dashboard.php');
+}
+
+$campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
+$brandsSpendings = mergeResults($campaignResults);
+
+$chartData = [];
+foreach ($brandsSpendings as $row) {
+    $chartData[] = [$row['brand_name'], floatval($row['total_spent']), $row['legend_colour_hex']];
+}
+
+$jsonData = json_encode($chartData);
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +80,7 @@ checkConnection($_SESSION);
 
         <div class="card">
             <section class="card__section">
-                <p class="ttl--smaller">Campagne : <?= $selectedCampaign['campaign_name'] ?></p>
+                <p class="ttl--smaller">Campagne : <?= $selectedCampaign['campaign_name'] ?> - <?= $selectedCampaign['company_name']; ?></p>
                 <p class="campaign__interlocutor">Interlocuteur : <?= $selectedCampaign['firstname'] . ' ' . $selectedCampaign['lastname'] ?></p>
             </section>
         </div>
@@ -92,10 +106,6 @@ checkConnection($_SESSION);
         </div>
 
         <h2 class="ttl">Données globales</h2>
-
-        <?php
-        // var_dump(getMonthlyCampaignOperations($dbCo, $_GET, '2024-06'));
-        ?>
 
         <div class="card">
             <section class="card__section card__section--vignettes">
@@ -128,28 +138,22 @@ checkConnection($_SESSION);
 
             <div class="card">
                 <h2 class="ttl">Répartition du budget dépensé<br> par marque</h2>
+                <!-- GRAPHIQUES DONUT  -->
                 <section class="card__section">
-                    <img src="img/chart.webp" alt="Graphique camembert récapitulatif de la campagne <?= $selectedCampaign['campaign_name'] ?>">
-                    <ul class="campaign__legend-section">
-                        <?= getBrandsAsList($brands) ?>
-                        <li class="campaign__legend">Toutes les marques</li>
-                    </ul>
+                    <div id="chart"></div>
                 </section>
             </div>
             <div class="card">
                 <h2 class="ttl">Budget attribué<br> par marque</h2>
+                <!-- TABLEAU DES DÉPENSES PAR MARQUES -->
                 <section class="card__section">
-                    <?php
-                    $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
-
-                    $brandsSpendings = mergeResults($campaignResults);
-
-                    echo generateTableFromDatas($brandsSpendings);
-                    ?>
+                    <?= generateTableFromDatas($brandsSpendings); ?>
                 </section>
             </div>
         </div>
         <div class="card">
+            <h2 class="ttl">Opérations</h2>
+            <!-- OPÉRATIONS DE LA CAMPAGNE DE COMMUNICATION  -->
             <section class="card__section card__section--operations">
                 <ul>
                     <?= getCampaignOperationsAsList($campaignOperations) ?>
@@ -166,5 +170,10 @@ checkConnection($_SESSION);
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/campaigns.js"></script>
 <script type="module" src="js/filter.js"></script>
+<script>
+    // Récupération des données PHP
+    var chartData = <?php echo $jsonData; ?>;
+</script>
+<script type="module" src="js/charts.js"></script>
 
 </html>

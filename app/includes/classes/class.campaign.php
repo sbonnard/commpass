@@ -24,7 +24,6 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
         );
 
         $queryCampaigns->execute();
-
     } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
         // Si l'utilisateur est un client mais qu'il est aussi le gérant de l'entreprise cliente.
         $queryCampaigns = $dbCo->prepare(
@@ -39,7 +38,6 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
         ];
 
         $queryCampaigns->execute($bindValues);
-
     } else {
         // Si l'utilisateur est un client mais qu'il n'est pas gérant de l'entreprise. Il est donc simple interlocuteur sur ses campagnes.
         $queryCampaigns = $dbCo->prepare(
@@ -55,7 +53,7 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
         $queryCampaigns->execute($bindValues);
     }
     $campaignDatas = $queryCampaigns->fetchAll(PDO::FETCH_ASSOC);
-    
+
     return $campaignDatas;
 }
 
@@ -72,16 +70,19 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $brands, array $
 {
     $campaignList = '';
 
+
     foreach ($campaigns as $campaign) {
+        $campaignId = $campaign['id_campaign'];
+
         $campaignList .= '
-        <a href="campaign.php?myc=' . $campaign['id_campaign'] . '">
+        <a href="campaign.php?myc=' . $campaignId . '">
             <div class="card__section" data-campaign="">
                 <div class="campaign__ttl">
                     <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>'
             . getCompanyNameIfTDC($campaign, $session) .
             '</div>
                 <div class="campaign__stats">
-                    <img src="img/chart.webp" alt="Graphique camembert récapitulatif de la campagne ' . $campaign['campaign_name'] . '">
+                    <div id="chart-' . $campaignId . '"></div>
 
                     <div class="vignettes-section">
                         <div class="vignette vignette--primary">
@@ -240,7 +241,6 @@ function getCampaignsBrands(PDO $dbCo, array $session, array $campaigns): array
 
             $queryBrands->execute($bindValues);
             $brands = $queryBrands->fetchAll(PDO::FETCH_ASSOC);
-
         } else {
             // Si l'utilisateur n'est pas un client, gérer les campagnes
             if (!empty($campaigns) && isset($campaigns[0]['id_campaign'])) {
@@ -299,9 +299,10 @@ function getOneCampaignDatas(PDO $dbCo, array $get): array
 
     if (isset($get['myc'])) {
         $queryOneCampaign = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, date, budget, c.id_user, firstname, lastname
+            'SELECT id_campaign, campaign_name, date, budget, c.id_user, firstname, lastname, co.id_company, company_name
             FROM campaign c
                 JOIN users u ON c.id_user = u.id_user
+                JOIN company co ON c.id_company = co.id_company
             WHERE id_campaign = :id_campaign;'
         );
 
@@ -379,23 +380,31 @@ function getCampaignOperationsAsList(array $operations): string
  * @param array $campaigns - An array containing all campaigns.
  * @return array - An array containing all spendings by brand, and by campaign.
  */
-function getSpendingByBrandByCampaign(PDO $dbCo, array $campaigns, array $get): array {
+function getSpendingByBrandByCampaign(PDO $dbCo, array $campaigns, array $get): array
+{
     $results = [];
-    
+
     foreach ($campaigns as $campaign) {
         if (isset($campaign['id_campaign'])) {
             $querySpendingByBrand = $dbCo->prepare(
-                'SELECT b.id_brand, brand_name, legend_colour_hex, SUM(o.price) AS total_spent 
+                'SELECT b.id_brand, c.id_campaign, brand_name, legend_colour_hex, SUM(o.price) AS total_spent 
                 FROM brand b 
                     JOIN operation_brand ob ON b.id_brand = ob.id_brand 
-                    JOIN operation o ON ob.id_operation = o.id_operation 
+                    JOIN operation o ON ob.id_operation = o.id_operation
+                    JOIN campaign c ON o.id_campaign = c.id_campaign
                 WHERE o.id_campaign = :id_campaign
                 GROUP BY id_brand;'
             );
 
-            $bindValues = [
-                'id_campaign' => intval($get['myc'])
-            ];
+            if (isset($get['myc']) && intval($get['myc'])) {
+                $bindValues = [
+                    'id_campaign' => intval($get['myc'])
+                ];
+            } else {
+                $bindValues = [
+                    'id_campaign' => intval($campaign['id_campaign'])
+                ];
+            }
 
             $querySpendingByBrand->execute($bindValues);
             $results[] = $querySpendingByBrand->fetchAll(PDO::FETCH_ASSOC);
@@ -403,7 +412,7 @@ function getSpendingByBrandByCampaign(PDO $dbCo, array $campaigns, array $get): 
             $results[] = ['error' => 'id_campaign manquant pour une campagne.'];
         }
     }
-    
+
     return $results;
 }
 
