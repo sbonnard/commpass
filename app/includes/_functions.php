@@ -77,8 +77,8 @@ function sanitizeInput(string $input): string {
  * @param string $yearAndMonth - The year and month to format.
  * @return string - The formatted date string.
  */
-function formatMonthYear(string $yearAndMonth): string {
-    [$year, $month] = explode('-', $yearAndMonth);
+function formatDate(string $yearMonthDay): string {
+    [$year, $month, $day] = explode('-', $yearMonthDay);
 
     $months = [
         '01' => 'Janvier',
@@ -96,5 +96,5 @@ function formatMonthYear(string $yearAndMonth): string {
     ];
 
     $monthName = $months[$month] ?? 'Mois inconnu';
-    return $monthName . ' ' . $year;
+    return $day . ' ' . $monthName . ' ' . $year;
 }

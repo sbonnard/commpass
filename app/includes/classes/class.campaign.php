@@ -22,9 +22,9 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
                 JOIN company USING (id_company)
             ORDER BY date DESC;'
         );
+
         $queryCampaigns->execute();
 
-        $campaignDatas = $queryCampaigns->fetchAll();
     } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
         // Si l'utilisateur est un client mais qu'il est aussi le gérant de l'entreprise cliente.
         $queryCampaigns = $dbCo->prepare(
@@ -33,13 +33,13 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
             WHERE id_company = :id
             ORDER BY date DESC;'
         );
+        
         $bindValues = [
             'id' => intval($session['id_company']),
         ];
 
         $queryCampaigns->execute($bindValues);
 
-        $campaignDatas = $queryCampaigns->fetchAll();
     } else {
         // Si l'utilisateur est un client mais qu'il n'est pas gérant de l'entreprise. Il est donc simple interlocuteur sur ses campagnes.
         $queryCampaigns = $dbCo->prepare(
@@ -53,9 +53,9 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
             'id_user' => intval($session['id_user'])
         ];
         $queryCampaigns->execute($bindValues);
-        $campaignDatas = $queryCampaigns->fetchAll();
     }
-
+    $campaignDatas = $queryCampaigns->fetchAll(PDO::FETCH_ASSOC);
+    
     return $campaignDatas;
 }
 
@@ -226,10 +226,12 @@ function getCampaignsBrands(PDO $dbCo, array $session, array $campaigns): array
 
     if (isset($session['id_company']) && intval($session['id_company'])) {
         if ($session['client'] === 1) {
+            // Si l'utilisateur est un client
             $queryBrands = $dbCo->prepare(
-                'SELECT *
-                FROM brand
-                WHERE id_company = :id_company;'
+                'SELECT DISTINCT b.*
+                FROM brand b
+                WHERE id_company = :id_company
+                GROUP BY id_brand;'
             );
 
             $bindValues = [
@@ -237,18 +239,47 @@ function getCampaignsBrands(PDO $dbCo, array $session, array $campaigns): array
             ];
 
             $queryBrands->execute($bindValues);
+            $brands = $queryBrands->fetchAll(PDO::FETCH_ASSOC);
+
         } else {
-            $queryBrands = $dbCo->prepare(
-                'SELECT DISTINCT brand.*
-                FROM brand
-                JOIN campaign ON brand.id_company = campaign.id_company
-                WHERE campaign.id_campaign IN (' . implode(',', array_map('intval', array_column($campaigns, 'id_campaign'))) . ');'
-            );
+            // Si l'utilisateur n'est pas un client, gérer les campagnes
+            if (!empty($campaigns) && isset($campaigns[0]['id_campaign'])) {
+                foreach ($campaigns as $campaign) {
+                    $queryBrands = $dbCo->prepare(
+                        'SELECT DISTINCT b.* 
+                    FROM brand AS b 
+                        LEFT JOIN operation_brand AS ob ON b.id_brand = ob.id_brand 
+                        LEFT JOIN operation AS o ON ob.id_operation = o.id_operation 
+                    WHERE o.id_campaign = :campaignId
+                    GROUP BY id_brand;'
+                    );
 
-            $queryBrands->execute();
+                    $bindValues = [
+                        'campaignId' => intval($campaign['id_campaign'])
+                    ];
+
+                    $queryBrands->execute($bindValues);
+                    $brands = array_merge($brands, $queryBrands->fetchAll(PDO::FETCH_ASSOC));
+                }
+            } elseif (isset($campaigns['id_campaign'])) {
+                // Cas où `$campaigns` n'a qu'un seul élément
+                $queryBrands = $dbCo->prepare(
+                    'SELECT DISTINCT b.* 
+                    FROM brand AS b 
+                        LEFT JOIN operation_brand AS ob ON b.id_brand = ob.id_brand 
+                        LEFT JOIN operation AS o ON ob.id_operation = o.id_operation 
+                    WHERE o.id_campaign = :campaignId
+                    GROUP BY id_brand;'
+                );
+
+                $bindValues = [
+                    'campaignId' => intval($campaigns['id_campaign'])
+                ];
+
+                $queryBrands->execute($bindValues);
+                $brands = $queryBrands->fetchAll(PDO::FETCH_ASSOC);
+            }
         }
-
-        $brands = $queryBrands->fetchAll(PDO::FETCH_ASSOC);
     }
 
     return $brands;
@@ -327,23 +358,24 @@ function getCampaignOperations(PDO $dbCo, array $get): array
 {
     $operations = [];
 
-    $queryOperations = $dbCo->prepare(
-        'SELECT o.id_operation, o.price, o.date_, o.description, b.brand_name, b.id_brand
-        FROM operation o
-            JOIN operation_brand ob ON o.id_operation = ob.id_operation
-            JOIN brand b ON ob.id_brand = b.id_brand
-        WHERE o.id_campaign = :id_campaign
-        GROUP BY o.id_operation, b.id_brand
-        ORDER BY o.date_ DESC;'
-    );
+    if (isset($get['myc']) && intval($get['myc'])) {
 
-    $bindValues = [
-        'id_campaign' => htmlspecialchars($get['myc'])
-    ];
+        $queryOperations = $dbCo->prepare(
+            'SELECT * 
+            FROM operation 
+                JOIN campaign USING (id_campaign)
+            WHERE id_campaign = :id_campaign
+            ORDER BY date_ DESC;'
+        );
 
-    $queryOperations->execute($bindValues);
+        $bindValues = [
+            'id_campaign' => htmlspecialchars($get['myc'])
+        ];
 
-    $operations = $queryOperations->fetchAll(PDO::FETCH_ASSOC);
+        $queryOperations->execute($bindValues);
+
+        $operations = $queryOperations->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     return $operations;
 }
@@ -353,11 +385,15 @@ function getCampaignOperationsAsList(array $operations): string
 {
     $operationsList = '';
 
+    if (empty($operations)) {
+        return '<p class="big-text">Pas d\'opération de communication pour cette campagne.</p>';
+    }
+
     foreach ($operations as $operation) {
         $operationsList .= '
-            <li>' . formatMonthYear($operation['date_']) . ': ' . $operation['description'] . 
-            ' avec la marque ' . $operation['brand_name'] . 
-            ' -> ' . formatPrice(floatval($operation['price']), '€') . ' H.T.</li>';
+            <li><h4>' . formatDate($operation['date_']) . '</h4>
+            <p>' . $operation['description'] .
+            ' -> ' . formatPrice(floatval($operation['price']), '€') . ' H.T.</p></li>';
     }
 
     return $operationsList;
