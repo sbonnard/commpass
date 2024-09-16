@@ -2,7 +2,7 @@
 
 let campaignsCards = document.querySelectorAll('[data-campaign]');
 
-console.log(campaignsCards);
+// console.log(campaignsCards);
 
 campaignsCards.forEach(card => {
     card.addEventListener('mouseover', function() {

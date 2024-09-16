@@ -80,7 +80,10 @@ $jsonData = json_encode($chartData);
 
         <div class="card">
             <section class="card__section">
-                <p class="ttl--smaller">Campagne : <?= $selectedCampaign['campaign_name'] ?> - <?= $selectedCampaign['company_name']; ?></p>
+                <?php if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+                    echo '<p class="campaign__company">' . $selectedCampaign['company_name'] . '</p>';
+                } ?>
+                <p class="ttl--smaller">Campagne : <?= $selectedCampaign['campaign_name'] ?></p>
                 <p class="campaign__interlocutor">Interlocuteur : <?= $selectedCampaign['firstname'] . ' ' . $selectedCampaign['lastname'] ?></p>
             </section>
         </div>
