@@ -31,6 +31,24 @@ generateToken();
 
 checkConnection($_SESSION);
 
+$campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
+
+$chartData = [];
+$chartColors = [];
+foreach ($campaignResults as $campaignData) {
+    foreach ($campaignData as $data) {
+        $campaignId = $data['id_campaign'];
+        if (!isset($chartData[$campaignId])) {
+            $chartData[$campaignId] = [];
+            $chartColors[$campaignId] = [];
+        }
+        $chartData[$campaignId][] = [$data['brand_name'], $data['total_spent']];
+        $chartColors[$campaignId][$data['brand_name']] = $data['legend_colour_hex'];
+    }
+}
+
+$jsonChartData = json_encode($chartData);
+$jsonChartColors = json_encode($chartColors);
 ?>
 
 <!DOCTYPE html>
@@ -112,5 +130,11 @@ checkConnection($_SESSION);
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/campaigns.js"></script>
 <script type="module" src="js/filter.js"></script>
+<script>
+    // Récupération des données PHP
+    var chartData = <?php echo $jsonChartData; ?>;
+    var chartColors = <?php echo $jsonChartColors; ?>;
+</script>
+<script type="module" src="js/dashboard-charts.js"></script>
 
 </html>

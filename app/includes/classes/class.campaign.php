@@ -82,7 +82,7 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $brands, array $
             . getCompanyNameIfTDC($campaign, $session) .
             '</div>
                 <div class="campaign__stats">
-                    <div id="chart-' . $campaignId . '"></div>
+                    <div class="js-chart" id="chart-' . $campaignId . '"></div>
 
                     <div class="vignettes-section">
                         <div class="vignette vignette--primary">
@@ -105,10 +105,6 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $brands, array $
                         </div>
                     </div>
                 </div>
-                <ul class="campaign__legend-section">'
-            . getBrandsAsList($brands) .
-            '<li class="campaign__legend">Toutes les marques</li>
-                </ul>
             </div>
         </a>
         ';
@@ -396,15 +392,9 @@ function getSpendingByBrandByCampaign(PDO $dbCo, array $campaigns, array $get): 
                 GROUP BY id_brand;'
             );
 
-            if (isset($get['myc']) && intval($get['myc'])) {
-                $bindValues = [
-                    'id_campaign' => intval($get['myc'])
-                ];
-            } else {
-                $bindValues = [
-                    'id_campaign' => intval($campaign['id_campaign'])
-                ];
-            }
+            $bindValues = [
+                'id_campaign' => intval($get['myc'] ?? $campaign['id_campaign'])
+            ];
 
             $querySpendingByBrand->execute($bindValues);
             $results[] = $querySpendingByBrand->fetchAll(PDO::FETCH_ASSOC);
