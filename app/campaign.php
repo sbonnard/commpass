@@ -95,6 +95,12 @@ checkConnection($_SESSION);
 
         <?php  
         // var_dump(getMonthlyCampaignOperations($dbCo, $_GET, '2024-06'));
+
+        $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
+
+        $brandsSpendings = mergeResults($campaignResults);
+
+        echo generateTableFromDatas($brandsSpendings);
         ?>
 
         <div class="card">

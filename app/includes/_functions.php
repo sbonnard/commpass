@@ -98,3 +98,57 @@ function formatDate(string $yearMonthDay): string {
     $monthName = $months[$month] ?? 'Mois inconnu';
     return $day . ' ' . $monthName . ' ' . $year;
 }
+
+
+// function generateTableFromDatas (array $brandsSpendings) {
+//     $htmlTable = '<table>';
+    
+//     $htmlTable.= '<thead><tr><th>Marque</th><th>Dépenses</th></tr></thead>';
+//     $htmlTable.= '<tbody>';
+
+//     foreach ($brandsSpendings as $brand) {
+//         $htmlTable.= '<tr>';
+//         $htmlTable.= '<td>'. $brand['brand_name']. '</td>';
+//         $htmlTable.= '<td>'. formatPrice($brand['total_spent'], '€'). '</td>';
+//         $htmlTable.= '</tr>';
+//     }
+
+//     $htmlTable.= '</tbody>';
+//     $htmlTable.= '</table>';
+
+//     return $htmlTable;
+// }
+
+
+function generateTableFromDatas(array $brandsSpendings): string {
+    $htmlTable = '<table>';
+    
+    $htmlTable .= '<thead><tr><th>Marque</th><th>Dépenses</th></tr></thead>';
+    $htmlTable .= '<tbody>';
+
+    foreach ($brandsSpendings as $brand) {
+        $htmlTable .= '<tr>';
+        $htmlTable .= '<td>' . htmlspecialchars($brand['brand_name']) . '</td>';
+        $htmlTable .= '<td>' . formatPrice($brand['total_spent'], '€') . '</td>';
+        $htmlTable .= '</tr>';
+    }
+
+    $htmlTable .= '</tbody>';
+    $htmlTable .= '</table>';
+
+    return $htmlTable;
+}
+
+
+function mergeResults(array $campaignResults): array {
+    $merged = [];
+    foreach ($campaignResults as $result) {
+        if (isset($result['error'])) {
+            // Gérer ou enregistrer l'erreur
+            continue;
+        }
+        $merged = array_merge($merged, $result);
+    }
+    return $merged;
+}
+

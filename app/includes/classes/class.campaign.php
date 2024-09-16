@@ -377,7 +377,7 @@ function getCampaignOperationsAsList(array $operations): string
  * @param array $campaigns - An array containing all campaigns.
  * @return array - An array containing all spendings by brand, and by campaign.
  */
-function getSpendingByBrandByCampaign(PDO $dbCo, array $campaigns): array {
+function getSpendingByBrandByCampaign(PDO $dbCo, array $campaigns, array $get): array {
     $results = [];
     
     foreach ($campaigns as $campaign) {
@@ -392,13 +392,12 @@ function getSpendingByBrandByCampaign(PDO $dbCo, array $campaigns): array {
             );
 
             $bindValues = [
-                'id_campaign' => intval($campaign['id_campaign'])
+                'id_campaign' => intval($get['myc'])
             ];
 
             $querySpendingByBrand->execute($bindValues);
             $results[] = $querySpendingByBrand->fetchAll(PDO::FETCH_ASSOC);
         } else {
-            // Gérer le cas où id_campaign est manquant
             $results[] = ['error' => 'id_campaign manquant pour une campagne.'];
         }
     }
