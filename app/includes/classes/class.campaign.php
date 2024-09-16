@@ -33,7 +33,7 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
             WHERE id_company = :id
             ORDER BY date DESC;'
         );
-        
+
         $bindValues = [
             'id' => intval($session['id_company']),
         ];
@@ -286,36 +286,6 @@ function getCampaignsBrands(PDO $dbCo, array $session, array $campaigns): array
 }
 
 
-function filterCampaigns(PDO $dbCo, array $campaigns)
-{
-    if (!isset($_POST['date-from'], $_POST['date-to'])) {
-        addError('date_ko');
-        redirectTo();
-        exit;
-    }
-
-    $dateFrom = sanitizeInput($_POST['date-from']);
-    $dateTo = sanitizeInput($_POST['date-to']);
-
-    $queryFilter = $dbCo->prepare(
-        'SELECT * 
-        FROM campaigns 
-        WHERE date 
-        BETWEEN :dateFrom AND :dateTo;'
-    );
-
-    $bindValues = [
-        'dateFrom' => $dateFrom,
-        'dateTo' => $dateTo
-    ];
-
-    $queryFilter->execute($bindValues);
-
-    $campaigns = $queryFilter->fetchAll();
-
-    echo json_encode($campaigns);
-}
-
 /**
  * Get datas from a specific campaign.
  *
@@ -397,4 +367,72 @@ function getCampaignOperationsAsList(array $operations): string
     }
 
     return $operationsList;
+}
+
+
+/**
+ * Get all spendings by brand for a specific campaign.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $campaigns - An array containing all campaigns.
+ * @return array - An array containing all spendings by brand, and by campaign.
+ */
+function getSpendingByBrandByCampaign(PDO $dbCo, array $campaigns): array {
+    $results = [];
+    
+    foreach ($campaigns as $campaign) {
+        if (isset($campaign['id_campaign'])) {
+            $querySpendingByBrand = $dbCo->prepare(
+                'SELECT b.id_brand, brand_name, SUM(o.price) AS total_spent 
+                FROM brand b 
+                    JOIN operation_brand ob ON b.id_brand = ob.id_brand 
+                    JOIN operation o ON ob.id_operation = o.id_operation 
+                WHERE o.id_campaign = :id_campaign
+                GROUP BY id_brand;'
+            );
+
+            $bindValues = [
+                'id_campaign' => intval($campaign['id_campaign'])
+            ];
+
+            $querySpendingByBrand->execute($bindValues);
+            $results[] = $querySpendingByBrand->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            // Gérer le cas où id_campaign est manquant
+            $results[] = ['error' => 'id_campaign manquant pour une campagne.'];
+        }
+    }
+    
+    return $results;
+}
+
+
+function filterCampaigns(PDO $dbCo, array $campaigns)
+{
+    if (!isset($_POST['date-from'], $_POST['date-to'])) {
+        addError('date_ko');
+        redirectTo();
+        exit;
+    }
+
+    $dateFrom = sanitizeInput($_POST['date-from']);
+    $dateTo = sanitizeInput($_POST['date-to']);
+
+    $queryFilter = $dbCo->prepare(
+        'SELECT * 
+        FROM campaigns 
+        WHERE date 
+        BETWEEN :dateFrom AND :dateTo;'
+    );
+
+    $bindValues = [
+        'dateFrom' => $dateFrom,
+        'dateTo' => $dateTo
+    ];
+
+    $queryFilter->execute($bindValues);
+
+    $campaigns = $queryFilter->fetchAll();
+
+    echo json_encode($campaigns);
 }

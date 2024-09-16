@@ -97,6 +97,7 @@ checkConnection($_SESSION);
             // var_dump($_SESSION);
             // var_dump($brands);
             // var_dump($campaigns);
+            var_dump(getSpendingByBrandByCampaign($dbCo, $campaigns));
             ?>
 
         </section>
