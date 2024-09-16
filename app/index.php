@@ -18,6 +18,10 @@ require_once "includes/templates/_footer.php";
 require_once "includes/templates/_nav.php";
 
 generateToken();
+
+if (isset($_SESSION) && !empty($_SESSION) && isset($_SESSION['id_user'], $_SESSION['username'], $_SESSION['client'], $_SESSION['boss'], $_SESSION['id_company'])) {
+    header('Location: dashboard.php');
+}
 ?>
 
 <!DOCTYPE html>
