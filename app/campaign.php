@@ -93,14 +93,8 @@ checkConnection($_SESSION);
 
         <h2 class="ttl">Données globales</h2>
 
-        <?php  
+        <?php
         // var_dump(getMonthlyCampaignOperations($dbCo, $_GET, '2024-06'));
-
-        $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
-
-        $brandsSpendings = mergeResults($campaignResults);
-
-        echo generateTableFromDatas($brandsSpendings);
         ?>
 
         <div class="card">
@@ -133,6 +127,7 @@ checkConnection($_SESSION);
         <div class="card card--grid">
 
             <div class="card">
+                <h2 class="ttl">Répartition du budget dépensé<br> par marque</h2>
                 <section class="card__section">
                     <img src="img/chart.webp" alt="Graphique camembert récapitulatif de la campagne <?= $selectedCampaign['campaign_name'] ?>">
                     <ul class="campaign__legend-section">
@@ -142,13 +137,25 @@ checkConnection($_SESSION);
                 </section>
             </div>
             <div class="card">
+                <h2 class="ttl">Budget attribué<br> par marque</h2>
                 <section class="card__section">
-                    <ul>
-                        <?= getCampaignOperationsAsList($campaignOperations) ?>
-                    </ul>
+                    <?php
+                    $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
+
+                    $brandsSpendings = mergeResults($campaignResults);
+
+                    echo generateTableFromDatas($brandsSpendings);
+                    ?>
                 </section>
             </div>
-
+        </div>
+        <div class="card">
+            <section class="card__section card__section--operations">
+                <ul>
+                    <?= getCampaignOperationsAsList($campaignOperations) ?>
+                </ul>
+            </section>
+        </div>
     </main>
 
     <footer class="footer">

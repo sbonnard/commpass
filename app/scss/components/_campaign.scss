@@ -35,17 +35,28 @@
         display: flex;
         gap: 0.5rem;
         font-size: 0.75rem;
+
     }
 
     &__legend-square {
         content: '';
         display: block;
         width: 1rem;
-        aspect-ratio: 1;
-        // background-color: $primary;
+        height: 1rem;
+
+        &--long {
+            width: 100%;
+            height: 1rem;
+        }
     }
 
     &__interlocutor {
         font-size: 1.25rem;
+    }
+
+    &__operation {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
     }
 }

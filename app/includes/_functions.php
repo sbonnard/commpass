@@ -67,7 +67,8 @@ function formatPrice(float|int $price, string $currency): string
  * @param string $input - The input string to sanitize.
  * @return string - The sanitized input string.
  */
-function sanitizeInput(string $input): string {
+function sanitizeInput(string $input): string
+{
     return trim(htmlspecialchars($input, ENT_QUOTES, 'UTF-8'));
 }
 
@@ -77,7 +78,8 @@ function sanitizeInput(string $input): string {
  * @param string $yearAndMonth - The year and month to format.
  * @return string - The formatted date string.
  */
-function formatDate(string $yearMonthDay): string {
+function formatDate(string $yearMonthDay): string
+{
     [$year, $month, $day] = explode('-', $yearMonthDay);
 
     $months = [
@@ -102,7 +104,7 @@ function formatDate(string $yearMonthDay): string {
 
 // function generateTableFromDatas (array $brandsSpendings) {
 //     $htmlTable = '<table>';
-    
+
 //     $htmlTable.= '<thead><tr><th>Marque</th><th>Dépenses</th></tr></thead>';
 //     $htmlTable.= '<tbody>';
 
@@ -120,16 +122,17 @@ function formatDate(string $yearMonthDay): string {
 // }
 
 
-function generateTableFromDatas(array $brandsSpendings): string {
-    $htmlTable = '<table>';
-    
-    $htmlTable .= '<thead><tr><th>Marque</th><th>Dépenses</th></tr></thead>';
+function generateTableFromDatas(array $brandsSpendings): string
+{
+    $htmlTable = '<table class="table">';
+
+    $htmlTable .= '<thead><tr><th class="table__head">Marque</th><th class="table__head">Dépenses H.T.</th></tr></thead>';
     $htmlTable .= '<tbody>';
 
     foreach ($brandsSpendings as $brand) {
         $htmlTable .= '<tr>';
-        $htmlTable .= '<td>' . htmlspecialchars($brand['brand_name']) . '</td>';
-        $htmlTable .= '<td>' . formatPrice($brand['total_spent'], '€') . '</td>';
+        $htmlTable .= '<td class="table__cell" aria-label="Cellule de la marque ' . $brand['brand_name'] . '"><span class="campaign__legend-square campaign__legend-square--long" style="background-color:' . $brand['legend_colour_hex'] . '"></span>' . htmlspecialchars($brand['brand_name']) . '</td>';
+        $htmlTable .= '<td class="table__cell" aria-label="Cellule de dépenses pour la marque ' . $brand['brand_name'] . '">' . formatPrice($brand['total_spent'], '€') . '</td>';
         $htmlTable .= '</tr>';
     }
 
@@ -140,15 +143,12 @@ function generateTableFromDatas(array $brandsSpendings): string {
 }
 
 
-function mergeResults(array $campaignResults): array {
-    $merged = [];
-    foreach ($campaignResults as $result) {
-        if (isset($result['error'])) {
-            // Gérer ou enregistrer l'erreur
-            continue;
-        }
-        $merged = array_merge($merged, $result);
+function mergeResults(array $campaignResults): array
+{
+    // Retourner uniquement les résultats de la première campagne
+    if (!empty($campaignResults)) {
+        return $campaignResults[0];
     }
-    return $merged;
-}
 
+    return [];
+}

@@ -1,0 +1,21 @@
+.table {
+    background-color: $white;
+    font-family: 'jura';
+    border: 1px solid $primary;
+    border-radius: 0.5rem;
+    width: 100%;
+    border-collapse: collapse;
+
+    &__head {
+        font-size: 1.25rem;
+        text-transform: uppercase;
+        color: $primary;
+        padding: 0.5rem 1rem;
+    }
+
+    &__cell {
+        padding: 0.5rem 1rem;
+        border : 1px solid $primary;
+        text-align: center;
+    }
+}

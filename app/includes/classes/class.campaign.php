@@ -334,6 +334,8 @@ function getCampaignOperations(PDO $dbCo, array $get): array
             'SELECT * 
             FROM operation 
                 JOIN campaign USING (id_campaign)
+                JOIN operation_brand USING (id_operation)
+                JOIN brand USING (id_brand)
             WHERE id_campaign = :id_campaign
             ORDER BY date_ DESC;'
         );
@@ -362,7 +364,7 @@ function getCampaignOperationsAsList(array $operations): string
     foreach ($operations as $operation) {
         $operationsList .= '
             <li><h4>' . formatDate($operation['date_']) . '</h4>
-            <p>' . $operation['description'] .
+            <p class="campaign__operation"><span class="campaign__legend-square" style="background-color:' . $operation['legend_colour_hex'] . '"></span>' . $operation['description'] .
             ' -> ' . formatPrice(floatval($operation['price']), '€') . ' H.T.</p></li>';
     }
 
@@ -383,7 +385,7 @@ function getSpendingByBrandByCampaign(PDO $dbCo, array $campaigns, array $get): 
     foreach ($campaigns as $campaign) {
         if (isset($campaign['id_campaign'])) {
             $querySpendingByBrand = $dbCo->prepare(
-                'SELECT b.id_brand, brand_name, SUM(o.price) AS total_spent 
+                'SELECT b.id_brand, brand_name, legend_colour_hex, SUM(o.price) AS total_spent 
                 FROM brand b 
                     JOIN operation_brand ob ON b.id_brand = ob.id_brand 
                     JOIN operation o ON ob.id_operation = o.id_operation 
