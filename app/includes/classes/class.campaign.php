@@ -66,7 +66,7 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
  * @param array $session - Superglobal $_SESSION.
  * @return string - HTML code that constitutes the template.
  */
-function getCampaignTemplate(PDO $dbCo, array $campaigns, array $brands, array $session): string
+function getCampaignTemplate(PDO $dbCo, array $campaigns, array $session): string
 {
     $campaignList = '';
 
@@ -82,6 +82,7 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $brands, array $
             . getCompanyNameIfTDC($campaign, $session) .
             '</div>
                 <div class="campaign__stats">
+
                     <div class="js-chart" id="chart-' . $campaignId . '"></div>
 
                     <div class="vignettes-section">
