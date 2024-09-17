@@ -159,7 +159,7 @@ $jsonData = json_encode($chartData);
             <!-- OPÉRATIONS DE LA CAMPAGNE DE COMMUNICATION  -->
             <section class="card__section card__section--operations">
                 <ul>
-                    <?= getCampaignOperationsAsList($campaignOperations) ?>
+                    <?= getCampaignOperationsAsList($campaignOperations, $_SESSION, $selectedCampaign); ?>
                 </ul>
             </section>
         </div>

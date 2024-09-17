@@ -135,6 +135,6 @@ $jsonChartColors = json_encode($chartColors);
     var chartData = <?php echo $jsonChartData; ?>;
     var chartColors = <?php echo $jsonChartColors; ?>;
 </script>
-    <script type="module" src="js/dashboard-charts.js"></script>
+<script type="module" src="js/dashboard-charts.js"></script>
 
 </html>

@@ -37,18 +37,18 @@
 
         &:hover {
             /* Safari and Chrome */
-            -webkit-transform: scale(1.10);
+            -webkit-transform: scale(1.05);
             /* Firefox */
-            -moz-transform: scale(1.10);
+            -moz-transform: scale(1.05);
             /* IE 9 */
-            -ms-transform: scale(1.10);
+            -ms-transform: scale(1.05);
             /* Opera */
-            -o-transform: scale(1.10);
-            transform: scale(1.10);
+            -o-transform: scale(1.05);
+            transform: scale(1.05);
         }
     }
 
-    
+
     @media screen and (min-width: 768px) {
         &--grid {
             display: grid;
