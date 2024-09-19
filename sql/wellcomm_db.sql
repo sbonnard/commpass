@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : jeu. 12 sep. 2024 à 14:34
+-- Généré le : jeu. 19 sep. 2024 à 14:17
 -- Version du serveur : 8.0.37
 -- Version de PHP : 8.2.8
 
@@ -41,6 +41,7 @@ CREATE TABLE `brand` (
 --
 
 INSERT INTO `brand` (`id_brand`, `brand_name`, `id_company`, `legend_colour_hex`) VALUES
+(0, 'Toutes les marques', 1, '#D35DB5'),
 (1, 'Lumosphère', 2, '#F8A23A'),
 (2, 'Vélocitix', 2, '#ECFF12'),
 (3, 'Stellar Threads', 2, '#3664BB'),
@@ -385,7 +386,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `brand`
 --
 ALTER TABLE `brand`
-  MODIFY `id_brand` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_brand` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `campaign`
