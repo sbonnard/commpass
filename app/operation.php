@@ -16,6 +16,7 @@ require_once "includes/classes/class.brand.php";
 require_once "includes/classes/class.campaign.php";
 require_once "includes/classes/class.company.php";
 require_once "includes/classes/class.user.php";
+require_once "includes/classes/class.operation.php";
 
 // DATAS
 require_once "includes/_datas.php";
@@ -73,10 +74,18 @@ if (!isset($_GET['myo'])) {
         </div>
 
         <div class="card">
-            <h2 class="ttl lineUp" id="new-operation-ttl">Nouvelle Opération<br>
-                pour la campagne<br>
-                <?= $selectedCampaign['campaign_name'] ?> de <br>
-                <span class="ttl--tertiary"><?= getCompanyNameForNewOp($dbCo, $_GET) ?></span>
+            <h2 class="ttl lineUp" id="new-operation-ttl">
+                <?php
+                if (isset($_GET['myo']) && intval($_GET['myo'])) {
+                    echo 'Modifier l\'opération<br>';
+                } else if (!isset($_GET['myo']) && isset($_GET['myc']) && intval($_GET['myc'])) {
+                    echo
+                    'Nouvelle Opération<br>
+                    pour la campagne<br>'
+                        . $selectedCampaign['campaign_name'] . ' de <br>';
+                }
+                ?>
+                <span class="ttl--tertiary"><?= $selectedCampaign['company_name'] ?></span>
             </h2>
 
             <section class="card__section" aria-labelledby="new-operation-ttl">
@@ -84,9 +93,7 @@ if (!isset($_GET['myo'])) {
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="operation_description">Description de l'opération</label>
-                            <textarea class="form__input form__textarea" type="" name="operation_description" id="operation_description" placeholder="Flocage d'un véhicule..." required aria-label="Saississez la description de l'opération.">
-                                <?= $operation['description']; ?>
-                            </textarea>
+                            <textarea class="form__input form__textarea" type="" name="operation_description" id="operation_description" placeholder="Flocage d'un véhicule..." required aria-label="Saississez la description de l'opération."><?= $operation['description']; ?></textarea>
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="operation_amount">Prix de l'opération (sans €)</label>
@@ -97,7 +104,7 @@ if (!isset($_GET['myo'])) {
                             <label class="form__label" for="operation_brand" aria-label="Sélectionner la marque concernée">Marque(s)</label>
                             <select class="form__input form__input--select" type="text" name="operation_brand" id="operation_brand" required aria-label="Sélectionner l'entreprise lançant une nouvelle campagne">
                                 <option value="">- Sélectionner une marque -</option>
-                                <?= getCompanyBrandsAsHTMLOptions($companyBrands) ?>
+                                <?= getCompanyBrandsAsHTMLOptions(getCompanyBrands($dbCo, $selectedCampaign)); ?>
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">
@@ -119,7 +126,10 @@ if (!isset($_GET['myo'])) {
                         <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                         <input type="hidden" name="id_campaign" value="<?= $selectedCampaign['id_campaign'] ?>">
                         <input type="hidden" name="id_company" value="<?= $selectedCampaign['id_company'] ?>">
-                        <input type="hidden" name="id_operation" value="<?= $operation['id_operation'] ?>">
+                        <?php if (isset($_GET['myo']) && isset($_GET['myc'])) {
+                            echo '<input type="hidden" name="id_operation" value="' . $operation['id_operation'] . '">';
+                        }
+                        ?>
                     </ul>
                 </form>
             </section>

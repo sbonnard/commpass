@@ -27,17 +27,21 @@ function getBrandsAsList(array $brands): string
  * @param array $get - Superglobal $_GET.
  * @return array $brandList - list of brand
  */
-function getCompanyBrands(PDO $dbCo, array $get): array
+function getCompanyBrands(PDO $dbCo, array $selectedCampaign): array
 {
+    if(!isset($selectedCampaign['id_company'])) {
+        return []; // Return empty array if no company id is provided. 
+    }
+    
     $queryBrands = $dbCo->prepare(
-        'SELECT * 
+        'SELECT id_brand, brand_name, legend_colour_hex, company.id_company
         FROM brand
             JOIN company ON company.id_company = brand.id_company
-        WHERE company_name LIKE :company_name;'
+        WHERE company.id_company = :id_company;'
     );
 
     $bindValues = [
-        'company_name' => '%' . getCompanyNameForNewOp($dbCo, $get) . '%'
+        'id_company' => $selectedCampaign['id_company']
     ];
 
     $queryBrands->execute($bindValues);
