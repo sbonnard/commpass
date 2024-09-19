@@ -138,39 +138,7 @@ if ($_POST['action'] === 'modify-pwd') {
     }
 } else if ($_POST['action'] === 'create-operation') {
 
-    var_dump("action = create-operation");
-
-    if (!isset($_POST['operation_description']) || strlen($_POST['operation_description']) > 255) {
-        addError('operation_description_ko');
-        redirectTo();
-        exit;
-    }
-
-    var_dump("description ok");
-
-    if (!isset($_POST['operation_amount']) || empty($_POST['operation_amount']) || !is_numeric($_POST['operation_amount']) || $_POST['operation_amount'] < 0) {
-        addError('operation_amount_ko');
-        redirectTo();
-        exit;
-    }
-
-    var_dump("price ok");
-
-    if (!isset($_POST['date']) || empty($_POST['date'])) {
-        addError('operation_date_ko');
-        redirectTo();
-        exit;
-    }
-
-    var_dump("date ok");
-
-    if (!isset($_POST['operation_brand']) || $_POST['operation_brand'] == null) {
-        addError('operation_brand_ko');
-        redirectTo();
-        exit;
-    }
-
-    var_dump("brand ok");
+    checkOperationFormDatas();
 
     try {
         $dbCo->beginTransaction();
@@ -180,8 +148,6 @@ if ($_POST['action'] === 'modify-pwd') {
         VALUES (:description, :price, :date, :id_campaign, :id_company);'
         );
 
-        var_dump("first query ok");
-
         $operationBindValues = [
             'description' => strip_tags($_POST['operation_description']),
             'price' => floatval($_POST['operation_amount']),
@@ -190,54 +156,102 @@ if ($_POST['action'] === 'modify-pwd') {
             'id_company' => strip_tags($_POST['id_company'])
         ];
 
-        var_dump($operationBindValues);
-
         $isInsertOk = $queryOperation->execute($operationBindValues);
 
-        var_dump('operation execute ok');
-
         $operationId = $dbCo->lastInsertId();
-
-        var_dump($operationId);
 
         if ($isInsertOk) {
             $queryBrand = $dbCo->prepare(
                 'INSERT INTO operation_brand (id_operation, id_brand) VALUES (:id_operation, :id_brand);'
             );
 
-            var_dump("second query ok");
-
             $brandBindValues = [
                 'id_operation' => $operationId,
                 'id_brand' => $_POST['operation_brand']
             ];
 
-        var_dump($brandBindValues);
-
             $isBrandInsertOk = $queryBrand->execute($brandBindValues);
-
-        var_dump($isBrandInsertOk);
 
             if ($isBrandInsertOk) {
                 $dbCo->commit();
 
-        var_dump('commit ok');
-
                 addMessage('operation_created_ok');
 
-        var_dump('message ok');
-
-                // redirectTo('campaign.php?myc=' . $_GET['myc']);
+                redirectTo('campaign.php?myc=' . $_POST['id_campaign']);
             } else {
                 $dbCo->rollBack();
                 addError('operation_creation_ko');
-                // redirectTo('campaign.php?myc=' . $_GET['myc']);
+                redirectTo('campaign.php?myc=' . $_POST['id_campaign']);
             }
         }
     } catch (PDOException $e) {
         $dbCo->rollBack();
         addError('operation_creation_ko');
     }
+} elseif ($_POST['action'] === 'edit-operation') {
+
+    if (!isset($_POST['id_campaign']) || empty($_POST['id_campaign']) || !is_numeric($_POST['id_campaign'])) {
+        addError('campaign_id_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['id_operation']) || empty($_POST['id_operation']) || !is_numeric($_POST['id_operation'])) {
+        addError('operation_id_ko');
+        redirectTo();
+        exit;
+    }
+
+    checkOperationFormDatas();
+
+
+    try {
+        $dbCo->beginTransaction();
+
+        $queryOperation = $dbCo->prepare(
+            'UPDATE operation 
+            SET description = :description, price = :price, date_ = :date 
+            WHERE id_operation = :id_operation;'
+        );
+
+        $operationBindValues = [
+            'description' => strip_tags($_POST['operation_description']),
+            'price' => floatval($_POST['operation_amount']),
+            'date' => strip_tags($_POST['date']),
+            'id_operation' => strip_tags($_POST['id_operation'])
+        ];
+
+        $isUpdateOk = $queryOperation->execute($operationBindValues);
+
+        if ($isUpdateOk) {
+            $queryBrand = $dbCo->prepare(
+                'UPDATE operation_brand 
+                SET id_brand = :id_brand WHERE id_operation = :id_operation;'
+            );
+
+            $brandBindValues = [
+                'id_brand' => $_POST['operation_brand'],
+                'id_operation' => $_POST['id_operation']
+            ];
+
+            $isBrandUpdateOk = $queryBrand->execute($brandBindValues);
+
+            if ($isBrandUpdateOk) {
+                $dbCo->commit();
+
+                addMessage('operation_update_ok');
+
+                redirectTo('campaign.php?myc=' . $_POST['id_campaign']);
+            } else {
+                $dbCo->rollBack();
+                addError('operation_update_ko');
+                redirectTo('campaign.php?myc=' . $_POST['id_campaign']);
+            }
+        }
+    } catch (PDOException $e) {
+        $dbCo->rollBack();
+        addError('operation_update_ko');
+    }
 }
 
-// redirectTo('dashboard.php');
+redirectTo('dashboard.php');

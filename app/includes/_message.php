@@ -5,7 +5,8 @@ $messages = [
     'update_ok_email' => 'Email mis à jour!',
     'update_ok_phone' => 'Numéro de téléphone mis à jour!',
     'campaign_created_ok' => 'Nouvelle campagne créée.',
-    'operation_created_ok' => 'Opération créée avec succès.'
+    'operation_created_ok' => 'Opération créée avec succès.',
+    'operation_update_ok' => 'Opération mise à jour avec succès.'
 ];
 
 $errors = [
@@ -30,7 +31,10 @@ $errors = [
     'operation_description_ko' => 'Veuillez saisir une description de l\'opération.',
     'operation_amount_ko' => 'Veuillez saisir un montant de l\'opération, en chiffre uniquement et sans espaces.',
     'operation_date_ko' => 'Veuillez saisir une date valide pour l\'opération.',
-    'operation_creation_ko' => 'Échec de la création de l\'opération.'
+    'operation_creation_ko' => 'Échec de la création de l\'opération.',
+    'campaign_id_ko' => 'Veuillez sélectionner une campagne valide.',
+    'operation_id_ko' => 'Veuillez sélectionner une opération valide.',
+    'operation_update_ko' => 'Erreur lors de la mise à jour de l\'opération.'
 ];
 
 

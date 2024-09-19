@@ -35,6 +35,14 @@ if (!isset($_GET['myc']) && !isset($_SESSION['client']) && $_SESSION['client'] =
     header('Location: dashboard.php');
     exit;
 }
+
+if (!isset($_GET['myo'])) {
+    $operation = [
+        "description" => "",
+        "price" => "",
+        "date_" => ""
+    ];
+}
 ?>
 
 <!DOCTYPE html>
@@ -65,8 +73,8 @@ if (!isset($_GET['myc']) && !isset($_SESSION['client']) && $_SESSION['client'] =
         </div>
 
         <div class="card">
-            <h2 class="ttl lineUp" id="new-operation-ttl">Nouvelle Opération<br> 
-            pour la campagne<br>
+            <h2 class="ttl lineUp" id="new-operation-ttl">Nouvelle Opération<br>
+                pour la campagne<br>
                 <?= $selectedCampaign['campaign_name'] ?> de <br>
                 <span class="ttl--tertiary"><?= getCompanyNameForNewOp($dbCo, $_GET) ?></span>
             </h2>
@@ -76,11 +84,13 @@ if (!isset($_GET['myc']) && !isset($_SESSION['client']) && $_SESSION['client'] =
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="operation_description">Description de l'opération</label>
-                            <textarea class="form__input form__textarea" type="" name="operation_description" id="operation_description" placeholder="Flocage d'un véhicule..." required aria-label="Saississez la description de l'opération."></textarea>
+                            <textarea class="form__input form__textarea" type="" name="operation_description" id="operation_description" placeholder="Flocage d'un véhicule..." required aria-label="Saississez la description de l'opération.">
+                                <?= $operation['description']; ?>
+                            </textarea>
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="operation_amount">Prix de l'opération (sans €)</label>
-                            <input class="form__input form__input--number" type="number" name="operation_amount" id="operation_amount" placeholder="12500" required>
+                            <input class="form__input form__input--number" type="number" name="operation_amount" id="operation_amount" placeholder="12500" required value="<?= $operation['price']; ?>">
                         </li>
 
                         <li class="form__itm form__itm--app">
@@ -91,8 +101,8 @@ if (!isset($_GET['myc']) && !isset($_SESSION['client']) && $_SESSION['client'] =
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">
-                            <label class="form__label" for="date">Interlocuteur</label>
-                            <input class="form__input form__input--date" type="date" name="date" id="date" required aria-label="Sélectionner la date de l'opération">
+                            <label class="form__label" for="date">Date de l'opération</label>
+                            <input class="form__input form__input--date" type="date" name="date" id="date" required aria-label="Sélectionner la date de l'opération" value="<?= $operation['date_']; ?>">
                         </li>
 
                         <?php
@@ -109,6 +119,7 @@ if (!isset($_GET['myc']) && !isset($_SESSION['client']) && $_SESSION['client'] =
                         <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                         <input type="hidden" name="id_campaign" value="<?= $selectedCampaign['id_campaign'] ?>">
                         <input type="hidden" name="id_company" value="<?= $selectedCampaign['id_company'] ?>">
+                        <input type="hidden" name="id_operation" value="<?= $operation['id_operation'] ?>">
                     </ul>
                 </form>
             </section>

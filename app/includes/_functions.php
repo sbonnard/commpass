@@ -101,27 +101,12 @@ function formatDate(string $yearMonthDay): string
     return $day . ' ' . $monthName . ' ' . $year;
 }
 
-
-// function generateTableFromDatas (array $brandsSpendings) {
-//     $htmlTable = '<table>';
-
-//     $htmlTable.= '<thead><tr><th>Marque</th><th>Dépenses</th></tr></thead>';
-//     $htmlTable.= '<tbody>';
-
-//     foreach ($brandsSpendings as $brand) {
-//         $htmlTable.= '<tr>';
-//         $htmlTable.= '<td>'. $brand['brand_name']. '</td>';
-//         $htmlTable.= '<td>'. formatPrice($brand['total_spent'], '€'). '</td>';
-//         $htmlTable.= '</tr>';
-//     }
-
-//     $htmlTable.= '</tbody>';
-//     $htmlTable.= '</table>';
-
-//     return $htmlTable;
-// }
-
-
+/**
+ * Generates a table from operations datas and brands.
+ *
+ * @param array $brandsSpendings - The results from operations.
+ * @return string - The generated table
+ */
 function generateTableFromDatas(array $brandsSpendings): string
 {
     $htmlTable = '<table class="table">';
@@ -143,6 +128,12 @@ function generateTableFromDatas(array $brandsSpendings): string
 }
 
 
+/**
+ * Merge results from multiple operations into a single array.
+ *
+ * @param array $campaignResults - The results from multiple operations.
+ * @return array The merged results.
+ */
 function mergeResults(array $campaignResults): array
 {
     // Retourner uniquement les résultats de la première campagne

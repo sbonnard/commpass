@@ -102,3 +102,34 @@ function generateToken()
         $_SESSION['tokenExpire'] = time() + 60 * 15;
     }
 }
+
+/**
+ * Checks if form input datas are valid and what was asked from the form.
+ *
+ * @return void
+ */
+function checkOperationFormDatas():void {
+    if (!isset($_POST['operation_description']) || strlen($_POST['operation_description']) > 255) {
+        addError('operation_description_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['operation_amount']) || empty($_POST['operation_amount']) || !is_numeric($_POST['operation_amount']) || $_POST['operation_amount'] < 0) {
+        addError('operation_amount_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['date']) || empty($_POST['date'])) {
+        addError('operation_date_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['operation_brand']) || $_POST['operation_brand'] == null) {
+        addError('operation_brand_ko');
+        redirectTo();
+        exit;
+    }
+}
