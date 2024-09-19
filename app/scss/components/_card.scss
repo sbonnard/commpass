@@ -26,14 +26,14 @@
 
     &--over {
         /* Safari and Chrome */
-        -webkit-transition: all 0.8s ease;
+        -webkit-transition: all 0.6s ease;
         /* Firefox */
-        -moz-transition: all 0.8s ease;
+        -moz-transition: all 0.6s ease;
         /* IE 9 */
-        -ms-transition: all 0.8s ease;
+        -ms-transition: all 0.6s ease;
         /* Opera */
-        -o-transition: all 0.8s ease;
-        transition: all 0.8s ease;
+        -o-transition: all 0.6s ease;
+        transition: all 0.6s ease;
 
         &:hover {
             /* Safari and Chrome */

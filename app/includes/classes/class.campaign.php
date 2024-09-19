@@ -76,7 +76,7 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $session): strin
 
         $campaignList .= '
         <a href="campaign.php?myc=' . $campaignId . '">
-            <div class="card__section" data-campaign="">
+            <div class="card__section" data-card="">
                 <div class="campaign__ttl">
                     <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>'
             . getCompanyNameIfTDC($campaign, $session) .

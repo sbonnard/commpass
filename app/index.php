@@ -53,7 +53,7 @@ if (isset($_SESSION) && !empty($_SESSION) && isset($_SESSION['id_user'], $_SESSI
 
     <main class="container container__flex">
 
-        <div class="card">
+        <div class="card" data-card="">
             <h2 class="ttl lineUp" id="take-control">
                 Prenez le contrôle<br>
                 de votre budget<br>
@@ -65,7 +65,7 @@ if (isset($_SESSION) && !empty($_SESSION) && isset($_SESSION['id_user'], $_SESSI
             </section>
         </div>
 
-        <div class="card">
+        <div class="card" data-card="">
             <h2 class="ttl lineUp" id="report">
                 <span class="ttl--tertiary">Comptes rendus<br></span>
                 EN TEMPS RÉEL
@@ -85,5 +85,6 @@ if (isset($_SESSION) && !empty($_SESSION) && isset($_SESSION['id_user'], $_SESSI
 
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/password.js"></script>
+<script type="module" src="js/cards.js"></script>
 
 </html>

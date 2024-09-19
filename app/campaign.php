@@ -158,6 +158,11 @@ $jsonData = json_encode($chartData);
             <h2 class="ttl lineUp">Opérations</h2>
             <!-- OPÉRATIONS DE LA CAMPAGNE DE COMMUNICATION  -->
             <section class="card__section card__section--operations">
+                <?php
+                if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+                    echo '<button class="button button--primary" id="create-operation" aria-label="Créer une nouvelle opération">Créer une opération</button>';
+                }
+                ?>
                 <ul>
                     <?= getCampaignOperationsAsList($campaignOperations, $_SESSION, $selectedCampaign); ?>
                 </ul>

@@ -128,7 +128,7 @@ $jsonChartColors = json_encode($chartColors);
 </body>
 
 <script type="module" src="js/script.js"></script>
-<script type="module" src="js/campaigns.js"></script>
+<script type="module" src="js/cards.js"></script>
 <script type="module" src="js/filter.js"></script>
 <script>
     // Récupération des données PHP

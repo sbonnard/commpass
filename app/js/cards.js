@@ -1,15 +1,15 @@
 // Animate campaign cards on hover //
 
-let campaignsCards = document.querySelectorAll('[data-campaign]');
+let cards = document.querySelectorAll('[data-card]');
 
-// console.log(campaignsCards);
+// console.log(cards);
 
-campaignsCards.forEach(card => {
+cards.forEach(card => {
     card.addEventListener('mouseover', function() {
         this.classList.add('card--over');
     });
 });
-campaignsCards.forEach(card => {
+cards.forEach(card => {
     card.addEventListener('mouseout', function() {
         this.classList.remove('card--over');
     });
