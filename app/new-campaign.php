@@ -60,7 +60,7 @@ checkConnection($_SESSION);
         </div>
 
         <div class="card">
-            <h2 class="ttl" id="new-campaign-ttl">Nouvelle Campagne</h2>
+            <h2 class="ttl lineUp" id="new-campaign-ttl">Nouvelle Campagne</h2>
 
             <section class="card__section" aria-labelledby="new-campaign-ttl">
                 <form class="form" action="actions.php" method="post" aria-label="Formulaire de création d'une nouvelle campagne">

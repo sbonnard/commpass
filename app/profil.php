@@ -61,7 +61,7 @@ checkConnection($_SESSION);
         </div>
         
         <div class="card">
-            <h2 class="ttl" id="profil">Mon profil</h2>
+            <h2 class="ttl lineUp" id="profil">Mon profil</h2>
 
             <section class="card__section profil" aria-labelledby="profil">
                 <p><span class="profil__info">Entreprise : </span><?= getCompanyName($dbCo, $_SESSION) ?></p>

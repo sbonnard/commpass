@@ -78,7 +78,7 @@ $jsonChartColors = json_encode($chartColors);
             ?>
         </div>
 
-        <h2 class="ttl">
+        <h2 class="ttl lineUp">
             Bonjour <?= $user['firstname'] ?><br>
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>

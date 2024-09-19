@@ -73,7 +73,7 @@ $jsonData = json_encode($chartData);
             ?>
         </div>
 
-        <h2 class="ttl">
+        <h2 class="ttl lineUp">
             Bonjour <?= $user['firstname'] ?><br>
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>
@@ -108,7 +108,7 @@ $jsonData = json_encode($chartData);
             </form>
         </div>
 
-        <h2 class="ttl">Données globales</h2>
+        <h2 class="ttl lineUp">Données globales</h2>
 
         <div class="card">
             <section class="card__section card__section--vignettes">
@@ -140,14 +140,14 @@ $jsonData = json_encode($chartData);
         <div class="card card--grid">
 
             <div class="card">
-                <h2 class="ttl">Répartition du budget dépensé<br> par marque</h2>
+                <h2 class="ttl lineUp">Répartition du budget dépensé<br> par marque</h2>
                 <!-- GRAPHIQUES DONUT  -->
                 <section class="card__section">
                     <div id="chart"></div>
                 </section>
             </div>
             <div class="card">
-                <h2 class="ttl">Budget attribué<br> par marque</h2>
+                <h2 class="ttl lineUp">Budget attribué<br> par marque</h2>
                 <!-- TABLEAU DES DÉPENSES PAR MARQUES -->
                 <section class="card__section">
                     <?= generateTableFromDatas($brandsSpendings); ?>
@@ -155,7 +155,7 @@ $jsonData = json_encode($chartData);
             </div>
         </div>
         <div class="card">
-            <h2 class="ttl">Opérations</h2>
+            <h2 class="ttl lineUp">Opérations</h2>
             <!-- OPÉRATIONS DE LA CAMPAGNE DE COMMUNICATION  -->
             <section class="card__section card__section--operations">
                 <ul>
