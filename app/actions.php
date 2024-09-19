@@ -218,10 +218,14 @@ if ($_POST['action'] === 'modify-pwd') {
             'description' => strip_tags($_POST['operation_description']),
             'price' => floatval($_POST['operation_amount']),
             'date' => strip_tags($_POST['date']),
-            'id_operation' => strip_tags($_POST['id_operation'])
+            'id_operation' => intval($_POST['id_operation'])
         ];
 
+        var_dump($operationBindValues);
+
         $isUpdateOk = $queryOperation->execute($operationBindValues);
+
+        var_dump($isUpdateOk);
 
         if ($isUpdateOk) {
             $queryBrand = $dbCo->prepare(
@@ -229,12 +233,23 @@ if ($_POST['action'] === 'modify-pwd') {
                 SET id_brand = :id_brand WHERE id_operation = :id_operation;'
             );
 
+            var_dump($queryBrand);
+
             $brandBindValues = [
-                'id_brand' => $_POST['operation_brand'],
-                'id_operation' => $_POST['id_operation']
+                'id_brand' => intval($_POST['operation_brand']),
+                'id_operation' => intval($_POST['id_operation'])
             ];
 
+            var_dump($brandBindValues);
+
             $isBrandUpdateOk = $queryBrand->execute($brandBindValues);
+
+            var_dump($isBrandUpdateOk);
+
+            if (!$isBrandUpdateOk) {
+                $errorInfo = $queryBrand->errorInfo();
+                var_dump($errorInfo);
+            }
 
             if ($isBrandUpdateOk) {
                 $dbCo->commit();
@@ -254,4 +269,4 @@ if ($_POST['action'] === 'modify-pwd') {
     }
 }
 
-redirectTo('dashboard.php');
+// redirectTo('dashboard.php');
