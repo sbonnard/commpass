@@ -23,3 +23,5 @@ $selectedCampaign = getOneCampaignDatas($dbCo, $_GET);
 $campaignOperations = getCampaignOperations($dbCo, $_GET);
 
 $brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);
+
+$companyBrands = getCompanyBrands($dbCo, $_GET);

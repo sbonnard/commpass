@@ -69,8 +69,6 @@ if ($_POST['action'] === 'modify-pwd') {
         redirectTo('profil.php');
         exit;
     }
-
-
 } else if ($_POST['action'] === 'modify-phone') {
     if (!isset($_POST['phone']) || !preg_match('/^[0-9]{10}$/', $_POST['phone'])) {
         $_SESSION['error'] = "invalid_phone";
@@ -120,7 +118,8 @@ if ($_POST['action'] === 'modify-pwd') {
 
     $queryCampaign = $dbCo->prepare(
         'INSERT INTO campaign (campaign_name, id_company, id_user, budget, id_target) 
-        VALUES (:name, :id_company, :id_interlocutor, :budget, :id_target);');
+        VALUES (:name, :id_company, :id_interlocutor, :budget, :id_target);'
+    );
 
     $bindValues = [
         'name' => strip_tags($_POST['campaign_name']),
@@ -137,6 +136,108 @@ if ($_POST['action'] === 'modify-pwd') {
     } else {
         addError('campaign_creation_ko');
     }
+} else if ($_POST['action'] === 'create-operation') {
+
+    var_dump("action = create-operation");
+
+    if (!isset($_POST['operation_description']) || strlen($_POST['operation_description']) > 255) {
+        addError('operation_description_ko');
+        redirectTo();
+        exit;
+    }
+
+    var_dump("description ok");
+
+    if (!isset($_POST['operation_amount']) || empty($_POST['operation_amount']) || !is_numeric($_POST['operation_amount']) || $_POST['operation_amount'] < 0) {
+        addError('operation_amount_ko');
+        redirectTo();
+        exit;
+    }
+
+    var_dump("price ok");
+
+    if (!isset($_POST['date']) || empty($_POST['date'])) {
+        addError('operation_date_ko');
+        redirectTo();
+        exit;
+    }
+
+    var_dump("date ok");
+
+    if (!isset($_POST['operation_brand']) || $_POST['operation_brand'] == null) {
+        addError('operation_brand_ko');
+        redirectTo();
+        exit;
+    }
+
+    var_dump("brand ok");
+
+    try {
+        $dbCo->beginTransaction();
+
+        $queryOperation = $dbCo->prepare(
+            'INSERT INTO operation (description, price, date_, id_campaign, id_company) 
+        VALUES (:description, :price, :date, :id_campaign, :id_company);'
+        );
+
+        var_dump("first query ok");
+
+        $operationBindValues = [
+            'description' => strip_tags($_POST['operation_description']),
+            'price' => floatval($_POST['operation_amount']),
+            'date' => strip_tags($_POST['date']),
+            'id_campaign' => strip_tags($_POST['id_campaign']),
+            'id_company' => strip_tags($_POST['id_company'])
+        ];
+
+        var_dump($operationBindValues);
+
+        $isInsertOk = $queryOperation->execute($operationBindValues);
+
+        var_dump('operation execute ok');
+
+        $operationId = $dbCo->lastInsertId();
+
+        var_dump($operationId);
+
+        if ($isInsertOk) {
+            $queryBrand = $dbCo->prepare(
+                'INSERT INTO operation_brand (id_operation, id_brand) VALUES (:id_operation, :id_brand);'
+            );
+
+            var_dump("second query ok");
+
+            $brandBindValues = [
+                'id_operation' => $operationId,
+                'id_brand' => $_POST['operation_brand']
+            ];
+
+        var_dump($brandBindValues);
+
+            $isBrandInsertOk = $queryBrand->execute($brandBindValues);
+
+        var_dump($isBrandInsertOk);
+
+            if ($isBrandInsertOk) {
+                $dbCo->commit();
+
+        var_dump('commit ok');
+
+                addMessage('operation_created_ok');
+
+        var_dump('message ok');
+
+                // redirectTo('campaign.php?myc=' . $_GET['myc']);
+            } else {
+                $dbCo->rollBack();
+                addError('operation_creation_ko');
+                // redirectTo('campaign.php?myc=' . $_GET['myc']);
+            }
+        }
+    } catch (PDOException $e) {
+        $dbCo->rollBack();
+        addError('operation_creation_ko');
+    }
 }
 
-redirectTo('dashboard.php');
+// redirectTo('dashboard.php');

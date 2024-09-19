@@ -69,6 +69,18 @@
         }
     }
 
+    &--edit {
+        color: $primary;
+        background-image: url(../../img/cta-edit.svg);
+        border: 2px solid $primary;
+
+        &:hover {
+            color: $tertiary;
+            background-image: url(../../img/cta-edit-hover.svg);
+            border: 2px solid $tertiary;
+        }
+    }
+
     &--eye {
         position: absolute;
         background-repeat: no-repeat;

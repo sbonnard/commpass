@@ -11,7 +11,7 @@
         flex-direction: column;
         justify-content: center;
         gap: 1.5rem;
-        padding: 1rem;
+        padding: 0.25rem;
         width: 90%;
 
         @media screen and (min-width: 768px) {
@@ -46,7 +46,7 @@
     &__input {
         padding: 0.75rem 1rem;
         border: 2px solid $primary;
-        border-radius: 0.70rem;
+        border-radius: 0.5rem;
         filter: drop-shadow(0.25rem 0.25rem 0.25rem $shadow);
         width: 100%;
 
@@ -98,6 +98,10 @@
             background-image: url(../../img/input-to.svg);
             background-position: left center;
         }
+    }
+
+    &__textarea {
+        padding: 1rem 1rem 3rem 1rem;
     }
 
     &__placeholder {

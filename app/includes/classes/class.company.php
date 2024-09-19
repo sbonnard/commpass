@@ -74,3 +74,36 @@ function getCompanyNameIfTDC(array $campaigns, array $session): string
         return '';
     }
 }
+
+
+function getCompanyNameForNewOp(PDO $dbCo, array $get)
+{
+    if (isset($get['myc'])) {
+        $sql = 'SELECT company_name
+            FROM company
+                JOIN operation ON company.id_company = operation.id_company
+            WHERE id_campaign = :myc';
+
+        if (isset($get['myc'], $get['myo'])) {
+            $sql .= ' AND id_operation = :myo';
+        }
+
+        $query = $dbCo->prepare($sql);
+
+        $bindValues = ['myc' => intval($get['myc'])];
+
+        if (isset($get['myo'])) {
+            $bindValues['myo'] = intval($get['myo']);
+        }
+
+        $query->execute($bindValues);
+
+        $companyDatas = $query->fetch(PDO::FETCH_ASSOC);
+
+        if (!$companyDatas) {
+            return null;
+        }
+
+        return $companyDatas['company_name'];
+    }
+}

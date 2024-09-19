@@ -30,6 +30,11 @@ require_once "includes/templates/_nav.php";
 generateToken();
 
 checkConnection($_SESSION);
+
+if (!isset($_SESSION['client']) && $_SESSION['client'] === 1) {
+    header('Location: dashboard.php');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>

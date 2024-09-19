@@ -18,3 +18,46 @@ function getBrandsAsList(array $brands): string
 
     return $brandList;
 }
+
+
+/**
+ * Get all brands from a company by comparing company_name.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $get - Superglobal $_GET.
+ * @return array $brandList - list of brand
+ */
+function getCompanyBrands(PDO $dbCo, array $get): array
+{
+    $queryBrands = $dbCo->prepare(
+        'SELECT * 
+        FROM brand
+            JOIN company ON company.id_company = brand.id_company
+        WHERE company_name LIKE :company_name;'
+    );
+
+    $bindValues = [
+        'company_name' => '%' . getCompanyNameForNewOp($dbCo, $get) . '%'
+    ];
+
+    $queryBrands->execute($bindValues);
+
+    $brandList = $queryBrands->fetchAll(PDO::FETCH_ASSOC);
+
+    return $brandList;
+}
+
+
+function getCompanyBrandsAsHTMLOptions(array $companyBrands): string {
+    $brandOptions = '';
+
+    $brandOptions .= '<option value="0">Toutes les marques</option>';
+
+    foreach ($companyBrands as $brand) {
+        $brandOptions.= '<option value="'. $brand['id_brand']. '">'. $brand['brand_name']. '</option>';
+    }
+
+    return $brandOptions;
+}
+
+

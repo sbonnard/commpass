@@ -4,7 +4,8 @@ $messages = [
     'update_ok_pwd' => 'Mot de passe mis à jour !',
     'update_ok_email' => 'Email mis à jour!',
     'update_ok_phone' => 'Numéro de téléphone mis à jour!',
-    'campaign_created_ok' => 'Nouvelle campagne créée.'
+    'campaign_created_ok' => 'Nouvelle campagne créée.',
+    'operation_created_ok' => 'Opération créée avec succès.'
 ];
 
 $errors = [
@@ -25,7 +26,11 @@ $errors = [
     'budget_ko' => 'Veuillez saisir un budget valide, en chiffre uniquement et sans espaces.',
     'campaign_target_ko' => 'Veuillez sélectionner un objectif de campagne.',
     'campaign_created_ko' => 'Échec de la création de la campagne.',
-    'date_ko' => 'Veuillez saisir une date valide.'
+    'date_ko' => 'Veuillez saisir une date valide.',
+    'operation_description_ko' => 'Veuillez saisir une description de l\'opération.',
+    'operation_amount_ko' => 'Veuillez saisir un montant de l\'opération, en chiffre uniquement et sans espaces.',
+    'operation_date_ko' => 'Veuillez saisir une date valide pour l\'opération.',
+    'operation_creation_ko' => 'Échec de la création de l\'opération.'
 ];
 
 
