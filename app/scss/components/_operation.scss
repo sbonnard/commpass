@@ -1,0 +1,24 @@
+.operation {
+    padding: 0.5rem;
+
+    &__date {
+        color: $secondary;
+    }
+
+    &__edit-link {
+        color: $primary;
+
+        &:hover {
+            color: $tertiary;
+        }
+    }
+
+    &__button {
+        color: $primary;
+        margin: 1rem;
+
+        &:hover {
+            color: $tertiary;
+        }
+    }
+}

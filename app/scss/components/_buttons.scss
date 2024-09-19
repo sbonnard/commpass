@@ -7,7 +7,7 @@
     font-family: 'roboto';
     color: $white;
     background-repeat: no-repeat;
-    transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out; // Ajout de la transition
+    transition: background-color 0.3s ease-in-out;
 
     &--connection {
         background-image: url(../../img/cta-connection.svg);
@@ -52,6 +52,23 @@
         margin-bottom: -2rem;
     }
 
+    &--add {
+        color: $primary;
+        background-image: url(../../img/cta-add-ope.svg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 15rem;
+        padding-left: 4rem;
+        border: 2px solid $primary;
+        border-radius: 0.75rem;
+
+        &:hover {
+            color: $tertiary;
+            background-image: url(../../img/cta-add-ope-hover.svg);
+            border: 2px solid $tertiary;
+        }
+    }
+
     &--eye {
         position: absolute;
         background-repeat: no-repeat;
@@ -75,18 +92,18 @@
         }
     }
 
-   &__section {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    width: 100%;
-    color: $white;
+    &__section {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        width: 100%;
+        color: $white;
 
-    @media screen and (max-width: 768px) {
-        & {
-            flex-direction: column;
-            align-items: center;
+        @media screen and (max-width: 768px) {
+            & {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     }
-   }
 }

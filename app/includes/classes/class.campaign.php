@@ -361,12 +361,12 @@ function getCampaignOperationsAsList(array $operations, array $session, array $s
 
     foreach ($operations as $operation) {
         $operationsList .= '
-            <li><h4>' . formatDate($operation['date_']) . '</h4>
+            <li class="operation"><h4 class="operation__date">' . formatDate($operation['date_']) . '</h4>
             <p class="campaign__operation"><span class="campaign__legend-square" style="background-color:' . $operation['legend_colour_hex'] . '"></span>' . $operation['description'] .
             ' ⮕ ' . formatPrice(floatval($operation['price']), '€') . ' H.T.';
 
         if (isset($session['client']) && $session['client'] === 0) {
-            $operationsList .= '<span><a href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '&myo=' . $operation['id_operation'] . '"> - Éditer</a></span>';
+            $operationsList .= '<span class="operation__edit-link"><a href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '&myo=' . $operation['id_operation'] . '"> - Éditer</a></span>';
         }
 
         $operationsList .= '</p></li>';

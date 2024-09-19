@@ -160,7 +160,7 @@ $jsonData = json_encode($chartData);
             <section class="card__section card__section--operations">
                 <?php
                 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                    echo '<button class="button button--primary" id="create-operation" aria-label="Créer une nouvelle opération">Créer une opération</button>';
+                    echo '<div class="operation__button"><a href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '" class="button button--add" aria-label="Créer une nouvelle opération">Ajouter opération</a></div>';
                 }
                 ?>
                 <ul>
