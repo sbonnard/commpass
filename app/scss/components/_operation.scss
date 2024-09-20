@@ -1,7 +1,13 @@
 .operation {
     padding: 0.5rem;
+    border-top: 1px solid $tertiary;
+
+    &__row {
+        color: $primary;
+    }
 
     &__date {
+        font-family: 'jura';
         color: $secondary;
     }
 

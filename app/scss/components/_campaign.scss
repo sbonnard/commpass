@@ -23,6 +23,12 @@
             width: 100%;
             justify-content: space-between;
         }
+
+        @media screen and (max-width: 768px) {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
     }
 
     &__legend-section {
@@ -56,12 +62,19 @@
 
     &__operation {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         gap: 1rem;
-    }
 
-    &__company {
-        font-family: 'jura';
-        font-size: 1.875rem;
+        @media screen and (max-width: 768px) {
+            & {
+                gap: 0.5rem;
+            }
+        }
+
+        &__company {
+            font-family: 'jura';
+            font-size: 1.875rem;
+        }
     }
 }
