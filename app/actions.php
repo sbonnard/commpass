@@ -116,9 +116,13 @@ if ($_POST['action'] === 'modify-pwd') {
         addError('campaign_target_ko');
     }
 
+    if (!isset($_POST['date']) || empty($_POST['date'])) {
+        addError('date_ko');
+    }
+
     $queryCampaign = $dbCo->prepare(
-        'INSERT INTO campaign (campaign_name, id_company, id_user, budget, id_target) 
-        VALUES (:name, :id_company, :id_interlocutor, :budget, :id_target);'
+        'INSERT INTO campaign (campaign_name, id_company, id_user, budget, id_target, date) 
+        VALUES (:name, :id_company, :id_interlocutor, :budget, :id_target, :date);'
     );
 
     $bindValues = [
@@ -126,7 +130,8 @@ if ($_POST['action'] === 'modify-pwd') {
         'id_company' => intval($_POST['campaign_company']),
         'id_interlocutor' => intval($_POST['campaign_interlocutor']),
         'budget' => strip_tags($_POST['budget']),
-        'id_target' => intval($_POST['campaign_target'])
+        'id_target' => intval($_POST['campaign_target']),
+        'date' => strip_tags($_POST['date'])
     ];
 
     $isInsertOk = $queryCampaign->execute($bindValues);

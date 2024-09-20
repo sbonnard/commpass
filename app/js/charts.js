@@ -39,7 +39,7 @@ if (!chartData || chartData.length === 0) {
             left: 20
         },
         donut: {
-            title: "Aucune opération effectuée"
+            title: "Aucune opération"
         }
     });
 } else {

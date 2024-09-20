@@ -96,8 +96,12 @@ if (!isset($_SESSION['client']) && $_SESSION['client'] === 1) {
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">
+                            <label class="form__label" for="date">Date de la campagne</label>
+                            <input class="form__input form__input--date" type="date" name="date" id="date" required aria-label="Sélectionner la date de l'opération">
+                        </li>
+                        <li class="form__itm form__itm--app">
                             <label class="form__label" for="budget" aria-label="Saississez le nom de la nouvelle campagne">Budget investi (sans €)</label>
-                            <input class="form__input form__input--number" type="number" name="budget" id="budget" placeholder="12500" required>
+                            <input class="form__input form__input--number" type="text" name="budget" id="budget" placeholder="12500" required>
                         </li>
                         <input class="button button--new-campaign" type="submit" value="Créer la campagne" aria-label="Valider la création de la nouvelle campagne">
                         <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
