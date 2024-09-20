@@ -275,10 +275,8 @@ if ($_POST['action'] === 'modify-pwd') {
         exit;
     }
 
-    // Nettoyer et récupérer la valeur de color
     $color = strip_tags($_POST['color']);
 
-    // Validation du format hexadécimal
     if (preg_match('/^#[0-9A-Fa-f]{6}$/', $color)) {
 
         $queryBrandColor = $dbCo->prepare('
