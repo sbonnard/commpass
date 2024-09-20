@@ -33,3 +33,9 @@ input[type="submit"] {
     cursor: pointer;
     background-color: $white;
 }
+
+input[type="color"] {
+    appearance: none;
+    cursor: pointer;
+    background-color: $white;
+}

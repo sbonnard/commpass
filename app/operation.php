@@ -104,6 +104,7 @@ if (!isset($_GET['myo'])) {
                             <label class="form__label" for="operation_brand" aria-label="Sélectionner la marque concernée">Marque(s)</label>
                             <select class="form__input form__input--select" type="text" name="operation_brand" id="operation_brand" required aria-label="Sélectionner l'entreprise lançant une nouvelle campagne">
                                 <option value="">- Sélectionner une marque -</option>
+                                <option value="0">Toutes les marques</option>
                                 <?= getCompanyBrandsAsHTMLOptions(getCompanyBrands($dbCo, $selectedCampaign)); ?>
                             </select>
                         </li>

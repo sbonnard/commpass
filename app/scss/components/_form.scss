@@ -98,6 +98,11 @@
             background-image: url(../../img/input-to.svg);
             background-position: left center;
         }
+
+        &--colour {
+            width: 100%;
+            border-radius: 0.25rem;
+        }
     }
 
     &__textarea {

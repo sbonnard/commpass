@@ -6,7 +6,7 @@ require_once "includes/_config.php";
 require_once "includes/_database.php";
 
 // DATAS
-require_once "includes/_datas.php";
+// require_once "includes/_datas.php";
 
 // FUNCTIONS
 require_once "includes/_functions.php";
@@ -39,10 +39,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'log-in') {
         $_SESSION['client'] = $user['client'];
         $_SESSION['boss'] = $user['boss'];
         $_SESSION['id_company'] = $user['id_company'];
-        redirectTo('dashboard.php');
-        exit();
     } else {
         addError('login_fail');
         redirectTo('index.php');
     }
 }
+
+redirectTo('dashboard.php');

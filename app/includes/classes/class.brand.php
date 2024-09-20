@@ -1,6 +1,29 @@
 <?php
 
 /**
+ * Fetch all brands from a company.
+ *
+ * @param PDO $dbCo - Connection to the database.
+ * @return array - Array of brands.
+ */
+function fetchCompanyBrands(PDO $dbCo, array $session):array
+{
+    $query = $dbCo->prepare(
+        'SELECT id_brand, brand_name, legend_colour_hex, id_company
+        FROM brand
+        WHERE id_company = :id_company;'
+    );
+
+    $bindValues = [
+        'id_company' => $session['id_company']
+    ];
+
+    $query->execute($bindValues);
+
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
  * Get a list of brand as HTML elements (<li>).
  *
  * @param array $brands - array of brands.
@@ -29,10 +52,10 @@ function getBrandsAsList(array $brands): string
  */
 function getCompanyBrands(PDO $dbCo, array $selectedCampaign): array
 {
-    if(!isset($selectedCampaign['id_company'])) {
+    if (!isset($selectedCampaign['id_company'])) {
         return []; // Return empty array if no company id is provided. 
     }
-    
+
     $queryBrands = $dbCo->prepare(
         'SELECT id_brand, brand_name, legend_colour_hex, company.id_company
         FROM brand
@@ -51,17 +74,19 @@ function getCompanyBrands(PDO $dbCo, array $selectedCampaign): array
     return $brandList;
 }
 
-
-function getCompanyBrandsAsHTMLOptions(array $companyBrands): string {
+/**
+ * Get all brands from a company as HTML options.
+ *
+ * @param array $companyBrands - list of brand
+ * @return string - A list of brand names as HTML options.
+ */
+function getCompanyBrandsAsHTMLOptions(array $companyBrands): string
+{
     $brandOptions = '';
 
-    $brandOptions .= '<option value="0">Toutes les marques</option>';
-
     foreach ($companyBrands as $brand) {
-        $brandOptions.= '<option value="'. $brand['id_brand']. '">'. $brand['brand_name']. '</option>';
+        $brandOptions .= '<option data-color="' . $brand['legend_colour_hex'] . '" value="' . $brand['id_brand'] . '">' . $brand['brand_name'] . '</option>';
     }
 
     return $brandOptions;
 }
-
-

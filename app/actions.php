@@ -262,6 +262,52 @@ if ($_POST['action'] === 'modify-pwd') {
         $dbCo->rollBack();
         addError('operation_update_ko');
     }
-}
+} else if ($_POST['action'] === 'modify-colour') {
+    if (!isset($_POST['profile_brand'])) {
+        addError('brand_ko');
+        redirectTo('profil.php');
+        exit;
+    }
 
+    if (!isset($_POST['color'])) {
+        addError('colour_ko');
+        redirectTo('profil.php');
+        exit;
+    }
+
+    // Nettoyer et récupérer la valeur de color
+    $color = strip_tags($_POST['color']);
+
+    // Validation du format hexadécimal
+    if (preg_match('/^#[0-9A-Fa-f]{6}$/', $color)) {
+
+        $queryBrandColor = $dbCo->prepare('
+            UPDATE brand SET legend_colour_hex = :color
+            WHERE id_brand = :id_brand;
+        ');
+
+
+        $bindValues = [
+            'color' => $color,
+            'id_brand' => intval($_POST['profile_brand'])
+        ];
+
+        $isUpdateOk = $queryBrandColor->execute($bindValues);
+
+        if ($isUpdateOk) {
+            addMessage('update_ok_colour');
+            redirectTo('profil.php');
+            exit;
+        } else {
+            addError('update_ko_colour');
+            redirectTo('profil.php');
+            exit;
+        }
+    } else {
+        // Si la couleur n'est pas valide
+        addError('invalid_colour_format');
+        redirectTo('profil.php');
+        exit;
+    }
+}
 redirectTo('dashboard.php');

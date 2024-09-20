@@ -70,3 +70,16 @@ buttonTel.addEventListener('click', function () {
         formEmail.classList.add('hidden');
     }
 })
+
+// COLOR FORM 
+
+document.getElementById('profil_brand').addEventListener('change', function() {
+    var selectedOption = this.options[this.selectedIndex];
+    var colorHex = selectedOption.getAttribute('data-color');
+    
+    if (colorHex) {
+        document.getElementById('color').value = colorHex;
+    } else {
+        document.getElementById('color').value = '#000000'; // Valeur par défaut si aucune couleur n'est trouvée
+    }
+});
