@@ -6,6 +6,9 @@ chartData.forEach(function (row) {
 // Génération du graphique
 
 if (!chartData || chartData.length === 0) {
+    var width = window.innerWidth < 768 ? 375 : 450; // Si l'écran est plus petit que 768px, utiliser 300px sinon 600px
+    var height = window.innerWidth < 768 ? 250 : 300; // Hauteur en fonction de la largeur
+
     // Si aucune donnée, on crée un donut grisé
     var chart = c3.generate({
         bindto: '#chart',
@@ -28,8 +31,8 @@ if (!chartData || chartData.length === 0) {
             }
         },
         size: {
-            width: 600,
-            height: 400
+            width: width,
+            height: height
         },
         padding: {
             right: 20,
@@ -57,8 +60,8 @@ if (!chartData || chartData.length === 0) {
             }
         },
         size: {
-            width: 600, // Ajuster la largeur du graphique
-            height: 400 // Ajuster la hauteur si nécessaire
+            width: width, // Ajuster la largeur du graphique
+            height: height // Ajuster la hauteur si nécessaire
         },
         padding: {
             right: 20,
