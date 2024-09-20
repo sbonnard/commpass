@@ -221,11 +221,11 @@ if ($_POST['action'] === 'modify-pwd') {
             'id_operation' => intval($_POST['id_operation'])
         ];
 
-        var_dump($operationBindValues);
+        // var_dump($operationBindValues);
 
         $isUpdateOk = $queryOperation->execute($operationBindValues);
 
-        var_dump($isUpdateOk);
+        // var_dump($isUpdateOk);
 
         if ($isUpdateOk) {
             $queryBrand = $dbCo->prepare(
@@ -233,18 +233,18 @@ if ($_POST['action'] === 'modify-pwd') {
                 SET id_brand = :id_brand WHERE id_operation = :id_operation;'
             );
 
-            var_dump($queryBrand);
+            // var_dump($queryBrand);
 
             $brandBindValues = [
                 'id_brand' => intval($_POST['operation_brand']),
                 'id_operation' => intval($_POST['id_operation'])
             ];
 
-            var_dump($brandBindValues);
+            // var_dump($brandBindValues);
 
             $isBrandUpdateOk = $queryBrand->execute($brandBindValues);
 
-            var_dump($isBrandUpdateOk);
+            // var_dump($isBrandUpdateOk);
 
             if (!$isBrandUpdateOk) {
                 $errorInfo = $queryBrand->errorInfo();
@@ -269,4 +269,4 @@ if ($_POST['action'] === 'modify-pwd') {
     }
 }
 
-// redirectTo('dashboard.php');
+redirectTo('dashboard.php');
