@@ -366,7 +366,11 @@ function getCampaignOperationsAsList(array $operations, array $session, array $s
             ' ⮕ ' . formatPrice(floatval($operation['price']), '€') . ' H.T.';
 
         if (isset($session['client']) && $session['client'] === 0) {
-            $operationsList .= '<span class="operation__edit-link"><a href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '&myo=' . $operation['id_operation'] . '"> - Éditer</a></span>';
+            $operationsList .= 
+            '<span class="flex-row">
+                <a class="operation__edit-link" href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '&myo=' . $operation['id_operation'] . '" title="Éditer l\'opération ' . $operation['description'] . '" aria-label="Éditer l\opération  ' . $operation['description'] . '"> - Éditer</a>
+                 | 
+                <a href="api.php?action=delete_op&operation=' . $operation['id_operation'] . '" class="button--trash" title="Supprimer l\'opération ' . $operation['description'] . '" aria-label="Supprimer l\opération  ' . $operation['description'] . '"></a></span>';
         }
 
         $operationsList .= '</p></li>';
