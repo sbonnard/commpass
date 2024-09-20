@@ -73,35 +73,3 @@ function fetchCampaignsByDate(dateFrom, dateTo) {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// DELETE OPERATION
-document.addEventListener('DOMContentLoaded', function() {
-    // Sélectionner tous les boutons de suppression
-    const deleteButtons = document.querySelectorAll('.button--trash');
-
-    // Attacher un écouteur d'événements pour chaque bouton
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            const operationId = this.getAttribute('data-delete-operation-id');
-
-            if (confirm('Êtes-vous sûr de vouloir supprimer cette opération ?')) {
-                fetch(`../api.php?action=delete_op&operation=${operationId}`, {
-                    method: 'GET', // Utilisation de GET
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('L\'opération a été supprimée.');
-                        location.reload(); // Rafraîchir la page
-                    } else {
-                        alert('Erreur lors de la suppression : ' + (data.errors || 'Erreur inconnue.'));
-                    }
-                })
-                .catch(error => console.error('Erreur:', error));
-            }
-        });
-    });
-});

@@ -362,7 +362,7 @@ function getCampaignOperationsAsList(array $operations, array $session, array $s
 
     foreach ($operations as $operation) {
         $operationsList .= '
-            <li class="operation"><h4 class="operation__date">' . formatDate($operation['date_']) . '</h4>
+            <li class="operation" data-js-operation="operation"><h4 class="operation__date">' . formatDate($operation['date_']) . '</h4>
             <p class="campaign__operation"><span class="campaign__legend-square" style="background-color:' . $operation['legend_colour_hex'] . '"></span>' . $operation['description'] .
             ' ⮕ ' . formatPrice(floatval($operation['price']), '€') . ' H.T.';
 
@@ -371,7 +371,10 @@ function getCampaignOperationsAsList(array $operations, array $session, array $s
                 '<span class="flex-row operation__row">
                 <a class="operation__edit-link" href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '&myo=' . $operation['id_operation'] . '" title="Éditer l\'opération ' . $operation['description'] . '" aria-label="Éditer l\opération  ' . $operation['description'] . '"> - Éditer</a>
                  | 
-               <a href="api.php?action=delete_op&operation=' . $operation['id_operation'] . '" class="button--trash" title="Supprimer l\'opération ' . $operation['description'] . ' "aria-label="Supprimer l\'opération ' . $operation['description'] . '" data-delete-operation-id="' . $operation['id_operation'] . '"></a>';
+                <button class="js-trash button--trash" 
+        title="Supprimer l\'opération ' . $operation['description'] . ' " 
+        aria-label="Supprimer l\'opération' . $operation['description'] . '" 
+        id="' . $operation['id_operation'] . '"></button>';
         }
 
         $operationsList .= '</p></li>';

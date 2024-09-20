@@ -176,8 +176,9 @@ $jsonData = json_encode($chartData);
 </body>
 
 <script type="module" src="js/script.js"></script>
-<script type="module" src="js/campaigns.js"></script>
+<script type="module" src="js/cards.js"></script>
 <script type="module" src="js/filter.js"></script>
+<script type="module" src="js/ajax-operation.js"></script>
 <script>
     // Récupération des données PHP
     var chartData = <?php echo $jsonData; ?>;
