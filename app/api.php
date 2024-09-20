@@ -9,7 +9,7 @@ header('Content-Type: application/json');
 
 if (isset($_POST['id_company'])) {
     $idCompany = $_POST['id_company'];
-
+    
     $query = $dbCo->prepare(
         'SELECT id_user, firstname, lastname
         FROM users
@@ -17,11 +17,12 @@ if (isset($_POST['id_company'])) {
         ORDER BY firstname;'
     );
     $query->execute(['idCompany' => $idCompany]);
-
+    
     $users = $query->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($users);
+    
 } else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-
+    
     $inputData = json_decode(file_get_contents('php://input'), true);
     // parse_str(file_get_contents("php://input"), $inputData);
 
@@ -34,7 +35,8 @@ if (isset($_POST['id_company'])) {
         global $errors;
         $errors = [];
 
-        var_dump($operationId, empty($operationId));
+        // var_dump($operationId, empty($operationId));
+        // exit;
 
         if (empty($operationId)) {
             $errors[] = 'ID de l\'opération manquant.';

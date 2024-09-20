@@ -94,7 +94,7 @@ CREATE TABLE operation_brand(
 INSERT INTO company (company_name) 
 VALUES ("Toile de Com"), ("FakeBusiness"), ("Luminase"), ("Groupe Pignon"), ("Nerexam Solutions");
 
-INSERT INTO brand (brand_name, legend_colour_hex, id_brand) 
+INSERT INTO brand (brand_name, legend_colour_hex, id_company) 
 VALUES ("Lumosphère", "#DF0000", 1), ("Vélocitix", "#DBDF00", 1), ("Stellar Threads", "#39B526", 1), ("Aurélys", "#D74A6B", 1), ("Nexmus", "#F58916", 2), ("Cafés Geronimo", "#4F3623", 2), ("Fripig", "#2E3F92", 3), ("Maxstock", "#2E928A", 3);
 
 INSERT INTO users (username, firstname, lastname, password, email, phone, client, id_company)
