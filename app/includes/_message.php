@@ -6,7 +6,8 @@ $messages = [
     'update_ok_phone' => 'Numéro de téléphone mis à jour!',
     'campaign_created_ok' => 'Nouvelle campagne créée.',
     'operation_created_ok' => 'Opération créée avec succès.',
-    'operation_update_ok' => 'Opération mise à jour avec succès.'
+    'operation_update_ok' => 'Opération mise à jour avec succès.',
+    'delete_operation_ok' => 'Opération supprimée avec succès.'
 ];
 
 $errors = [
@@ -34,7 +35,8 @@ $errors = [
     'operation_creation_ko' => 'Échec de la création de l\'opération.',
     'campaign_id_ko' => 'Veuillez sélectionner une campagne valide.',
     'operation_id_ko' => 'Veuillez sélectionner une opération valide.',
-    'operation_update_ko' => 'Erreur lors de la mise à jour de l\'opération.'
+    'operation_update_ko' => 'Erreur lors de la mise à jour de l\'opération.',
+    'delete_operation_ko' => 'Erreur lors de la suppression de l\'opération.'
 ];
 
 
