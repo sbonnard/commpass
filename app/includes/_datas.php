@@ -32,3 +32,5 @@ $brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);
 $companyBrands = getCompanyBrands($dbCo, $_GET);
 
 $operation = getAllOperationsFromACampaign($dbCo, $_GET);
+
+$communicationObjectives = fetchCampaignTarget($dbCo);

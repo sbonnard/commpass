@@ -20,6 +20,14 @@
                 gap: 4.25rem;
                 width: 100%;
             }
+
+            &--row {
+                display: flex;
+                flex-direction: row;
+                gap: 4.25rem;
+                width: 100%;
+                padding: 1rem 4rem 0.25rem 4rem;
+            }
         }
 
         &--app {
