@@ -98,6 +98,7 @@ $jsonChartColors = json_encode($chartColors);
                         <li class="form__itm">
                             <label for="client-filter">Sélectionner un client</label>
                             <select class="form__input form__input--select" type="date" name="client-filter" id="client-filter" required>
+                                <?= getCompaniesAsHTMLOptions($companies) ?>
                             </select>
                         </li>
                         <li class="form__itm">

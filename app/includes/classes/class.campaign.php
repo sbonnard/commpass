@@ -73,9 +73,10 @@ function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session): array
     if (isset($session['client']) && $session['client'] === 0 && $session['boss'] === 1) {
         // Si l'utilisateur est le gérant de l'entreprise Toile de Com.
         $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, budget, date, company_name, YEAR(date) AS year
+            'SELECT id_campaign, campaign_name, budget, date, company_name, YEAR(date) AS year, target.id_target, target_com
             FROM campaign
                 JOIN company USING (id_company)
+                JOIN target USING (id_target)
             HAVING year = YEAR(CURDATE())
             ORDER BY date DESC;'
         );
@@ -84,8 +85,9 @@ function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session): array
     } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
         // Si l'utilisateur est un client mais qu'il est aussi le gérant de l'entreprise cliente.
         $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year
+            'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year, target.id_target, target_com
             FROM campaign
+                JOIN target USING (id_target)
             WHERE id_company = :id
             HAVING year = YEAR(CURDATE())
             ORDER BY date DESC;'
@@ -97,8 +99,9 @@ function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session): array
     } else {
         // Si l'utilisateur est un client mais qu'il n'est pas gérant de l'entreprise. Il est donc simple interlocuteur sur ses campagnes.
         $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year
+            'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year, target.id_target, target_com
             FROM campaign
+                JOIN target USING (id_target)
             WHERE id_company = :id AND id_user = :id_user
             HAVING year = YEAR(CURDATE())
             ORDER BY date DESC;'
@@ -133,9 +136,10 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session): array
     if (isset($session['client']) && $session['client'] === 0 && $session['boss'] === 1) {
         // Si l'utilisateur est le gérant de l'entreprise Toile de Com.
         $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, budget, date, company_name, YEAR(date) AS year
+            'SELECT id_campaign, campaign_name, budget, date, company_name, YEAR(date) AS year, target.id_target, target_com
             FROM campaign
                 JOIN company USING (id_company)
+                JOIN target USING (id_target)
             HAVING year != YEAR(CURDATE())
             ORDER BY date DESC;'
         );
@@ -144,8 +148,9 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session): array
     } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
         // Si l'utilisateur est un client mais qu'il est aussi le gérant de l'entreprise cliente.
         $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year
+            'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year, target.id_target, target_com
             FROM campaign
+                JOIN target USING (id_target)
             WHERE id_company = :id
             HAVING year != YEAR(CURDATE())
             ORDER BY date DESC;'
@@ -157,8 +162,9 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session): array
     } else {
         // Si l'utilisateur est un client mais qu'il n'est pas gérant de l'entreprise. Il est donc simple interlocuteur sur ses campagnes.
         $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year
+            'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year, target.id_target, target_com
             FROM campaign
+                JOIN target USING (id_target)
             WHERE id_company = :id AND id_user = :id_user
             HAVING year != YEAR(CURDATE())
             ORDER BY date DESC;'
@@ -199,6 +205,7 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $session): strin
                 <div class="campaign__ttl">
                     <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . ' - ' . getYearOnly($dbCo, $campaign) . '</h3>'
             . getCompanyNameIfTDC($campaign, $session) .
+            $campaign['target_com'] .
             '</div>
                 <div class="campaign__stats">
 
@@ -593,6 +600,23 @@ function getTargetsAsHTMLOptions(array $targets): string {
 
     foreach ($targets as $target) {
         $options.= '<option value="'. $target['id_target']. '">'. $target['target_com']. '</option>';
+    }
+
+    return $options;
+}
+
+
+/**
+ * get companies as HTML options.
+ *
+ * @param array $targets - An array containing clients.
+ * @return string - HTML options for clients.
+ */
+function getCompaniesAsHTMLOptions(array $companies): string {
+    $options = '<option value="">- Sélectionner un client -</option>';
+
+    foreach ($companies as $company) {
+        $options.= '<option value="'. $company['id_company']. '">'. $company['company_name']. '</option>';
     }
 
     return $options;

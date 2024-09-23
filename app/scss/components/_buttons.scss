@@ -38,10 +38,9 @@
         color: $tertiary;
         background-image: url(../../img/filter-btn.svg);
 
-        &--primary {
+        &:hover {
             background-image: url(../../img/filter-btn-primary.svg);
             color: $primary;
-            border: 2px solid $primary;
         }
     }
 
