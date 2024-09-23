@@ -60,17 +60,9 @@ function formatPrice(float|int $price, string $currency): string
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FUNCTIONS TO FORMAT DATES
 
-/**
- * Sanitize input data to prevent XSS attacks. Remove any potentially harmful characters and escape HTML special characters.
- *
- * @param string $input - The input string to sanitize.
- * @return string - The sanitized input string.
- */
-function sanitizeInput(string $input): string
-{
-    return trim(htmlspecialchars($input, ENT_QUOTES, 'UTF-8'));
-}
 
 /**
  * Format a month and year into a readable French format. Example : '2024-12' -> 'Décembre 2024'.
@@ -78,7 +70,7 @@ function sanitizeInput(string $input): string
  * @param string $yearAndMonth - The year and month to format.
  * @return string - The formatted date string.
  */
-function formatDate(string $yearMonthDay): string
+function formatFrenchDate(string $yearMonthDay): string
 {
     [$year, $month, $day] = explode('-', $yearMonthDay);
 
@@ -100,6 +92,29 @@ function formatDate(string $yearMonthDay): string
     $monthName = $months[$month] ?? 'Mois inconnu';
     return $day . ' ' . $monthName . ' ' . $year;
 }
+
+
+function getYearOnly(PDO $dbCo, array $campaign)
+{
+    $queryYear = $dbCo->prepare(
+        'SELECT YEAR(date) AS year
+        FROM campaign
+        WHERE id_campaign = :id_campaign;'
+    );
+
+    $bindValues = [
+        'id_campaign' => intval($campaign['id_campaign'])
+    ];
+
+    $queryYear->execute($bindValues);
+
+    $result = $queryYear->fetch(PDO::FETCH_ASSOC);
+
+    return implode('', $result);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FUNCTIONS TO GET DATAS AS A TABLE 
 
 /**
  * Generates a table from operations datas and brands.

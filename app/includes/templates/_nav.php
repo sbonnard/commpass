@@ -7,12 +7,15 @@
  * @param string $profilActive - Makes profil active.
  * @return string - Class name that will be applied to the navigation menu.
  */
-function fetchNav(string $dashboardActive = '', string $profilActive = ''):string {
+function fetchNav(string $dashboardActive = '', string $historyActive = '', string $profilActive = ''):string {
     if(isset($_SESSION['id_user'])) {
         return '
             <ul class="nav__lst" id="nav-list">
                 <li class="nav__itm '.$dashboardActive.'">
-                    <a href="dashboard.php" class="nav__lnk" aria-label="Lien vers le tableau de bord contenant les campagnes de communications">Tableau de bord</a>
+                    <a href="dashboard.php" class="nav__lnk" aria-label="Lien vers le tableau de bord contenant les campagnes de communications de l\'année en cours">Tableau de bord</a>
+                </li>
+                <li class="nav__itm '.$historyActive.'">
+                    <a href="history.php" class="nav__lnk" aria-label="Lien vers l\'historique des campagnes">Historique</a>
                 </li>
                 <li class="nav__itm '.$profilActive.'">
                     <a href="profil.php" class="nav__lnk" aria-label="Lien vers mon profil d\'utilisateur">Mon profil</a>

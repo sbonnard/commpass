@@ -19,6 +19,10 @@ $companies = fetchAllCompanies($dbCo, $_SESSION);
 
 $campaigns = getCompanyCampaigns($dbCo, $_SESSION);
 
+$currentYearCampaigns = getCompanyCampaignsCurrentYear($dbCo, $_SESSION, '=', date('Y'));
+
+$pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, '!=', date('Y'));
+
 $selectedCampaign = getOneCampaignDatas($dbCo, $_GET);
 
 $campaignOperations = getCampaignOperations($dbCo, $_GET);

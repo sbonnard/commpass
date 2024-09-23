@@ -67,7 +67,7 @@ $jsonChartColors = json_encode($chartColors);
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav('nav__itm--active') ?>
+        <?= fetchNav('', 'nav__itm--active') ?>
     </nav>
 
     <main class="container container--campaigns container__flex">
@@ -83,34 +83,9 @@ $jsonChartColors = json_encode($chartColors);
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>
 
-        <div class="button__section">
-            <?php
-            if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                echo '<a href="new-campaign.php" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>';
-            }
-            ?>
-            <button class="button button--filter" id="filter-button" aria-label="Ouvre un formulaire de filtres">Filtres</button>
-        </div>
-
-        <div class="hidden" id="filter-container">
-            <form class="card__section form hidden" action="api.php" method="post" id="filter-form" aria-label="Formulaire pour filtrer les campagnes">
-                <ul class="form__lst form__lst--app">
-                    <li>
-                        <input class="form__input form__input--from" type="date" name="date-from" id="date-from">
-                    </li>
-                    <li>
-                        <input class="form__input form__input--to" type="date" name="date-to" id="date-to">
-                    </li>
-                    <input class="button button--filter button--filter--primary" type="submit" value="Filtrer" aria-label="Valider la création de la nouvelle campagne">
-                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                    <input type="hidden" name="action" value="filter-campaigns">
-                </ul>
-            </form>
-        </div>
-
         <section class="card campaign">
             <?= getMessageIfNoCampaign($campaigns) ?>
-            <?= getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION) ?>
+            <?= getCampaignTemplate($dbCo, $pastYearsCampaigns, $_SESSION) ?>
 
             <?php
             // var_dump($_SESSION);

@@ -48,7 +48,7 @@ checkConnection($_SESSION);
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav('', 'nav__itm--active') ?>
+        <?= fetchNav('', '', 'nav__itm--active') ?>
     </nav>
 
 
@@ -71,32 +71,37 @@ checkConnection($_SESSION);
             </section>
         </div>
 
-        <div class="card">
-            <h2 class="ttl" id="my-brands">Mes marques</h2>
-            <section class="card__section profil__modify" aria-labelledby="my-brands">
-                <ul class="profil__brands">
-                    <?= getBrandsAsList(fetchCompanyBrands($dbCo, $_SESSION)) ?>
-                </ul>
-                <form action="actions.php" method="post">
-                    <ul class="form__lst form__lst--app">
-                        <li class="form__itm form__itm--app">
-                            <label class="form__label" for="profile_brand" aria-label="Sélectionner la marque concernée">Sélectionnez la marque à modifier</label>
-                            <select class="form__input form__input--select" type="text" name="profile_brand" id="profile_brand" required aria-label="Sélectionner l'entreprise lançant une nouvelle campagne">
-                                <option value="">- Sélectionner une marque -</option>
-                                <?= getCompanyBrandsAsHTMLOptions(fetchCompanyBrands($dbCo, $_SESSION)); ?>
-                            </select>
-                        </li>
-                        <li class="form__itm form__itm--app">
-                            <label class="form__label" for="color" aria-label="Sélectionner la marque concernée">Nouvelle couleur de la marque</label>
-                            <input class="form__input--colour" type="color" name="color" id="color" value="">
-                        </li>
-                        <input class="button button--confirm" type="submit" value="Confirmer" aria-label="Confirmer la modification de la couleur">
-                        <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                        <input type="hidden" name="action" value="modify-colour">
+        <?php
+        if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
+            echo
+            '<div class="card">
+                <h2 class="ttl" id="my-brands">Mes marques</h2>
+                <section class="card__section profil__modify" aria-labelledby="my-brands">
+                    <ul class="profil__brands">
+                        ' . getBrandsAsList(fetchCompanyBrands($dbCo, $_SESSION)) . '
                     </ul>
-                </form>
-            </section>
-        </div>
+                    <form action="actions.php" method="post">
+                        <ul class="form__lst form__lst--app">
+                            <li class="form__itm form__itm--app">
+                                <label class="form__label" for="profile_brand" aria-label="Sélectionner la marque concernée">Sélectionnez la marque à modifier</label>
+                                <select class="form__input form__input--select" type="text" name="profile_brand" id="profile_brand" required aria-label="Sélectionner l\'entreprise lançant une nouvelle campagne">
+                                    <option value="">- Sélectionner une marque -</option>
+                                    ' . getCompanyBrandsAsHTMLOptions(fetchCompanyBrands($dbCo, $_SESSION)) . '
+                                </select>
+                            </li>
+                            <li class="form__itm form__itm--app">
+                                <label class="form__label" for="color" aria-label="Sélectionner la marque concernée">Nouvelle couleur de la marque</label>
+                                <input class="form__input--colour" type="color" name="color" id="color" value="">
+                            </li>
+                            <input class="button button--confirm" type="submit" value="Confirmer" aria-label="Confirmer la modification de la couleur">
+                            <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
+                            <input type="hidden" name="action" value="modify-colour">
+                        </ul>
+                    </form>
+                </section>
+            </div>';
+        }
+        ?>
 
         <div class="card">
             <h2 class="ttl" id="modify-infos">Modifier</h2>

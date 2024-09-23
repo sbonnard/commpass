@@ -133,3 +133,14 @@ function checkOperationFormDatas():void {
         exit;
     }
 }
+
+/**
+ * Sanitize input data to prevent XSS attacks. Remove any potentially harmful characters and escape HTML special characters.
+ *
+ * @param string $input - The input string to sanitize.
+ * @return string - The sanitized input string.
+ */
+function sanitizeInput(string $input): string
+{
+    return trim(htmlspecialchars($input, ENT_QUOTES, 'UTF-8'));
+}

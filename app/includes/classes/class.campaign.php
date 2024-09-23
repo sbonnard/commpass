@@ -58,6 +58,114 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
 
 
 
+function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session): array
+{
+    if (!isset($session['client'], $session['boss'], $session['id_company'], $session['id_user'])) {
+        return [];
+    }
+
+    if (isset($session['client']) && $session['client'] === 0 && $session['boss'] === 1) {
+        // Si l'utilisateur est le gérant de l'entreprise Toile de Com.
+        $queryCampaigns = $dbCo->prepare(
+            'SELECT id_campaign, campaign_name, budget, date, company_name, YEAR(date) AS year
+            FROM campaign
+                JOIN company USING (id_company)
+            HAVING year = YEAR(CURDATE())
+            ORDER BY date DESC;'
+        );
+
+        $bindValues = [];
+    } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
+        // Si l'utilisateur est un client mais qu'il est aussi le gérant de l'entreprise cliente.
+        $queryCampaigns = $dbCo->prepare(
+            'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year
+            FROM campaign
+            WHERE id_company = :id
+            HAVING year = YEAR(CURDATE())
+            ORDER BY date DESC;'
+        );
+
+        $bindValues = [
+            'id' => intval($session['id_company'])
+        ];
+    } else {
+        // Si l'utilisateur est un client mais qu'il n'est pas gérant de l'entreprise. Il est donc simple interlocuteur sur ses campagnes.
+        $queryCampaigns = $dbCo->prepare(
+            'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year
+            FROM campaign
+            WHERE id_company = :id AND id_user = :id_user
+            HAVING year = YEAR(CURDATE())
+            ORDER BY date DESC;'
+        );
+        $bindValues = [
+            'id' => intval($session['id_company']),
+            'id_user' => intval($session['id_user'])
+        ];
+    }
+
+    $queryCampaigns->execute($bindValues);
+
+    $campaignDatas = $queryCampaigns->fetchAll(PDO::FETCH_ASSOC);
+
+    return $campaignDatas;
+}
+
+
+
+function getCompanyCampaignsPastYears(PDO $dbCo, array $session): array
+{
+    if (!isset($session['client'], $session['boss'], $session['id_company'], $session['id_user'])) {
+        return [];
+    }
+
+    if (isset($session['client']) && $session['client'] === 0 && $session['boss'] === 1) {
+        // Si l'utilisateur est le gérant de l'entreprise Toile de Com.
+        $queryCampaigns = $dbCo->prepare(
+            'SELECT id_campaign, campaign_name, budget, date, company_name, YEAR(date) AS year
+            FROM campaign
+                JOIN company USING (id_company)
+            HAVING year != YEAR(CURDATE())
+            ORDER BY date DESC;'
+        );
+
+        $bindValues = [];
+    } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
+        // Si l'utilisateur est un client mais qu'il est aussi le gérant de l'entreprise cliente.
+        $queryCampaigns = $dbCo->prepare(
+            'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year
+            FROM campaign
+            WHERE id_company = :id
+            HAVING year != YEAR(CURDATE())
+            ORDER BY date DESC;'
+        );
+
+        $bindValues = [
+            'id' => intval($session['id_company'])
+        ];
+    } else {
+        // Si l'utilisateur est un client mais qu'il n'est pas gérant de l'entreprise. Il est donc simple interlocuteur sur ses campagnes.
+        $queryCampaigns = $dbCo->prepare(
+            'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year
+            FROM campaign
+            WHERE id_company = :id AND id_user = :id_user
+            HAVING year != YEAR(CURDATE())
+            ORDER BY date DESC;'
+        );
+        $bindValues = [
+            'id' => intval($session['id_company']),
+            'id_user' => intval($session['id_user'])
+        ];
+    }
+
+    $queryCampaigns->execute($bindValues);
+
+    $campaignDatas = $queryCampaigns->fetchAll(PDO::FETCH_ASSOC);
+
+    return $campaignDatas;
+}
+
+
+
 /**
  * Get HTML template for a campaign displaying most important infos.
  *
@@ -77,7 +185,7 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $session): strin
         <a href="campaign.php?myc=' . $campaignId . '">
             <div class="card__section" data-card="">
                 <div class="campaign__ttl">
-                    <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>'
+                    <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . ' - ' . getYearOnly($dbCo, $campaign) . '</h3>'
             . getCompanyNameIfTDC($campaign, $session) .
             '</div>
                 <div class="campaign__stats">
@@ -360,7 +468,7 @@ function getCampaignOperationsAsList(array $operations, array $session, array $s
 
     foreach ($operations as $operation) {
         $operationsList .= '
-            <li class="operation" data-js-operation="operation"><h4 class="operation__date">' . formatDate($operation['date_']) . '</h4>
+            <li class="operation" data-js-operation="operation"><h4 class="operation__date">' . formatFrenchDate($operation['date_']) . '</h4>
             <p class="campaign__operation"><span class="campaign__legend-square" style="background-color:' . $operation['legend_colour_hex'] . '"></span>' . $operation['description'] .
             ' ⮕ ' . formatPrice(floatval($operation['price']), '€') . ' H.T.';
 
