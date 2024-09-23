@@ -22,3 +22,18 @@
     align-items: center;
     gap: 1rem;
 }
+
+#filter-form {
+    position: relative;
+}
+
+#reinit-form {
+    position:absolute;
+    bottom: 10%;
+    right: 30%;
+
+    @media screen and (max-width: 768px) {
+        bottom: 8%;
+        right: 5%;
+    }
+}

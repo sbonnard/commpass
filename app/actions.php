@@ -307,5 +307,17 @@ if ($_POST['action'] === 'modify-pwd') {
         redirectTo('profil.php');
         exit;
     }
+} else if ($_POST['action'] === 'filter-campaigns') {
+    if (!isset($_POST['client-filter']) || empty($_POST['client-filter'])) {
+        addError('no_client');
+        redirectTo('dashboard.php');
+        exit;
+    }
+
+    $_SESSION['filter']['id_company'] = intval($_POST['client-filter']);
+
+    if (!empty($_POST['filter']['target-filter'])) {
+        $_SESSION['filter']['target-filter'] = intval($_POST['filter']['target-filter']);
+    }
 }
 redirectTo('dashboard.php');

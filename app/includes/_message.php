@@ -40,7 +40,8 @@ $errors = [
     'delete_operation_ko' => 'Erreur lors de la suppression de l\'opération.',
     'brand_ko' => 'Veuillez saisir une marque valide.',
     'colour_ko' => 'Veuillez saisir une couleur valide.',
-    'update_ko_colour' => 'Erreur lors de la mise à jour de la couleur de la marque.'
+    'update_ko_colour' => 'Erreur lors de la mise à jour de la couleur de la marque.',
+    'no_client' => 'Aucun client n\'a été trouvé.',
 ];
 
 

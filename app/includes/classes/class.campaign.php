@@ -64,7 +64,7 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
  * @param array $session - Superglobal $_SESSION. 
  * @return array - array of campaigns for current year.
  */
-function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session): array
+function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session, string $id_company): array
 {
     if (!isset($session['client'], $session['boss'], $session['id_company'], $session['id_user'])) {
         return [];
@@ -182,6 +182,43 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session): array
     return $campaignDatas;
 }
 
+
+function getCompanyFilteredCampaigns(PDO $dbCo, array $session): array
+{
+    if (!isset($session['client'], $session['boss'], $session['id_company'], $session['id_user'])) {
+        return [];
+    }
+
+    if ($session['client'] === 0 && isset($session['filter']['id_company'])) {
+        $query = '
+            SELECT id_campaign, campaign_name, budget, date, company_name, YEAR(date) AS year, target.id_target, target_com
+            FROM campaign
+                JOIN company USING (id_company)
+                JOIN target USING (id_target)
+            WHERE id_company = :id_company ';
+
+        if (isset($session['filter']['id_target'])) {
+            $query .= 'AND id_target = :id_target ';
+        }
+
+        $query .= 'HAVING year = YEAR(CURDATE())
+            ORDER BY id_company, date DESC;';
+
+        $queryCampaigns = $dbCo->prepare($query);
+
+        $bindValues = ['id_company' => intval($session['filter']['id_company'])];
+
+        if (isset($session['filter']['id_target'])) {
+            $bindValues['id_target'] = intval($session['filter']['id_target']);
+        }
+
+        $queryCampaigns->execute($bindValues);
+
+        return $queryCampaigns->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    return [];
+}
 
 
 /**
@@ -583,7 +620,8 @@ function filterCampaigns(PDO $dbCo, array $campaigns)
  * @param PDO $dbCo - Connection to database.
  * @return array - An array containing all 3 objectives for a communication campaign.
  */
-function fetchCampaignTarget(PDO $dbCo): array {
+function fetchCampaignTarget(PDO $dbCo): array
+{
     $queryTarget = $dbCo->query('SELECT * FROM target');
 
     return $queryTarget->fetchAll(PDO::FETCH_ASSOC);
@@ -595,11 +633,12 @@ function fetchCampaignTarget(PDO $dbCo): array {
  * @param array $targets - An array containing all 3 objectives for a communication campaign.
  * @return string - HTML options for objectives.
  */
-function getTargetsAsHTMLOptions(array $targets): string {
+function getTargetsAsHTMLOptions(array $targets): string
+{
     $options = '<option value="">- Sélectionner un objectif -</option>';
 
     foreach ($targets as $target) {
-        $options.= '<option value="'. $target['id_target']. '">'. $target['target_com']. '</option>';
+        $options .= '<option value="' . $target['id_target'] . '">' . $target['target_com'] . '</option>';
     }
 
     return $options;
@@ -612,11 +651,12 @@ function getTargetsAsHTMLOptions(array $targets): string {
  * @param array $targets - An array containing clients.
  * @return string - HTML options for clients.
  */
-function getCompaniesAsHTMLOptions(array $companies): string {
+function getCompaniesAsHTMLOptions(array $companies): string
+{
     $options = '<option value="">- Sélectionner un client -</option>';
 
     foreach ($companies as $company) {
-        $options.= '<option value="'. $company['id_company']. '">'. $company['company_name']. '</option>';
+        $options .= '<option value="' . $company['id_company'] . '">' . $company['company_name'] . '</option>';
     }
 
     return $options;

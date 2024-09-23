@@ -44,6 +44,20 @@
         }
     }
 
+    &--reinit {
+        width: 3rem;
+        aspect-ratio: 1;
+        padding: 0;
+        background-image: url(../img/reinit-btn.svg);
+        background-position: center;
+        border: 2px solid $primary;
+
+        &:hover {
+            background-image: url(../../img/reinit-btn-hover.svg);
+            border: 2px solid $tertiary;
+        }
+    }
+
     &--close {
         width: 100%;
         text-align: end;

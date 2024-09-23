@@ -109,6 +109,9 @@ function getCompanyNameForNewOp(PDO $dbCo, array $get)
 }
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// BUDGET CALCULATIONS 
+
 /**
  * Fetch annual budget of a company from the database.
  *
@@ -117,7 +120,7 @@ function getCompanyNameForNewOp(PDO $dbCo, array $get)
  * @param array $get - Superglobal $_GET.
  * @return string - Returns the annual budget of the company.
  */
-function fetchCompanyAnnualBudget(PDO $dbCo, array $session, array $get): string
+function fetchCompanyAnnualBudget(PDO $dbCo, array $session): string
 {
     $query = $dbCo->prepare(
         'SELECT annual_budget
@@ -125,10 +128,10 @@ function fetchCompanyAnnualBudget(PDO $dbCo, array $session, array $get): string
         WHERE id_company = :id_company;'
     );
 
-    if (isset($session['id_company'])) {
+    if (isset($session['id_company']) && $session['id_company'] !== 1) {
         $bindValues = ['id_company' => intval($session['id_company'])];
-    } else if (isset($get['comp'])) {
-        $bindValues = ['id_company' => intval($get['comp'])];
+    } else if (isset($session['filter']) && isset($session['filter']['id_company']) && $session['filter']['id_company'] !== 1) {
+        $bindValues = ['id_company' => intval($session['filter']['id_company'])];
     }
 
     $query->execute($bindValues);
@@ -160,7 +163,7 @@ function calculateAnnualSpentBudget(PDO $dbCo, array $session): string
 
     if (isset($session['id_company']) && $session['id_company'] !== 1) {
         $bindValues = ['id_company' => intval($session['id_company'])];
-    } else if (isset($session['id_company']) && $session['id_company'] === 1 && isset($session['filter']['id_company'])) {
+    } else if (isset($session['id_company']) && $session['id_company'] === 1 && isset($session['filter']['id_company']) && $session['filter']['id_company'] !== 1) {
         $bindValues = ['id_company' => intval($session['filter']['id_company'])];
     } else {
         $bindValues = ['id_company' => 1];
@@ -193,9 +196,9 @@ function calculateAnnualRemainingBudget(PDO $dbCo, array $session): string
         GROUP BY company.id_company;'
     );
 
-    if (isset($session['id_company'])) {
+    if (isset($session['id_company']) && $session['id_company'] !== 1) {
         $bindValues = ['id_company' => intval($session['id_company'])];
-    } else if (isset($session['id_company']) && $session['id_company'] === 1 && isset($session['filter']['id_company'])) {
+    } else if (isset($session['id_company']) && $session['id_company'] === 1 && isset($session['filter']['id_company']) &&  $session['filter']['id_company'] !== 1) {
         $bindValues = ['id_company' => intval($session['filter']['id_company'])];
     }
 

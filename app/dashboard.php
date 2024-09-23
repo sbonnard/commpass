@@ -49,6 +49,7 @@ foreach ($campaignResults as $campaignData) {
 
 $jsonChartData = json_encode($chartData);
 $jsonChartColors = json_encode($chartColors);
+
 ?>
 
 <!DOCTYPE html>
@@ -83,32 +84,6 @@ $jsonChartColors = json_encode($chartColors);
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>
 
-        <div class="card">
-            <section class="card__section">
-                <h3 class="ttl ttl--budget">Budgets de <?= $currentYear ?></h3>
-            <div class="vignettes-section vignettes-section--row">
-                        <div class="vignette vignette--bigger vignette--primary">
-                            <h4 class="vignette__ttl vignette__ttl--big">
-                                Budget annuel
-                            </h4>
-                            <p class="vignette__price vignette__price--big"><?= formatPrice(fetchCompanyAnnualBudget($dbCo, $_SESSION, $_GET), "€"); ?></p>
-                        </div>
-                        <div class="vignette vignette--bigger vignette--secondary">
-                            <h4 class="vignette__ttl vignette__ttl--big">
-                                Budget dépensé
-                            </h4>
-                            <p class="vignette__price vignette__price--big"><?= formatPrice(calculateAnnualSpentBudget($dbCo, $_SESSION, $_GET), '€') ?></p>
-                        </div>
-                        <div class="vignette vignette--bigger vignette--tertiary">
-                            <h4 class="vignette__ttl vignette__ttl--big">
-                                Budget restant
-                            </h4>
-                            <p class="vignette__price vignette__price--big"><?= formatPrice(calculateAnnualRemainingBudget($dbCo, $_SESSION), '€') ?></p>
-                        </div>
-                    </div>
-            </section>
-        </div>
-
         <div class="button__section">
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
@@ -121,9 +96,9 @@ $jsonChartColors = json_encode($chartColors);
         if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
             echo
             '<div class="card">
-                <form class="card__section" action="actions.php" method="post">
+                <form class="card__section" action="actions.php" method="post" id="filter-form">
                     <ul class="form__lst form__lst--app">
-                        <div class="form__lst--row">
+                        <div class="form__lst--flex">
                             <li class="form__itm">
                                 <label for="client-filter">Sélectionner un client</label>
                                 <select class="form__input form__input--select" type="date" name="client-filter" id="client-filter" required>
@@ -141,13 +116,55 @@ $jsonChartColors = json_encode($chartColors);
                         <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
                         <input type="hidden" name="action" value="filter-campaigns">
                 </form>
+                <form action="actions.php" method="post" id="reinit-form">
+                    <input type="submit" class="button button--reinit" id="filter-reinit" aria-label="Réinitialise tous les filtres" value="" title="Réinitialiser les filtres">
+                    <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
+                    <input type="hidden" name="action" value="filter-reinit">
+                </form>
+            </div>';
+        }
+        ?>
+
+        <?php if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || $_SESSION['id_company'] !== 1) {
+            echo
+            '<div class="card">
+                <section class="card__section">
+                    <h3 class="ttl ttl--budget">Budgets de ' . $currentYear . '</h3>
+                    <div class="vignettes-section vignettes-section--row">
+                        <div class="vignette vignette--bigger vignette--primary">
+                            <h4 class="vignette__ttl vignette__ttl--big">
+                                Budget annuel
+                            </h4>
+                            <p class="vignette__price vignette__price--big">' . formatPrice(fetchCompanyAnnualBudget($dbCo, $_SESSION, $_GET), "€") . '</p>
+                        </div>
+                        <div class="vignette vignette--bigger vignette--secondary">
+                            <h4 class="vignette__ttl vignette__ttl--big">
+                                Budget dépensé
+                            </h4>
+                            <p class="vignette__price vignette__price--big">' . formatPrice(calculateAnnualSpentBudget($dbCo, $_SESSION, $_GET), '€') . '</p>
+                        </div>
+                        <div class="vignette vignette--bigger vignette--tertiary">
+                            <h4 class="vignette__ttl vignette__ttl--big">
+                                Budget restant
+                            </h4>
+                            <p class="vignette__price vignette__price--big">' . formatPrice(calculateAnnualRemainingBudget($dbCo, $_SESSION), '€') . '</p>
+                        </div>
+                    </div>
+                </section>
             </div>';
         }
         ?>
 
         <section class="card campaign">
             <?= getMessageIfNoCampaign($campaigns) ?>
-            <?= getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION) ?>
+            <?php
+            if (!isset($_SESSION['filter']) && !isset($_SESSION['filter']['id_company'])) {
+                echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
+            } else if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
+                $currentYearCampaigns = getCompanyFilteredCampaigns($dbCo, $_SESSION);
+                echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
+            }
+            ?>
         </section>
     </main>
 
