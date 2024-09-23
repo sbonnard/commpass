@@ -643,21 +643,3 @@ function getTargetsAsHTMLOptions(array $targets): string
 
     return $options;
 }
-
-
-/**
- * get companies as HTML options.
- *
- * @param array $targets - An array containing clients.
- * @return string - HTML options for clients.
- */
-function getCompaniesAsHTMLOptions(array $companies): string
-{
-    $options = '<option value="">- Sélectionner un client -</option>';
-
-    foreach ($companies as $company) {
-        $options .= '<option value="' . $company['id_company'] . '">' . $company['company_name'] . '</option>';
-    }
-
-    return $options;
-}

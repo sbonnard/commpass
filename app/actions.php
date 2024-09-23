@@ -316,11 +316,13 @@ if ($_POST['action'] === 'modify-pwd') {
 
     $_SESSION['filter']['id_company'] = intval($_POST['client-filter']);
 
-    if (!empty($_POST['filter']['target-filter'])) {
+    if (
+        isset($_POST['filter']['target-filter']) && intval($_POST['filter']['target-filter'])
+        && intval($_POST['filter']['target-filter']) >= 1 && intval($_POST['filter']['target-filter']) <= 3
+    ) {
         $_SESSION['filter']['target-filter'] = intval($_POST['filter']['target-filter']);
     }
 } else if (isset($_POST['action']) && $_POST['action'] === 'filter-reinit') {
-    unset($_SESSION['filter']['id_company']);
-    unset($_SESSION['filter']['target-filter']);
+    unset($_SESSION['filter']);
 }
 redirectTo('dashboard.php');

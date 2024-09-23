@@ -109,6 +109,24 @@ function getCompanyNameForNewOp(PDO $dbCo, array $get)
 }
 
 
+/**
+ * get companies as HTML options.
+ *
+ * @param array $targets - An array containing clients.
+ * @return string - HTML options for clients.
+ */
+function getCompaniesAsHTMLOptions(array $companies): string
+{
+    $options = '<option value="">- Sélectionner un client -</option>';
+
+    foreach ($companies as $company) {
+        $options .= '<option value="' . $company['id_company'] . '">' . $company['company_name'] . '</option>';
+    }
+
+    return $options;
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BUDGET CALCULATIONS 
 
@@ -207,4 +225,53 @@ function calculateAnnualRemainingBudget(PDO $dbCo, array $session): string
     $remainingBudget = $query->fetch(PDO::FETCH_ASSOC);
 
     return $remainingBudget ? $remainingBudget['remaining_budget'] : 0;
+}
+
+
+function getAnnualSpendingsByTarget(PDO $dbCo, array $session): array
+{
+    $query = $dbCo->prepare(
+        'SELECT c.id_company, c.id_target, t.target_com AS target, target_legend_hex, SUM(o.price) AS total, YEAR(c.date) AS year 
+        FROM campaign c 
+            JOIN operation o ON c.id_campaign = o.id_campaign 
+            JOIN target t ON c.id_target = t.id_target
+        WHERE c.id_company = :id_company 
+        GROUP BY c.id_company, c.id_target, year 
+        HAVING year = YEAR(CURDATE());'
+    );
+
+    $bindValues = [
+        'id_company' => intval($session['id_company'])
+    ];
+
+    $query->execute($bindValues);
+
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+/**
+ * Generates a table from operations datas and brands.
+ *
+ * @param array $brandsSpendings - The results from operations.
+ * @return string - The generated table
+ */
+function generateTableFromTargetDatas(array $targetSpendings): string
+{
+    $htmlTable = '<table class="table">';
+
+    $htmlTable .= '<thead><tr><th class="table__head">Objectif</th><th class="table__head">Dépenses H.T.</th></tr></thead>';
+    $htmlTable .= '<tbody>';
+
+    foreach ($targetSpendings as $target) {
+        $htmlTable .= '<tr>';
+        $htmlTable .= '<td class="table__cell" aria-label="Cellule de l\'objectif ' . $target['target'] . '">' . htmlspecialchars($target['target']) . '</td>';
+        $htmlTable .= '<td class="table__cell" aria-label="Cellule de dépenses pour l\'objectif' . $target['target'] . '">' . formatPrice($target['total'], '€') . '</td>';
+        $htmlTable .= '</tr>';
+    }
+
+    $htmlTable .= '</tbody>';
+    $htmlTable .= '</table>';
+
+    return $htmlTable;
 }
