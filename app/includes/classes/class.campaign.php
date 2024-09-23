@@ -78,7 +78,7 @@ function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session): array
                 JOIN company USING (id_company)
                 JOIN target USING (id_target)
             HAVING year = YEAR(CURDATE())
-            ORDER BY date DESC;'
+            ORDER BY id_company, date DESC;'
         );
 
         $bindValues = [];
@@ -90,7 +90,7 @@ function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session): array
                 JOIN target USING (id_target)
             WHERE id_company = :id
             HAVING year = YEAR(CURDATE())
-            ORDER BY date DESC;'
+            ORDER BY id_company, date DESC;'
         );
 
         $bindValues = [
@@ -104,7 +104,7 @@ function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session): array
                 JOIN target USING (id_target)
             WHERE id_company = :id AND id_user = :id_user
             HAVING year = YEAR(CURDATE())
-            ORDER BY date DESC;'
+            ORDER BY id_company, date DESC;'
         );
         $bindValues = [
             'id' => intval($session['id_company']),
@@ -141,7 +141,7 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session): array
                 JOIN company USING (id_company)
                 JOIN target USING (id_target)
             HAVING year != YEAR(CURDATE())
-            ORDER BY date DESC;'
+            ORDER BY id_company, date DESC;'
         );
 
         $bindValues = [];
@@ -153,7 +153,7 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session): array
                 JOIN target USING (id_target)
             WHERE id_company = :id
             HAVING year != YEAR(CURDATE())
-            ORDER BY date DESC;'
+            ORDER BY id_company, date DESC;'
         );
 
         $bindValues = [
@@ -167,7 +167,7 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session): array
                 JOIN target USING (id_target)
             WHERE id_company = :id AND id_user = :id_user
             HAVING year != YEAR(CURDATE())
-            ORDER BY date DESC;'
+            ORDER BY id_company, date DESC;'
         );
         $bindValues = [
             'id' => intval($session['id_company']),

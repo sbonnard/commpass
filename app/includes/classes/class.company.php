@@ -107,3 +107,101 @@ function getCompanyNameForNewOp(PDO $dbCo, array $get)
         return $companyDatas['company_name'];
     }
 }
+
+
+/**
+ * Fetch annual budget of a company from the database.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $session - Superglobal $_SESSION.
+ * @param array $get - Superglobal $_GET.
+ * @return string - Returns the annual budget of the company.
+ */
+function fetchCompanyAnnualBudget(PDO $dbCo, array $session, array $get): string
+{
+    $query = $dbCo->prepare(
+        'SELECT annual_budget
+        FROM company
+        WHERE id_company = :id_company;'
+    );
+
+    if (isset($session['id_company'])) {
+        $bindValues = ['id_company' => intval($session['id_company'])];
+    } else if (isset($get['comp'])) {
+        $bindValues = ['id_company' => intval($get['comp'])];
+    }
+
+    $query->execute($bindValues);
+
+    $annualBudget = $query->fetch(PDO::FETCH_ASSOC);
+
+    return $annualBudget ? implode('', $annualBudget) : 0;
+}
+
+
+/**
+ * Calculates the annual spent budget of a company from the database.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $session - Superglobal $_SESSION.
+ * @param array $get - Superglobal $_GET.
+ * @return string - Returns the annual spent budget of the company.
+ */
+function calculateAnnualSpentBudget(PDO $dbCo, array $session): string
+{
+    // Assure-toi que 'id_company' est bien présent dans $campaign
+
+    $query = $dbCo->prepare(
+        'SELECT SUM(price) AS total_spent
+        FROM operation
+        WHERE YEAR(date_) = YEAR(CURDATE()) AND id_company = :id_company
+        GROUP BY id_company;'
+    );
+
+    if (isset($session['id_company']) && $session['id_company'] !== 1) {
+        $bindValues = ['id_company' => intval($session['id_company'])];
+    } else if (isset($session['id_company']) && $session['id_company'] === 1 && isset($session['filter']['id_company'])) {
+        $bindValues = ['id_company' => intval($session['filter']['id_company'])];
+    } else {
+        $bindValues = ['id_company' => 1];
+    }
+
+    $query->execute($bindValues);
+
+    $spentBudget = $query->fetch(PDO::FETCH_ASSOC);
+
+    // Gestion des cas où aucune dépense n'est trouvée
+    return $spentBudget ? $spentBudget['total_spent'] : 0;
+}
+
+
+
+/**
+ * Calculates the annual remaining budget of a company from the database.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $session - Superglobal $_SESSION.
+ * @return string - Returns the annual remaining budget of the company.
+ */
+function calculateAnnualRemainingBudget(PDO $dbCo, array $session): string
+{
+    $query = $dbCo->prepare(
+        'SELECT annual_budget - SUM(price) AS remaining_budget
+        FROM company
+            JOIN operation ON company.id_company = operation.id_company
+        WHERE YEAR(date_) = YEAR(CURDATE()) AND company.id_company = :id_company
+        GROUP BY company.id_company;'
+    );
+
+    if (isset($session['id_company'])) {
+        $bindValues = ['id_company' => intval($session['id_company'])];
+    } else if (isset($session['id_company']) && $session['id_company'] === 1 && isset($session['filter']['id_company'])) {
+        $bindValues = ['id_company' => intval($session['filter']['id_company'])];
+    }
+
+    $query->execute($bindValues);
+
+    $remainingBudget = $query->fetch(PDO::FETCH_ASSOC);
+
+    return $remainingBudget ? $remainingBudget['remaining_budget'] : 0;
+}

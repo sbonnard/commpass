@@ -8,6 +8,11 @@
             flex-direction: row;
             gap: 3.375rem;
         }
+
+        &--row {
+            flex-direction: row;
+            gap: 1.5rem;
+        }
     }
 }
 
@@ -59,5 +64,11 @@
     &--tertiary {
         background: linear-gradient(to right, $black80, $tertiary90);
 
+    }
+
+    &--bigger {
+        width: 14.875rem;
+        gap: 1.5rem;
+        font-size: 1.5rem;
     }
 }

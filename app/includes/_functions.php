@@ -93,8 +93,14 @@ function formatFrenchDate(string $yearMonthDay): string
     return $day . ' ' . $monthName . ' ' . $year;
 }
 
-
-function getYearOnly(PDO $dbCo, array $campaign)
+/**
+ * Get year only from a campaign.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $campaign - Campaign array
+ * @return string - The year from the campaign.
+ */
+function getYearOnly(PDO $dbCo, array $campaign):string
 {
     $queryYear = $dbCo->prepare(
         'SELECT YEAR(date) AS year
