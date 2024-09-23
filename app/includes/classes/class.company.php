@@ -228,6 +228,13 @@ function calculateAnnualRemainingBudget(PDO $dbCo, array $session): string
 }
 
 
+/**
+ * Get annual spendings grouped by communication campaign objectives.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $session - Superglobal $_SESSION.
+ * @return array - An array containing the annual spendings grouped by communication campaign objectives.
+ */
 function getAnnualSpendingsByTarget(PDO $dbCo, array $session): array
 {
     $query = $dbCo->prepare(
@@ -240,9 +247,15 @@ function getAnnualSpendingsByTarget(PDO $dbCo, array $session): array
         HAVING year = YEAR(CURDATE());'
     );
 
-    $bindValues = [
-        'id_company' => intval($session['id_company'])
-    ];
+    if (!isset($session['filter']) && !isset($session['filter']['id_company'])) {
+        $bindValues = [
+            'id_company' => intval($session['id_company'])
+        ];
+    } else if (isset($session['filter']) && isset($session['filter']['id_company'])) {
+        $bindValues = [
+            'id_company' => intval($session['filter']['id_company'])
+        ];
+    }
 
     $query->execute($bindValues);
 
@@ -251,9 +264,9 @@ function getAnnualSpendingsByTarget(PDO $dbCo, array $session): array
 
 
 /**
- * Generates a table from operations datas and brands.
+ * Generates a table from objective datas (objective) .
  *
- * @param array $brandsSpendings - The results from operations.
+ * @param array $target - An array containing communication objective data.
  * @return string - The generated table
  */
 function generateTableFromTargetDatas(array $targetSpendings): string

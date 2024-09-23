@@ -50,7 +50,7 @@ foreach ($campaignResults as $campaignData) {
 $jsonChartData = json_encode($chartData);
 $jsonChartColors = json_encode($chartColors);
 
-if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
+if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || isset($_SESSION['client']) && $_SESSION['client'] === 1) {
     // Récupérer les dépenses annuelles par objectif
     $targetAnnualSpendings = getAnnualSpendingsByTarget($dbCo, $_SESSION);
     
@@ -150,7 +150,7 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
         }
         ?>
 
-        <?php if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || $_SESSION['id_company'] !== 1) {
+        <?php if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
             echo
             '<div class="card">
                 <section class="card__section">
@@ -181,7 +181,7 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
         ?>
 
         <?php
-        if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
+        if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
             echo
             '<div class="card card--grid">
         <div class="card">
@@ -192,7 +192,7 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
             </section>
         </div>
         <div class="card">
-            <h2 class="ttl lineUp">Budget attribué<br> par objectif</h2>
+            <h2 class="ttl lineUp">Budget annuel attribué<br> par objectif</h2>
             <!-- TABLEAU DES DÉPENSES PAR OBJECTIF -->
             <section class="card__section">'
                 . generateTableFromTargetDatas($targetAnnualSpendings) .
