@@ -319,5 +319,8 @@ if ($_POST['action'] === 'modify-pwd') {
     if (!empty($_POST['filter']['target-filter'])) {
         $_SESSION['filter']['target-filter'] = intval($_POST['filter']['target-filter']);
     }
+} else if (isset($_POST['action']) && $_POST['action'] === 'filter-reinit') {
+    unset($_SESSION['filter']['id_company']);
+    unset($_SESSION['filter']['target-filter']);
 }
 redirectTo('dashboard.php');
