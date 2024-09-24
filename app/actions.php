@@ -325,4 +325,5 @@ if ($_POST['action'] === 'modify-pwd') {
 } else if (isset($_POST['action']) && $_POST['action'] === 'filter-reinit') {
     unset($_SESSION['filter']);
 }
-redirectTo('dashboard.php');
+
+redirectTo();

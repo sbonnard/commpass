@@ -53,28 +53,27 @@ $jsonChartColors = json_encode($chartColors);
 if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || isset($_SESSION['client']) && $_SESSION['client'] === 1) {
     // Récupérer les dépenses annuelles par objectif
     $targetAnnualSpendings = getAnnualSpendingsByTarget($dbCo, $_SESSION);
-    
+
     // Préparer les données et les couleurs pour le graphique
     $targetChartData = [];
     $targetchartColors = [];
-    
+
     foreach ($targetAnnualSpendings as $targetData) {
         $targetName = $targetData['target'];
         $totalSpent = $targetData['total'];
         $targetHex = $targetData['target_legend_hex'];
-        
+
         // Ajouter les données pour chaque objectif
         $targetChartData[] = [$targetName, $totalSpent];
-        
+
         // Associer la couleur hexadécimale de l'objectif
         $targetChartColors[$targetName] = $targetHex;
     }
-    
+
     // Convertir les données en JSON pour les transmettre à JavaScript
     $jsonTargetChartData = json_encode($targetChartData);
     $jsonTargetChartColors = json_encode($targetChartColors);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -149,6 +148,15 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             </div>';
         }
         ?>
+
+        <h2 class="ttl lineUp">Tableau de bord
+            <?php if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
+                echo '<br><span class="ttl--tertiary">' . getClientName($dbCo, $_SESSION) . '</span>';
+            } else {
+                echo '<br><span class="ttl--tertiary">Toutes les campagnes '. $currentYear .'</span>';
+            }
+            ?>
+        </h2>
 
         <?php if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
             echo

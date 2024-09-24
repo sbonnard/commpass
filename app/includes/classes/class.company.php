@@ -59,6 +59,24 @@ function getCompanyName(PDO $dbCo, array $session): string
 };
 
 
+function getClientName(PDO $dbCo, array $session): string {
+    $query = $dbCo->prepare(
+        'SELECT company_name
+        FROM company
+        WHERE id_company = :id;'
+    );
+
+    $bindValues = [
+        'id' => intval($session['filter']['id_company'])
+    ];
+
+    $query->execute($bindValues);
+
+    $companyDatas = $query->fetch();
+
+    return implode($companyDatas);
+}
+
 /**
  * Display company's name for a campaign if the user is not a client.
  *
@@ -181,7 +199,12 @@ function calculateAnnualSpentBudget(PDO $dbCo, array $session): string
 
     if (isset($session['id_company']) && $session['id_company'] !== 1) {
         $bindValues = ['id_company' => intval($session['id_company'])];
-    } else if (isset($session['id_company']) && $session['id_company'] === 1 && isset($session['filter']['id_company']) && $session['filter']['id_company'] !== 1) {
+    } else if (
+        isset($session['id_company'])
+        && $session['id_company'] === 1
+        && isset($session['filter']['id_company'])
+        && $session['filter']['id_company'] !== 1
+    ) {
         $bindValues = ['id_company' => intval($session['filter']['id_company'])];
     } else {
         $bindValues = ['id_company' => 1];

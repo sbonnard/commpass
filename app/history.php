@@ -49,6 +49,11 @@ foreach ($campaignResults as $campaignData) {
 
 $jsonChartData = json_encode($chartData);
 $jsonChartColors = json_encode($chartColors);
+
+if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || isset($_SESSION['client']) && $_SESSION['client'] === 1) {
+    // Récupérer les dépenses annuelles par objectif
+    $targetAnnualSpendings = getAnnualSpendingsByTarget($dbCo, $_SESSION);
+}
 ?>
 
 <!DOCTYPE html>
@@ -83,17 +88,101 @@ $jsonChartColors = json_encode($chartColors);
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>
 
+        <?php
+        if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+            echo
+            '<div class="card">
+                <form class="card__section" action="actions.php" method="post" id="filter-form">
+                    <ul class="form__lst form__lst--app">
+                        <div class="form__lst--flex">
+                            <li class="form__itm">
+                                <label for="client-filter">Sélectionner un client</label>
+                                <select class="form__input form__input--select" type="date" name="client-filter" id="client-filter" required>
+                                    ' . getCompaniesAsHTMLOptions($companies) . '
+                                </select>
+                            </li>
+                            <li class="form__itm">
+                                <label for="target-filter">Objectifs de la campagne (optionnel)</label>
+                                <select class="form__input form__input--select" type="date" name="target-filter" id="target-filter">
+                                    ' . getTargetsAsHTMLOptions($communicationObjectives) . '
+                                </select>
+                            </li>
+                        </div>
+                        <input type="submit" class="button button--filter" id="filter-button" aria-label="Filtrer les données entrées" value="Filtrer">
+                        <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
+                        <input type="hidden" name="action" value="filter-campaigns">
+                </form>
+                <form action="actions.php" method="post" id="reinit-form">
+                    <input type="submit" class="button button--reinit" id="filter-reinit" aria-label="Réinitialise tous les filtres" value="" title="Réinitialiser les filtres">
+                    <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
+                    <input type="hidden" name="action" value="filter-reinit">
+                </form>
+            </div>';
+        }
+        ?>
+
+        <?php if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
+            echo
+            '<div class="card">
+                <section class="card__section">
+                    <h3 class="ttl ttl--budget">Budgets de ' . $currentYear . '</h3>
+                    <div class="vignettes-section vignettes-section--row">
+                        <div class="vignette vignette--bigger vignette--primary">
+                            <h4 class="vignette__ttl vignette__ttl--big">
+                                Budget annuel
+                            </h4>
+                            <p class="vignette__price vignette__price--big">' . formatPrice(fetchCompanyAnnualBudget($dbCo, $_SESSION, $_GET), "€") . '</p>
+                        </div>
+                        <div class="vignette vignette--bigger vignette--secondary">
+                            <h4 class="vignette__ttl vignette__ttl--big">
+                                Budget dépensé
+                            </h4>
+                            <p class="vignette__price vignette__price--big">' . formatPrice(calculateAnnualSpentBudget($dbCo, $_SESSION, $_GET), '€') . '</p>
+                        </div>
+                        <div class="vignette vignette--bigger vignette--tertiary">
+                            <h4 class="vignette__ttl vignette__ttl--big">
+                                Budget restant
+                            </h4>
+                            <p class="vignette__price vignette__price--big">' . formatPrice(calculateAnnualRemainingBudget($dbCo, $_SESSION), '€') . '</p>
+                        </div>
+                    </div>
+                </section>
+            </div>';
+        }
+        ?>
+
+        <?php
+        if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
+            echo
+            '<div class="card card--grid">
+        <div class="card">
+            <h2 class="ttl lineUp">Répartition du budget annuel<br> dépensé par objectif</h2>
+            <!-- GRAPHIQUES DONUT  -->
+            <section class="card__section">
+                <div id="chart-target"></div>
+            </section>
+        </div>
+        <div class="card">
+            <h2 class="ttl lineUp">Budget annuel attribué<br> par objectif</h2>
+            <!-- TABLEAU DES DÉPENSES PAR OBJECTIF -->
+            <section class="card__section">'
+                . generateTableFromTargetDatas($targetAnnualSpendings) .
+                '</section>
+        </div>
+    </div>';
+        }
+        ?>
+
         <section class="card campaign">
             <?= getMessageIfNoCampaign($campaigns) ?>
-            <?= getCampaignTemplate($dbCo, $pastYearsCampaigns, $_SESSION) ?>
-
             <?php
-            // var_dump($_SESSION);
-            // var_dump($brands);
-            // var_dump($campaigns);
-            // var_dump(getSpendingByBrandByCampaign($dbCo, $campaigns));
+            if (!isset($_SESSION['filter']) && !isset($_SESSION['filter']['id_company'])) {
+                echo getCampaignTemplate($dbCo, $pastYearsCampaigns, $_SESSION);
+            } else if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
+                $pastYearsCampaigns = getCompanyFilteredCampaigns($dbCo, $_SESSION);
+                echo getCampaignTemplate($dbCo, $pastYearsCampaigns, $_SESSION);
+            }
             ?>
-
         </section>
     </main>
 
