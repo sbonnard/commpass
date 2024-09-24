@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mar. 24 sep. 2024 à 12:44
+-- Généré le : mar. 24 sep. 2024 à 14:51
 -- Version du serveur : 8.0.37
 -- Version de PHP : 8.2.8
 
@@ -64,25 +64,26 @@ CREATE TABLE `campaign` (
   `date` datetime NOT NULL,
   `id_user` int NOT NULL,
   `id_company` int DEFAULT NULL,
-  `id_target` int NOT NULL
+  `id_target` int NOT NULL,
+  `id_user_TDC` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `campaign`
 --
 
-INSERT INTO `campaign` (`id_campaign`, `campaign_name`, `budget`, `date`, `id_user`, `id_company`, `id_target`) VALUES
-(1, 'Soldes d\'été', 25000.00, '2024-06-27 00:00:00', 3, 2, 3),
-(2, 'Promos d\'hiver', 18000.00, '2023-11-14 00:00:00', 3, 2, 3),
-(3, 'Tous plus verts', 25000.00, '2024-02-01 00:00:00', 3, 2, 2),
-(13, 'Salon du luminaire', 178000.10, '2022-05-05 00:00:00', 4, 3, 1),
-(14, 'Lancement Groupe Pignon', 21000.00, '2023-05-14 00:00:00', 5, 4, 1),
-(15, 'Tous plus verts', 25000.00, '2022-02-01 00:00:00', 3, 2, 2),
-(16, 'Fête des pères', 8500.00, '2025-06-09 00:00:00', 6, 2, 3),
-(17, 'Soldes d\'hiver', 7000.00, '2024-11-15 00:00:00', 4, 3, 3),
-(18, 'Soldes d\'hiver', 4500.00, '2024-11-01 00:00:00', 5, 4, 3),
-(19, 'Green days', 12500.00, '2024-01-04 00:00:00', 5, 4, 2),
-(20, 'Salon des métiers', 7000.00, '2024-09-23 00:00:00', 6, 2, 1);
+INSERT INTO `campaign` (`id_campaign`, `campaign_name`, `budget`, `date`, `id_user`, `id_company`, `id_target`, `id_user_TDC`) VALUES
+(1, 'Soldes d\'été', 25000.00, '2024-06-27 00:00:00', 3, 2, 3, 2),
+(2, 'Promos d\'hiver', 18000.00, '2023-11-14 00:00:00', 3, 2, 3, 1),
+(3, 'Tous plus verts', 25000.00, '2024-02-01 00:00:00', 3, 2, 2, 1),
+(13, 'Salon du luminaire', 178000.10, '2022-05-05 00:00:00', 4, 3, 1, 2),
+(14, 'Lancement Groupe Pignon', 21000.00, '2023-05-14 00:00:00', 5, 4, 1, 2),
+(15, 'Tous plus verts', 25000.00, '2022-02-01 00:00:00', 3, 2, 2, 2),
+(16, 'Fête des pères', 8500.00, '2025-06-09 00:00:00', 6, 2, 3, 2),
+(17, 'Soldes d\'hiver', 7000.00, '2024-11-15 00:00:00', 4, 3, 3, 2),
+(18, 'Soldes d\'hiver', 4500.00, '2024-11-01 00:00:00', 5, 4, 3, 2),
+(19, 'Green days', 12500.00, '2024-01-04 00:00:00', 5, 4, 2, 2),
+(20, 'Salon des métiers', 7000.00, '2024-09-23 00:00:00', 6, 2, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -102,7 +103,7 @@ CREATE TABLE `company` (
 
 INSERT INTO `company` (`id_company`, `company_name`, `annual_budget`) VALUES
 (1, 'Toile de Com', 0.00),
-(2, 'FakeBusiness', 87000.00),
+(2, 'FakeBusiness', 84000.00),
 (3, 'Luminase', 52000.00),
 (4, 'Groupe Pignon', 15750.00),
 (5, 'Nerexam Solutions', 72000.00);
@@ -173,8 +174,10 @@ INSERT INTO `operation` (`id_operation`, `description`, `price`, `date_`, `id_ca
 (24, 'Panneau Roll-up', 75.00, '2024-09-23', 20, 2, 6, NULL),
 (25, 'Panneau Roll-up', 75.00, '2024-09-23', 20, 2, 6, NULL),
 (26, 'Panneau Roll-Up', 75.00, '2024-09-23', 20, 2, 6, NULL),
-(27, 'Flocage polos Fakebusiness', 527.55, '2024-09-23', 20, 2, 2, 3),
-(28, 'Flocage de stylos 4 couleurs', 27.00, '2024-09-24', 20, 2, 2, 0);
+(27, 'Flocage polos Fakebusiness', 827.55, '2024-09-23', 20, 2, 2, 0),
+(28, 'Flocage de stylos 4 couleurs', 27.00, '2024-09-24', 20, 2, 2, 0),
+(29, 'Etiquetage de 240 bouteilles de champagne personnalisées', 6000.00, '2024-09-24', 20, 2, 2, 0),
+(30, 'Publicité radio', 896.00, '2024-09-24', 1, 2, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -203,6 +206,7 @@ INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 (11, 1),
 (23, 1),
 (24, 2),
+(30, 2),
 (14, 3),
 (15, 3),
 (22, 3),
@@ -210,6 +214,7 @@ INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 (4, 4),
 (8, 4),
 (26, 4),
+(29, 4),
 (18, 5),
 (19, 5),
 (17, 6),
@@ -324,7 +329,8 @@ ALTER TABLE `campaign`
   ADD PRIMARY KEY (`id_campaign`),
   ADD KEY `id_user` (`id_user`),
   ADD KEY `id_target` (`id_target`),
-  ADD KEY `id_company` (`id_company`);
+  ADD KEY `id_company` (`id_company`),
+  ADD KEY `fk_campain_userTDC` (`id_user_TDC`);
 
 --
 -- Index pour la table `company`
@@ -412,7 +418,7 @@ ALTER TABLE `media`
 -- AUTO_INCREMENT pour la table `operation`
 --
 ALTER TABLE `operation`
-  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT pour la table `partner`
@@ -454,6 +460,7 @@ ALTER TABLE `brand`
 ALTER TABLE `campaign`
   ADD CONSTRAINT `campaign_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
   ADD CONSTRAINT `campaign_ibfk_2` FOREIGN KEY (`id_target`) REFERENCES `target` (`id_target`),
+  ADD CONSTRAINT `fk_campain_userTDC` FOREIGN KEY (`id_user_TDC`) REFERENCES `users` (`id_user`),
   ADD CONSTRAINT `fk_company_campaign` FOREIGN KEY (`id_company`) REFERENCES `company` (`id_company`);
 
 --
