@@ -278,7 +278,7 @@ function generateTableFromTargetDatas(array $targetSpendings): string
 
     foreach ($targetSpendings as $target) {
         $htmlTable .= '<tr>';
-        $htmlTable .= '<td class="table__cell" aria-label="Cellule de l\'objectif ' . $target['target'] . '">' . htmlspecialchars($target['target']) . '</td>';
+        $htmlTable .= '<td class="table__cell" aria-label="Cellule de l\'objectif ' . $target['target'] . '"><span class="campaign__legend-square campaign__legend-square--long" style="background-color:' . $target['target_legend_hex'] . '"></span>' . htmlspecialchars($target['target']) . '</td>';
         $htmlTable .= '<td class="table__cell" aria-label="Cellule de dépenses pour l\'objectif' . $target['target'] . '">' . formatPrice($target['total'], '€') . '</td>';
         $htmlTable .= '</tr>';
     }
