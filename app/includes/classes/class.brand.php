@@ -60,7 +60,8 @@ function getCompanyBrands(PDO $dbCo, array $selectedCampaign): array
         'SELECT id_brand, brand_name, legend_colour_hex, company.id_company
         FROM brand
             JOIN company ON company.id_company = brand.id_company
-        WHERE company.id_company = :id_company;'
+        WHERE company.id_company = :id_company
+        ORDER BY brand_name ASC;'
     );
 
     $bindValues = [

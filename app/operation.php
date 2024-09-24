@@ -17,6 +17,8 @@ require_once "includes/classes/class.campaign.php";
 require_once "includes/classes/class.company.php";
 require_once "includes/classes/class.user.php";
 require_once "includes/classes/class.operation.php";
+require_once "includes/classes/class.media.php";
+require_once "includes/classes/class.partner.php";
 
 // DATAS
 require_once "includes/_datas.php";
@@ -101,11 +103,23 @@ if (!isset($_GET['myo'])) {
                         </li>
 
                         <li class="form__itm form__itm--app">
-                            <label class="form__label" for="operation_brand" aria-label="Sélectionner la marque concernée">Marque(s)</label>
-                            <select class="form__input form__input--select" type="text" name="operation_brand" id="operation_brand" required aria-label="Sélectionner l'entreprise lançant une nouvelle campagne">
+                            <label class="form__label" for="operation_brand">Marque(s)</label>
+                            <select class="form__input form__input--select" type="text" name="operation_brand" id="operation_brand" required aria-label="Sélectionner la marque concernée">
                                 <option value="">- Sélectionner une marque -</option>
                                 <option value="0">Toutes les marques</option>
                                 <?= getCompanyBrandsAsHTMLOptions(getCompanyBrands($dbCo, $selectedCampaign)); ?>
+                            </select>
+                        </li>
+                        <li class="form__itm form__itm--app">
+                            <label class="form__label" for="operation_media" aria-label="Sélectionner le media utilisé">Média</label>
+                            <select class="form__input form__input--select" type="text" name="operation_media" id="operation_media" required aria-label="Sélectionner le media de l'opération.">
+                                <?= getMediaAsHTMLOptions($media) ?>
+                            </select>
+                        </li>
+                        <li class="form__itm form__itm--app">
+                            <label class="form__label" for="operation_partner"> (optionnel)</label>
+                            <select class="form__input form__input--select" type="text" name="operation_partner" id="operation_partner" required aria-label="Sélectionner un partenaire de l'opération s'il y en a un.">
+                                <?= getPartnersAsHTMLOptions($partners) ?>
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">

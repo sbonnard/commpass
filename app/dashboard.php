@@ -16,6 +16,8 @@ require_once "includes/classes/class.brand.php";
 require_once "includes/classes/class.campaign.php";
 require_once "includes/classes/class.company.php";
 require_once "includes/classes/class.user.php";
+require_once "includes/classes/class.media.php";
+require_once "includes/classes/class.partner.php";
 
 // DATAS
 require_once "includes/_datas.php";
@@ -74,6 +76,8 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
     $jsonTargetChartData = json_encode($targetChartData);
     $jsonTargetChartColors = json_encode($targetChartColors);
 }
+
+// var_dump();
 ?>
 
 <!DOCTYPE html>

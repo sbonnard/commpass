@@ -96,6 +96,10 @@
             background-position: right center;
             -webkit-appearance-: none;
             appearance: none;
+
+            &-option {
+                text-transform: capitalize;
+            }
         }
 
         &--number {

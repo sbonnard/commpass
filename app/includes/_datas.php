@@ -10,13 +10,22 @@ require_once "includes/classes/class.campaign.php";
 require_once "includes/classes/class.company.php";
 require_once "includes/classes/class.operation.php";
 require_once "includes/classes/class.user.php";
+require_once "includes/classes/class.media.php";
 
+
+// USER DATAS
 $user = fetchUserDatas($dbCo, $_SESSION);
 
 $users = fetchAllUsers($dbCo);
 
+// COMPANY DATAS
 $companies = fetchAllCompanies($dbCo, $_SESSION);
 
+$companyBrands = getCompanyBrands($dbCo, $_GET);
+
+$companyAnnualBudget = fetchCompanyAnnualBudget($dbCo, $_SESSION);
+
+// CAMPAIGN DATAS
 $campaigns = getCompanyCampaigns($dbCo, $_SESSION);
 
 $currentYearCampaigns = getCompanyCampaignsCurrentYear($dbCo, $_SESSION, '=', date('Y'));
@@ -25,16 +34,19 @@ $pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, '!=', date(
 
 $selectedCampaign = getOneCampaignDatas($dbCo, $_GET);
 
-$campaignOperations = getCampaignOperations($dbCo, $_GET);
-
 $brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);
 
-$companyBrands = getCompanyBrands($dbCo, $_GET);
-
-$companyAnnualBudget = fetchCompanyAnnualBudget($dbCo, $_SESSION);
+// OPERATION DATAS
+$campaignOperations = getCampaignOperations($dbCo, $_GET);
 
 $operation = getAllOperationsFromACampaign($dbCo, $_GET);
 
+
+// OTHER DATAS
 $communicationObjectives = fetchCampaignTarget($dbCo);
+
+$media = fetchAllMedia($dbCo);
+
+$partners = fetchAllPartners($dbCo);
 
 $currentYear = date('Y');
