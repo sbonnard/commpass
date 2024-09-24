@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Fetch all user's datas from database.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $session - Superglobal $_SESSION.
+ * @return array|boolean - Returns array of user's datas or false on failure.
+ */
 function fetchUserDatas(PDO $dbCo, array $session): array|bool
 {
     // Vérifier si la clé 'id_user' existe dans $session

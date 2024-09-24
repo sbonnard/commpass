@@ -193,8 +193,6 @@ function fetchCompanyAnnualBudget(PDO $dbCo, array $session): string
  */
 function calculateAnnualSpentBudget(PDO $dbCo, array $session): string
 {
-    // Assure-toi que 'id_company' est bien présent dans $campaign
-
     $query = $dbCo->prepare(
         'SELECT SUM(price) AS total_spent
         FROM operation
@@ -315,25 +313,4 @@ function generateTableFromTargetDatas(array $targetSpendings): string
     $htmlTable .= '</table>';
 
     return $htmlTable;
-}
-
-function setAnnualBudgetForm(string $companyAnnualBudget, array $session, string $currentYear): string
-{
-    if ($companyAnnualBudget === '0.00') {
-        return '
-        <form class="form" method="post" action="actions.php">
-            <ul class="form__lst form__lst--app">
-                <li class="form__itm form__itm--app">
-                    <label for="annual_budget">Fixer le budget annuel pour ' . $currentYear . ': </label>
-                    <input class="form__input" type="text" id="annual_budget" name="annual_budget" placeholder="30000" required>
-                    <input class="button" type="submit" value="Fixer le budget">
-                </li>
-            </ul>
-            <input type="hidden" name="id_company" value="' . $session['filter']['id_company'] . '">
-            <input type="hidden" name="action" value="set_annual_budget">
-            <input type="hidden" name="token" value="' . $session['token'] . '">
-        </form>';
-    }
-
-    return '';
 }
