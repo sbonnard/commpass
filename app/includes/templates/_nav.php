@@ -12,16 +12,16 @@ function fetchNav(string $dashboardActive = '', string $historyActive = '', stri
         return '
             <ul class="nav__lst" id="nav-list">
                 <li class="nav__itm '.$dashboardActive.'">
-                    <a href="dashboard.php" class="nav__lnk" aria-label="Lien vers le tableau de bord contenant les campagnes de communications de l\'année en cours">Tableau de bord</a>
+                    <a href="dashboard.php" class="nav__lnk nav__lnk--dashboard" aria-label="Lien vers le tableau de bord contenant les campagnes de communications de l\'année en cours">Tableau de bord</a>
                 </li>
                 <li class="nav__itm '.$historyActive.'">
-                    <a href="history.php" class="nav__lnk" aria-label="Lien vers l\'historique des campagnes">Historique</a>
+                    <a href="history.php" class="nav__lnk nav__lnk--history" aria-label="Lien vers l\'historique des campagnes">Historique</a>
                 </li>
                 <li class="nav__itm '.$profilActive.'">
-                    <a href="profil.php" class="nav__lnk" aria-label="Lien vers mon profil d\'utilisateur">Mon profil</a>
+                    <a href="profil.php" class="nav__lnk nav__lnk--profile" aria-label="Lien vers mon profil d\'utilisateur">Mon profil</a>
                 </li>
                 <li class="nav__itm">
-                    <a href="logout.php" class="nav__lnk" aria-label="Se déconnecter de l\'application">Déconnexion</a>
+                    <a href="logout.php" class="nav__lnk nav__lnk--logout" aria-label="Se déconnecter de l\'application">Déconnexion</a>
                 </li>
             </ul>
         ';

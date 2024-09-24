@@ -120,6 +120,27 @@ function getYearOnly(PDO $dbCo, array $campaign): string
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FUNCTIONS TO FORMAT PHONE NUMBERS
+
+
+/**
+ * Formats phone numbers from database. Example : 0601020304 -> 06 01 02 03 04.
+ *
+ * @param string $phoneNumber - The phone number to format.
+ * @return string - The formatted phone number.
+ */
+function formatPhoneNumber(string $phoneNumber): string
+{
+    // Vérifie si le numéro de téléphone a bien 10 chiffres
+    if (strlen($phoneNumber) === 10) {
+        // Utilise une expression régulière pour insérer un espace toutes les deux positions
+        return preg_replace('/(\d{2})(?=\d)/', '$1 ', $phoneNumber);
+    }
+    // Retourne le numéro original s'il ne correspond pas au format attendu
+    return $phoneNumber;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS TO GET DATAS AS A TABLE 
 
 /**
@@ -182,7 +203,14 @@ function displayButtonIfNotClient(array $session): string
 }
 
 
-function turnVignetteRedIfNegative(string $companyRemainings): string {
+/**
+ * Turns a vignette red if the company's remaining budget is negative.
+ *
+ * @param string $companyRemainings - The remaining budget of the company.
+ * @return string - The class name for the vignette. If the budget is negative, it returns 'vignette--negative'. Otherwise, it returns an empty string.
+ */
+function turnVignetteRedIfNegative(string $companyRemainings): string
+{
     // Supprime tous les caractères non numériques sauf les signes - ou . pour la conversion
     $cleanedValue = preg_replace('/[^\d.-]/', '', $companyRemainings);
     $className = '';

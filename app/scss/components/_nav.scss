@@ -12,16 +12,46 @@
             color: $tertiary;
         }
     }
-    
+
     &__lnk {
+        display: flex;
+        gap: 0.75rem;
         font-size: 1.25rem;
-    }
     
+        @media screen and (min-width: 768px) {
+            align-items: center;
+            justify-content: center;
+        }
+    
+        // Propriétés communes pour les icônes avant les liens
+        &::before {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    
+        // Génération dynamique du contenu en fonction de la classe
+        &--profile::before {
+            content: url(../../img/profile-lnk.svg);
+        }
+    
+        &--dashboard::before {
+            content: url(../../img/dashboard-lnk.svg);
+        }
+    
+        &--history::before {
+            content: url(../../img/history-lnk.svg);
+        }
+    
+        &--logout::before {
+            content: url(../../img/logout-lnk.svg);
+        }
+    }
+
     @media screen and (min-width: 768px) {
         &__itm {
             display: inline-block;
         }
-        
+
         &__lst {
             display: flex;
             justify-content: center;

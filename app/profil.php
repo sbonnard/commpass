@@ -67,7 +67,7 @@ checkConnection($_SESSION);
                 <p><span class="profil__info">Entreprise : </span><?= getCompanyName($dbCo, $_SESSION) ?></p>
                 <p><span class="profil__info">Nom : </span><?= $user['firstname'] . ' ' . $user['lastname'] ?></p>
                 <p><span class="profil__info">Email : </span><?= $user['email'] ?></p>
-                <p><span class="profil__info">Tél. : </span><?= $user['phone'] ?></p>
+                <p><span class="profil__info">Tél. : </span><?= formatPhoneNumber($user['phone']) ?></p>
             </section>
         </div>
 
