@@ -82,6 +82,22 @@ function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session, string $id_co
         );
 
         $bindValues = [];
+    } else if (isset($session['client']) && $session['client'] === 0 && $session['boss'] === 0) {
+                // Si l'utilisateur est le gérant de l'entreprise Toile de Com.
+                $queryCampaigns = $dbCo->prepare(
+                    'SELECT id_campaign, campaign_name, budget, date, company_name, YEAR(date) AS year, target.id_target, target_com
+                    FROM campaign
+                        JOIN company USING (id_company)
+                        JOIN target USING (id_target)
+                    WHERE id_user_TDC = :id_user
+                    HAVING year = YEAR(CURDATE())
+                    ORDER BY id_company, date DESC;'
+                );
+        
+                $bindValues = [
+                    'id_user' => intval($session['id_user'])
+                ];
+
     } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
         // Si l'utilisateur est un client mais qu'il est aussi le gérant de l'entreprise cliente.
         $queryCampaigns = $dbCo->prepare(

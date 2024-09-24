@@ -217,7 +217,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         ?>
         <h2 class="ttl">Mes campagnes <?= $currentYear ?></h2>
         <section class="card campaign">
-            <?= getMessageIfNoCampaign($campaigns) ?>
+            <?= getMessageIfNoCampaign($currentYearCampaigns) ?>
             <?php
             if (!isset($_SESSION['filter']) && !isset($_SESSION['filter']['id_company'])) {
                 echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
