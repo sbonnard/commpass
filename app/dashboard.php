@@ -153,7 +153,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             <?php if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
                 echo '<br><span class="ttl--tertiary">' . getClientName($dbCo, $_SESSION) . '</span>';
             } else {
-                echo '<br><span class="ttl--tertiary">Toutes les campagnes ' . $currentYear . '</span>';
+                echo '<br><span class="ttl--tertiary">' . $currentYear . '</span>';
             }
             ?>
         </h2>
@@ -234,13 +234,18 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/cards.js"></script>
+
+<!-- Script pour les multiple graphiques de campagne. -->
 <script>
     // Récupération des données PHP
     var chartData = <?php echo $jsonChartData; ?>;
     var chartColors = <?php echo $jsonChartColors; ?>;
 </script>
 <script type="module" src="js/dashboard-charts.js"></script>
+
+<!-- Script pour le graphique donut des dépenses par objectif. -->
 <script type="module">
+
     // Récupérer les données PHP encodées en JSON
     var targetChartData = <?php echo $jsonTargetChartData ?? '[]'; ?>;
     var targetChartColors = <?php echo $jsonTargetChartColors ?? '{}'; ?>;
