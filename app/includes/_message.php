@@ -8,7 +8,8 @@ $messages = [
     'operation_created_ok' => 'Opération créée avec succès.',
     'operation_update_ok' => 'Opération mise à jour avec succès.',
     'delete_operation_ok' => 'Opération supprimée avec succès.',
-    'update_ok_colour' => 'La couleur de la marque a été mise à jour avec succès.'
+    'update_ok_colour' => 'La couleur de la marque a été mise à jour avec succès.',
+    'budget_update_ok' => 'Le budget annuel a été mis à jour avec succès.'
 ];
 
 $errors = [
@@ -42,6 +43,7 @@ $errors = [
     'colour_ko' => 'Veuillez saisir une couleur valide.',
     'update_ko_colour' => 'Erreur lors de la mise à jour de la couleur de la marque.',
     'no_client' => 'Aucun client n\'a été trouvé.',
+    'budget_update_ok' => 'Erreur lors de la mise à jour du budget annuel.'
 ];
 
 

@@ -153,21 +153,25 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             <?php if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
                 echo '<br><span class="ttl--tertiary">' . getClientName($dbCo, $_SESSION) . '</span>';
             } else {
-                echo '<br><span class="ttl--tertiary">Toutes les campagnes '. $currentYear .'</span>';
+                echo '<br><span class="ttl--tertiary">Toutes les campagnes ' . $currentYear . '</span>';
             }
             ?>
         </h2>
 
-        <?php if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
+        <?php
+        if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
             echo
             '<div class="card">
                 <section class="card__section">
                     <h3 class="ttl ttl--budget">Budgets de ' . $currentYear . '</h3>
                     <div class="vignettes-section vignettes-section--row">
                         <div class="vignette vignette--bigger vignette--primary">
-                            <h4 class="vignette__ttl vignette__ttl--big">
-                                Budget annuel
-                            </h4>
+                            <div class="flex-row">
+                                <h4 class="vignette__ttl vignette__ttl--big">
+                                    Budget annuel
+                                </h4>
+                                <a href="new-budget.php" class="button--setting" aria-label="Redirige vers un formulaire de création de budget" title="Paramétrer le budget annuel"></a>
+                            </div>
                             <p class="vignette__price vignette__price--big">' . formatPrice(fetchCompanyAnnualBudget($dbCo, $_SESSION, $_GET), "€") . '</p>
                         </div>
                         <div class="vignette vignette--bigger vignette--secondary">

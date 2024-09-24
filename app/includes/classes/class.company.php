@@ -59,7 +59,8 @@ function getCompanyName(PDO $dbCo, array $session): string
 };
 
 
-function getClientName(PDO $dbCo, array $session): string {
+function getClientName(PDO $dbCo, array $session): string
+{
     $query = $dbCo->prepare(
         'SELECT company_name
         FROM company
@@ -168,6 +169,10 @@ function fetchCompanyAnnualBudget(PDO $dbCo, array $session): string
         $bindValues = ['id_company' => intval($session['id_company'])];
     } else if (isset($session['filter']) && isset($session['filter']['id_company']) && $session['filter']['id_company'] !== 1) {
         $bindValues = ['id_company' => intval($session['filter']['id_company'])];
+    } else {
+        $bindValues = [
+            'id_company' => 1 // default for admin
+        ];
     }
 
     $query->execute($bindValues);
@@ -310,4 +315,25 @@ function generateTableFromTargetDatas(array $targetSpendings): string
     $htmlTable .= '</table>';
 
     return $htmlTable;
+}
+
+function setAnnualBudgetForm(string $companyAnnualBudget, array $session, string $currentYear): string
+{
+    if ($companyAnnualBudget === '0.00') {
+        return '
+        <form class="form" method="post" action="actions.php">
+            <ul class="form__lst form__lst--app">
+                <li class="form__itm form__itm--app">
+                    <label for="annual_budget">Fixer le budget annuel pour ' . $currentYear . ': </label>
+                    <input class="form__input" type="text" id="annual_budget" name="annual_budget" placeholder="30000" required>
+                    <input class="button" type="submit" value="Fixer le budget">
+                </li>
+            </ul>
+            <input type="hidden" name="id_company" value="' . $session['filter']['id_company'] . '">
+            <input type="hidden" name="action" value="set_annual_budget">
+            <input type="hidden" name="token" value="' . $session['token'] . '">
+        </form>';
+    }
+
+    return '';
 }

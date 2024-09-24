@@ -324,6 +324,33 @@ if ($_POST['action'] === 'modify-pwd') {
     }
 } else if (isset($_POST['action']) && $_POST['action'] === 'filter-reinit') {
     unset($_SESSION['filter']);
+} else if ($_POST['action'] === 'set_annual_budget') {
+    if(!isset($_POST['annual_budget']) || empty($_POST['annual_budget']) ||!is_numeric($_POST['annual_budget'])) {
+        addError('budget_ko');
+        redirectTo();
+        exit;
+    }
+
+    $queryBudget = $dbCo->prepare('
+        UPDATE company 
+        SET annual_budget = :budget
+        WHERE id_company = :id_company;
+    ');
+
+    $bindValues = [
+        'budget' => floatval($_POST['annual_budget']),
+        'id_company' => $_SESSION['filter']['id_company']
+    ];
+
+    $isUpdateOk = $queryBudget->execute($bindValues);
+
+    if ($isUpdateOk) {
+        addMessage('budget_update_ok');
+        redirectTo('dashboard.php');
+    } else {
+        addError('budget_update_ko');
+        redirectTo();
+    }
 }
 
 redirectTo();
