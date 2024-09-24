@@ -244,6 +244,8 @@ function calculateAnnualRemainingBudget(PDO $dbCo, array $session): string
         $bindValues = ['id_company' => intval($session['id_company'])];
     } else if (isset($session['id_company']) && $session['id_company'] === 1 && isset($session['filter']['id_company']) &&  $session['filter']['id_company'] !== 1) {
         $bindValues = ['id_company' => intval($session['filter']['id_company'])];
+    } else {
+        $bindValues = ['id_company' => 1]; // default
     }
 
     $query->execute($bindValues);
