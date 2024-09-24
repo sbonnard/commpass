@@ -117,8 +117,8 @@ if (!isset($_GET['myo'])) {
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">
-                            <label class="form__label" for="operation_partner"> (optionnel)</label>
-                            <select class="form__input form__input--select" type="text" name="operation_partner" id="operation_partner" required aria-label="Sélectionner un partenaire de l'opération s'il y en a un.">
+                            <label class="form__label" for="operation_partner">Partenaire (optionnel)</label>
+                            <select class="form__input form__input--select" type="text" name="operation_partner" id="operation_partner" aria-label="Sélectionner un partenaire de l'opération s'il y en a un.">
                                 <?= getPartnersAsHTMLOptions($partners) ?>
                             </select>
                         </li>

@@ -24,7 +24,7 @@ function fetchAllPartners(PDO $dbCo): array
  */
 function getPartnersAsHTMLOptions(array $partners): string
 {
-    $htmlOptions = '<option value="0">- Sélectionner un partenaire -</option>';
+    $htmlOptions = '<option value="">- Pas de partenaire -</option>';
 
     foreach ($partners as $partner) {
         $htmlOptions .= '<option class="form__input--select-option" value="' . intval($partner['id_partner']) . '">' . $partner['partner_name'] . '</option>';

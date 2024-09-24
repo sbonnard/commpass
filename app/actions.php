@@ -149,16 +149,18 @@ if ($_POST['action'] === 'modify-pwd') {
         $dbCo->beginTransaction();
 
         $queryOperation = $dbCo->prepare(
-            'INSERT INTO operation (description, price, date_, id_campaign, id_company) 
-        VALUES (:description, :price, :date, :id_campaign, :id_company);'
+            'INSERT INTO operation (description, price, date_, id_campaign, id_company, id_media, id_partner)  
+        VALUES (:description, :price, :date, :id_campaign, :id_company, :id_media, :id_partner);'
         );
 
         $operationBindValues = [
             'description' => strip_tags($_POST['operation_description']),
             'price' => floatval($_POST['operation_amount']),
             'date' => strip_tags($_POST['date']),
-            'id_campaign' => strip_tags($_POST['id_campaign']),
-            'id_company' => strip_tags($_POST['id_company'])
+            'id_campaign' => intval($_POST['id_campaign']),
+            'id_company' => intval($_POST['id_company']),
+            'id_media' => intval($_POST['operation_media']),
+            'id_partner' => intval($_POST['operation_partner'])
         ];
 
         $isInsertOk = $queryOperation->execute($operationBindValues);
@@ -215,7 +217,7 @@ if ($_POST['action'] === 'modify-pwd') {
 
         $queryOperation = $dbCo->prepare(
             'UPDATE operation 
-            SET description = :description, price = :price, date_ = :date 
+            SET description = :description, price = :price, date_ = :date, id_media = :id_media, id_partner = :id_partner
             WHERE id_operation = :id_operation;'
         );
 
@@ -223,7 +225,9 @@ if ($_POST['action'] === 'modify-pwd') {
             'description' => strip_tags($_POST['operation_description']),
             'price' => floatval($_POST['operation_amount']),
             'date' => strip_tags($_POST['date']),
-            'id_operation' => intval($_POST['id_operation'])
+            'id_operation' => intval($_POST['id_operation']),
+            'id_media' => intval($_POST['operation_media']),
+            'id_partner' => intval($_POST['operation_partner'])
         ];
 
         $isUpdateOk = $queryOperation->execute($operationBindValues);
@@ -325,7 +329,7 @@ if ($_POST['action'] === 'modify-pwd') {
 } else if (isset($_POST['action']) && $_POST['action'] === 'filter-reinit') {
     unset($_SESSION['filter']);
 } else if ($_POST['action'] === 'set_annual_budget') {
-    if(!isset($_POST['annual_budget']) || empty($_POST['annual_budget']) ||!is_numeric($_POST['annual_budget'])) {
+    if (!isset($_POST['annual_budget']) || empty($_POST['annual_budget']) || !is_numeric($_POST['annual_budget'])) {
         addError('budget_ko');
         redirectTo();
         exit;

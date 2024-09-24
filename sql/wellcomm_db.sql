@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mar. 24 sep. 2024 à 11:41
+-- Généré le : mar. 24 sep. 2024 à 12:44
 -- Version du serveur : 8.0.37
 -- Version de PHP : 8.2.8
 
@@ -144,35 +144,37 @@ CREATE TABLE `operation` (
   `date_` date NOT NULL,
   `id_campaign` int NOT NULL,
   `id_company` int DEFAULT NULL,
-  `id_media` int DEFAULT NULL
+  `id_media` int DEFAULT NULL,
+  `id_partner` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `operation`
 --
 
-INSERT INTO `operation` (`id_operation`, `description`, `price`, `date_`, `id_campaign`, `id_company`, `id_media`) VALUES
-(4, 'Flocage de totebags', 690.00, '2023-11-12', 2, 2, 2),
-(5, 'Flyers soldes d\'été, 1000 exemplaires', 300.25, '2024-06-12', 1, 2, 2),
-(6, 'Flyers soldes d\'hiver, 1000 exemplaires', 300.25, '2023-11-12', 2, 2, 2),
-(8, 'Vitrine web mise à jour', 227.92, '2023-11-29', 2, 2, 7),
-(9, 'Avatars du personnel', 205.00, '2024-01-15', 3, 2, 7),
-(10, 'Encart presse dans la Manche Libre', 75.00, '2024-02-05', 3, 2, 1),
-(11, 'Réseaux sociaux', 144.85, '2024-03-02', 3, 2, 5),
-(12, 'Mise en lumière de la société Luminase avec un beau panneau néon', 14250.28, '2024-09-12', 13, 3, 6),
-(14, 'Test Stellar Threads', 1450.00, '2024-09-20', 1, 2, 1),
-(15, 'Graphisme affiches fête des père', 1200.00, '2025-06-09', 16, 2, 2),
-(17, 'Campagne radio Tendance Ouest', 800.00, '2024-11-15', 17, 3, 3),
-(18, 'Campagne radio Tendance Ouest', 800.00, '2024-09-15', 17, 3, 3),
-(19, 'Prints affiches soldes abribus ', 452.50, '2024-11-17', 17, 3, 2),
-(20, 'Affiches soldes', 450.00, '2024-11-09', 18, 4, 2),
-(21, 'Matraquage publicitaire sur le green washing', 800.00, '2024-01-10', 19, 4, 5),
-(22, 'Publicité Linkedin sur la politique verte de l\'entreprise', 1300.80, '2024-03-07', 3, 2, 5),
-(23, 'Panneau Roll-up', 75.00, '2024-09-23', 20, 2, 6),
-(24, 'Panneau Roll-up', 75.00, '2024-09-23', 20, 2, 6),
-(25, 'Panneau Roll-up', 75.00, '2024-09-23', 20, 2, 6),
-(26, 'Panneau Roll-Up', 75.00, '2024-09-23', 20, 2, 6),
-(27, 'Flocage polos Fakebusiness', 527.55, '2024-09-23', 20, 2, 2);
+INSERT INTO `operation` (`id_operation`, `description`, `price`, `date_`, `id_campaign`, `id_company`, `id_media`, `id_partner`) VALUES
+(4, 'Flocage de totebags', 690.00, '2023-11-12', 2, 2, 2, NULL),
+(5, 'Flyers soldes d\'été, 1000 exemplaires', 300.25, '2024-06-12', 1, 2, 2, NULL),
+(6, 'Flyers soldes d\'hiver, 1000 exemplaires', 300.25, '2023-11-12', 2, 2, 2, NULL),
+(8, 'Vitrine web mise à jour', 227.92, '2023-11-29', 2, 2, 7, NULL),
+(9, 'Avatars du personnel', 205.00, '2024-01-15', 3, 2, 7, NULL),
+(10, 'Encart presse dans la Manche Libre', 75.00, '2024-02-05', 3, 2, 1, 1),
+(11, 'Réseaux sociaux', 144.85, '2024-03-02', 3, 2, 5, NULL),
+(12, 'Mise en lumière de la société Luminase avec un beau panneau néon', 14250.28, '2024-09-12', 13, 3, 6, NULL),
+(14, 'Test Stellar Threads', 1450.00, '2024-09-20', 1, 2, 1, NULL),
+(15, 'Graphisme affiches fête des père', 1200.00, '2025-06-09', 16, 2, 2, NULL),
+(17, 'Campagne radio Tendance Ouest', 800.00, '2024-11-15', 17, 3, 3, 3),
+(18, 'Campagne radio Tendance Ouest', 800.00, '2024-09-15', 17, 3, 3, 3),
+(19, 'Prints affiches soldes abribus ', 452.50, '2024-11-17', 17, 3, 2, NULL),
+(20, 'Affiches soldes', 450.00, '2024-11-09', 18, 4, 2, NULL),
+(21, 'Matraquage publicitaire sur le green washing', 800.00, '2024-01-10', 19, 4, 5, NULL),
+(22, 'Publicité Linkedin sur la politique verte de l\'entreprise', 1300.80, '2024-03-07', 3, 2, 5, NULL),
+(23, 'Panneau Roll-up', 75.00, '2024-09-23', 20, 2, 6, NULL),
+(24, 'Panneau Roll-up', 75.00, '2024-09-23', 20, 2, 6, NULL),
+(25, 'Panneau Roll-up', 75.00, '2024-09-23', 20, 2, 6, NULL),
+(26, 'Panneau Roll-Up', 75.00, '2024-09-23', 20, 2, 6, NULL),
+(27, 'Flocage polos Fakebusiness', 527.55, '2024-09-23', 20, 2, 2, 3),
+(28, 'Flocage de stylos 4 couleurs', 27.00, '2024-09-24', 20, 2, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -191,6 +193,7 @@ CREATE TABLE `operation_brand` (
 
 INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 (27, 0),
+(28, 0),
 (4, 1),
 (5, 1),
 (6, 1),
@@ -220,7 +223,7 @@ INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 --
 
 CREATE TABLE `partner` (
-  `id_partners` int NOT NULL,
+  `id_partner` int NOT NULL,
   `partner_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -228,7 +231,7 @@ CREATE TABLE `partner` (
 -- Déchargement des données de la table `partner`
 --
 
-INSERT INTO `partner` (`id_partners`, `partner_name`) VALUES
+INSERT INTO `partner` (`id_partner`, `partner_name`) VALUES
 (1, 'La Manche Libre'),
 (2, 'Ouest France'),
 (3, 'Tendance Ouest');
@@ -311,7 +314,8 @@ INSERT INTO `users` (`id_user`, `username`, `firstname`, `lastname`, `password`,
 -- Index pour la table `brand`
 --
 ALTER TABLE `brand`
-  ADD PRIMARY KEY (`id_brand`);
+  ADD PRIMARY KEY (`id_brand`),
+  ADD KEY `fk_company_brand` (`id_company`);
 
 --
 -- Index pour la table `campaign`
@@ -341,7 +345,8 @@ ALTER TABLE `operation`
   ADD PRIMARY KEY (`id_operation`),
   ADD KEY `id_campaign` (`id_campaign`),
   ADD KEY `id_company` (`id_company`),
-  ADD KEY `id_media` (`id_media`);
+  ADD KEY `id_media` (`id_media`),
+  ADD KEY `id_partner` (`id_partner`);
 
 --
 -- Index pour la table `operation_brand`
@@ -354,7 +359,7 @@ ALTER TABLE `operation_brand`
 -- Index pour la table `partner`
 --
 ALTER TABLE `partner`
-  ADD PRIMARY KEY (`id_partners`);
+  ADD PRIMARY KEY (`id_partner`);
 
 --
 -- Index pour la table `target`
@@ -407,13 +412,13 @@ ALTER TABLE `media`
 -- AUTO_INCREMENT pour la table `operation`
 --
 ALTER TABLE `operation`
-  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT pour la table `partner`
 --
 ALTER TABLE `partner`
-  MODIFY `id_partners` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_partner` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `target`
@@ -438,16 +443,25 @@ ALTER TABLE `users`
 --
 
 --
+-- Contraintes pour la table `brand`
+--
+ALTER TABLE `brand`
+  ADD CONSTRAINT `fk_company_brand` FOREIGN KEY (`id_company`) REFERENCES `company` (`id_company`);
+
+--
 -- Contraintes pour la table `campaign`
 --
 ALTER TABLE `campaign`
   ADD CONSTRAINT `campaign_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
-  ADD CONSTRAINT `campaign_ibfk_2` FOREIGN KEY (`id_target`) REFERENCES `target` (`id_target`);
+  ADD CONSTRAINT `campaign_ibfk_2` FOREIGN KEY (`id_target`) REFERENCES `target` (`id_target`),
+  ADD CONSTRAINT `fk_company_campaign` FOREIGN KEY (`id_company`) REFERENCES `company` (`id_company`);
 
 --
 -- Contraintes pour la table `operation`
 --
 ALTER TABLE `operation`
+  ADD CONSTRAINT `fk_company` FOREIGN KEY (`id_company`) REFERENCES `company` (`id_company`),
+  ADD CONSTRAINT `fk_media` FOREIGN KEY (`id_media`) REFERENCES `media` (`id_media`),
   ADD CONSTRAINT `operation_ibfk_1` FOREIGN KEY (`id_campaign`) REFERENCES `campaign` (`id_campaign`);
 
 --
