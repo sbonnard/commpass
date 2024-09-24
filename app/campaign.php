@@ -129,7 +129,7 @@ $jsonData = json_encode($chartData);
                             </h4>
                             <p class="vignette__price vignette__price--big"><?= calculateSpentBudget($dbCo, $selectedCampaign) ?></p>
                         </div>
-                        <div class="vignette vignette--tertiary vignette--big">
+                        <div class="vignette vignette--tertiary vignette--big <?= turnVignetteRedIfNegative(calculateRemainingBudget($dbCo, $selectedCampaign)) ?>">
                             <h4 class="vignette__ttl vignette__ttl--big">
                                 Budget restant
                             </h4>
@@ -162,6 +162,7 @@ $jsonData = json_encode($chartData);
             <!-- OPÉRATIONS DE LA CAMPAGNE DE COMMUNICATION  -->
             <section class="card__section card__section--operations">
                 <?php
+
                 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                     echo '<div class="operation__button"><a href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '" class="button button--add" aria-label="Créer une nouvelle opération">Ajouter opération</a></div>';
                 }
@@ -180,7 +181,7 @@ $jsonData = json_encode($chartData);
 
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/cards.js"></script>
-<script type="module" src="js/filter.js"></script>
+<script type="module" src="js/vignette.js"></script>
 <script type="module" src="js/ajax-operation.js"></script>
 <script>
     // Récupération des données PHP

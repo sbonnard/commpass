@@ -166,6 +166,12 @@ function mergeResults(array $campaignResults): array
 }
 
 
+/**
+ * Displays a button to create a new budget if the user is not a client.
+ *
+ * @param array $session - Superglobal session.
+ * @return string - The new budget button.
+ */
 function displayButtonIfNotClient(array $session): string
 {
     if (isset($session['client']) && $session['client'] === 0) {
@@ -173,4 +179,17 @@ function displayButtonIfNotClient(array $session): string
     } else {
         return '';
     }
+}
+
+
+function turnVignetteRedIfNegative(string $companyRemainings): string {
+    // Supprime tous les caractères non numériques sauf les signes - ou . pour la conversion
+    $cleanedValue = preg_replace('/[^\d.-]/', '', $companyRemainings);
+    $className = '';
+
+    if (floatval($cleanedValue) < 0) {
+        $className = 'vignette--negative';
+    }
+
+    return $className;
 }

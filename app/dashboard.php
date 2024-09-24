@@ -77,7 +77,6 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
     $jsonTargetChartColors = json_encode($targetChartColors);
 }
 
-// var_dump();
 ?>
 
 <!DOCTYPE html>
@@ -161,6 +160,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         </h2>
 
         <?php
+        // var_dump($companyAnnualRemainings);
         if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
             echo
             '<div class="card">
@@ -182,7 +182,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                             </h4>
                             <p class="vignette__price vignette__price--big">' . formatPrice(calculateAnnualSpentBudget($dbCo, $_SESSION, $_GET), '€') . '</p>
                         </div>
-                        <div class="vignette vignette--bigger vignette--tertiary">
+                        <div class="vignette vignette--bigger vignette--tertiary ' . turnVignetteRedIfNegative($companyAnnualRemainings) . '" data-vignette="">
                             <h4 class="vignette__ttl vignette__ttl--big">
                                 Budget restant
                             </h4>
@@ -236,6 +236,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/cards.js"></script>
+<script type="module" src="js/vignette.js"></script>
 
 <!-- Script pour les multiple graphiques de campagne. -->
 <script>

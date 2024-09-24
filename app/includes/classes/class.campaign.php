@@ -261,7 +261,7 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $session): strin
                             </h4>
                             <p class="vignette__price">' . calculateSpentBudget($dbCo, $campaign) . '</p>
                         </div>
-                        <div class="vignette vignette--tertiary">
+                        <div class="vignette vignette--tertiary ' . turnVignetteRedIfNegative(calculateRemainingBudget($dbCo, $campaign)) . '">
                             <h4 class="vignette__ttl">
                                 Budget restant
                             </h4>
@@ -351,6 +351,11 @@ function calculateSpentBudget(PDO $dbCo, array $campaigns): string
  */
 function calculateRemainingBudget(PDO $dbCo, array $campaigns): string
 {
+    if (!isset($campaigns['id_campaign'])) {
+        // Gérer l'absence de 'id_campaign'
+        return 'ID de campagne non défini';
+    }
+
     $queryRemaining = $dbCo->prepare(
         'SELECT c.id_campaign, (c.budget - IFNULL(SUM(o.price), 0)) AS total_remaining 
         FROM campaign c

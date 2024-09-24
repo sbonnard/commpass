@@ -11,6 +11,7 @@ require_once "includes/classes/class.company.php";
 require_once "includes/classes/class.operation.php";
 require_once "includes/classes/class.user.php";
 require_once "includes/classes/class.media.php";
+require_once "includes/classes/class.partner.php";
 
 
 // USER DATAS
@@ -25,6 +26,8 @@ $companyBrands = getCompanyBrands($dbCo, $_GET);
 
 $companyAnnualBudget = fetchCompanyAnnualBudget($dbCo, $_SESSION);
 
+$companyAnnualRemainings = calculateAnnualRemainingBudget($dbCo, $_SESSION);
+
 // CAMPAIGN DATAS
 $campaigns = getCompanyCampaigns($dbCo, $_SESSION);
 
@@ -35,6 +38,10 @@ $pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, '!=', date(
 $selectedCampaign = getOneCampaignDatas($dbCo, $_GET);
 
 $brands = getCampaignsBrands($dbCo, $_SESSION, $campaigns);
+
+$campaignRemainings = calculateRemainingBudget($dbCo, $selectedCampaign);
+
+$eachCampaignRemainings = calculateRemainingBudget($dbCo, $campaigns);
 
 // OPERATION DATAS
 $campaignOperations = getCampaignOperations($dbCo, $_GET);

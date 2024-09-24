@@ -141,7 +141,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                             </h4>
                             <p class="vignette__price vignette__price--big">' . formatPrice(calculateAnnualSpentBudget($dbCo, $_SESSION, $_GET), '€') . '</p>
                         </div>
-                        <div class="vignette vignette--bigger vignette--tertiary">
+                        <div class="vignette vignette--bigger vignette--tertiary" data-vignette="">
                             <h4 class="vignette__ttl vignette__ttl--big">
                                 Budget restant
                             </h4>
@@ -195,7 +195,8 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/cards.js"></script>
-<script type="module" src="js/filter.js"></script>
+<script type="module" src="js/vignette.js"></script>
+
 <script>
     // Récupération des données PHP
     var chartData = <?php echo $jsonChartData; ?>;

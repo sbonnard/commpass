@@ -58,12 +58,14 @@
 
     &--secondary {
         background: linear-gradient(to right, $black80, $secondary90);
-
     }
 
     &--tertiary {
         background: linear-gradient(to right, $black80, $tertiary90);
+    }
 
+    &--negative {
+        background: linear-gradient(to right, $black80, $error90);
     }
 
     &--bigger {
