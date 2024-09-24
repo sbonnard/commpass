@@ -213,7 +213,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
     </div>';
         }
         ?>
-
+        <h2 class="ttl">Mes campagnes</h2>
         <section class="card campaign">
             <?= getMessageIfNoCampaign($campaigns) ?>
             <?php
