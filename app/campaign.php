@@ -85,6 +85,7 @@ $jsonData = json_encode($chartData);
                 } ?>
                 <p class="ttl--smaller">Campagne : <?= $selectedCampaign['campaign_name'] ?></p>
                 <p class="campaign__interlocutor">Interlocuteur : <?= $selectedCampaign['firstname'] . ' ' . $selectedCampaign['lastname'] ?></p>
+                <p class="campaign__interlocutor">Objectif : <?= $selectedCampaign['target_com']?></p>
             </section>
         </div>
 

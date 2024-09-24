@@ -167,9 +167,9 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                             <div class="flex-row">
                                 <h4 class="vignette__ttl vignette__ttl--big">
                                     Budget annuel
-                                </h4>
-                                <a href="new-budget.php" class="button--setting" aria-label="Redirige vers un formulaire de création de budget" title="Paramétrer le budget annuel"></a>
-                            </div>
+                                </h4>'
+                . displayButtonIfNotClient($_SESSION) .
+                '</div>
                             <p class="vignette__price vignette__price--big">' . formatPrice(fetchCompanyAnnualBudget($dbCo, $_SESSION, $_GET), "€") . '</p>
                         </div>
                         <div class="vignette vignette--bigger vignette--secondary">

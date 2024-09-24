@@ -100,7 +100,7 @@ function formatFrenchDate(string $yearMonthDay): string
  * @param array $campaign - Campaign array
  * @return string - The year from the campaign.
  */
-function getYearOnly(PDO $dbCo, array $campaign):string
+function getYearOnly(PDO $dbCo, array $campaign): string
 {
     $queryYear = $dbCo->prepare(
         'SELECT YEAR(date) AS year
@@ -163,4 +163,14 @@ function mergeResults(array $campaignResults): array
     }
 
     return [];
+}
+
+
+function displayButtonIfNotClient(array $session): string
+{
+    if (isset($session['client']) && $session['client'] === 0) {
+        return '<a href="new-budget.php" class="button--setting" aria-label="Redirige vers un formulaire de création de budget" title="Paramétrer le budget annuel"></a>';
+    } else {
+        return '';
+    }
 }
