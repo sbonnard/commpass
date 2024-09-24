@@ -152,8 +152,6 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         <h2 class="ttl lineUp">Tableau de bord
             <?php if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
                 echo '<br><span class="ttl--tertiary">' . getClientName($dbCo, $_SESSION) . '</span>';
-            } else {
-                echo '<br><span class="ttl--tertiary">' . $currentYear . '</span>';
             }
             ?>
         </h2>
@@ -213,7 +211,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
     </div>';
         }
         ?>
-        <h2 class="ttl">Mes campagnes</h2>
+        <h2 class="ttl">Mes campagnes <?= $currentYear ?></h2>
         <section class="card campaign">
             <?= getMessageIfNoCampaign($campaigns) ?>
             <?php
@@ -245,7 +243,6 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 
 <!-- Script pour le graphique donut des dépenses par objectif. -->
 <script type="module">
-
     // Récupérer les données PHP encodées en JSON
     var targetChartData = <?php echo $jsonTargetChartData ?? '[]'; ?>;
     var targetChartColors = <?php echo $jsonTargetChartColors ?? '{}'; ?>;

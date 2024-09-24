@@ -72,7 +72,7 @@ checkConnection($_SESSION);
         </div>
 
         <?php
-        if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
+        if (isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
             echo
             '<div class="card">
                 <h2 class="ttl" id="my-brands">Mes marques</h2>
