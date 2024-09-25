@@ -59,7 +59,7 @@ function getCompanyName(PDO $dbCo, array $session): string
 };
 
 
-function getClientName(PDO $dbCo, array $session): string
+function getClientName(PDO $dbCo, array $session, array $selectedCampaign = []): string
 {
     $query = $dbCo->prepare(
         'SELECT company_name
@@ -67,10 +67,15 @@ function getClientName(PDO $dbCo, array $session): string
         WHERE id_company = :id;'
     );
 
-    $bindValues = [
-        'id' => intval($session['filter']['id_company'])
-    ];
-
+    if (isset($session['filter']['id_company'])) {
+        $bindValues = [
+            'id' => intval($session['filter']['id_company'])
+        ];
+    } else {
+        $bindValues = [
+            'id' => intval($selectedCampaign['id_company'])
+        ];
+    }
     $query->execute($bindValues);
 
     $companyDatas = $query->fetch();

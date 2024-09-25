@@ -65,26 +65,46 @@ if (!isset($_SESSION['client']) && $_SESSION['client'] === 1) {
         </div>
 
         <div class="card big-padding">
-            <h2 class="ttl lineUp" id="new-campaign-ttl">Budget annuel<br>
-                <span class="ttl--tertiary"><?= getClientName($dbCo, $_SESSION) ?></span>
+            <h2 class="ttl lineUp" id="new-campaign-ttl">Budget
+                <?php
+                if (isset($_GET['myc']) && intval($_GET['myc'])) {
+                    echo 'de la campagne<br>' . $selectedCampaign['campaign_name'];
+                } else {
+                    echo 'annuel';
+                }
+                ?>
+                <br>
+                <span class="ttl--tertiary"><?= getClientName($dbCo, $_SESSION, $selectedCampaign) ?></span>
             </h2>
 
             <section class="card__section" aria-labelledby="new-campaign-ttl">
                 <form class="form" method="post" action="actions.php">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
-                            <label class="form__label" for="budget">Fixer le budget annuel pour <?= $currentYear ?></label>
+                            <label class="form__label" for="budget">Fixer le budget<?php
+                                if (isset($_GET['myc']) && intval($_GET['myc'])) {
+                                    echo '';
+                                } else if(isset($_SESSION['filter']['id_company']) && intval($_SESSION['filter']['id_company'])) {
+                                    echo ' annuel pour ' . $currentYear;
+                                }
+                            ?></label>
                             <input class="form__input" type="text" id="budget" name="budget" placeholder="35000" value="<?php
-                            if(isset($_GET['myc']) && intval($_GET['myc'])) {
-                                echo $selectedCampaign['budget'];
-                             } else {
-                                echo $companyAnnualBudget;
-                             }
-                             ?>" required>
+                                                                                                                        if (isset($_GET['myc']) && intval($_GET['myc'])) {
+                                                                                                                            echo $selectedCampaign['budget'];
+                                                                                                                        } else {
+                                                                                                                            echo $companyAnnualBudget;
+                                                                                                                        }
+                                                                                                                        ?>" required>
                         </li>
                         <input class="button button--confirm" type="submit" value="Fixer le budget">
                     </ul>
-                    <input type="hidden" name="id_company" value="<?= $_SESSION['filter']['id_company'] ?>">
+                    <input type="hidden" name="id_company" value="<?php
+                                                                    if (isset($_SESSION['filter']['id_company']) && intval($_SESSION['filter']['id_company'])) {
+                                                                        echo $_SESSION['filter']['id_company'];
+                                                                    } else {
+                                                                        echo $selectedCampaign['id_company'];
+                                                                    }
+                                                                    ?>">
                     <?php
                     if (isset($_GET['myc']) && intval($_GET['myc'])) {
                         echo '<input type="hidden" name="action" value="set_campaign_budget">
