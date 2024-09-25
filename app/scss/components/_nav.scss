@@ -36,8 +36,12 @@
             content: url(../../img/dashboard-lnk.svg);
         }
 
-        &--client::before {
-            content: url(../../img/client-lnk.svg);
+        &--network {
+            color: $primary;
+        }
+
+        &--network::before {
+            content: url(../../img/lnk-network.svg);
         }
     
         &--history::before {
@@ -68,5 +72,9 @@
             gap: 7.5rem;
             padding: 0.5rem;
         }
+    }
+
+    &__arrow {
+        font-size: 1rem;
     }
 }

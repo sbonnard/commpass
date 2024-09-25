@@ -1,0 +1,37 @@
+.mainmenubtn {
+    background-color: $white;
+    color: $primary;
+    border: none;
+    cursor: pointer;
+    align-items: center;
+}
+.mainmenubtn:hover {
+    color: $tertiary;
+    }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-child {
+    display: none;
+    background-color: $white;
+    width: 100%;
+    padding: 1rem;
+    margin-left: 1.5rem;
+}
+
+.dropdown-child-itm {
+    padding: 0.5rem 0;
+}
+
+.dropdown-child a {
+    color: $primary;
+}
+.dropdown:hover .dropdown-child {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    padding-bottom: 1rem;
+}
