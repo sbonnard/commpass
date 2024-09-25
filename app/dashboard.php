@@ -77,6 +77,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
     $jsonTargetChartColors = json_encode($targetChartColors);
 }
 
+var_dump($campaigns);
 ?>
 
 <!DOCTYPE html>
@@ -221,7 +222,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             <?php
             if (!isset($_SESSION['filter']) && !isset($_SESSION['filter']['id_company'])) {
                 echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
-            } else if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && $_SESSION['client'] === 0 && $_SESSION['boss'] === 1) {
+            } else if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && $_SESSION['client'] === 0) {
                 $currentYearCampaigns = getCompanyFilteredCampaigns($dbCo, $_SESSION);
                 echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
             }

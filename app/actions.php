@@ -121,8 +121,8 @@ if ($_POST['action'] === 'modify-pwd') {
     }
 
     $queryCampaign = $dbCo->prepare(
-        'INSERT INTO campaign (campaign_name, id_company, id_user, budget, id_target, date) 
-        VALUES (:name, :id_company, :id_interlocutor, :budget, :id_target, :date);'
+        'INSERT INTO campaign (campaign_name, id_company, id_user, budget, id_target, date, id_user_TDC)  
+        VALUES (:name, :id_company, :id_interlocutor, :budget, :id_target, :date, :id_user_TDC);'
     );
 
     $bindValues = [
@@ -131,7 +131,8 @@ if ($_POST['action'] === 'modify-pwd') {
         'id_interlocutor' => intval($_POST['campaign_interlocutor']),
         'budget' => strip_tags($_POST['budget']),
         'id_target' => intval($_POST['campaign_target']),
-        'date' => strip_tags($_POST['date'])
+        'date' => strip_tags($_POST['date']),
+        'id_user_TDC' => intval($_SESSION['id_user'])
     ];
 
     $isInsertOk = $queryCampaign->execute($bindValues);
