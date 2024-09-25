@@ -416,7 +416,7 @@ function calculateRemainingBudget(PDO $dbCo, array $campaigns): string
         'SELECT c.id_campaign, (c.budget - IFNULL(SUM(o.price), 0)) AS total_remaining 
         FROM campaign c
             LEFT JOIN operation o ON c.id_campaign = o.id_campaign
-        WHERE c.id_campaign = :id_campaign
+        WHERE c.id_campaign = :id_campaign AND c.budget > 0
         GROUP BY c.id_campaign;'
     );
 
