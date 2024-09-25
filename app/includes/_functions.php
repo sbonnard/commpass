@@ -193,10 +193,10 @@ function mergeResults(array $campaignResults): array
  * @param array $session - Superglobal session.
  * @return string - The new budget button.
  */
-function displayButtonIfNotClient(array $session): string
+function displayButtonIfNotClient(array $session, string $getValue = ""): string
 {
     if (isset($session['client']) && $session['client'] === 0) {
-        return '<a href="new-budget.php" class="button--setting" aria-label="Redirige vers un formulaire de création de budget" title="Paramétrer le budget annuel"></a>';
+        return '<a href="new-budget.php' . $getValue . '" class="button--setting" aria-label="Redirige vers un formulaire de création de budget" title="Paramétrer le budget"></a>';
     } else {
         return '';
     }

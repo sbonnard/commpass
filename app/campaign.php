@@ -87,7 +87,7 @@ $jsonData = json_encode($chartData);
                 } ?>
                 <p class="ttl--smaller">Campagne : <?= $selectedCampaign['campaign_name'] ?></p>
                 <p class="campaign__interlocutor">Interlocuteur : <?= $selectedCampaign['firstname'] . ' ' . $selectedCampaign['lastname'] ?></p>
-                <p class="campaign__interlocutor">Objectif : <?= $selectedCampaign['target_com']?></p>
+                <p class="campaign__interlocutor">Objectif : <?= $selectedCampaign['target_com'] ?></p>
             </section>
         </div>
 
@@ -116,11 +116,14 @@ $jsonData = json_encode($chartData);
         <div class="card">
             <section class="card__section card__section--vignettes">
                 <div class="campaign__stats">
-                    <div class="vignettes-section vignettes-section--big">
-                        <div class="vignette vignette--primary vignette--big">
-                            <h4 class="vignette__ttl vignette__ttl--big">
-                                Budget attribué
-                            </h4>
+                    <div class="vignettes-section vignettes-section--row">
+                        <div class="vignette vignette--bigger vignette--primary">
+                            <div class="flex-row">
+                                <h4 class="vignette__ttl vignette__ttl--big">
+                                    Budget attribué
+                                </h4>
+                                <?= displayButtonIfNotClient($_SESSION, '?myc=' . $_GET['myc']) ?>
+                            </div>
                             <p class="vignette__price vignette__price--big"><?= formatPrice($selectedCampaign['budget'], "€") ?></p>
                         </div>
                         <div class="vignette vignette--secondary vignette--big">

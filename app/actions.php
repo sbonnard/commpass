@@ -18,7 +18,6 @@ if (!isset($_REQUEST['action'])) {
     exit;
 }
 
-
 // Check CSRF
 preventFromCSRF();
 
@@ -343,7 +342,7 @@ if ($_POST['action'] === 'modify-pwd') {
 } else if (isset($_POST['action']) && $_POST['action'] === 'filter-reinit') {
     unset($_SESSION['filter']);
 } else if ($_POST['action'] === 'set_annual_budget') {
-    if (!isset($_POST['annual_budget']) || empty($_POST['annual_budget']) || !is_numeric($_POST['annual_budget'])) {
+    if (!isset($_POST['budget']) || empty($_POST['budget']) || !is_numeric($_POST['budget'])) {
         addError('budget_ko');
         redirectTo();
         exit;
@@ -356,8 +355,35 @@ if ($_POST['action'] === 'modify-pwd') {
     ');
 
     $bindValues = [
-        'budget' => floatval($_POST['annual_budget']),
+        'budget' => floatval($_POST['budget']),
         'id_company' => $_SESSION['filter']['id_company']
+    ];
+
+    $isUpdateOk = $queryBudget->execute($bindValues);
+
+    if ($isUpdateOk) {
+        addMessage('budget_update_ok');
+        redirectTo('dashboard.php');
+    } else {
+        addError('budget_update_ko');
+        redirectTo();
+    }
+} else if ($_POST['action'] === 'set_campaign_budget') {
+    if (!isset($_POST['budget']) || empty($_POST['budget']) || !is_numeric($_POST['budget'])) {
+        addError('budget_ko');
+        redirectTo();
+        exit;
+    }
+
+    $queryBudget = $dbCo->prepare('
+        UPDATE campaign 
+        SET budget = :budget
+        WHERE id_campaign = :id_campaign;
+    ');
+
+    $bindValues = [
+        'budget' => floatval($_POST['budget']),
+        'id_campaign' => $_POST['myc']
     ];
 
     $isUpdateOk = $queryBudget->execute($bindValues);

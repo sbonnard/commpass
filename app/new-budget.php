@@ -73,13 +73,26 @@ if (!isset($_SESSION['client']) && $_SESSION['client'] === 1) {
                 <form class="form" method="post" action="actions.php">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
-                            <label class="form__label" for="annual_budget">Fixer le budget annuel pour <?= $currentYear ?></label>
-                            <input class="form__input" type="text" id="annual_budget" name="annual_budget" placeholder="35000" value="<?= $companyAnnualBudget ?>" required>
+                            <label class="form__label" for="budget">Fixer le budget annuel pour <?= $currentYear ?></label>
+                            <input class="form__input" type="text" id="budget" name="budget" placeholder="35000" value="<?php
+                            if(isset($_GET['myc']) && intval($_GET['myc'])) {
+                                echo $selectedCampaign['budget'];
+                             } else {
+                                echo $companyAnnualBudget;
+                             }
+                             ?>" required>
                         </li>
                         <input class="button button--confirm" type="submit" value="Fixer le budget">
                     </ul>
                     <input type="hidden" name="id_company" value="<?= $_SESSION['filter']['id_company'] ?>">
-                    <input type="hidden" name="action" value="set_annual_budget">
+                    <?php
+                    if (isset($_GET['myc']) && intval($_GET['myc'])) {
+                        echo '<input type="hidden" name="action" value="set_campaign_budget">
+                        <input type="hidden" name="myc" value="' . $_GET['myc'] . '">';
+                    } else {
+                        echo '<input type="hidden" name="action" value="set_annual_budget">';
+                    }
+                    ?>
                     <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 </form>
             </section>
