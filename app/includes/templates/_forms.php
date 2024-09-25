@@ -23,9 +23,9 @@ function fetchLogInForm(array $session): string
                 <input class="form__input" type="text" name="username" id="username" placeholder="alemaitre78" required aria-label="Saississez votre nom d\'ilisateur">
             </li>
             <li class="form__itm">
-                <label for="password" aria-label="Saississez votre mot de passe">Mot de passe</label>
+                <label for="password">Mot de passe</label>
                 <div class="form__input--password">
-                    <input class="form__input" type="password" name="password" id="password" placeholder="•••••••••••" required>
+                    <input class="form__input" type="password" name="password" id="password" placeholder="•••••••••••" required aria-label="Saississez votre mot de passe">
                     <button class="button--eye button--eye--inactive" id="eye-button" aria-label="Montrer le mot de passe en clair dans le champs de saisie"></button>
                 </div>
             </li>

@@ -94,8 +94,19 @@
                 border: 2px solid $tertiary;
             }
         }
+    }
 
+    &--user {
+        color: $tertiary;
+        background-image: url(../../img/cta-add-user.svg);
+        border: 2px solid $tertiary;
+        padding-left: 4rem;
 
+        &:hover {
+            color: $primary;
+            background-image: url(../../img/cta-add-user-hover.svg);
+            border: 2px solid $primary;
+        }
     }
 
     &--edit {
@@ -157,6 +168,7 @@
     &__section {
         display: flex;
         justify-content: center;
+        align-items: center;
         gap: 2rem;
         width: 100%;
         color: $white;

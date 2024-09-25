@@ -12,6 +12,10 @@
     font-size: 0.75rem;
 }
 
+.text-tertiary {
+    color: $tertiary;
+}
+
 .hidden {
     display: none;
 }
@@ -33,7 +37,7 @@
 }
 
 #reinit-form {
-    position:absolute;
+    position: absolute;
     bottom: 10%;
     right: 30%;
 

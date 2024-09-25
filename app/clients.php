@@ -69,18 +69,15 @@ checkUserClientStatus($_SESSION);
         </h2>
 
         <div class="button__section">
-            <?php
-            if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                echo '<a href="new-client.php" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouveau client</a>';
-            }
-            ?>
+            <a href="new-client.php" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouveau client</a>
+            <span class="text-tertiary"><a href="new-user.php" class="button button--user" aria-label="Redirige vers un formulaire de création d'utilisateur">Nouvel utilisateur</a></span>
         </div>
 
-        </main>
+    </main>
 
-<footer class="footer">
-    <?= fetchFooter() ?>
-</footer>
+    <footer class="footer">
+        <?= fetchFooter() ?>
+    </footer>
 </body>
 
 <script type="module" src="js/script.js"></script>
