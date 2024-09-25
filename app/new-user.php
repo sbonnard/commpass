@@ -90,6 +90,7 @@ checkUserClientStatus($_SESSION);
                         </li>
                         <li class="form__itm form__itm--app form__itm--checkbox">
                             <label class="form__label form__label--root" for="boss">L'utilisateur est gérant de l'entreprise</label>
+                            <input type="hidden" name="boss" value="0">
                             <input class="form__input--checkbox" type="checkbox" name="boss" id="boss" aria-label="Cocher si l'utilisateur est le gérant de l'entreprise." value="1">
                         </li>
                         <li class="form__itm form__itm--app">

@@ -426,6 +426,80 @@ if ($_POST['action'] === 'modify-pwd') {
     } else {
         addError('new_client_creation_ko');
     }
+} else if ($_POST['action'] === 'create_user') {
+    if (!isset($_POST['username']) || empty($_POST['username']) || !is_string($_POST['username']) || strlen($_POST['username']) > 100) {
+        addError('username_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['firstname']) || empty($_POST['firstname']) || !is_string($_POST['firstname']) || strlen($_POST['firstname']) > 50) {
+        addError('firstname_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['lastname']) || empty($_POST['lastname']) || !is_string($_POST['lastname']) || strlen($_POST['lastname']) > 50) {
+        addError('lastname_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['company']) && empty($_POST['company']) || !is_numeric($_POST['company'])) {
+        addError('company_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['password']) || empty($_POST['password']) || !is_string($_POST['password']) || strlen($_POST['password']) < 8) {
+        addError('password_choice_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['email']) || empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+        addError('email_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['phone']) || empty($_POST['phone']) || strlen($_POST['phone']) > 10) {
+        addError('phone_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['status']) || $_POST['status'] > 1) {
+        addError('status_ko');
+        redirectTo();
+        exit;
+    }
+
+    $queryNewUser = $dbCo->prepare(
+        'INSERT INTO users (username, firstname, lastname, email, phone, password, id_company, client, boss)
+        VALUES (:username, :firstname, :lastname, :email, :phone, :password, :id_company, :status, :boss);'
+    );
+
+    $bindValues = [
+        'username' => htmlspecialchars($_POST['username']),
+        'firstname' => htmlspecialchars($_POST['firstname']),
+        'lastname' => htmlspecialchars($_POST['lastname']),
+        'email' => htmlspecialchars($_POST['email']),
+        'phone' => htmlspecialchars($_POST['phone']),
+        'password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
+        'id_company' => intval($_POST['company']),
+        'status' => intval($_POST['status']),
+        'boss' => intval($_POST['boss'])
+    ];
+
+    $isInsertUserOk = $queryNewUser->execute($bindValues);
+
+    if ($isInsertUserOk) {
+        addMessage('new_user_created_ok');
+        redirectTo('clients.php');
+    } else {
+        addError('new_user_creation_ko');
+    }
 }
 
 redirectTo();

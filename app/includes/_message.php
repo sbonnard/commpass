@@ -10,7 +10,8 @@ $messages = [
     'delete_operation_ok' => 'Opération supprimée avec succès.',
     'update_ok_colour' => 'La couleur de la marque a été mise à jour avec succès.',
     'budget_update_ok' => 'Le budget annuel a été mis à jour avec succès.',
-    'new_client_created_ok' => 'Nouveau client créé avec succès.'
+    'new_client_created_ok' => 'Nouveau client créé avec succès.',
+    'new_user_created_ok' => 'Nouvel utilisateur créé avec succès.',
 ];
 
 $errors = [
@@ -47,7 +48,16 @@ $errors = [
     'no_client' => 'Aucun client n\'a été trouvé.',
     'budget_update_ok' => 'Erreur lors de la mise à jour du budget annuel.',
     'company_name_ko' => 'Entrez un nom de société valide.',
-    'new_client_creation_ko' => 'Erreur lors de la création du client.'
+    'new_client_creation_ko' => 'Erreur lors de la création du client.',
+    'username_ko' => 'Entrez un nom d\'utilisateur valide.',
+    'password_choice_ko' => 'Entrez un mot de passe d\'au moins 8 caractères.',
+    'email_ko' => 'Entrez un email valide.',
+    'firstname_ko' => 'Entrez un prénom valide.',
+    'lastname_ko' => 'Entrez un nom de famille valide.',
+    'company_ko' => 'Sélectionnez une entreprise.',
+    'phone_ko' => 'Entrez un numéro de téléphone valide, sans espaces ni caractères spéciaux.',
+    'status_ko' => 'Le formulaire n\'a pas correctement établi le statut de l\'utilisateur.',
+    'new_user_creation_ko' => 'Erreur lors de la création de l\'utilisateur.'
 ];
 
 
