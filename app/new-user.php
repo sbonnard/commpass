@@ -108,10 +108,10 @@ checkUserClientStatus($_SESSION);
                             <input class="form__input" type="tel" name="phone" id="phone" placeholder="0688120668" required aria-label="Entrez le numéro de téléphone de l'utilisateur.">
                         </li>
 
-                        <input type="hidden" name="status" value="">
+                        <input type="hidden" name="status" id="status" value="">
                         <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                        <input type="hidden" name="action" value="create_client">
-                        <input class="button button--add" type="submit" value="Créer le client" aria-label="Valider la création du client">
+                        <input type="hidden" name="action" value="create_user">
+                        <input class="button button--user" type="submit" value="Créer l'utilisateur" aria-label="Valider la création de l'utilisateur">
                     </ul>
                 </form>
             </section>
@@ -125,6 +125,7 @@ checkUserClientStatus($_SESSION);
 </body>
 
 <script type="module" src="js/script.js"></script>
+<script type="module" src="js/ajax-new-user.js"></script>
 <script type="module" src="js/password.js"></script>
 
 </html>

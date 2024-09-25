@@ -1,30 +1,38 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Get only workers from the company selected in the previous input field.
-
 document.getElementById('campaign_company').addEventListener('change', function() {
     var companyId = this.value;
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '../api.php', true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.onload = function() {
-        if (this.status === 200) {
-            var users = JSON.parse(this.responseText);
-            var select = document.getElementById('campaign_interlocutor');
-            select.innerHTML = '';
-
-            users.forEach(function(user) {
-                var option = document.createElement('option');
-                option.value = user.id_user;
-                option.textContent = user.firstname;
-                option.textContent += ' ';
-                option.textContent += user.lastname;
-                select.appendChild(option);
-            });
+    fetch('../api.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            'id_company': companyId
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
         }
-    };
-    xhr.send('id_company=' + companyId);
+        throw new Error('Network response was not ok');
+    })
+    .then(users => {
+        var select = document.getElementById('campaign_interlocutor');
+        select.innerHTML = ''; // Clear previous options
+
+        users.forEach(user => {
+            var option = document.createElement('option');
+            option.value = user.id_user;
+            option.textContent = `${user.firstname} ${user.lastname}`;
+            select.appendChild(option);
+        });
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
