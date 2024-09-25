@@ -64,7 +64,7 @@ if (!isset($_GET['myo'])) {
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav() ?>
+        <?= fetchNav($_SESSION) ?>
     </nav>
 
     <main class="container container--campaigns container__flex">

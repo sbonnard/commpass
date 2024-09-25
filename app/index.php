@@ -41,7 +41,7 @@ if (isset($_SESSION) && !empty($_SESSION) && isset($_SESSION['id_user'], $_SESSI
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav() ?>
+        <?= fetchNav($_SESSION) ?>
     </nav>
 
     <div class="notifs">

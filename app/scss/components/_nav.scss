@@ -23,19 +23,21 @@
             justify-content: center;
         }
     
-        // Propriétés communes pour les icônes avant les liens
         &::before {
             width: 1.5rem;
             height: 1.5rem;
         }
     
-        // Génération dynamique du contenu en fonction de la classe
         &--profile::before {
             content: url(../../img/profile-lnk.svg);
         }
     
         &--dashboard::before {
             content: url(../../img/dashboard-lnk.svg);
+        }
+
+        &--client::before {
+            content: url(../../img/client-lnk.svg);
         }
     
         &--history::before {
@@ -44,6 +46,14 @@
     
         &--logout::before {
             content: url(../../img/logout-lnk.svg);
+        }
+
+        &--login::before {
+            content: url(../../img/login-lnk.svg);
+        }
+
+        &--contact::before {
+            content: url(../../img/contact-lnk.svg);
         }
     }
 
