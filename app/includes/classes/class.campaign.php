@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Get communication campaigns considering your status of client or not, your company and if you are the inrlocutor or not.
