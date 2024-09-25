@@ -97,6 +97,9 @@ VALUES ("Toile de Com"), ("FakeBusiness"), ("Luminase"), ("Groupe Pignon"), ("Ne
 INSERT INTO brand (brand_name, legend_colour_hex, id_company) 
 VALUES ("Lumosphère", "#DF0000", 1), ("Vélocitix", "#DBDF00", 1), ("Stellar Threads", "#39B526", 1), ("Aurélys", "#D74A6B", 1), ("Nexmus", "#F58916", 2), ("Cafés Geronimo", "#4F3623", 2), ("Fripig", "#2E3F92", 3), ("Maxstock", "#2E928A", 3);
 
+INSERT INTO brand (brand_name, legend_colour_hex, id_company) 
+VALUES ("ProNerexam Versicherung", "#DF0000", 5), ("Nerexam Schutz", "#DF0000", 5),("VersicherungsNexus", "#DF0000", 5);
+
 INSERT INTO users (username, firstname, lastname, password, email, phone, client, id_company)
 VALUES ("sbonnard94", "Sébastien", "Bonnard", "$2y$10$ZMkpWcRvhkY0PHUZPlb8COU3sCBTRqIKdvvK4sZd2U84wH2HHNPwK", "sebastien.bonnard94@gmail.com", "0608118078", 0, 1);
 
@@ -109,6 +112,10 @@ VALUES
 INSERT INTO users (username, firstname, lastname, password, email, phone, client, id_company)
 VALUES 
 ("mchampion", "Manon", "Champion", "$2y$10$cCubd56otzIKiNdKRj3i.u4Crxaxz586Ygn5QmVszFF91z2SgMqFS", "manon.champion@fakebusiness.com", "0600102030", 1, 1);
+
+INSERT INTO users (username, firstname, lastname, password, email, phone, client, id_company)
+VALUES 
+("hziegler", "Helmut", "Ziegler", "$2y$10$cCubd56otzIKiNdKRj3i.u4Crxaxz586Ygn5QmVszFF91z2SgMqFS", "helmut.ziegler@nerexam.com", "0600102030", 1, 5);
 
 INSERT INTO target (target_com)
 VALUES ("Faire connaître"), ("Faire aimer"), ("Faire agir");

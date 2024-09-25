@@ -151,6 +151,7 @@ if ($_POST['action'] === 'modify-pwd') {
 
     if ($isInsertOk) {
         addMessage('campaign_created_ok');
+        redirectTo('dashboard.php');
     } else {
         addError('campaign_creation_ko');
     }

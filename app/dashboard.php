@@ -74,7 +74,9 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 
     // Convertir les données en JSON pour les transmettre à JavaScript
     $jsonTargetChartData = json_encode($targetChartData);
-    $jsonTargetChartColors = json_encode($targetChartColors);
+    if(!empty($targetChartColors)) {
+        $jsonTargetChartColors = json_encode($targetChartColors);
+    }
 }
 
 // var_dump($campaigns);
