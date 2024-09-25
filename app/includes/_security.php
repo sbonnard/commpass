@@ -144,3 +144,17 @@ function sanitizeInput(string $input): string
 {
     return trim(htmlspecialchars($input, ENT_QUOTES, 'UTF-8'));
 }
+
+/**
+ * Checks user's client status. If user is not authorized, redirect to dashboard page and add error message.
+ *
+ * @param array $session - $_SESSION super global.
+ * @return void 
+ */
+function checkUserClientStatus(array $session) {
+    if (!isset($session['client']) || $session['client'] === 1) {
+        addError('authorization_ko');
+        redirectTo('dashboard.php');
+        exit();
+    }
+}

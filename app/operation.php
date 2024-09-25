@@ -34,10 +34,12 @@ generateToken();
 
 checkConnection($_SESSION);
 
-if (!isset($_GET['myc']) && !isset($_SESSION['client']) && $_SESSION['client'] === 1) {
+if (!isset($_GET['myc'])) {
     header('Location: dashboard.php');
     exit;
 }
+
+checkUserClientStatus($_SESSION);
 
 if (!isset($_GET['myo'])) {
     $operation = [
