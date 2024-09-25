@@ -98,26 +98,38 @@ if ($_POST['action'] === 'modify-pwd') {
 } else if ($_POST['action'] === 'create-campaign') {
     if (!isset($_POST['campaign_name']) || empty($_POST['campaign_name'])) {
         addError('campaign_name_ko');
+        redirectTo();
+        exit;
     }
 
     if (!isset($_POST['campaign_company']) || empty($_POST['campaign_company'])) {
         addError('campaign_company_ko');
+        redirectTo();
+        exit;
     }
 
     if (!isset($_POST['campaign_interlocutor']) || empty($_POST['campaign_interlocutor'])) {
         addError('campaign_interlocutor_ko');
+        redirectTo();
+        exit;
     }
 
-    if (!isset($_POST['budget']) || empty($_POST['budget']) || !is_numeric($_POST['budget'])) {
+    if (!isset($_POST['budget']) || !is_numeric($_POST['budget']) || $_POST['budget'] < 0) {
         addError('budget_ko');
+        redirectTo();
+        exit;
     }
 
     if (!isset($_POST['campaign_target']) || empty($_POST['campaign_target'])) {
         addError('campaign_target_ko');
+        redirectTo();
+        exit;
     }
 
     if (!isset($_POST['date']) || empty($_POST['date'])) {
         addError('date_ko');
+        redirectTo();
+        exit;
     }
 
     $queryCampaign = $dbCo->prepare(
