@@ -390,7 +390,7 @@ if ($_POST['action'] === 'modify-pwd') {
 
     if ($isUpdateOk) {
         addMessage('budget_update_ok');
-        redirectTo('dashboard.php');
+        redirectTo('campaign.php?myc=' . $_POST['myc']);
     } else {
         addError('budget_update_ko');
         redirectTo();
