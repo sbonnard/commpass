@@ -62,7 +62,7 @@ checkUserClientStatus($_SESSION);
         </div>
 
         <div class="card big-padding">
-            <h2 class="ttl lineUp" id="new-campaign-ttl">Budget
+            <h2 class="ttl lineUp" id="new-budget-ttl">Budget
                 <?php
                 if (isset($_GET['myc']) && intval($_GET['myc'])) {
                     echo 'de la campagne<br>' . $selectedCampaign['campaign_name'];
@@ -74,7 +74,7 @@ checkUserClientStatus($_SESSION);
                 <span class="ttl--tertiary"><?= getClientName($dbCo, $_SESSION, $selectedCampaign) ?></span>
             </h2>
 
-            <section class="card__section" aria-labelledby="new-campaign-ttl">
+            <section class="card__section" aria-labelledby="new-budget-ttl">
                 <form class="form" method="post" action="actions.php">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">

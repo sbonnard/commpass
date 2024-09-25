@@ -101,7 +101,7 @@ if (!isset($_GET['myo'])) {
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="operation_amount">Prix de l'opération (sans €)</label>
-                            <input class="form__input form__input--number" type="text" name="operation_amount" id="operation_amount" placeholder="12500" required value="<?= $operation['price']; ?>">
+                            <input class="form__input form__input--number" type="text" name="operation_amount" id="operation_amount" placeholder="12500" required value="<?= $operation['price']; ?>" aria-label="Fixe le montant d'une opération.">
                         </li>
 
                         <li class="form__itm form__itm--app">
@@ -132,7 +132,7 @@ if (!isset($_GET['myo'])) {
                         <?php
                         if (isset($_GET['myc']) && !isset($_GET['myo'])) {
                             echo '
-                            <input class="button button--add" type="submit" value="Ajouter opération" aria-label="Valider la création de la nouvelle campagne">
+                            <input class="button button--add" type="submit" value="Ajouter opération" aria-label="Valider l\'ajout de l\'opération">
                             <input type="hidden" name="action" value="create-operation">';
                         } else if (isset($_GET['myc']) && isset($_GET['myo'])) {
                             echo '
