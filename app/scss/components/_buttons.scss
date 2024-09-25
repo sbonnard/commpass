@@ -7,7 +7,7 @@
     font-family: 'roboto';
     color: $white;
     background-repeat: no-repeat;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
 
     &--connection {
         background-image: url(../../img/cta-connection.svg);
@@ -80,6 +80,22 @@
             background-image: url(../../img/cta-add-ope-hover.svg);
             border: 2px solid $tertiary;
         }
+
+        &--solid {
+            color: $white;
+            background-image: url(../../img/cta-add-solid.svg);
+            background-color: $primary;
+            padding-left: 4rem;
+            border: 2px solid $primary;
+
+            &:hover {
+                color: $white;
+                background-color: $tertiary;
+                border: 2px solid $tertiary;
+            }
+        }
+
+
     }
 
     &--edit {

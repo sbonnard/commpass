@@ -68,6 +68,14 @@ checkUserClientStatus($_SESSION);
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>
 
+        <div class="button__section">
+            <?php
+            if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+                echo '<a href="new-client.php" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouveau client</a>';
+            }
+            ?>
+        </div>
+
         </main>
 
 <footer class="footer">
