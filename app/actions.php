@@ -395,6 +395,37 @@ if ($_POST['action'] === 'modify-pwd') {
         addError('budget_update_ko');
         redirectTo();
     }
+} else if ($_POST['action'] === 'create_client') {
+    if (!isset($_POST['company_name']) || empty($_POST['company_name']) || !is_string($_POST['company_name']) || strlen($_POST['company_name']) > 100) {
+        addError('company_name_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['annual_budget']) || empty($_POST['annual_budget']) || !is_numeric($_POST['annual_budget'])) {
+        addError('budget_ko');
+        redirectTo();
+        exit;
+    }
+
+    $queryNewClient = $dbCo->prepare(
+        'INSERT INTO company (company_name, annual_budget)
+        VALUES (:company_name, :budget);'
+    );
+
+    $bindValues = [
+        'company_name' => htmlspecialchars($_POST['company_name']),
+        'budget' => floatval($_POST['annual_budget'])
+    ];
+
+    $isInsertClientOk = $queryNewClient->execute($bindValues);
+
+    if ($isInsertClientOk) {
+        addMessage('new_client_created_ok');
+        redirectTo('clients.php');
+    } else {
+        addError('new_client_creation_ko');
+    }
 }
 
 redirectTo();
