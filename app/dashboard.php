@@ -55,6 +55,7 @@ $jsonChartColors = json_encode($chartColors);
 if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || isset($_SESSION['client']) && $_SESSION['client'] === 1) {
     // Récupérer les dépenses annuelles par objectif
     $targetAnnualSpendings = getAnnualSpendingsByTarget($dbCo, $_SESSION);
+    $brandsAnnualSpendings = getAnnualSpendingByBrand($dbCo, $_SESSION);
 
     // Préparer les données et les couleurs pour le graphique
     $targetChartData = [];
@@ -74,12 +75,28 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 
     // Convertir les données en JSON pour les transmettre à JavaScript
     $jsonTargetChartData = json_encode($targetChartData);
-    if(!empty($targetChartColors)) {
+    if (!empty($targetChartColors)) {
         $jsonTargetChartColors = json_encode($targetChartColors);
     }
-}
 
-// var_dump($campaigns);
+    foreach ($brandsAnnualSpendings as $brandData) {
+        $brandName = $brandData['brand_name'];
+        $totalSpent = $brandData['total_spent'];
+        $brandHex = $brandData['legend_colour_hex'];
+
+        // Ajouter les données pour chaque marque
+        $brandChartData[] = [$brandName, $totalSpent];
+
+        // Associer la couleur hexadécimale de la marque
+        $brandChartColors[$brandName] = $brandHex;
+    }
+
+    // Convertir les données en JSON pour les transmettre à JavaScript
+    $jsonBrandChartData = json_encode($brandChartData);
+    if (!empty($brandChartColors)) {
+        $jsonBrandChartColors = json_encode($brandChartColors);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -199,6 +216,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 
         <?php
         if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
+            // DISPLAY TABLE & DONUT CHART FOR OBJECTIVES
             echo
             '<div class="card card--grid">
         <div class="card">
@@ -216,6 +234,27 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                 '</section>
         </div>
     </div>';
+
+
+            // DISPLAY TABLE & DONUT CHART FOR BRANDS
+            echo
+            '<div class="card card--grid card--reverse">
+        <div class="card">
+            <h2 class="ttl lineUp">Répartition du budget annuel<br> dépensé par marque</h2>
+            <!-- GRAPHIQUES DONUT  -->
+            <section class="card__section">
+                <div id="chart-brand"></div>
+            </section>
+        </div>
+        <div class="card">
+            <h2 class="ttl lineUp">Budget annuel attribué<br> par marque</h2>
+            <!-- TABLEAU DES DÉPENSES PAR MARQUE -->
+            <section class="card__section">'
+                . generateTableFromDatas($brandsAnnualSpendings) .
+                '</section>
+        </div>
+    </div>';
+
         }
         ?>
         <h2 class="ttl">Mes campagnes <?= $currentYear ?></h2>
@@ -259,8 +298,8 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 
     // Vérifier si des données sont disponibles pour générer le graphique
     if (targetChartData.length === 0) {
-        var width = window.innerWidth < 768 ? 375 : 450;
-        var height = window.innerWidth < 768 ? 250 : 300;
+        var width = window.innerWidth < 768 ? 495 : 495;
+        var height = window.innerWidth < 768 ? 330 : 330;
 
         // Si aucune donnée, on affiche un donut grisé
         var chart = c3.generate({
@@ -296,8 +335,67 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                 colors: targetChartColors // Appliquer les couleurs des objectifs
             },
             size: {
-                width: window.innerWidth < 768 ? 375 : 450,
-                height: window.innerWidth < 768 ? 250 : 300
+                width: width,
+                height: height
+            },
+            padding: {
+                right: 20,
+                left: 20
+            },
+            donut: {
+                title: ""
+            }
+        });
+    }
+</script>
+
+<!-- Script pour le graphique donut des dépenses par marque. -->
+<script type="module">
+    // Récupérer les données PHP encodées en JSON
+    var brandChartData = <?php echo $jsonBrandChartData ?? '[]'; ?>;
+    var brandChartColors = <?php echo $jsonBrandChartColors ?? '{}'; ?>;
+
+    // Vérifier si des données sont disponibles pour générer le graphique
+    if (brandChartData.length === 0) {
+        var width = window.innerWidth < 768 ? 495 : 495;
+        var height = window.innerWidth < 768 ? 330 : 330;
+
+        // Si aucune donnée, on affiche un donut grisé
+        var chart = c3.generate({
+            bindto: '#chart-brand',
+            data: {
+                columns: [
+                    ['En attente d\'opération', 1] // Donut "Aucune donnée"
+                ],
+                type: 'donut',
+                colors: {
+                    'En attente d\'opération': '#d3d3d3' // Couleur grise pour "Aucune donnée"
+                }
+            },
+            size: {
+                width: width,
+                height: height
+            },
+            padding: {
+                right: 20,
+                left: 20
+            },
+            donut: {
+                title: "Aucune opération"
+            }
+        });
+    } else {
+        // Générer le graphique avec les données et couleurs
+        var chart = c3.generate({
+            bindto: '#chart-brand',
+            data: {
+                columns: brandChartData,
+                type: 'donut',
+                colors: brandChartColors // Appliquer les couleurs des objectifs
+            },
+            size: {
+                width: width,
+                height: height
             },
             padding: {
                 right: 20,
