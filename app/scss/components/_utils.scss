@@ -8,6 +8,11 @@
     color: $secondary;
 }
 
+.medium-text {
+    font-size: 1.25rem;
+    text-align: center;
+}
+
 .small-text {
     font-size: 0.75rem;
 }
@@ -49,4 +54,21 @@
 
 .big-padding {
     padding: 0 0 6rem 0;
+}
+
+.gradient-border {
+    border-image: linear-gradient(to right, $primary, $tertiary);
+    border-image-slice: 1;
+
+    &--top {
+        border-top: 1px solid transparent;
+    }
+
+    &--bottom {
+        border-bottom: 1px solid transparent;
+    }
+}
+
+.partner {
+    padding-bottom: 0.5rem;
 }

@@ -63,13 +63,39 @@ checkUserClientStatus($_SESSION);
             ?>
         </div>
 
-        <h2 class="ttl lineUp">
+        <h2 class="ttl lineUp" id="partners-ttl">
             Les partenaires de<br>
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>
 
         <div class="button__section">
             <a href="new-client.php" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Ajouter partenaire</a>
+        </div>
+
+        <div class="card">
+            <section class="card__section" aria-labelledby="partners-ttl">
+                <?php
+                $partnersDatas = '';
+
+                $partnersDatas .= '<ul>';
+                foreach ($partners as $partner) {
+                    $partnersDatas .= '<li class="partner medium-text">' . $partner['partner_name'] . '</li>';
+                }
+                $partnersDatas .= '</ul>';
+
+                echo $partnersDatas;
+                ?>
+
+                <form action="api.php" method="post" class="form gradient-border gradient-border--top" aria-label="Formulaire d'ajout d'un nouveau partenaire.">
+                    <ul class="form__lst form__lst--app">
+                        <li class="form__itm form__itm--app">
+                            <label class="form__label" for="partner_name">Ajouter un partenaire</label>
+                            <input class="form__input" type="text" name="partner_name" id="partner_name" placeholder="Tendance Ouest" required>
+                        </li>
+                        <input class="button button--partner" type="submit" value="Créer partenaire">
+                    </ul>
+                </form>
+            </section>
         </div>
 
     </main>

@@ -89,7 +89,7 @@ checkUserClientStatus($_SESSION);
         <div class="card" data-card="">
             <section class="card__section card__section--company" aria-labelledby="company_name' . $company['id_company'] . '">
                 <h3 class="client__ttl" id="company_name' . $company['id_company'] . '">' . $company['company_name'] . '</h3>
-                <ul>';
+                <ul class="client__lst gradient-border gradient-border--top">';
 
                         $userFound = false;
 

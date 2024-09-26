@@ -143,6 +143,18 @@
         background-size: contain;
     }
 
+    &--partner {
+        color: $primary;
+        background-image: url(../../img/partner.svg);
+        border: 2px solid $primary;
+
+        &:hover {
+            color: $tertiary;
+            background-image: url(../../img/partner-hover.svg);
+            border: 2px solid $tertiary;
+        }
+    }
+
     &--eye {
         position: absolute;
         background-repeat: no-repeat;
