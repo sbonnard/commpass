@@ -598,7 +598,7 @@ function getCampaignOperationsAsList(array $operations, array $session, array $s
                 <button class="js-trash button--trash" 
         title="Supprimer l\'opération ' . $operation['description'] . ' " 
         aria-label="Supprimer l\'opération' . $operation['description'] . '" 
-        id="' . $operation['id_operation'] . '"></button>';
+        id="' . $operation['id_operation'] . '"></button></span>';
         }
 
         $operationsList .= '</p></li>';

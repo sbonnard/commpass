@@ -12,6 +12,7 @@ $messages = [
     'budget_update_ok' => 'Le budget annuel a été mis à jour avec succès.',
     'new_client_created_ok' => 'Nouveau client créé avec succès.',
     'new_user_created_ok' => 'Nouvel utilisateur créé avec succès.',
+    'partner_created_ok' => 'Nouveau partenaire créé avec succès.'
 ];
 
 $errors = [
@@ -57,7 +58,9 @@ $errors = [
     'company_ko' => 'Sélectionnez une entreprise.',
     'phone_ko' => 'Entrez un numéro de téléphone valide, sans espaces ni caractères spéciaux.',
     'status_ko' => 'Le formulaire n\'a pas correctement établi le statut de l\'utilisateur.',
-    'new_user_creation_ko' => 'Erreur lors de la création de l\'utilisateur.'
+    'new_user_creation_ko' => 'Erreur lors de la création de l\'utilisateur.',
+    'partner_name_ko' => 'Entrez un nom de partenaire valide.',
+    'partner_created_ko' => 'Échec lors de la création du partenaire.'
 ];
 
 

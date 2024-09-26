@@ -500,6 +500,30 @@ if ($_POST['action'] === 'modify-pwd') {
     } else {
         addError('new_user_creation_ko');
     }
+} else if ($_POST['action'] === 'create_partner') {
+    if (!isset($_POST['partner_name']) || empty($_POST['partner_name']) || !is_string($_POST['partner_name']) || strlen($_POST['partner_name']) > 255) {
+        addError('partner_name_ko');
+        redirectTo();
+        exit;
+    }
+
+    $queryNewPartner = $dbCo->prepare(
+        'INSERT INTO partner (partner_name)
+        VALUES (:partner_name);'
+    );
+    
+    $bindValues = [
+        'partner_name' => htmlspecialchars($_POST['partner_name'])
+    ];
+
+    $isInsertPartnerOk = $queryNewPartner->execute($bindValues);
+
+    if ($isInsertPartnerOk) {
+        addMessage('partner_created_ok');
+        redirectTo();
+    } else {
+        addError('partner_created_ko');
+    }
 }
 
 redirectTo();
