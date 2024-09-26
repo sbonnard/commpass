@@ -73,43 +73,52 @@ checkUserClientStatus($_SESSION);
             <span class="text-tertiary"><a href="new-user.php" class="button button--user" aria-label="Redirige vers un formulaire de création d'utilisateur">Nouvel utilisateur</a></span>
         </div>
 
-        <div class="card card--grid card--grid--3columns">
+        <div class="card <?php
+                            if (!empty($companies)) {
+                                echo 'card--grid card--grid--3columns';
+                            }
+                            ?>">
             <?php
 
             // Récupérer les données des entreprises et les afficher sous forme de cartes.
             $companyDatas = '';
-
-            foreach ($companies as $company) {
-                if ($company['id_company'] !== $_SESSION['id_company']) {
-                    $companyDatas .= '
-        <div class="card">
+            if (!empty($companies) && is_array($companies)) {
+                foreach ($companies as $company) {
+                    if ($company['id_company'] !== $_SESSION['id_company']) {
+                        $companyDatas .= '
+        <div class="card" data-card="">
             <section class="card__section card__section--company" aria-labelledby="company_name' . $company['id_company'] . '">
                 <h3 class="client__ttl" id="company_name' . $company['id_company'] . '">' . $company['company_name'] . '</h3>
                 <ul>';
 
-                    $userFound = false;
+                        $userFound = false;
 
-                    foreach ($users as $user) {
-                        if ($user['id_company'] === $company['id_company']) {
-                            $userFound = true;
-                            $companyDatas .= '<li class="';
+                        foreach ($users as $user) {
+                            if ($user['id_company'] === $company['id_company']) {
+                                $userFound = true;
+                                $companyDatas .= '<li class="';
 
-                            if ($user['boss'] === 1) {
-                                $companyDatas .= 'user--boss';
+                                if ($user['boss'] === 1) {
+                                    $companyDatas .= 'user--boss';
+                                }
+
+                                $companyDatas .= '">' . $user['firstname'] . ' ' . $user['lastname'] . '</li>';
                             }
-
-                            $companyDatas .= '">' . $user['firstname'] . ' ' . $user['lastname'] . '</li>';
                         }
-                    }
 
-                    if (!$userFound) {
-                        $companyDatas .= '<li>Aucun interlocuteur pour cette entreprise.</li>';
-                    }
+                        if (!$userFound) {
+                            $companyDatas .= '<li>Aucun interlocuteur pour cette entreprise.</li>';
+                        }
 
-                    $companyDatas .= '</ul></section></div>';
+                        $companyDatas .= '</ul></section></div>';
+                    }
                 }
+            } else {
+                echo '
+                <div class="card card__section">
+                        <p class="big-text">Aucun client pour l\'instant !</p>
+                </div>';
             }
-
             echo $companyDatas;
             ?>
         </div>
