@@ -19,6 +19,7 @@
             border-bottom: 2px solid transparent;
             border-image: linear-gradient(to right, $primary, $tertiary);
             border-image-slice: 1;
+            overflow:scroll;
         }
     
         &__menu.overlay {

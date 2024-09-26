@@ -23,8 +23,16 @@
         border-bottom-left-radius: 0.75rem;
         border-bottom-right-radius: 0.75rem;
 
+        @media screen and (max-width: 768px) {
+            overflow-y: scroll
+        }
+
         &-itm {
             padding: 0.5rem 0;
+
+            @media screen and (max-width: 768px) {
+                padding: 0;
+            }
         }
     }
 
@@ -35,11 +43,19 @@
             color: $tertiary;
         }
     }
-}
 
-.dropdown:hover .dropdown__child {
-    display: block;
-    position: absolute;
-    z-index: 1;
-    padding-bottom: 1rem;
+    @media screen and (min-width: 768px) {
+        &:hover .dropdown__child {
+            display: block;
+            position: absolute;
+            z-index: 1;
+            padding-bottom: 1rem;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .dropdown__child--active {
+            display: block;
+        }
+    }
 }

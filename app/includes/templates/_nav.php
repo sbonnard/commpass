@@ -53,8 +53,8 @@ function displayNetworkLinkIfTDC(array $session, string $clientActive): string
     if (isset($session['client']) && $session['client'] === 0) {
         return '
         <li class="nav__itm dropdown ' . $clientActive . '">
-            <button class="nav__lnk nav__lnk--network dropdown__button" aria-label="Menu déroulant">Mon réseau<span class="nav__arrow">▼</span></button>
-            <ul class="dropdown__child">
+            <button class="nav__lnk nav__lnk--network dropdown__button" aria-label="Menu déroulant" id="dropdown-btn">Mon réseau<span class="nav__arrow">▼</span></button>
+            <ul class="dropdown__child" id="dropdown-child">
                 <li class="dropdown__child-itm">
                     <a href="clients.php" class="dropdown__child-lnk" aria-label="Lien vers mes clients">Mes clients</a>
                 </li>

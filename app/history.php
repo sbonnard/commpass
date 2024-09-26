@@ -194,6 +194,8 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 </body>
 
 <script type="module" src="js/script.js"></script>
+<script type="module" src="js/burger.js"></script>
+<script type="module" src="js/dropdown-menu.js"></script>
 <script type="module" src="js/cards.js"></script>
 <script type="module" src="js/vignette.js"></script>
 

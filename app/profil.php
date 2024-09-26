@@ -127,6 +127,8 @@ checkConnection($_SESSION);
 </body>
 
 <script type="module" src="js/script.js"></script>
+<script type="module" src="js/burger.js"></script>
+<script type="module" src="js/dropdown-menu.js"></script>
 <script type="module" src="js/profil-forms.js"></script>
 
 </html>

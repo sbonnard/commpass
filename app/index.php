@@ -84,6 +84,7 @@ if (isset($_SESSION) && !empty($_SESSION) && isset($_SESSION['id_user'], $_SESSI
 </body>
 
 <script type="module" src="js/script.js"></script>
+<script type="module" src="js/index.js"></script>
 <script type="module" src="js/password.js"></script>
 <script type="module" src="js/cards.js"></script>
 
