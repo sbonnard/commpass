@@ -1,35 +1,43 @@
-.mainmenubtn {
-    background-color: $white;
-    color: $primary;
-    border: none;
-    cursor: pointer;
-    align-items: center;
-}
-.mainmenubtn:hover {
-    color: $tertiary;
-    }
-
 .dropdown {
     position: relative;
     display: inline-block;
+
+    &__button {
+        background-color: $white;
+        color: $primary;
+        border: none;
+        cursor: pointer;
+        align-items: center;
+
+        &:hover {
+            color: $tertiary;
+        }
+    }
+
+    &__child {
+        display: none;
+        background-color: $white;
+        width: 100%;
+        padding: 1rem;
+        margin-left: 1.75rem;
+        border-bottom-left-radius: 0.75rem;
+        border-bottom-right-radius: 0.75rem;
+
+        &-itm {
+            padding: 0.5rem 0;
+        }
+    }
+
+    &__child a {
+        color: $primary;
+
+        &:hover {
+            color: $tertiary;
+        }
+    }
 }
 
-.dropdown-child {
-    display: none;
-    background-color: $white;
-    width: 100%;
-    padding: 1rem;
-    margin-left: 1.5rem;
-}
-
-.dropdown-child-itm {
-    padding: 0.5rem 0;
-}
-
-.dropdown-child a {
-    color: $primary;
-}
-.dropdown:hover .dropdown-child {
+.dropdown:hover .dropdown__child {
     display: block;
     position: absolute;
     z-index: 1;
