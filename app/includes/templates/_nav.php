@@ -48,18 +48,18 @@ function fetchNav(array $session, string $dashboardActive = '', string $NetworkA
  * @param array $session - Superglobal $_SESSION.
  * @return string - HTML code for the link.
  */
-function displayNetworkLinkIfTDC(array $session, string $clientActive): string
+function displayNetworkLinkIfTDC(array $session, string $NetworkActive): string
 {
     if (isset($session['client']) && $session['client'] === 0) {
         return '
-        <li class="nav__itm dropdown ' . $clientActive . '">
+        <li class="nav__itm ' . $NetworkActive . ' dropdown">
             <button class="nav__lnk nav__lnk--network dropdown__button" aria-label="Menu déroulant" id="dropdown-btn">Mon réseau<span class="nav__arrow">▼</span></button>
             <ul class="dropdown__child" id="dropdown-child">
                 <li class="dropdown__child-itm">
                     <a href="clients.php" class="dropdown__child-lnk" aria-label="Lien vers mes clients">Mes clients</a>
                 </li>
                 <li class="dropdown__child-itm">
-                    <a href="collaborators.php" class="dropdown__child-lnk" aria-label="Lien vers mes collaborateurs">Mes collaborateurs</a>
+                    <a href="my-team.php" class="dropdown__child-lnk" aria-label="Lien vers mon équipe">Mon équipe</a>
                 </li>
                 <li class="dropdown__child-itm">
                     <a href="partners.php" class="dropdown__child-lnk" aria-label="Lien vers mes partenaires">Mes partenaires</a>
