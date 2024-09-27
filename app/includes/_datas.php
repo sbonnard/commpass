@@ -28,6 +28,8 @@ $companyAnnualBudget = fetchCompanyAnnualBudget($dbCo, $_SESSION);
 
 $companyAnnualRemainings = calculateAnnualRemainingBudget($dbCo, $_SESSION);
 
+$companyCurrentYearCampaigns = getOneCompanyYearlyCampaigns($dbCo, $_SESSION);
+
 // CAMPAIGN DATAS
 $campaigns = getCompanyCampaigns($dbCo, $_SESSION);
 

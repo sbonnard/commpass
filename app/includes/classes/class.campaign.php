@@ -186,7 +186,6 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session): array
         $bindValues = [
             'id_user' => intval($session['id_user'])
         ];
-
     } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
         // Si l'utilisateur est un client mais qu'il est aussi le gérant de l'entreprise cliente.
         $queryCampaigns = $dbCo->prepare(
@@ -704,4 +703,34 @@ function getTargetsAsHTMLOptions(array $targets): string
     }
 
     return $options;
+}
+
+/**
+ * Get company campaigns for current year.
+ *
+ * @param PDO $dbCo - PDO connection object
+ * @param array $session - Superglobal $_SESSION.
+ * @return array - array of campaigns for current year for a specific company.
+ */
+function getOneCompanyYearlyCampaigns(PDO $dbCo, array $session): array
+{
+    $query = $dbCo->prepare(
+        'SELECT *
+        FROM campaign
+        WHERE id_company = :idcompany AND YEAR(date) = YEAR(CURDATE());'
+    );
+
+    if (isset($session['id_company']) && $session['id_company'] !== 1) {
+        $bindValues = [
+            'idcompany' => $session['id_company']
+        ];
+    } else if (isset($session['filter']['id_company'])) {
+        $bindValues = [
+            'idcompany' => $session['filter']['id_company']
+        ];
+    }
+
+    $query->execute($bindValues);
+
+    return $query->fetchAll(PDO::FETCH_ASSOC);
 }

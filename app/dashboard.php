@@ -90,8 +90,6 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         // Ajouter les données pour chaque marque
         $brandChartData[] = [$brandName, $totalSpent];
 
-        var_dump($brandChartData);
-
         // Associer la couleur hexadécimale de la marque
         $brandChartColors[$brandName] = $brandHex;
     }
@@ -259,18 +257,22 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                 '</section>
         </div>
     </div>';
-
         }
         ?>
         <h2 class="ttl">Mes campagnes <?= $currentYear ?></h2>
-        <section class="card campaign">
-            <?= getMessageIfNoCampaign($currentYearCampaigns) ?>
+        <section class="card <?php
+        if(!empty($companyCurrentYearCampaigns)) {
+            echo 'campaign';
+        }
+        ?>">
             <?php
             if (!isset($_SESSION['filter']) && !isset($_SESSION['filter']['id_company'])) {
                 echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
+                echo getMessageIfNoCampaign($currentYearCampaigns);
             } else if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && $_SESSION['client'] === 0) {
                 $currentYearCampaigns = getCompanyFilteredCampaigns($dbCo, $_SESSION);
                 echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
+                echo getMessageIfNoCampaign($currentYearCampaigns);
             }
             ?>
         </section>
