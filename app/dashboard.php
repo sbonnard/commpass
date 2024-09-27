@@ -261,7 +261,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         ?>
         <h2 class="ttl">Mes campagnes <?= $currentYear ?></h2>
         <section class="card <?php
-        if(!empty($companyCurrentYearCampaigns)) {
+        if(!empty($companyCurrentYearCampaigns) || $_SESSION['client'] === 0) {
             echo 'campaign';
         }
         ?>">

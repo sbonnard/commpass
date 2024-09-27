@@ -90,7 +90,6 @@ checkUserClientStatus($_SESSION);
             <section class="card__section card__section--company" aria-labelledby="company_name' . $company['id_company'] . '">
                 <h3 class="client__ttl" id="company_name' . $company['id_company'] . '">' . $company['company_name'] . '</h3>
                 <ul class="client__lst gradient-border gradient-border--top">';
-
                         $userFound = false;
 
                         foreach ($users as $user) {
@@ -112,17 +111,17 @@ checkUserClientStatus($_SESSION);
 
                         $companyDatas .= '</ul>';
                         $companyDatas .= '<ul>';
-                        $companyDatas .= '<h4 class="client__subttl">Les marques</h4>';
+                        $companyDatas .= '<div class=""><h4 class="client__subttl">Les marques</h4><a class="button--plus" href="?comp=' . $company['id_company'] . '"></a></div>';
 
-                        foreach($allbrands as $brand) {
-                            if($brand['id_company'] === $company['id_company']) {
-                                $companyDatas.= '<li class="campaign__legend"><span class="campaign__legend-square" style="background-color:'. $brand['legend_colour_hex']. '"></span>'. $brand['brand_name']. '</li>';
+                        foreach ($allbrands as $brand) {
+                            if ($brand['id_company'] === $company['id_company']) {
+                                $companyDatas .= '<li class="campaign__legend"><span class="campaign__legend-square" style="background-color:' . $brand['legend_colour_hex'] . '"></span>' . $brand['brand_name'] . '</li>';
                             } else if (empty($allbrands)) {
                                 echo '<li>Aucune marque pour cette entreprise.</li>';
                             }
                         }
                         $companyDatas .= '</ul>';
-                
+
                         $companyDatas .= '</section></div>';
                     }
                 }
