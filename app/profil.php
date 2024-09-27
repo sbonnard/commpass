@@ -90,7 +90,7 @@ checkConnection($_SESSION);
                                 </select>
                             </li>
                             <li class="form__itm form__itm--app">
-                                <label class="form__label" for="color" aria-label="Sélectionner la marque concernée">Nouvelle couleur de la marque</label>
+                                <label class="form__label" for="color" aria-label="Sélectionner la couleur pour la marque">Nouvelle couleur de la marque</label>
                                 <input class="form__input--colour" type="color" name="color" id="color" value="">
                             </li>
                             <input class="button button--confirm" type="submit" value="Confirmer" aria-label="Confirmer la modification de la couleur">

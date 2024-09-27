@@ -100,25 +100,17 @@ function getCompanyNameIfTDC(array $campaigns, array $session): string
 }
 
 
-function getCompanyNameForNewOp(PDO $dbCo, array $get)
+function getCompanyNameForNewBrand(PDO $dbCo, array $get)
 {
     if (isset($get['myc'])) {
         $sql = 'SELECT company_name
             FROM company
                 JOIN operation ON company.id_company = operation.id_company
-            WHERE id_campaign = :myc';
-
-        if (isset($get['myc'], $get['myo'])) {
-            $sql .= ' AND id_operation = :myo';
-        }
+            WHERE id_company =:id_company';
 
         $query = $dbCo->prepare($sql);
 
-        $bindValues = ['myc' => intval($get['myc'])];
-
-        if (isset($get['myo'])) {
-            $bindValues['myo'] = intval($get['myo']);
-        }
+        $bindValues = ['id_company' => intval($get['comp'])];
 
         $query->execute($bindValues);
 

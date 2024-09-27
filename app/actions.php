@@ -324,6 +324,48 @@ if ($_POST['action'] === 'modify-pwd') {
         redirectTo('profil.php');
         exit;
     }
+} else if ($_POST['action'] === 'new_brand') {
+    if (!isset($_POST['brand_name']) || empty($_POST['brand_name']) || strlen($_POST['brand_name']) > 100) {
+        addError('brand_name_ko');
+        redirectTo('');
+        exit;
+    }
+
+    if(!isset($_POST['color']) || empty($_POST['color']) || strlen($_POST['color']) > 7) {
+        addError('colour_ko');
+        redirectTo('');
+        exit;
+    }
+
+    if(!isset($_POST['id_company']) || empty($_POST['id_company']) || !intval($_POST['id_company'])) {
+        addError('company_id_ko');
+        redirectTo('');
+        exit;
+    }
+
+    
+    
+    $query = $dbCo->prepare(
+        'INSERT INTO brand (brand_name, legend_colour_hex, id_company)
+        VALUES (:brand_name, :color, :id_company);'
+    );
+    
+    $bindValues = [
+        'brand_name' => strip_tags($_POST['brand_name']),
+        'color' => strip_tags($_POST['color']),
+        'id_company' => intval($_POST['id_company'])
+    ];
+    
+    $isInsertOk = $query->execute($bindValues);
+
+    if ($isInsertOk) {
+        addMessage('brand_created_ok');
+        redirectTo('clients.php');
+    } else {
+        addError('brand_creation_ko');
+        redirectTo('');
+    }
+
 } else if ($_POST['action'] === 'filter-campaigns') {
     if (!isset($_POST['client-filter']) || empty($_POST['client-filter'])) {
         addError('no_client');
@@ -511,7 +553,7 @@ if ($_POST['action'] === 'modify-pwd') {
         'INSERT INTO partner (partner_name)
         VALUES (:partner_name);'
     );
-    
+
     $bindValues = [
         'partner_name' => htmlspecialchars($_POST['partner_name'])
     ];

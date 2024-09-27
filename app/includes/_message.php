@@ -12,7 +12,8 @@ $messages = [
     'budget_update_ok' => 'Le budget annuel a été mis à jour avec succès.',
     'new_client_created_ok' => 'Nouveau client créé avec succès.',
     'new_user_created_ok' => 'Nouvel utilisateur créé avec succès.',
-    'partner_created_ok' => 'Nouveau partenaire créé avec succès.'
+    'partner_created_ok' => 'Nouveau partenaire créé avec succès.',
+    'brand_created_ok' => 'Nouvelle marque créée.'
 ];
 
 $errors = [
@@ -60,7 +61,11 @@ $errors = [
     'status_ko' => 'Le formulaire n\'a pas correctement établi le statut de l\'utilisateur.',
     'new_user_creation_ko' => 'Erreur lors de la création de l\'utilisateur.',
     'partner_name_ko' => 'Entrez un nom de partenaire valide.',
-    'partner_created_ko' => 'Échec lors de la création du partenaire.'
+    'partner_created_ko' => 'Échec lors de la création du partenaire.',
+    'brand_name_ko' => 'Le nom de la marque est invalide.',
+    'colour_ko' => 'Sélectionnez une couleur.',
+    'company_id_ko' => 'Aucune entreprise sélectionnée.',
+    'brand_creation_ko' => 'Échec lors de la création de la marque.'
 ];
 
 

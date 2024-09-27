@@ -160,6 +160,8 @@
         width: 1.5rem;
         aspect-ratio: 1;
         background-image: url(../img/cta-plus.svg);
+        border: 2px solid $tertiary;
+        border-radius: 0.5rem;
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
