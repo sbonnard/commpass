@@ -79,6 +79,9 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         $jsonTargetChartColors = json_encode($targetChartColors);
     }
 
+    $brandChartData = [];
+    $brandChartColors = [];
+
     foreach ($brandsAnnualSpendings as $brandData) {
         $brandName = $brandData['brand_name'];
         $totalSpent = $brandData['total_spent'];
@@ -86,6 +89,8 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 
         // Ajouter les données pour chaque marque
         $brandChartData[] = [$brandName, $totalSpent];
+
+        var_dump($brandChartData);
 
         // Associer la couleur hexadécimale de la marque
         $brandChartColors[$brandName] = $brandHex;
