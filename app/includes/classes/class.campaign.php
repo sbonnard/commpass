@@ -275,6 +275,14 @@ function getCompanyFilteredCampaigns(PDO $dbCo, array $session): array
     return $queryCampaigns->fetchAll(PDO::FETCH_ASSOC);
 }
 
+
+/**
+ * Get HTML template for a campaign displaying most important infos.
+ *
+ * @param array $campaigns - An array containing all campaigns.
+ * @param array $session - Superglobal $_SESSION.
+ * @return string - HTML code that constitutes the template.
+ */
 function getCampaignTemplate(PDO $dbCo, array $campaigns, array $session): string
 {
     $campaignList = '<div class="campaign__pattern">';
@@ -327,10 +335,11 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $session): strin
 }
 
 /**
- * Get HTML template for a campaign displaying most important infos.
+ * Get HTML template for a campaign displaying most important infos. It displays campaigns by company.
  *
  * @param array $campaigns - An array containing all campaigns.
  * @param array $session - Superglobal $_SESSION.
+ * @param array $companies - Tableau contenant toutes les entreprises.
  * @return string - HTML code that constitutes the template.
  */
 function getCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array $session, array $companies): string

@@ -127,9 +127,19 @@ function getAnnualSpendingByBrand(PDO $dbCo, array $session): array
         GROUP BY id_brand;'
     );
 
-    $bindValues = [
-        'id_company' => $session['filter']['id_company']
-    ];
+    if(isset($session['filter'])) {
+        $bindValues = [
+            'id_company' => $session['filter']['id_company']
+        ];
+    } else if (!isset($session['filter'])) {
+        $bindValues = [
+            'id_company' => intval($session['id_company'])
+        ];
+    } else {
+        $bindValues = [
+            'id_company' => 1 // default
+        ];
+    }
 
     $queryAnnualSpending->execute($bindValues);
 

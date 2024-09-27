@@ -260,18 +260,28 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         ?>
         <h2 class="ttl lineUp">Mes campagnes <?= $currentYear ?></h2>
         <section class="card <?php
-        if(!empty($companyCurrentYearCampaigns) || $_SESSION['client'] === 0) {
-            echo 'campaign';
-        }
-        ?>">
+                                if (!empty($companyCurrentYearCampaigns) || $_SESSION['client'] === 0) {
+                                    echo 'campaign';
+                                }
+                                ?>">
             <?php
-            if (!isset($_SESSION['filter']) && !isset($_SESSION['filter']['id_company'])) {
+
+            if (!isset($_SESSION['filter']) && $_SESSION['client'] === 0) {
                 echo getCampaignTemplateByCompany($dbCo, $currentYearCampaigns, $_SESSION, $companies);
                 echo getMessageIfNoCampaign($currentYearCampaigns);
+
             } else if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && $_SESSION['client'] === 0) {
                 $currentYearCampaigns = getCompanyFilteredCampaigns($dbCo, $_SESSION);
                 echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
                 echo getMessageIfNoCampaign($currentYearCampaigns);
+
+            } else if ($_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
+                $currentYearCampaigns = getCompanyFilteredCampaigns($dbCo, $_SESSION);
+                echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
+            } else if ($_SESSION['client'] === 1 && $_SESSION['boss'] === 0) {
+                echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
+            } else {
+                echo 'Aucun bloc atteint';
             }
             ?>
         </section>
