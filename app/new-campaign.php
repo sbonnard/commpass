@@ -38,7 +38,7 @@ checkUserClientStatus($_SESSION);
 <html lang="fr">
 
 <head>
-    <?= fetchHead('WellComm'); ?>
+    <?= fetchHead('Commpass'); ?>
 </head>
 
 <body>

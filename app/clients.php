@@ -40,7 +40,7 @@ checkUserClientStatus($_SESSION);
 <html lang="fr">
 
 <head>
-    <?= fetchHead('WellComm'); ?>
+    <?= fetchHead('Commpass'); ?>
 </head>
 
 <body>
@@ -110,13 +110,26 @@ checkUserClientStatus($_SESSION);
                             $companyDatas .= '<li>Aucun interlocuteur pour cette entreprise.</li>';
                         }
 
-                        $companyDatas .= '</ul></section></div>';
+                        $companyDatas .= '</ul>';
+                        $companyDatas .= '<ul>';
+                        $companyDatas .= '<h4 class="client__subttl">Les marques</h4>';
+
+                        foreach($allbrands as $brand) {
+                            if($brand['id_company'] === $company['id_company']) {
+                                $companyDatas.= '<li class="campaign__legend"><span class="campaign__legend-square" style="background-color:'. $brand['legend_colour_hex']. '"></span>'. $brand['brand_name']. '</li>';
+                            } else if (empty($allbrands)) {
+                                echo '<li>Aucune marque pour cette entreprise.</li>';
+                            }
+                        }
+                        $companyDatas .= '</ul>';
+                
+                        $companyDatas .= '</section></div>';
                     }
                 }
             } else {
                 echo '
                 <div class="card card__section">
-                        <p class="big-text">Aucun client pour l\'instant !</p>
+                <p class="big-text">Aucun client pour l\'instant !</p>
                 </div>';
             }
             echo $companyDatas;

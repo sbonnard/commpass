@@ -28,7 +28,7 @@ if (isset($_SESSION) && !empty($_SESSION) && isset($_SESSION['id_user'], $_SESSI
 <html lang="fr">
 
 <head>
-    <?= fetchHead('WellComm'); ?>
+    <?= fetchHead('Commpass'); ?>
 </head>
 
 <body>

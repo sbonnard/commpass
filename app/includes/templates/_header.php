@@ -11,7 +11,7 @@ function fetchHeader(string $url, string $linkTitle = null): string
 {
     return '
         <a href="' . $url . '" title="' . $linkTitle . '">
-            <h1 class="header__ttl">WellComm</h1>
+            <h1 class="header__ttl">Commpass</h1>
         </a>
         <div class="hamburger">
             <a href="#menu" id="hamburger-menu-icon">

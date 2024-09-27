@@ -106,7 +106,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 <html lang="fr">
 
 <head>
-    <?= fetchHead('WellComm'); ?>
+    <?= fetchHead('Commpass'); ?>
 </head>
 
 <body>

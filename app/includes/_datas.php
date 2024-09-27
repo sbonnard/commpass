@@ -52,6 +52,8 @@ $operation = getAllOperationsFromACampaign($dbCo, $_GET);
 
 
 // OTHER DATAS
+$allbrands = fetchAllBrands($dbCo);
+
 $communicationObjectives = fetchCampaignTarget($dbCo);
 
 $media = fetchAllMedia($dbCo);

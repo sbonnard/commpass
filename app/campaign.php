@@ -52,7 +52,7 @@ $jsonData = json_encode($chartData);
 <html lang="fr">
 
 <head>
-    <?= fetchHead('WellComm'); ?>
+    <?= fetchHead('Commpass'); ?>
 </head>
 
 <body>

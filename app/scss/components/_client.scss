@@ -5,6 +5,14 @@
         color: $primary;
     }
 
+    &__subttl {
+        font-size: 1.25rem;
+        font-family: 'jura';
+        color: $secondary;
+        margin-bottom: 0.5rem;
+        text-align: center;
+    }
+
     &__lst {
         padding-top: 1.5rem;
     }

@@ -1,12 +1,29 @@
 <?php
 
 /**
+ * Fetch all brands from database.
+ *
+ * @param PDO $dbCo
+ * @return void
+ */
+function fetchAllBrands(PDO $dbCo):array
+{
+    $query = $dbCo->query(
+        'SELECT id_brand, brand_name, legend_colour_hex, id_company
+        FROM brand 
+        ORDER BY brand_name ASC;'
+    );
+
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
  * Fetch all brands from a company.
  *
  * @param PDO $dbCo - Connection to the database.
  * @return array - Array of brands.
  */
-function fetchCompanyBrands(PDO $dbCo, array $session):array
+function fetchCompanyBrands(PDO $dbCo, array $session): array
 {
     $query = $dbCo->prepare(
         'SELECT id_brand, brand_name, legend_colour_hex, id_company
@@ -99,7 +116,8 @@ function getCompanyBrandsAsHTMLOptions(array $companyBrands): string
  * @param array $session - Superglobal $_SESSION.
  * @return array - Array of annual spending by brand.
  */
-function getAnnualSpendingByBrand(PDO $dbCo, array $session):array {
+function getAnnualSpendingByBrand(PDO $dbCo, array $session): array
+{
     $queryAnnualSpending = $dbCo->prepare(
         'SELECT b.id_brand, brand_name, legend_colour_hex, SUM(o.price) AS total_spent
         FROM brand b
@@ -112,7 +130,7 @@ function getAnnualSpendingByBrand(PDO $dbCo, array $session):array {
     $bindValues = [
         'id_company' => $session['filter']['id_company']
     ];
-    
+
     $queryAnnualSpending->execute($bindValues);
 
     return $queryAnnualSpending->fetchAll(PDO::FETCH_ASSOC);

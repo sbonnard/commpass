@@ -54,7 +54,7 @@ if (!isset($_GET['myo'])) {
 <html lang="fr">
 
 <head>
-    <?= fetchHead('WellComm'); ?>
+    <?= fetchHead('Commpass'); ?>
 </head>
 
 <body>
