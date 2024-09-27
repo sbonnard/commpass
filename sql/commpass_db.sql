@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mar. 24 sep. 2024 à 14:51
+-- Généré le : ven. 27 sep. 2024 à 12:18
 -- Version du serveur : 8.0.37
 -- Version de PHP : 8.2.8
 
@@ -18,10 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `wellcomm_db`
+-- Base de données : `commpass_db`
 --
-CREATE DATABASE IF NOT EXISTS `wellcomm_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `wellcomm_db`;
+CREATE DATABASE IF NOT EXISTS `commpass_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `commpass_db`;
 
 -- --------------------------------------------------------
 
@@ -49,7 +49,11 @@ INSERT INTO `brand` (`id_brand`, `brand_name`, `id_company`, `legend_colour_hex`
 (5, 'Nexmus', 3, '#44277A'),
 (6, 'Cafés Geronimo', 3, '#5F3838'),
 (7, 'Fripig', 4, '#4DBEBE'),
-(8, 'Maxstock', 4, '#40BC54');
+(8, 'Maxstock', 4, '#40BC54'),
+(10, 'ProNerexam Versicherung', 5, '#fbff24'),
+(11, 'Nerexam Schutz', 5, '#ff9238'),
+(12, 'VersicherungsNexus', 5, '#DF0000'),
+(13, 'AlpCare', 6, '#1dd7c2');
 
 -- --------------------------------------------------------
 
@@ -83,7 +87,9 @@ INSERT INTO `campaign` (`id_campaign`, `campaign_name`, `budget`, `date`, `id_us
 (17, 'Soldes d\'hiver', 7000.00, '2024-11-15 00:00:00', 4, 3, 3, 2),
 (18, 'Soldes d\'hiver', 4500.00, '2024-11-01 00:00:00', 5, 4, 3, 2),
 (19, 'Green days', 12500.00, '2024-01-04 00:00:00', 5, 4, 2, 2),
-(20, 'Salon des métiers', 7000.00, '2024-09-23 00:00:00', 6, 2, 1, 2);
+(20, 'Salon des métiers', 7000.00, '2024-09-23 00:00:00', 6, 2, 1, 2),
+(26, 'Test 445', 8500.00, '2024-09-25 00:00:00', 7, 5, 1, 2),
+(28, 'Peau neuve', 16000.00, '2024-11-06 00:00:00', 8, 6, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -106,7 +112,9 @@ INSERT INTO `company` (`id_company`, `company_name`, `annual_budget`) VALUES
 (2, 'FakeBusiness', 84000.00),
 (3, 'Luminase', 52000.00),
 (4, 'Groupe Pignon', 15750.00),
-(5, 'Nerexam Solutions', 72000.00);
+(5, 'Nerexam Solutions', 76000.00),
+(6, 'Helvionics SA', 128000.00),
+(7, 'En un Écl&#039;Hair', 4200.00);
 
 -- --------------------------------------------------------
 
@@ -160,7 +168,6 @@ INSERT INTO `operation` (`id_operation`, `description`, `price`, `date_`, `id_ca
 (8, 'Vitrine web mise à jour', 227.92, '2023-11-29', 2, 2, 7, NULL),
 (9, 'Avatars du personnel', 205.00, '2024-01-15', 3, 2, 7, NULL),
 (10, 'Encart presse dans la Manche Libre', 75.00, '2024-02-05', 3, 2, 1, 1),
-(11, 'Réseaux sociaux', 144.85, '2024-03-02', 3, 2, 5, NULL),
 (12, 'Mise en lumière de la société Luminase avec un beau panneau néon', 14250.28, '2024-09-12', 13, 3, 6, NULL),
 (14, 'Test Stellar Threads', 1450.00, '2024-09-20', 1, 2, 1, NULL),
 (15, 'Graphisme affiches fête des père', 1200.00, '2025-06-09', 16, 2, 2, NULL),
@@ -177,7 +184,16 @@ INSERT INTO `operation` (`id_operation`, `description`, `price`, `date_`, `id_ca
 (27, 'Flocage polos Fakebusiness', 827.55, '2024-09-23', 20, 2, 2, 0),
 (28, 'Flocage de stylos 4 couleurs', 27.00, '2024-09-24', 20, 2, 2, 0),
 (29, 'Etiquetage de 240 bouteilles de champagne personnalisées', 6000.00, '2024-09-24', 20, 2, 2, 0),
-(30, 'Publicité radio', 896.00, '2024-09-24', 1, 2, 3, 3);
+(30, 'Publicité radio', 896.00, '2024-09-24', 1, 2, 3, 3),
+(31, 'Test 880', 700.00, '2024-09-24', 21, 3, 3, 3),
+(33, 'test', 1483.00, '2024-09-25', 26, 5, 3, 0),
+(34, 'test 2', 450.00, '2024-09-28', 26, 5, 6, 0),
+(35, 'test 3', 789.00, '2024-10-17', 26, 5, 5, 0),
+(36, 'Refonte du logo original', 350.00, '2024-09-28', 27, 6, 2, 0),
+(37, 'Panneau d\'affichage à Caen', 822.00, '2024-09-27', 3, 2, 6, 4),
+(38, 'Pub télé', 1222.00, '2024-09-27', 1, 2, 4, 5),
+(39, 'Redesign d\'un logo pour la marque', 1230.00, '2024-11-01', 28, 6, 2, 0),
+(40, 'Diffusion spots radio', 2700.00, '2024-11-05', 28, 6, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -197,16 +213,19 @@ CREATE TABLE `operation_brand` (
 INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 (27, 0),
 (28, 0),
+(36, 0),
+(38, 0),
+(39, 0),
 (4, 1),
 (5, 1),
 (6, 1),
 (8, 1),
 (9, 1),
 (10, 1),
-(11, 1),
 (23, 1),
 (24, 2),
 (30, 2),
+(37, 2),
 (14, 3),
 (15, 3),
 (22, 3),
@@ -218,8 +237,13 @@ INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 (18, 5),
 (19, 5),
 (17, 6),
+(31, 6),
 (20, 7),
-(21, 8);
+(21, 8),
+(33, 10),
+(34, 11),
+(35, 12),
+(40, 13);
 
 -- --------------------------------------------------------
 
@@ -239,7 +263,9 @@ CREATE TABLE `partner` (
 INSERT INTO `partner` (`id_partner`, `partner_name`) VALUES
 (1, 'La Manche Libre'),
 (2, 'Ouest France'),
-(3, 'Tendance Ouest');
+(3, 'Tendance Ouest'),
+(4, 'Radio TSF 98'),
+(5, 'France 3 Basse-Normandie');
 
 -- --------------------------------------------------------
 
@@ -309,7 +335,11 @@ INSERT INTO `users` (`id_user`, `username`, `firstname`, `lastname`, `password`,
 (3, 'jcarriere3', 'Julie', 'Carrière', '$2y$10$cCubd56otzIKiNdKRj3i.u4Crxaxz586Ygn5QmVszFF91z2SgMqFS', 'julie.carriere@fakebusiness.com', '0600102030', 1, 1, 2),
 (4, 'mhamelin4', 'Marius', 'Hamelin', '$2y$10$ZMkpWcRvhkY0PHUZPlb8COU3sCBTRqIKdvvK4sZd2U84wH2HHNPwK', 'marius.hamelin@luminase.com', '0600102030', 1, 1, 3),
 (5, 'ppignon5', 'Pascale', 'Pignon', '$2y$10$ZMkpWcRvhkY0PHUZPlb8COU3sCBTRqIKdvvK4sZd2U84wH2HHNPwK', 'pascale.pignon@pignon-group.com', '0600102030', 1, 1, 4),
-(6, 'mchampion6', 'Manon', 'Champion', '$2y$10$cCubd56otzIKiNdKRj3i.u4Crxaxz586Ygn5QmVszFF91z2SgMqFS', 'manon.champion@fakebusiness.com', '0600102030', 1, 0, 2);
+(6, 'mchampion6', 'Manon', 'Champion', '$2y$10$cCubd56otzIKiNdKRj3i.u4Crxaxz586Ygn5QmVszFF91z2SgMqFS', 'manon.champion@fakebusiness.com', '0600102030', 1, 0, 2),
+(7, 'hziegler7', 'Helmut', 'Ziegler', '$2y$10$cCubd56otzIKiNdKRj3i.u4Crxaxz586Ygn5QmVszFF91z2SgMqFS', 'helmut.ziegler@nerexam.com', '0600102030', 1, 1, 5),
+(8, 'ldubois8', 'Léon', 'Dubois', '$2y$10$0FCcKygW2AKjhbM93u2qg.GchfDaImvsU7dsV8vy8zLYSuV9dlOYe', 'duboisleon@helvionics.com', '0601020304', 1, 1, 6),
+(9, 'jmuller9', 'Johannes', 'Müller', '$2y$10$ZrJPfxjaIWGVJEfu6VjQqeRjeqXrBpuaMl6ks96rYasTgda1Qp7aK', 'johannesmuller@nerexam.com', '0614141414', 1, 0, 5),
+(12, 'vriche74', 'Veronica', 'Riche', '$2y$10$H85YqMiJjN9Z4FT15z32pe3cjwbbv8gGVFA4tiJHXN73DGKply6XW', 'veronica-riche@helvionics.com', '0601020304', 1, 0, 6);
 
 --
 -- Index pour les tables déchargées
@@ -394,19 +424,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `brand`
 --
 ALTER TABLE `brand`
-  MODIFY `id_brand` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_brand` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `campaign`
 --
 ALTER TABLE `campaign`
-  MODIFY `id_campaign` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_campaign` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT pour la table `company`
 --
 ALTER TABLE `company`
-  MODIFY `id_company` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_company` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `media`
@@ -418,13 +448,13 @@ ALTER TABLE `media`
 -- AUTO_INCREMENT pour la table `operation`
 --
 ALTER TABLE `operation`
-  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT pour la table `partner`
 --
 ALTER TABLE `partner`
-  MODIFY `id_partner` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_partner` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `target`
@@ -442,7 +472,7 @@ ALTER TABLE `type_operation`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Contraintes pour les tables déchargées
@@ -468,8 +498,7 @@ ALTER TABLE `campaign`
 --
 ALTER TABLE `operation`
   ADD CONSTRAINT `fk_company` FOREIGN KEY (`id_company`) REFERENCES `company` (`id_company`),
-  ADD CONSTRAINT `fk_media` FOREIGN KEY (`id_media`) REFERENCES `media` (`id_media`),
-  ADD CONSTRAINT `operation_ibfk_1` FOREIGN KEY (`id_campaign`) REFERENCES `campaign` (`id_campaign`);
+  ADD CONSTRAINT `fk_media` FOREIGN KEY (`id_media`) REFERENCES `media` (`id_media`);
 
 --
 -- Contraintes pour la table `operation_brand`

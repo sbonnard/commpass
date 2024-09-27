@@ -179,10 +179,10 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             <?= getMessageIfNoCampaign($campaigns) ?>
             <?php
             if (!isset($_SESSION['filter']) && !isset($_SESSION['filter']['id_company'])) {
-                echo getCampaignTemplate($dbCo, $pastYearsCampaigns, $_SESSION);
+                echo getCampaignTemplate($dbCo, $pastYearsCampaigns, $_SESSION, $companies);
             } else if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
                 $pastYearsCampaigns = getCompanyFilteredCampaigns($dbCo, $_SESSION);
-                echo getCampaignTemplate($dbCo, $pastYearsCampaigns, $_SESSION);
+                echo getCampaignTemplate($dbCo, $pastYearsCampaigns, $_SESSION, $companies);
             }
             ?>
         </section>

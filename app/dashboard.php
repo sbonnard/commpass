@@ -183,7 +183,6 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         </h2>
 
         <?php
-        // var_dump($companyAnnualRemainings);
         if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
             echo
             '<div class="card">
@@ -259,7 +258,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
     </div>';
         }
         ?>
-        <h2 class="ttl">Mes campagnes <?= $currentYear ?></h2>
+        <h2 class="ttl lineUp">Mes campagnes <?= $currentYear ?></h2>
         <section class="card <?php
         if(!empty($companyCurrentYearCampaigns) || $_SESSION['client'] === 0) {
             echo 'campaign';
@@ -267,7 +266,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         ?>">
             <?php
             if (!isset($_SESSION['filter']) && !isset($_SESSION['filter']['id_company'])) {
-                echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
+                echo getCampaignTemplateByCompany($dbCo, $currentYearCampaigns, $_SESSION, $companies);
                 echo getMessageIfNoCampaign($currentYearCampaigns);
             } else if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && $_SESSION['client'] === 0) {
                 $currentYearCampaigns = getCompanyFilteredCampaigns($dbCo, $_SESSION);
