@@ -33,6 +33,10 @@ generateToken();
 
 checkConnection($_SESSION);
 
+// Retire tous les filtres en cas d'arrivée sur la page historique pour éviter de perdre l\'utilisateur. 
+unset($_SESSION['filter']);
+
+
 $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
 
 $chartData = [];

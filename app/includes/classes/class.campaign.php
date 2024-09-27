@@ -349,7 +349,7 @@ function getCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array $sessio
     foreach ($companies as $company) {
         // Démarre une section pour cette entreprise
         if ($company['id_company'] !== 1) {
-            $campaignList .= '<div class="gradient-border gradient-border--top"><h3 class="ttl lineUp">' . $company['company_name'] . '</h3>';
+            $campaignList .= '<div class="gradient-border gradient-border--top"><h3 class="ttl secondary lineUp">' . $company['company_name'] . '</h3>';
 
             $campaignList .= '<ul class="campaign__grid">';
 
