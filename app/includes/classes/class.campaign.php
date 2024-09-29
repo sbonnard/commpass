@@ -75,74 +75,57 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
  * @param array $session - Superglobal $_SESSION. 
  * @return array - array of campaigns for current year.
  */
+/**
+ * Get company campaigns for current year considering user's status as client or not, their company, and if they are the interlocutor.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $session - Superglobal $_SESSION.
+ * @return array - array of campaigns for current year.
+ */
 function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session): array
 {
     if (!isset($session['client'], $session['boss'], $session['id_company'], $session['id_user'])) {
         return [];
     }
 
-    if (isset($session['client']) && $session['client'] === 0 && $session['boss'] === 1) {
-        // Si l'utilisateur est le gérant de l'entreprise Toile de Com.
-        $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, budget, date, company.id_company, company_name, YEAR(date) AS year, target.id_target, target_com
-            FROM campaign
-                JOIN company USING (id_company)
-                JOIN target USING (id_target)
-            HAVING year = YEAR(CURDATE())
-            ORDER BY id_company, date DESC;'
-        );
+    $baseQuery = '
+        SELECT id_campaign, campaign_name, budget, date, company.id_company, company_name, YEAR(date) AS year, target.id_target, target_com
+        FROM campaign
+            JOIN company USING (id_company)
+            JOIN target USING (id_target)
+        WHERE YEAR(date) = YEAR(CURDATE())';
 
-        $bindValues = [];
-    } else if (isset($session['client']) && $session['client'] === 0 && $session['boss'] === 0) {
-        // Si l'utilisateur est le gérant de l'entreprise Toile de Com.
-        $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, budget, date, company_name, company.id_company, YEAR(date) AS year, target.id_target, target_com
-                    FROM campaign
-                        JOIN company USING (id_company)
-                        JOIN target USING (id_target)
-                    WHERE id_user_TDC = :id_user
-                    HAVING year = YEAR(CURDATE())
-                    ORDER BY id_company, date DESC;'
-        );
-
-        $bindValues = [
-            'id_user' => intval($session['id_user'])
-        ];
-    } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
-        // Si l'utilisateur est un client mais qu'il est aussi le gérant de l'entreprise cliente.
-        $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, budget, id_company, date, YEAR(date) AS year, target.id_target, target_com
-            FROM campaign
-                JOIN target USING (id_target)
-            WHERE id_company = :id
-            HAVING year = YEAR(CURDATE())
-            ORDER BY id_company, date DESC;'
-        );
-
-        $bindValues = [
-            'id' => intval($session['id_company'])
-        ];
+    $bindValues = [];
+    
+    // Determine the appropriate conditions based on the user's status
+    if ($session['client'] === 0) {
+        // If the user is from Toile de Com
+        if ($session['boss'] === 1) {
+            // Gérant de Toile de Com
+            $queryCampaigns = $baseQuery . ' ORDER BY company.id_company, date DESC;';
+        } else {
+            // Employé de Toile de Com
+            $queryCampaigns = $baseQuery . ' AND id_user_TDC = :id_user ORDER BY company.id_company, date DESC;';
+            $bindValues['id_user'] = intval($session['id_user']);
+        }
     } else {
-        // Si l'utilisateur est un client mais qu'il n'est pas gérant de l'entreprise. Il est donc simple interlocuteur sur ses campagnes.
-        $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, id_company, budget, date, YEAR(date) AS year, target.id_target, target_com
-            FROM campaign
-                JOIN target USING (id_target)
-            WHERE id_company = :id AND id_user = :id_user
-            HAVING year = YEAR(CURDATE())
-            ORDER BY id_company, date DESC;'
-        );
-        $bindValues = [
-            'id' => intval($session['id_company']),
-            'id_user' => intval($session['id_user'])
-        ];
+        // If the user is a client
+        if ($session['boss'] === 1) {
+            // Gérant d’une entreprise cliente
+            $queryCampaigns = $baseQuery . ' AND id_company = :id ORDER BY company.id_company, date DESC;';
+            $bindValues['id'] = intval($session['id_company']);
+        } else {
+            // Interlocuteur d’une entreprise cliente
+            $queryCampaigns = $baseQuery . ' AND id_company = :id AND id_user = :id_user ORDER BY company.id_company, date DESC;';
+            $bindValues['id'] = intval($session['id_company']);
+            $bindValues['id_user'] = intval($session['id_user']);
+        }
     }
 
+    $queryCampaigns = $dbCo->prepare($queryCampaigns);
     $queryCampaigns->execute($bindValues);
 
-    $campaignDatas = $queryCampaigns->fetchAll(PDO::FETCH_ASSOC);
-
-    return $campaignDatas;
+    return $queryCampaigns->fetchAll(PDO::FETCH_ASSOC);
 }
 
 
