@@ -69,13 +69,6 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
 
 
 /**
- * Get company campaigns for current year considering your status of client or not, your company and if you are the interlocutor or not.
- *
- * @param PDO $dbCo - Connection to database.
- * @param array $session - Superglobal $_SESSION. 
- * @return array - array of campaigns for current year.
- */
-/**
  * Get company campaigns for current year considering user's status as client or not, their company, and if they are the interlocutor.
  *
  * @param PDO $dbCo - Connection to database.
