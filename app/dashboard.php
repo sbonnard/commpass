@@ -112,9 +112,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 <body>
 
     <header class="header">
-        <?php
-        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
-        ?>
+        <?= fetchHeader('dashboard.php', 'Mon tableau de bord') ?>
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
