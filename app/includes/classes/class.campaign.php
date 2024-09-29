@@ -75,7 +75,7 @@ function getCompanyCampaigns(PDO $dbCo, array $session): array
  * @param array $session - Superglobal $_SESSION. 
  * @return array - array of campaigns for current year.
  */
-function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session, string $id_company): array
+function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session): array
 {
     if (!isset($session['client'], $session['boss'], $session['id_company'], $session['id_user'])) {
         return [];
