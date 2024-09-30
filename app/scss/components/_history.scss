@@ -1,0 +1,12 @@
+.history {
+    padding: 2rem 0;
+    &__year-section {
+
+    }
+
+    &__year-campaigns {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}

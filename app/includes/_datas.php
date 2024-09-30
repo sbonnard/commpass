@@ -35,7 +35,7 @@ $campaigns = getCompanyCampaigns($dbCo, $_SESSION);
 
 $currentYearCampaigns = getCompanyCampaignsCurrentYear($dbCo, $_SESSION, '=', date('Y'));
 
-$pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, '!=', date('Y'));
+$pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, $campaigns);
 
 $selectedCampaign = getOneCampaignDatas($dbCo, $_GET);
 

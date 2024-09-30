@@ -129,7 +129,7 @@ function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session): array
  * @param array $session - Superglobal $_SESSION.
  * @return array - array of campaigns for past years.
  */
-function getCompanyCampaignsPastYears(PDO $dbCo, array $session): array
+function getCompanyCampaignsPastYears(PDO $dbCo, array $session, $campaigns): array
 {
     if (!isset($session['client'], $session['boss'], $session['id_company'], $session['id_user'])) {
         return [];
@@ -142,7 +142,7 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session): array
             FROM campaign
                 JOIN company USING (id_company)
                 JOIN target USING (id_target)
-            HAVING year != YEAR(CURDATE())
+            HAVING year < YEAR(CURDATE())
             ORDER BY id_company, date DESC;'
         );
 
@@ -155,7 +155,7 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session): array
                 JOIN company USING (id_company)
                 JOIN target USING (id_target)
             WHERE id_user_TDC = :id_user
-            HAVING year != YEAR(CURDATE())
+            HAVING year < YEAR(CURDATE())
             ORDER BY id_company, date DESC;'
         );
 
@@ -169,7 +169,7 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session): array
             FROM campaign
                 JOIN target USING (id_target)
             WHERE id_company = :id
-            HAVING year != YEAR(CURDATE())
+            HAVING year < YEAR(CURDATE())
             ORDER BY id_company, date DESC;'
         );
 
@@ -183,7 +183,7 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session): array
             FROM campaign
                 JOIN target USING (id_target)
             WHERE id_company = :id AND id_user = :id_user
-            HAVING year != YEAR(CURDATE())
+            HAVING year < YEAR(CURDATE())
             ORDER BY id_company, date DESC;'
         );
         $bindValues = [
@@ -379,6 +379,91 @@ function getCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array $sessio
 
         // Ferme la section pour cette entreprise
         $campaignList .= '</ul></div>';
+    }
+
+    return $campaignList;
+}
+
+
+/**
+ * Get HTML template for a campaign displaying most important infos. It displays campaigns by company, further subdivided by year.
+ *
+ * @param array $campaigns - An array containing all campaigns.
+ * @param array $session - Superglobal $_SESSION.
+ * @param array $companies - Tableau contenant toutes les entreprises.
+ * @return string - HTML code that constitutes the template.
+ */
+function getHistoryCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array $session, array $companies): string
+{
+    $campaignList = '';
+
+    foreach ($companies as $company) {
+        // Démarre une section pour cette entreprise
+        if ($company['id_company'] !== 1) {
+            // Récupère les campagnes de l'entreprise, triées par année
+            $companyCampaignsByYear = [];
+
+            foreach ($campaigns as $campaign) {
+                if ($campaign['id_company'] === $company['id_company']) {
+                    // Regroupe les campagnes par année
+                    $year = getYearOnly($dbCo, $campaign);
+                    $companyCampaignsByYear[$year][] = $campaign;
+                }
+            }
+
+            // Vérifie si l'entreprise a des campagnes
+            if (!empty($companyCampaignsByYear)) {
+                $campaignList .= '<div class="gradient-border gradient-border--top"><h3 class="ttl secondary lineUp">' . $company['company_name'] . '</h3>';
+                $campaignList .= '<ul class="history">';
+
+                // Affiche les campagnes année par année
+                foreach ($companyCampaignsByYear as $year => $campaignsByYear) {
+                    // Section pour chaque année
+                    $campaignList .= '<li class="history__year-section"><h4 class="ttl ttl--medium">Année ' . $year . '</h4>';
+                    $campaignList .= '<ul class="campaign__grid">';
+
+                    foreach ($campaignsByYear as $campaign) {
+                        $campaignId = $campaign['id_campaign'];
+
+                        $campaignList .= '
+                            <li>
+                                <a href="campaign.php?myc=' . $campaignId . '">
+                                    <div class="card__section" data-card="">
+                                        <div class="campaign__ttl">
+                                            <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>'
+                                            . getCompanyNameIfTDC($campaign, $session) . 
+                                            $campaign['target_com'] . '
+                                        </div>
+                                        <div class="campaign__stats">
+                                            <div class="js-chart" id="chart-' . $campaignId . '"></div>
+                                            <div class="vignettes-section">
+                                                <div class="vignette vignette--primary">
+                                                    <h4 class="vignette__ttl">Budget attribué</h4>
+                                                    <p class="vignette__price">' . formatPrice($campaign['budget'], "€") . '</p>
+                                                </div>
+                                                <div class="vignette vignette--secondary">
+                                                    <h4 class="vignette__ttl">Budget dépensé</h4>
+                                                    <p class="vignette__price">' . calculateSpentBudget($dbCo, $campaign) . '</p>
+                                                </div>
+                                                <div class="vignette vignette--tertiary ' . turnVignetteRedIfNegative(calculateRemainingBudget($dbCo, $campaign)) . '">
+                                                    <h4 class="vignette__ttl">Budget restant</h4>
+                                                    <p class="vignette__price">' . calculateRemainingBudget($dbCo, $campaign) . '</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>';
+                    }
+
+                    $campaignList .= '</ul>'; // Ferme la liste des campagnes pour l'année
+                    $campaignList .= '</li>'; // Ferme la section pour l'année
+                }
+
+                $campaignList .= '</ul>'; // Ferme la liste des campagnes de l'entreprise
+                $campaignList .= '</div>'; // Ferme la section pour l'entreprise
+            }
+        }
     }
 
     return $campaignList;
