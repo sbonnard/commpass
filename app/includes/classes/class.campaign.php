@@ -878,12 +878,12 @@ function getOneCompanyYearlyCampaigns(PDO $dbCo, array $session): array
  *
  * @param array $selectedCampaign - The array containing the selected campaign datas.
  * @param array $session - Superglobal $_SESSION.
- * @return string - A "form" to delete a campaign that only has a button aspect.
+ * @return string - A "form" to delete a campaign that only has a button.
  */
 function deleteCampaignButton(array $selectedCampaign, array $session): string
 {
     return '
-        <form method="post" action="actions.php">
+        <form method="post" action="actions-campaign.php">
             <input type="submit" value="" class="button--trash" aria-label="Supprimer l\'opération ' . $selectedCampaign['campaign_name'] . '">
             <input type="hidden" name="token" value="' . $session['token'] . '">
             <input type="hidden" name="action" value="delete-campaign">

@@ -72,7 +72,7 @@ checkUserClientStatus($_SESSION);
 
 
             <section class="card__section" aria-labelledby="new-campaign-ttl">
-                <form class="form" action="actions.php" method="post" aria-label="Formulaire de création d'une nouvelle campagne">
+                <form class="form" action="actions-campaign.php" method="post" aria-label="Formulaire de création d'une nouvelle campagne">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="campaign_name">Nom de la campagne</label>
@@ -117,7 +117,7 @@ checkUserClientStatus($_SESSION);
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="budget">Budget investi (sans €)</label>
-                            <input class="form__input form__input--number" type="text" name="budget" id="budget" placeholder="12500" required aria-label="Saississez le budget de la nouvelle campagne ou 0 si il n'a pas encore été défini." value="<?php
+                            <input class="form__input form__input--number" type="number" name="budget" id="budget" placeholder="12500" required aria-label="Saississez le budget de la nouvelle campagne ou 0 si il n'a pas encore été défini." value="<?php
                                                                                                                                                                                                                                                         if (isset($_GET['myc']) && intval($_GET['myc'])) {
                                                                                                                                                                                                                                                             echo $selectedCampaign['budget'];
                                                                                                                                                                                                                                                         }
