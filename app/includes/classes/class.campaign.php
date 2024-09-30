@@ -389,7 +389,7 @@ function getCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array $sessio
  * @param array $companies - Tableau contenant toutes les entreprises.
  * @return string - HTML code that constitutes the template.
  */
-function getHistoryCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array $session, array $companies = []): string
+function getHistoryCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array $session, array $companies): string
 {
     $campaignList = '';
 
