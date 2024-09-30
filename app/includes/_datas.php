@@ -19,6 +19,9 @@ $user = fetchUserDatas($dbCo, $_SESSION);
 
 $users = fetchAllUsers($dbCo);
 
+$nonClientUsers = fetchNonClientUsers($dbCo, $_SESSION);
+
+
 // COMPANY DATAS
 $companies = fetchAllCompanies($dbCo, $_SESSION);
 

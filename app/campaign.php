@@ -82,9 +82,11 @@ $jsonData = json_encode($chartData);
 
         <div class="card">
             <section class="card__section">
-                <?php if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+                <?php
+                if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                     echo '<p class="campaign__company">' . $selectedCampaign['company_name'] . '</p>';
-                } ?>
+                }
+                ?>
                 <div class="flex-row">
                     <p class="ttl--smaller">Campagne : <?= $selectedCampaign['campaign_name'] ?></p>
                     <a class="button--edit" href="new-campaign.php?myc=<?= $selectedCampaign['id_campaign'] ?>" title="éditer la campagne <?= $selectedCampaign['campaign_name'] ?>"></a>

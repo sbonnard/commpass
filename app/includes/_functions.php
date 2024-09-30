@@ -30,14 +30,14 @@ function redirectTo(?string $url = null): void
  * @param string $dataName - The name of the the interlocutor or company.
  * @return string - The HTML options for the select field.
  */
-function getDatasAsHTMLOptions(array $datas, string $placeholder, string $id, string $dataName): string
+function getDatasAsHTMLOptions(array $datas, string $placeholder, string $id, string $dataName, string $dataNameBis = ''): string
 {
     $htmlOptions = '<option class="form__input__placeholder" value="">- ' . $placeholder . ' -</option>';
 
     foreach ($datas as $data) {
         $htmlOptions .=
-            '<option value="' . htmlspecialchars($data[$id], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($data[$dataName], ENT_QUOTES, 'UTF-8') .
-            '</option>';
+            '<option value="' . $data[$id] . '">' . $data[$dataName] . ' ' . $data[$dataNameBis] . 
+           '</option>';
     }
 
     return $htmlOptions;

@@ -54,3 +54,34 @@ function fetchAllUsers(PDO $dbCo): array
 
     return $userData;
 }
+
+
+/**
+ * Fetch all users that are not clients from your company.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $session - Superglobale $_SESSION to check id_company.
+ * @return array - An array containing all non client users from your company.
+ */
+function fetchNonClientUsers(PDO $dbCo, array $session): array
+{
+    $nonClientUsers = [];
+
+    if (isset($session['client']) && $session['client'] === 0) {
+        $query = $dbCo->prepare(
+            'SELECT id_user, firstname, lastname, client, boss, id_company
+            FROM users
+            WHERE id_company = :idcompany;'
+        );
+
+        $bindValues = [
+            'idcompany' => intval($session['id_company'])
+        ];
+
+        $query->execute($bindValues);
+
+        $nonClientUsers = $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    return $nonClientUsers;
+}

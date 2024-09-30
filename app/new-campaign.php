@@ -76,7 +76,9 @@ checkUserClientStatus($_SESSION);
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="campaign_name">Nom de la campagne</label>
-                            <input class="form__input" type="text" name="campaign_name" id="campaign_name" placeholder="Soldes d'Hiver" required aria-label="Saississez le nom de la nouvelle campagne" value="<?= $selectedCampaign['campaign_name'] ?>">
+                            <input class="form__input" type="text" name="campaign_name" id="campaign_name" placeholder="Soldes d'Hiver" required aria-label="Saississez le nom de la nouvelle campagne" value="<?php if (isset($_GET['myc']) && intval($_GET['myc'])) {
+                                                                                                                                                                                                                    echo  $selectedCampaign['campaign_name'];
+                                                                                                                                                                                                                }  ?>">
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="campaign_target">Objectif de la campagne</label>
@@ -100,12 +102,26 @@ checkUserClientStatus($_SESSION);
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">
+                            <label class="form__label" for="user_TDC">Chargé de la campagne</label>
+                            <select class="form__input form__input--select" type="text" name="user_TDC" id="user_TDC" required aria-label="Sélectionner le chargé de la campagne dans votre entreprise">
+                                <?= getDatasAsHTMLOptions($nonClientUsers, 'Sélectionner un collaborateur', 'id_user', 'firstname', 'lastname') ?>
+                            </select>
+                        </li>
+                        <li class="form__itm form__itm--app">
                             <label class="form__label" for="date">Date de la campagne</label>
-                            <input class="form__input form__input--date" type="date" name="date" id="date" required aria-label="Sélectionner la date de l'opération" value="<?= $selectedCampaign['date'] ?>">
+                            <input class="form__input form__input--date" type="date" name="date" id="date" required aria-label="Sélectionner la date de l'opération" value="<?php
+                                                                                                                                                                            if (isset($_GET['myc']) && intval($_GET['myc'])) {
+                                                                                                                                                                                echo $selectedCampaign['date'];
+                                                                                                                                                                            }
+                                                                                                                                                                            ?>">
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="budget">Budget investi (sans €)</label>
-                            <input class="form__input form__input--number" type="text" name="budget" id="budget" placeholder="12500" required aria-label="Saississez le budget de la nouvelle campagne ou 0 si il n'a pas encore été défini." value="<?= $selectedCampaign['budget'] ?>">
+                            <input class="form__input form__input--number" type="text" name="budget" id="budget" placeholder="12500" required aria-label="Saississez le budget de la nouvelle campagne ou 0 si il n'a pas encore été défini." value="<?php
+                                                                                                                                                                                                                                                        if (isset($_GET['myc']) && intval($_GET['myc'])) {
+                                                                                                                                                                                                                                                            echo $selectedCampaign['budget'];
+                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                        ?>">
                         </li>
                         <?php
                         if (isset($_GET['myc']) && intval($_GET['myc'])) {

@@ -143,7 +143,7 @@ if ($_POST['action'] === 'modify-pwd') {
         'budget' => strip_tags($_POST['budget']),
         'id_target' => intval($_POST['campaign_target']),
         'date' => strip_tags($_POST['date']),
-        'id_user_TDC' => intval($_SESSION['id_user'])
+        'id_user_TDC' => intval($_POST['user_TDC'])
     ];
 
     $isInsertOk = $queryCampaign->execute($bindValues);
@@ -198,7 +198,8 @@ if ($_POST['action'] === 'modify-pwd') {
             date = :date,
             id_user = :user, 
             id_company = :company, 
-            id_target = :target
+            id_target = :target,
+            id_user_TDC = :userTDC
         WHERE id_campaign = :id_campaign;'
     );
     
@@ -209,6 +210,7 @@ if ($_POST['action'] === 'modify-pwd') {
         'user' => intval($_POST['campaign_interlocutor']),
         'company' => intval($_POST['campaign_company']),
         'target' => intval($_POST['campaign_target']),
+        'userTDC' => intval($_POST['user_TDC']),
         'id_campaign' => intval($_POST['id_campaign'])
     ];
 
