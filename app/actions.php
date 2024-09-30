@@ -302,23 +302,6 @@ if ($_POST['action'] === 'modify-pwd') {
         addError('brand_creation_ko');
         redirectTo('');
     }
-} else if ($_POST['action'] === 'filter-campaigns') {
-    if (!isset($_POST['client-filter']) || empty($_POST['client-filter'])) {
-        addError('no_client');
-        redirectTo('dashboard.php');
-        exit;
-    }
-
-    $_SESSION['filter']['id_company'] = intval($_POST['client-filter']);
-
-    if (
-        isset($_POST['filter']['target-filter']) && intval($_POST['filter']['target-filter'])
-        && intval($_POST['filter']['target-filter']) >= 1 && intval($_POST['filter']['target-filter']) <= 3
-    ) {
-        $_SESSION['filter']['target-filter'] = intval($_POST['filter']['target-filter']);
-    }
-} else if (isset($_POST['action']) && $_POST['action'] === 'filter-reinit') {
-    unset($_SESSION['filter']);
 } else if ($_POST['action'] === 'set_annual_budget') {
     if (!isset($_POST['budget']) || empty($_POST['budget']) || !is_numeric($_POST['budget'])) {
         addError('budget_ko');
