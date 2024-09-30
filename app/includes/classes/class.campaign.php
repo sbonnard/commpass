@@ -871,3 +871,22 @@ function getOneCompanyYearlyCampaigns(PDO $dbCo, array $session): array
 
     return $query->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+/**
+ * Display a button that is a form to delete a campaign with actions.php. I needed it to redirect so I did not wanted it to be AJAX.
+ *
+ * @param array $selectedCampaign - The array containing the selected campaign datas.
+ * @param array $session - Superglobal $_SESSION.
+ * @return string - A "form" to delete a campaign that only has a button aspect.
+ */
+function deleteCampaignButton(array $selectedCampaign, array $session): string
+{
+    return '
+        <form method="post" action="actions.php">
+            <input type="submit" value="" class="button--trash" aria-label="Supprimer l\'opération ' . $selectedCampaign['campaign_name'] . '">
+            <input type="hidden" name="token" value="' . $session['token'] . '">
+            <input type="hidden" name="action" value="delete-campaign">
+            <input type="hidden" name="id_campaign" value="' . $selectedCampaign['id_campaign'] . '">
+        </form>';
+}

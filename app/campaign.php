@@ -91,10 +91,7 @@ $jsonData = json_encode($chartData);
                     <p class="ttl--smaller">Campagne : <?= $selectedCampaign['campaign_name'] ?></p>
                     <a class="button--edit" href="new-campaign.php?myc=<?= $selectedCampaign['id_campaign'] ?>" title="éditer la campagne <?= $selectedCampaign['campaign_name'] ?>"></a>
                     |
-                    <button class="js-trash button--trash"
-                        title="Supprimer la campagne <?= $selectedCampaign['campaign_name'] ?>"
-                        aria-label="Supprimer l\'opération <?= $selectedCampaign['campaign_name'] ?>"
-                        id=" <?= $selectedCampaign['id_campaign'] ?>"></button>
+                    <?= deleteCampaignButton($selectedCampaign, $_SESSION) ?>
                 </div>
                 <p class="campaign__interlocutor">Interlocuteur : <?= $selectedCampaign['firstname'] . ' ' . $selectedCampaign['lastname'] ?></p>
                 <p class="campaign__interlocutor">Objectif : <?= $selectedCampaign['target_com'] ?></p>
