@@ -13,7 +13,8 @@ $messages = [
     'new_client_created_ok' => 'Nouveau client créé avec succès.',
     'new_user_created_ok' => 'Nouvel utilisateur créé avec succès.',
     'partner_created_ok' => 'Nouveau partenaire créé avec succès.',
-    'brand_created_ok' => 'Nouvelle marque créée.'
+    'brand_created_ok' => 'Nouvelle marque créée.',
+    'campaign_updated_ok' => 'La campagne a été mise à jour'
 ];
 
 $errors = [
@@ -65,7 +66,8 @@ $errors = [
     'brand_name_ko' => 'Le nom de la marque est invalide.',
     'colour_ko' => 'Sélectionnez une couleur.',
     'company_id_ko' => 'Aucune entreprise sélectionnée.',
-    'brand_creation_ko' => 'Échec lors de la création de la marque.'
+    'brand_creation_ko' => 'Échec lors de la création de la marque.',
+    'campaign_update_ko' => 'Échec de la modification de la campagne'
 ];
 
 

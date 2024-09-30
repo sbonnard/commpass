@@ -158,3 +158,46 @@ function checkUserClientStatus(array $session) {
         exit();
     }
 }
+
+/**
+ * Checks form campaign inputs for creation or edition.
+ *
+ * @param $post - $_POST Request.
+ */
+function checkFormCampaignInputs($post) {
+    if (!isset($post['campaign_name']) || empty($post['campaign_name'])) {
+        addError('campaign_name_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($post['campaign_company']) || empty($post['campaign_company'])) {
+        addError('campaign_company_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($post['campaign_interlocutor']) || empty($post['campaign_interlocutor'])) {
+        addError('campaign_interlocutor_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($post['budget']) || !is_numeric($post['budget']) || $post['budget'] < 0) {
+        addError('budget_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($post['campaign_target']) || empty($post['campaign_target'])) {
+        addError('campaign_target_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($post['date']) || empty($post['date'])) {
+        addError('date_ko');
+        redirectTo();
+        exit;
+    }
+}

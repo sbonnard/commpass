@@ -62,14 +62,21 @@ checkUserClientStatus($_SESSION);
         </div>
 
         <div class="card">
-            <h2 class="ttl lineUp" id="new-campaign-ttl">Nouvelle Campagne</h2>
+            <h2 class="ttl lineUp" id="new-campaign-ttl"><?php
+                                                            if (!isset($_GET['myc']) || !intval($_GET['myc'])) {
+                                                                echo 'Nouvelle Campagne';
+                                                            } else if (isset($_GET['myc']) || intval($_GET['myc'])) {
+                                                                echo 'Modifier la Campagne';
+                                                            }
+                                                            ?></h2>
+
 
             <section class="card__section" aria-labelledby="new-campaign-ttl">
                 <form class="form" action="actions.php" method="post" aria-label="Formulaire de création d'une nouvelle campagne">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="campaign_name">Nom de la campagne</label>
-                            <input class="form__input" type="text" name="campaign_name" id="campaign_name" placeholder="Soldes d'Hiver" required aria-label="Saississez le nom de la nouvelle campagne">
+                            <input class="form__input" type="text" name="campaign_name" id="campaign_name" placeholder="Soldes d'Hiver" required aria-label="Saississez le nom de la nouvelle campagne" value="<?= $selectedCampaign['campaign_name'] ?>">
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="campaign_target">Objectif de la campagne</label>
@@ -94,15 +101,23 @@ checkUserClientStatus($_SESSION);
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="date">Date de la campagne</label>
-                            <input class="form__input form__input--date" type="date" name="date" id="date" required aria-label="Sélectionner la date de l'opération">
+                            <input class="form__input form__input--date" type="date" name="date" id="date" required aria-label="Sélectionner la date de l'opération" value="<?= $selectedCampaign['date'] ?>">
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="budget">Budget investi (sans €)</label>
-                            <input class="form__input form__input--number" type="text" name="budget" id="budget" placeholder="12500" required aria-label="Saississez le budget de la nouvelle campagne ou 0 si il n'a pas encore été défini.">
+                            <input class="form__input form__input--number" type="text" name="budget" id="budget" placeholder="12500" required aria-label="Saississez le budget de la nouvelle campagne ou 0 si il n'a pas encore été défini." value="<?= $selectedCampaign['budget'] ?>">
                         </li>
-                        <input class="button button--new-campaign" type="submit" value="Créer la campagne" aria-label="Valider la création de la nouvelle campagne">
+                        <?php
+                        if (isset($_GET['myc']) && intval($_GET['myc'])) {
+                            echo '<input class="button button--new-campaign" type="submit" value="Modifier campagne" aria-label="Valider la création de la nouvelle campagne">';
+                            echo '<input type="hidden" name="action" value="modify-campaign">';
+                            echo '<input type="hidden" name="id_campaign" value="' . $selectedCampaign['id_campaign'] . '">';
+                        } else {
+                            echo '<input class="button button--new-campaign" type="submit" value="Créer la campagne" aria-label="Valider la création de la nouvelle campagne">';
+                            echo '<input type="hidden" name="action" value="create-campaign">';
+                        }
+                        ?>
                         <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                        <input type="hidden" name="action" value="create-campaign">
                     </ul>
                 </form>
             </section>

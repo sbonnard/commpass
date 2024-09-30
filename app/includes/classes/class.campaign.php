@@ -89,7 +89,7 @@ function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session): array
         WHERE YEAR(date) = YEAR(CURDATE())';
 
     $bindValues = [];
-    
+
     // Determine the appropriate conditions based on the user's status
     if ($session['client'] === 0) {
         // If the user is from Toile de Com
@@ -341,10 +341,10 @@ function getCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array $sessio
                     <a href="campaign.php?myc=' . $campaignId . '">
                         <div class="card__section" data-card="">
                             <div class="campaign__ttl">
-                                <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . ' - ' . getYearOnly($dbCo, $campaign) . '</h3>'
-                                . getCompanyNameIfTDC($campaign, $session) .
-                                $campaign['target_com'] . 
-                            '</div>
+                                    <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . ' - ' . getYearOnly($dbCo, $campaign) . '</h3>'
+                    . getCompanyNameIfTDC($campaign, $session) .
+                    $campaign['target_com'] .
+                    '</div>
                             <div class="campaign__stats">
                                 <div class="js-chart" id="chart-' . $campaignId . '"></div>
                                 <div class="vignettes-section">
@@ -427,8 +427,8 @@ function getHistoryCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array 
                                     <div class="card__section" data-card="">
                                         <div class="campaign__ttl">
                                             <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>'
-                                            . getCompanyNameIfTDC($campaign, $session) . 
-                                            $campaign['target_com'] . '
+                            . getCompanyNameIfTDC($campaign, $session) .
+                            $campaign['target_com'] . '
                                         </div>
                                         <div class="campaign__stats">
                                             <div class="js-chart" id="chart-' . $campaignId . '"></div>

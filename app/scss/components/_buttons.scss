@@ -111,14 +111,19 @@
     }
 
     &--edit {
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
         color: $primary;
         background-image: url(../../img/cta-edit.svg);
-        border: 2px solid $primary;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: left;
+        // border: 2px solid $primary;
 
         &:hover {
-            color: $tertiary;
             background-image: url(../../img/cta-edit-hover.svg);
-            border: 2px solid $tertiary;
+            // border: 2px solid $tertiary;
         }
     }
 

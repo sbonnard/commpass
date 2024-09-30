@@ -154,6 +154,73 @@ if ($_POST['action'] === 'modify-pwd') {
     } else {
         addError('campaign_creation_ko');
     }
+} else if ($_POST['action'] === 'modify-campaign') {
+    if (!isset($_POST['campaign_name']) || empty($_POST['campaign_name'])) {
+        addError('campaign_name_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['campaign_company']) || empty($_POST['campaign_company'])) {
+        addError('campaign_company_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['campaign_interlocutor']) || empty($_POST['campaign_interlocutor'])) {
+        addError('campaign_interlocutor_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['budget']) || !is_numeric($_POST['budget']) || $_POST['budget'] < 0) {
+        addError('budget_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['campaign_target']) || empty($_POST['campaign_target'])) {
+        addError('campaign_target_ko');
+        redirectTo();
+        exit;
+    }
+
+    if (!isset($_POST['date']) || empty($_POST['date'])) {
+        addError('date_ko');
+        redirectTo();
+        exit;
+    }
+
+    $queryUpdateCampaign = $dbCo->prepare(
+        'UPDATE campaign 
+        SET campaign_name = :campaign_name,
+            budget = :budget,
+            date = :date,
+            id_user = :user, 
+            id_company = :company, 
+            id_target = :target
+        WHERE id_campaign = :id_campaign;'
+    );
+    
+    $bindValues = [
+        'campaign_name' => strip_tags($_POST['campaign_name']),
+        'budget' => is_numeric($_POST['budget']),
+        'date' => strip_tags($_POST['date']),
+        'user' => intval($_POST['campaign_interlocutor']),
+        'company' => intval($_POST['campaign_company']),
+        'target' => intval($_POST['campaign_target']),
+        'id_campaign' => intval($_POST['id_campaign'])
+    ];
+
+    $isUpdateOk = $queryUpdateCampaign->execute($bindValues);
+
+    if ($isUpdateOk) {
+        addMessage('campaign_updated_ok');
+        redirectTo('dashboard.php');
+    } else {
+        addError('campaign_update_ko');
+    }
+
 } else if ($_POST['action'] === 'create-operation') {
 
     checkOperationFormDatas();
@@ -331,31 +398,29 @@ if ($_POST['action'] === 'modify-pwd') {
         exit;
     }
 
-    if(!isset($_POST['color']) || empty($_POST['color']) || strlen($_POST['color']) > 7) {
+    if (!isset($_POST['color']) || empty($_POST['color']) || strlen($_POST['color']) > 7) {
         addError('colour_ko');
         redirectTo('');
         exit;
     }
 
-    if(!isset($_POST['id_company']) || empty($_POST['id_company']) || !intval($_POST['id_company'])) {
+    if (!isset($_POST['id_company']) || empty($_POST['id_company']) || !intval($_POST['id_company'])) {
         addError('company_id_ko');
         redirectTo('');
         exit;
     }
 
-    
-    
     $query = $dbCo->prepare(
         'INSERT INTO brand (brand_name, legend_colour_hex, id_company)
         VALUES (:brand_name, :color, :id_company);'
     );
-    
+
     $bindValues = [
         'brand_name' => strip_tags($_POST['brand_name']),
         'color' => strip_tags($_POST['color']),
         'id_company' => intval($_POST['id_company'])
     ];
-    
+
     $isInsertOk = $query->execute($bindValues);
 
     if ($isInsertOk) {
@@ -365,7 +430,6 @@ if ($_POST['action'] === 'modify-pwd') {
         addError('brand_creation_ko');
         redirectTo('');
     }
-
 } else if ($_POST['action'] === 'filter-campaigns') {
     if (!isset($_POST['client-filter']) || empty($_POST['client-filter'])) {
         addError('no_client');
