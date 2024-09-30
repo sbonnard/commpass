@@ -129,7 +129,7 @@ if ($_POST['action'] === 'create-campaign') {
             id_user_TDC = :userTDC
         WHERE id_campaign = :id_campaign;'
     );
-    
+
     $bindValues = [
         'campaign_name' => strip_tags($_POST['campaign_name']),
         'budget' => floatval($_POST['budget']),
@@ -149,9 +149,52 @@ if ($_POST['action'] === 'create-campaign') {
     } else {
         addError('campaign_update_ko');
     }
+} elseif ($_POST['action'] === 'delete-campaign') {
+    try {
+        $dbCo->beginTransaction();
 
-} else if ($_POST['action'] === 'delete-campaign') {
-    
-} 
+        //Prépare la suppression d'une campagne.
+        $queryDeleteCampaign = $dbCo->prepare('DELETE FROM campaign WHERE id_campaign = :id_campaign;');
+        $bindValues = [
+            'id_campaign' => intval($_POST['id_campaign'])
+        ];
+        $isDeleteOk = $queryDeleteCampaign->execute($bindValues);
+
+        if (!$isDeleteOk) {
+            throw new Exception('Erreur lors de la suppression de la campagne');
+        }
+
+        // Une campagne dépendant de ses opérations, je supprime les opérations afin qu'elles ne restent pas en BDD 
+        $querySelectOperations = $dbCo->prepare('SELECT id_operation FROM operation WHERE id_campaign = :id_campaign;');
+        $querySelectOperations->execute($bindValues);
+        $operations = $querySelectOperations->fetchAll(PDO::FETCH_ASSOC);
+
+        // Une opération étant associée à une ou plusieurs marques, je dois supprimer les marques associées.
+        foreach ($operations as $operation) {
+            $queryDeleteBrands = $dbCo->prepare('DELETE FROM operation_brand WHERE id_operation = :id_operation;');
+            $isDeleteBrandOk = $queryDeleteBrands->execute(['id_operation' => $operation['id_operation']]);
+
+            if (!$isDeleteBrandOk) {
+                throw new Exception('Erreur lors de la suppression des marques');
+            }
+        }
+
+        $queryDeleteOperation = $dbCo->prepare('DELETE FROM operation WHERE id_campaign = :id_campaign;');
+        $isDeleteOperationOk = $queryDeleteOperation->execute($bindValues);
+
+        if ($isDeleteOk && $isDeleteOperationOk) {
+            $dbCo->commit();
+            addMessage('campaign_deleted_ok');
+            redirectTo('dashboard.php');
+        } else {
+            throw new Exception('Erreur lors de la suppression des opérations');
+        }
+
+    } catch (Exception $e) {
+        $dbCo->rollBack();
+        addError('campaign_deletion_ko');
+        redirectTo();
+    }
+}
 
 redirectTo();

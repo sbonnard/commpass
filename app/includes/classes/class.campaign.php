@@ -883,7 +883,7 @@ function getOneCompanyYearlyCampaigns(PDO $dbCo, array $session): array
 function deleteCampaignButton(array $selectedCampaign, array $session): string
 {
     return '
-        <form method="post" action="actions-campaign.php">
+        <form method="post" action="actions-campaign.php" onsubmit="return confirmDelete();">
             <input type="submit" value="" class="button--trash" aria-label="Supprimer l\'opération ' . $selectedCampaign['campaign_name'] . '">
             <input type="hidden" name="token" value="' . $session['token'] . '">
             <input type="hidden" name="action" value="delete-campaign">

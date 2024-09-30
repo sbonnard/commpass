@@ -14,7 +14,8 @@ $messages = [
     'new_user_created_ok' => 'Nouvel utilisateur créé avec succès.',
     'partner_created_ok' => 'Nouveau partenaire créé avec succès.',
     'brand_created_ok' => 'Nouvelle marque créée.',
-    'campaign_updated_ok' => 'La campagne a été mise à jour'
+    'campaign_updated_ok' => 'La campagne a été mise à jour',
+    'campaign_deleted_ok' => 'La campagne a été supprimée.'
 ];
 
 $errors = [
@@ -67,7 +68,8 @@ $errors = [
     'colour_ko' => 'Sélectionnez une couleur.',
     'company_id_ko' => 'Aucune entreprise sélectionnée.',
     'brand_creation_ko' => 'Échec lors de la création de la marque.',
-    'campaign_update_ko' => 'Échec de la modification de la campagne'
+    'campaign_update_ko' => 'Échec de la modification de la campagne',
+    'campaign_deletion_ko' => 'Erreur lors de la suppression de la campagne.'
 ];
 
 

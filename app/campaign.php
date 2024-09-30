@@ -196,6 +196,11 @@ $jsonData = json_encode($chartData);
 <script type="module" src="js/vignette.js"></script>
 <script type="module" src="js/ajax-operation.js"></script>
 <script>
+    function confirmDelete() {
+        return confirm("Êtes-vous sûr de vouloir supprimer cette campagne ?");
+    }
+</script>
+<script>
     // Récupération des données PHP
     var chartData = <?php echo $jsonData; ?>;
 </script>

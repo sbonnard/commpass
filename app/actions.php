@@ -164,7 +164,6 @@ if ($_POST['action'] === 'modify-pwd') {
 
     checkOperationFormDatas();
 
-
     try {
         $dbCo->beginTransaction();
 
