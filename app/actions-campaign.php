@@ -189,10 +189,36 @@ if ($_POST['action'] === 'create-campaign') {
         } else {
             throw new Exception('Erreur lors de la suppression des opérations');
         }
-
     } catch (Exception $e) {
         $dbCo->rollBack();
         addError('campaign_deletion_ko');
+        redirectTo();
+    }
+} else if ($_POST['action'] === 'set_campaign_budget') {
+    if (!isset($_POST['budget']) || empty($_POST['budget']) || !is_numeric($_POST['budget'])) {
+        addError('budget_ko');
+        redirectTo();
+        exit;
+    }
+
+    $queryBudget = $dbCo->prepare('
+        UPDATE campaign 
+        SET budget = :budget
+        WHERE id_campaign = :id_campaign;
+    ');
+
+    $bindValues = [
+        'budget' => floatval($_POST['budget']),
+        'id_campaign' => $_POST['myc']
+    ];
+
+    $isUpdateOk = $queryBudget->execute($bindValues);
+
+    if ($isUpdateOk) {
+        addMessage('budget_update_ok');
+        redirectTo('campaign.php?myc=' . $_POST['myc']);
+    } else {
+        addError('budget_update_ko');
         redirectTo();
     }
 }

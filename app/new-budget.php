@@ -75,7 +75,7 @@ checkUserClientStatus($_SESSION);
             </h2>
 
             <section class="card__section" aria-labelledby="new-budget-ttl">
-                <form class="form" method="post" action="actions.php">
+                <form class="form" method="post" action="actions-campaign.php">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="budget">Fixer le budget<?php

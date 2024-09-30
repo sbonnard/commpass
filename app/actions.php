@@ -346,33 +346,6 @@ if ($_POST['action'] === 'modify-pwd') {
         addError('budget_update_ko');
         redirectTo();
     }
-} else if ($_POST['action'] === 'set_campaign_budget') {
-    if (!isset($_POST['budget']) || empty($_POST['budget']) || !is_numeric($_POST['budget'])) {
-        addError('budget_ko');
-        redirectTo();
-        exit;
-    }
-
-    $queryBudget = $dbCo->prepare('
-        UPDATE campaign 
-        SET budget = :budget
-        WHERE id_campaign = :id_campaign;
-    ');
-
-    $bindValues = [
-        'budget' => floatval($_POST['budget']),
-        'id_campaign' => $_POST['myc']
-    ];
-
-    $isUpdateOk = $queryBudget->execute($bindValues);
-
-    if ($isUpdateOk) {
-        addMessage('budget_update_ok');
-        redirectTo('campaign.php?myc=' . $_POST['myc']);
-    } else {
-        addError('budget_update_ko');
-        redirectTo();
-    }
 } else if ($_POST['action'] === 'create_client') {
     if (!isset($_POST['company_name']) || empty($_POST['company_name']) || !is_string($_POST['company_name']) || strlen($_POST['company_name']) > 100) {
         addError('company_name_ko');
