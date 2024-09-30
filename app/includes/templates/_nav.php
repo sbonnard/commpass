@@ -61,6 +61,9 @@ function displayNetworkLinkIfTDC(array $session, string $NetworkActive): string
                 <li class="dropdown__child-itm">
                     <a href="partners.php" class="dropdown__child-lnk" aria-label="Lien vers mes partenaires">Mes partenaires</a>
                 </li>
+                <li class="dropdown__child-itm">
+                    <a href="new-user.php" class="dropdown__child-lnk" aria-label="Lien vers création d\'un nouvel utilisateur client ou Toile de Com">Nouvel utilisateur</a>
+                </li>
             </ul>
         </li>';
     } else {
