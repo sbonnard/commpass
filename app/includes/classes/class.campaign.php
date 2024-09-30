@@ -323,62 +323,58 @@ function getCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array $sessio
     $campaignList = '';
 
     foreach ($companies as $company) {
-        // Démarre une section pour cette entreprise
-        if ($company['id_company'] !== 1) {
-            $campaignList .= '<div class="gradient-border gradient-border--top"><h3 class="ttl secondary lineUp">' . $company['company_name'] . '</h3>';
+        // On initialise un drapeau pour vérifier si l'entreprise a des campagnes
+        $hasCampaigns = false;
 
-            $campaignList .= '<ul class="campaign__grid">';
+        // Récupère les campagnes de l'entreprise
+        $companyCampaigns = '';
 
-            // On initialise un drapeau pour vérifier si l'entreprise a des campagnes
-            $hasCampaigns = false;
+        foreach ($campaigns as $campaign) {
+            // Vérifie si la campagne appartient bien à l'entreprise en cours
+            if ($campaign['id_company'] === $company['id_company']) {
 
-            foreach ($campaigns as $campaign) {
-                // Vérifie si la campagne appartient bien à l'entreprise en cours
-                if ($campaign['id_company'] === $company['id_company']) {
+                $hasCampaigns = true;
+                $campaignId = $campaign['id_campaign'];
 
-                    $hasCampaigns = true;
-                    $campaignId = $campaign['id_campaign'];
-
-                    $campaignList .= '
-                        <li>
-                        <a href="campaign.php?myc=' . $campaignId . '">
-                            <div class="card__section" data-card="">
-                                <div class="campaign__ttl">
-                                    <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . ' - ' . getYearOnly($dbCo, $campaign) . '</h3>'
-                        . getCompanyNameIfTDC($campaign, $session) .
-                        $campaign['target_com'] .
-                        '</div>
-                                <div class="campaign__stats">
-                                    <div class="js-chart" id="chart-' . $campaignId . '"></div>
-                                    <div class="vignettes-section">
-                                        <div class="vignette vignette--primary">
-                                            <h4 class="vignette__ttl">Budget attribué</h4>
-                                            <p class="vignette__price">' . formatPrice($campaign['budget'], "€") . '</p>
-                                        </div>
-                                        <div class="vignette vignette--secondary">
-                                            <h4 class="vignette__ttl">Budget dépensé</h4>
-                                            <p class="vignette__price">' . calculateSpentBudget($dbCo, $campaign) . '</p>
-                                        </div>
-                                        <div class="vignette vignette--tertiary ' . turnVignetteRedIfNegative(calculateRemainingBudget($dbCo, $campaign)) . '">
-                                            <h4 class="vignette__ttl">Budget restant</h4>
-                                            <p class="vignette__price">' . calculateRemainingBudget($dbCo, $campaign) . '</p>
-                                        </div>
+                $companyCampaigns .= '
+                    <li>
+                    <a href="campaign.php?myc=' . $campaignId . '">
+                        <div class="card__section" data-card="">
+                            <div class="campaign__ttl">
+                                <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . ' - ' . getYearOnly($dbCo, $campaign) . '</h3>'
+                                . getCompanyNameIfTDC($campaign, $session) .
+                                $campaign['target_com'] . 
+                            '</div>
+                            <div class="campaign__stats">
+                                <div class="js-chart" id="chart-' . $campaignId . '"></div>
+                                <div class="vignettes-section">
+                                    <div class="vignette vignette--primary">
+                                        <h4 class="vignette__ttl">Budget attribué</h4>
+                                        <p class="vignette__price">' . formatPrice($campaign['budget'], "€") . '</p>
+                                    </div>
+                                    <div class="vignette vignette--secondary">
+                                        <h4 class="vignette__ttl">Budget dépensé</h4>
+                                        <p class="vignette__price">' . calculateSpentBudget($dbCo, $campaign) . '</p>
+                                    </div>
+                                    <div class="vignette vignette--tertiary ' . turnVignetteRedIfNegative(calculateRemainingBudget($dbCo, $campaign)) . '">
+                                        <h4 class="vignette__ttl">Budget restant</h4>
+                                        <p class="vignette__price">' . calculateRemainingBudget($dbCo, $campaign) . '</p>
                                     </div>
                                 </div>
                             </div>
-                        </a>
-                        </li>';
-                }
+                        </div>
+                    </a>
+                    </li>';
             }
         }
 
-        // Si l'entreprise n'a aucune campagne, affiche un message
-        if (!$hasCampaigns) {
-            $campaignList .= '<p class="card__section big-text">Aucune campagne disponible pour cette entreprise.</p>';
+        // Affiche la section de l'entreprise seulement s'il y a des campagnes
+        if ($hasCampaigns) {
+            $campaignList .= '<div class="gradient-border gradient-border--top"><h3 class="ttl secondary lineUp">' . $company['company_name'] . '</h3>';
+            $campaignList .= '<ul class="campaign__grid">';
+            $campaignList .= $companyCampaigns;
+            $campaignList .= '</ul></div>'; // Ferme la section pour cette entreprise
         }
-
-        // Ferme la section pour cette entreprise
-        $campaignList .= '</ul></div>';
     }
 
     return $campaignList;
