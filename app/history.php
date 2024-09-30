@@ -126,7 +126,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             </div>';
         }
         ?>
-        
+
         <?php
         if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
             echo
@@ -152,7 +152,9 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         <section class="card campaign">
             <?= getMessageIfNoCampaign($campaigns) ?>
             <?php
-            if (!isset($_SESSION['filter']) && !isset($_SESSION['filter']['id_company'])) {
+            if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
+                echo getCampaignTemplate($dbCo, $pastYearsCampaigns, $_SESSION);
+            } else if (!isset($_SESSION['filter']) && !isset($_SESSION['filter']['id_company'])) {
                 echo getHistoryCampaignTemplateByCompany($dbCo, $pastYearsCampaigns, $_SESSION, $companies);
             } else if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
                 $pastYearsCampaigns = getCompanyFilteredCampaigns($dbCo, $_SESSION);

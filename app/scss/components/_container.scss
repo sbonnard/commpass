@@ -2,6 +2,10 @@
     padding: 1.5rem 1rem;
     max-width: 84.375rem;
 
+    @media screen and (min-width: 1200px) {
+        padding: 3rem 2.5rem;
+    }
+
     &__flex {
         display: flex;
         flex-direction: column;
