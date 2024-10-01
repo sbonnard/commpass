@@ -1,0 +1,10 @@
+.c3-legend {
+    display: flex; /* Utiliser flexbox pour le conteneur des légendes */
+    flex-wrap: wrap; /* Permettre aux légendes de passer à la ligne */
+    margin-top: 10px; /* Espace au-dessus des légendes */
+}
+
+.c3-legend-item {
+    margin-right: 15px; /* Espace entre les éléments de légende */
+    margin-bottom: 5px; /* Espace entre les lignes de légende */
+}

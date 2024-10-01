@@ -953,6 +953,8 @@ function getOneCompanyYearlyCampaigns(PDO $dbCo, array $session): array
         $bindValues = [
             'idcompany' => $session['id_company']
         ];
+    } else {
+        return [];
     }
 
     $query->execute($bindValues);

@@ -99,6 +99,8 @@
         }
 
         &--select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
             background-image: url(../../img/select-background.svg);
             background-repeat: no-repeat;
             background-size: contain;
