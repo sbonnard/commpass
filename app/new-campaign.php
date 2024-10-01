@@ -84,9 +84,9 @@ checkUserClientStatus($_SESSION);
                             <label class="form__label" for="campaign_target">Objectif de la campagne</label>
                             <select class="form__input form__input--select" type="text" name="campaign_target" id="campaign_target" required aria-label="Sélectionner l'objectif de la campagne de communication">
                                 <option class="form__input__placeholder" value="">- Sélectionnez un objectif -</option>
-                                <option value="1">Faire connaître</option>
-                                <option value="2">Faire aimer</option>
-                                <option value="3">Faire agir</option>
+                                <option value="1" <?php if (isset($selectedCampaign['id_target']) && $selectedCampaign['id_target'] === 1) echo 'selected'; ?>>Faire connaître</option>
+                                <option value="2" <?php if (isset($selectedCampaign['id_target']) && $selectedCampaign['id_target'] === 2) echo 'selected'; ?>>Faire aimer</option>
+                                <option value="3" <?php if (isset($selectedCampaign['id_target']) && $selectedCampaign['id_target'] === 3) echo 'selected'; ?>>Faire agir</option>
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">
@@ -109,11 +109,7 @@ checkUserClientStatus($_SESSION);
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="date">Date de la campagne</label>
-                            <input class="form__input form__input--date" type="date" name="date" id="date" required aria-label="Sélectionner la date de l'opération" value="<?php
-                                                                                                                                                                            if (isset($_GET['myc']) && intval($_GET['myc'])) {
-                                                                                                                                                                                echo $selectedCampaign['date'];
-                                                                                                                                                                            }
-                                                                                                                                                                            ?>">
+                            <input class="form__input form__input--date" type="date" name="date" id="date" required aria-label="Sélectionner la date de l'opération" value="<?php if (isset($selectedCampaign['date'])) echo formatDateForInput($selectedCampaign['date']) ?>">
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="budget">Budget investi (sans €)</label>

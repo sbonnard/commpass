@@ -32,12 +32,16 @@ function redirectTo(?string $url = null): void
  */
 function getDatasAsHTMLOptions(array $datas, string $placeholder, string $id, string $dataName, string $dataNameBis = ''): string
 {
-    $htmlOptions = '<option class="form__input__placeholder" value="">- ' . $placeholder . ' -</option>';
+    $htmlOptions = '<option class="form__input__placeholder" value="">- ' . htmlspecialchars($placeholder) . ' -</option>';
 
     foreach ($datas as $data) {
+        // I check here if datas exist to avoid a PHP error.
+        $dataNameBisValue = !empty($dataNameBis) ? ' ' . htmlspecialchars($data[$dataNameBis]) : '';
+
         $htmlOptions .=
-            '<option value="' . $data[$id] . '">' . $data[$dataName] . ' ' . $data[$dataNameBis] . 
-           '</option>';
+            '<option value="' . htmlspecialchars($data[$id]) . '">' .
+            htmlspecialchars($data[$dataName]) . $dataNameBisValue .
+            '</option>';
     }
 
     return $htmlOptions;
@@ -117,6 +121,17 @@ function getYearOnly(PDO $dbCo, array $campaign): string
     $result = $queryYear->fetch(PDO::FETCH_ASSOC);
 
     return implode('', $result);
+}
+
+/**
+ * Formats date to get it back when editing.
+ *
+ * @param string $date - The date to format
+ * @return string - The formatted date
+ */
+function formatDateForInput(string $date): string {
+    $dateTime = new DateTime($date);
+    return $dateTime->format('Y-m-d');
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
