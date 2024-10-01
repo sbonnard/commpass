@@ -141,7 +141,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         </div>
 
         <?php
-        var_dump($_SESSION);
+        // var_dump($_SESSION);
 
         if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
             echo

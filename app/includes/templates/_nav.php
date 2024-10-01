@@ -34,7 +34,7 @@ function fetchNav(array $session, string $dashboardActive = '', string $NetworkA
                     <a href="#connection-form" id="connection-menu" class="nav__lnk nav__lnk--login" aria-label="Lien vers le formulaire de connexion à l\'application">Se connecter</a>
                 </li>
                 <li class="nav__itm">
-                    <a href="contact.php" class="nav__lnk nav__lnk--contact" aria-label="Lien vers un formulaire de contact">Nous contacter</a>
+                    <a href="https://www.toiledecom.fr/contactez-nous/" class="nav__lnk nav__lnk--contact" aria-label="Lien vers un formulaire de contact">Nous contacter</a>
                 </li>
             </ul>
         ';

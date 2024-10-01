@@ -720,11 +720,11 @@ function getCampaignOperationsAsList(array $operations, array $session, array $s
         $operationsList .= '
             <li class="operation" data-js-operation="operation"><h4 class="operation__date">' . formatFrenchDate($operation['date_']) . '</h4>
             <p class="campaign__operation"><span class="campaign__legend-square" style="background-color:' . $operation['legend_colour_hex'] . '"></span>' . $operation['description'] .
-            ' ⮕ ' . formatPrice(floatval($operation['price']), '€') . ' H.T. -';
+            ' ⮕ ' . formatPrice(floatval($operation['price']), '€') . ' H.T.';
 
         if (isset($session['client']) && $session['client'] === 0) {
             $operationsList .=
-                '<span class="flex-row operation__row">
+                '<span class="flex-row operation__row">- 
                 <a class="button--edit" href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '&myo=' . $operation['id_operation'] . '" title="Éditer l\'opération ' . $operation['description'] . '" aria-label="Éditer l\opération  ' . $operation['description'] . '"></a>
                  | 
                 <button class="js-trash button--trash" 
