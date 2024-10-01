@@ -108,3 +108,42 @@ function getModifyPwdForm(): string
 }
 
 
+/**
+ * Displays filter form for non clients users.
+ *
+ * @param array $companies - list of companies
+ * @param array $communicationObjectives - list of communication objectives
+ * @return string - the form
+ */
+function displayFilterFormNotClient(array $companies, array $communicationObjectives): string
+{
+    return
+        '<div class="card">
+                <form class="card__section" action="actions-filter.php" method="post" id="filter-form">
+                    <ul class="form__lst form__lst--app">
+                        <div class="form__lst--flex">
+                            <li class="form__itm">
+                                <label for="client-filter">Sélectionner un client</label>
+                                <select class="form__input form__input--select" type="date" name="client-filter" id="client-filter" required>
+                                    ' . getCompaniesAsHTMLOptions($companies) . '
+                                </select>
+                            </li>
+                            <li class="form__itm">
+                                <label for="target-filter">Objectifs de la campagne (optionnel)</label>
+                                <select class="form__input form__input--select" type="date" name="target-filter" id="target-filter">
+                                    ' . getTargetsAsHTMLOptions($communicationObjectives) . '
+                                </select>
+                            </li>
+                        </div>
+                        <input type="submit" class="button button--filter" id="filter-button" aria-label="Filtrer les données entrées" value="Filtrer">
+                        <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
+                        <input type="hidden" name="action" value="filter-campaigns">
+                    </ul>
+                </form>
+                <form action="actions-filter.php" method="post" id="reinit-form">
+                    <input type="submit" class="button button--reinit" id="filter-reinit" aria-label="Réinitialise tous les filtres" value="" title="Réinitialiser les filtres">
+                    <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
+                    <input type="hidden" name="action" value="filter-reinit">
+                </form>
+        </div>';
+}

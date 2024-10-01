@@ -150,7 +150,7 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session, $campaigns): ar
     } else if (isset($session['client']) && $session['client'] === 0 && $session['boss'] === 0) {
         // Si l'utilisateur est le gérant de l'entreprise Toile de Com.
         $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, budget, date, company_name, YEAR(date) AS year, target.id_target, target_com
+            'SELECT id_campaign, campaign_name, budget, date, company.id_company, company_name, YEAR(date) AS year, target.id_target, target_com
             FROM campaign
                 JOIN company USING (id_company)
                 JOIN target USING (id_target)
@@ -165,7 +165,7 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session, $campaigns): ar
     } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
         // Si l'utilisateur est un client mais qu'il est aussi le gérant de l'entreprise cliente.
         $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year, target.id_target, target_com
+            'SELECT id_campaign, campaign_name, id_company, budget, date, YEAR(date) AS year, target.id_target, target_com
             FROM campaign
                 JOIN target USING (id_target)
             WHERE id_company = :id
@@ -179,7 +179,7 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session, $campaigns): ar
     } else {
         // Si l'utilisateur est un client mais qu'il n'est pas gérant de l'entreprise. Il est donc simple interlocuteur sur ses campagnes.
         $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, budget, date, YEAR(date) AS year, target.id_target, target_com
+            'SELECT id_campaign, campaign_name, id_company, budget, date, YEAR(date) AS year, target.id_target, target_com
             FROM campaign
                 JOIN target USING (id_target)
             WHERE id_company = :id AND id_user = :id_user
@@ -465,6 +465,86 @@ function getHistoryCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array 
     return $campaignList;
 }
 
+
+/**
+ * Get HTML template for a campaign displaying most important infos. It displays campaigns by year for clients.
+ *
+ * @param array $campaigns - An array containing all campaigns.
+ * @param array $session - Superglobal $_SESSION.
+ * @param array $companies - Tableau contenant toutes les entreprises.
+ * @return string - HTML code that constitutes the template.
+ */
+function getHistoryCampaignTemplateClient(PDO $dbCo, array $campaigns, array $session): string
+{
+    $campaignList = '';
+
+            $companyCampaignsByYear = [];
+
+            
+            foreach ($campaigns as $campaign) {
+                if ($campaign['id_company'] === $session['id_company']) {
+                    // Regroupe les campagnes par année
+                    $year = getYearOnly($dbCo, $campaign);
+                    $companyCampaignsByYear[$year][] = $campaign;
+                }
+            }
+            
+            // Vérifie si l'entreprise a des campagnes
+            if (!empty($companyCampaignsByYear)) {
+                $campaignList .= '<div class="gradient-border gradient-border--top">';
+                $campaignList .= '<ul class="history">';
+                
+                // Affiche les campagnes année par année
+                foreach ($companyCampaignsByYear as $year => $campaignsByYear) {
+                    // Section pour chaque année
+                    $campaignList .= '<li class="history__year-section"><h4 class="ttl ttl--medium">Année ' . $year . '</h4>';
+                    $campaignList .= '<ul class="campaign__grid">';
+
+                    foreach ($campaignsByYear as $campaign) {
+                        $campaignId = $campaign['id_campaign'];
+
+                        $campaignList .= '
+                            <li>
+                                <a href="campaign.php?myc=' . $campaignId . '">
+                                    <div class="card__section" data-card="">
+                                        <div class="campaign__ttl">
+                                            <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>'
+                            . getCompanyNameIfTDC($campaign, $session) .
+                            $campaign['target_com'] . '
+                                        </div>
+                                        <div class="campaign__stats">
+                                            <div class="js-chart" id="chart-' . $campaignId . '"></div>
+                                            <div class="vignettes-section">
+                                                <div class="vignette vignette--primary">
+                                                    <h4 class="vignette__ttl">Budget attribué</h4>
+                                                    <p class="vignette__price">' . formatPrice($campaign['budget'], "€") . '</p>
+                                                </div>
+                                                <div class="vignette vignette--secondary">
+                                                    <h4 class="vignette__ttl">Budget dépensé</h4>
+                                                    <p class="vignette__price">' . calculateSpentBudget($dbCo, $campaign) . '</p>
+                                                </div>
+                                                <div class="vignette vignette--tertiary ' . turnVignetteRedIfNegative(calculateRemainingBudget($dbCo, $campaign)) . '">
+                                                    <h4 class="vignette__ttl">Budget restant</h4>
+                                                    <p class="vignette__price">' . calculateRemainingBudget($dbCo, $campaign) . '</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>';
+                    }
+
+                    $campaignList .= '</ul>'; // Ferme la liste des campagnes pour l'année
+                    $campaignList .= '</li>'; // Ferme la section pour l'année
+                }
+
+                $campaignList .= '</ul>'; // Ferme la liste des campagnes de l'entreprise
+                $campaignList .= '</div>'; // Ferme la section pour l'entreprise
+            }
+            return $campaignList;
+        }
+
+
 //  Not working for now.
 // function getCampaignsByYear(array $campaigns, array $session, string $date)
 // {
@@ -708,6 +788,14 @@ function getCampaignOperations(PDO $dbCo, array $get): array
 }
 
 
+/**
+ * Get all operations of a campaign as an HTML list.
+ *
+ * @param array $operations - An array of operations
+ * @param array $session - Superglobal $_SESSION
+ * @param array $selectedCampaign - An array containing one campaign datas.
+ * @return string list of campaigns.
+ */
 function getCampaignOperationsAsList(array $operations, array $session, array $selectedCampaign): string
 {
     $operationsList = '';
@@ -778,35 +866,35 @@ function getSpendingByBrandByCampaign(PDO $dbCo, array $campaigns, array $get): 
 }
 
 
-function filterCampaigns(PDO $dbCo, array $campaigns)
-{
-    if (!isset($_POST['date-from'], $_POST['date-to'])) {
-        addError('date_ko');
-        redirectTo();
-        exit;
-    }
+// function filterCampaigns(PDO $dbCo, array $campaigns)
+// {
+//     if (!isset($_POST['date-from'], $_POST['date-to'])) {
+//         addError('date_ko');
+//         redirectTo();
+//         exit;
+//     }
 
-    $dateFrom = sanitizeInput($_POST['date-from']);
-    $dateTo = sanitizeInput($_POST['date-to']);
+//     $dateFrom = sanitizeInput($_POST['date-from']);
+//     $dateTo = sanitizeInput($_POST['date-to']);
 
-    $queryFilter = $dbCo->prepare(
-        'SELECT * 
-        FROM campaigns 
-        WHERE date 
-        BETWEEN :dateFrom AND :dateTo;'
-    );
+//     $queryFilter = $dbCo->prepare(
+//         'SELECT * 
+//         FROM campaigns 
+//         WHERE date 
+//         BETWEEN :dateFrom AND :dateTo;'
+//     );
 
-    $bindValues = [
-        'dateFrom' => $dateFrom,
-        'dateTo' => $dateTo
-    ];
+//     $bindValues = [
+//         'dateFrom' => $dateFrom,
+//         'dateTo' => $dateTo
+//     ];
 
-    $queryFilter->execute($bindValues);
+//     $queryFilter->execute($bindValues);
 
-    $campaigns = $queryFilter->fetchAll();
+//     $campaigns = $queryFilter->fetchAll();
 
-    echo json_encode($campaigns);
-}
+//     echo json_encode($campaigns);
+// }
 
 /**
  * Fetch all 3 objectives for a communication campaign.

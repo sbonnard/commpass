@@ -37,6 +37,11 @@
     gap: 1rem;
 }
 
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
 #filter-form {
     position: relative;
 }
