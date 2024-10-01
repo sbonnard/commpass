@@ -48,6 +48,8 @@ if (!isset($_GET['myo'])) {
         "operation_date" => ""
     ];
 }
+
+// var_dump($selectedCampaign);
 ?>
 
 <!DOCTYPE html>
@@ -109,7 +111,7 @@ if (!isset($_GET['myo'])) {
                             <select class="form__input form__input--select" type="text" name="operation_brand" id="operation_brand" required aria-label="Sélectionner la marque concernée">
                                 <option value="">- Sélectionner une marque -</option>
                                 <option value="0">Toutes les marques</option>
-                                <?= getCompanyBrandsAsHTMLOptions(getCompanyBrands($dbCo, $selectedCampaign)); ?>
+                                <?= getCompanyBrandsAsHTMLOptions(getCompanyBrands($dbCo, $selectedCampaign), $selectedBrand, $_GET); ?>
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">

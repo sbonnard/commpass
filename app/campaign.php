@@ -98,9 +98,9 @@ $jsonData = json_encode($chartData);
             </section>
         </div>
 
-        <div class="button__section">
+        <!-- <div class="button__section">
             <button class="button button--filter" id="filter-button" aria-label="Ouvre un formulaire de filtres">Filtres</button>
-        </div>
+        </div> -->
 
         <div class="hidden" id="filter-container">
             <form class="card__section form hidden" action="api.php" method="post" id="filter-form" aria-label="Formulaire pour filtrer les campagnes">

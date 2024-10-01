@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : ven. 27 sep. 2024 à 12:18
+-- Généré le : mar. 01 oct. 2024 à 14:00
 -- Version du serveur : 8.0.37
 -- Version de PHP : 8.2.8
 
@@ -53,7 +53,11 @@ INSERT INTO `brand` (`id_brand`, `brand_name`, `id_company`, `legend_colour_hex`
 (10, 'ProNerexam Versicherung', 5, '#fbff24'),
 (11, 'Nerexam Schutz', 5, '#ff9238'),
 (12, 'VersicherungsNexus', 5, '#DF0000'),
-(13, 'AlpCare', 6, '#1dd7c2');
+(13, 'AlpCare', 6, '#1dd7c2'),
+(14, 'Joueur du Grenier', 8, '#fbff00'),
+(15, 'Bazar du Grenier', 8, '#00d604'),
+(16, 'L\'Arcadia', 8, '#0074cc'),
+(17, 'Pignottes', 4, '#ff61a0');
 
 -- --------------------------------------------------------
 
@@ -77,19 +81,23 @@ CREATE TABLE `campaign` (
 --
 
 INSERT INTO `campaign` (`id_campaign`, `campaign_name`, `budget`, `date`, `id_user`, `id_company`, `id_target`, `id_user_TDC`) VALUES
-(1, 'Soldes d\'été', 25000.00, '2024-06-27 00:00:00', 3, 2, 3, 2),
+(1, 'Soldes d\'été', 10500.00, '2024-06-27 00:00:00', 3, 2, 3, 2),
 (2, 'Promos d\'hiver', 18000.00, '2023-11-14 00:00:00', 3, 2, 3, 1),
 (3, 'Tous plus verts', 25000.00, '2024-02-01 00:00:00', 3, 2, 2, 1),
 (13, 'Salon du luminaire', 178000.10, '2022-05-05 00:00:00', 4, 3, 1, 2),
 (14, 'Lancement Groupe Pignon', 21000.00, '2023-05-14 00:00:00', 5, 4, 1, 2),
 (15, 'Tous plus verts', 25000.00, '2022-02-01 00:00:00', 3, 2, 2, 2),
 (16, 'Fête des pères', 8500.00, '2025-06-09 00:00:00', 6, 2, 3, 2),
-(17, 'Soldes d\'hiver', 7000.00, '2024-11-15 00:00:00', 4, 3, 3, 2),
 (18, 'Soldes d\'hiver', 4500.00, '2024-11-01 00:00:00', 5, 4, 3, 2),
 (19, 'Green days', 12500.00, '2024-01-04 00:00:00', 5, 4, 2, 2),
 (20, 'Salon des métiers', 7000.00, '2024-09-23 00:00:00', 6, 2, 1, 2),
 (26, 'Test 445', 8500.00, '2024-09-25 00:00:00', 7, 5, 1, 2),
-(28, 'Peau neuve', 16000.00, '2024-11-06 00:00:00', 8, 6, 2, 2);
+(28, 'Peau neuve', 16000.00, '2024-11-06 00:00:00', 8, 6, 2, 2),
+(29, 'Test 8548', 4500.00, '2023-02-22 00:00:00', 3, 2, 1, 2),
+(30, 'Zevent', 1000.00, '2024-09-05 00:00:00', 15, 8, 3, 2),
+(31, 'Ouverture de l\'Arcadia', 2500.00, '2024-09-30 00:00:00', 15, 8, 1, 2),
+(32, 'Soldes d\'automne', 7800.00, '2024-09-30 00:00:00', 4, 3, 1, 2),
+(37, 'Rentrée scolaire', 2000.00, '2024-09-02 00:00:00', 7, 5, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -114,7 +122,8 @@ INSERT INTO `company` (`id_company`, `company_name`, `annual_budget`) VALUES
 (4, 'Groupe Pignon', 15750.00),
 (5, 'Nerexam Solutions', 76000.00),
 (6, 'Helvionics SA', 128000.00),
-(7, 'En un Écl&#039;Hair', 4200.00);
+(7, 'En un Écl\'Hair', 4200.00),
+(8, 'JDG Production', 15000.00);
 
 -- --------------------------------------------------------
 
@@ -150,7 +159,7 @@ CREATE TABLE `operation` (
   `id_operation` int NOT NULL,
   `description` varchar(255) NOT NULL,
   `price` decimal(15,2) NOT NULL,
-  `date_` date NOT NULL,
+  `operation_date` date NOT NULL,
   `id_campaign` int NOT NULL,
   `id_company` int DEFAULT NULL,
   `id_media` int DEFAULT NULL,
@@ -161,7 +170,7 @@ CREATE TABLE `operation` (
 -- Déchargement des données de la table `operation`
 --
 
-INSERT INTO `operation` (`id_operation`, `description`, `price`, `date_`, `id_campaign`, `id_company`, `id_media`, `id_partner`) VALUES
+INSERT INTO `operation` (`id_operation`, `description`, `price`, `operation_date`, `id_campaign`, `id_company`, `id_media`, `id_partner`) VALUES
 (4, 'Flocage de totebags', 690.00, '2023-11-12', 2, 2, 2, NULL),
 (5, 'Flyers soldes d\'été, 1000 exemplaires', 300.25, '2024-06-12', 1, 2, 2, NULL),
 (6, 'Flyers soldes d\'hiver, 1000 exemplaires', 300.25, '2023-11-12', 2, 2, 2, NULL),
@@ -171,9 +180,6 @@ INSERT INTO `operation` (`id_operation`, `description`, `price`, `date_`, `id_ca
 (12, 'Mise en lumière de la société Luminase avec un beau panneau néon', 14250.28, '2024-09-12', 13, 3, 6, NULL),
 (14, 'Test Stellar Threads', 1450.00, '2024-09-20', 1, 2, 1, NULL),
 (15, 'Graphisme affiches fête des père', 1200.00, '2025-06-09', 16, 2, 2, NULL),
-(17, 'Campagne radio Tendance Ouest', 800.00, '2024-11-15', 17, 3, 3, 3),
-(18, 'Campagne radio Tendance Ouest', 800.00, '2024-09-15', 17, 3, 3, 3),
-(19, 'Prints affiches soldes abribus ', 452.50, '2024-11-17', 17, 3, 2, NULL),
 (20, 'Affiches soldes', 450.00, '2024-11-09', 18, 4, 2, NULL),
 (21, 'Matraquage publicitaire sur le green washing', 800.00, '2024-01-10', 19, 4, 5, NULL),
 (22, 'Publicité Linkedin sur la politique verte de l\'entreprise', 1300.80, '2024-03-07', 3, 2, 5, NULL),
@@ -193,7 +199,13 @@ INSERT INTO `operation` (`id_operation`, `description`, `price`, `date_`, `id_ca
 (37, 'Panneau d\'affichage à Caen', 822.00, '2024-09-27', 3, 2, 6, 4),
 (38, 'Pub télé', 1222.00, '2024-09-27', 1, 2, 4, 5),
 (39, 'Redesign d\'un logo pour la marque', 1230.00, '2024-11-01', 28, 6, 2, 0),
-(40, 'Diffusion spots radio', 2700.00, '2024-11-05', 28, 6, 3, 3);
+(40, 'Diffusion spots radio', 2700.00, '2024-11-05', 28, 6, 3, 3),
+(41, 'Spot radio', 452.00, '2024-09-30', 31, 8, 3, 3),
+(42, 'Panneau découpés Seb du Grenier et Fred du Grenier', 325.00, '2024-09-30', 31, 8, 6, 0),
+(43, 'Flocage chaise de gaming', 52.00, '2024-09-05', 30, 8, 2, 0),
+(44, 'Redesign logo Bazar du grenier', 852.00, '2024-08-31', 30, 8, 2, 0),
+(46, 'Impression d\'une nappe à motifs feuilles de palmier', 125.00, '2024-09-07', 30, 8, 2, 0),
+(48, 'Affiches abribus', 900.00, '2024-10-01', 37, 5, 6, 0);
 
 -- --------------------------------------------------------
 
@@ -216,6 +228,7 @@ INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 (36, 0),
 (38, 0),
 (39, 0),
+(42, 0),
 (4, 1),
 (5, 1),
 (6, 1),
@@ -234,16 +247,18 @@ INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 (8, 4),
 (26, 4),
 (29, 4),
-(18, 5),
-(19, 5),
-(17, 6),
 (31, 6),
 (20, 7),
 (21, 8),
 (33, 10),
 (34, 11),
+(48, 11),
 (35, 12),
-(40, 13);
+(40, 13),
+(43, 14),
+(46, 14),
+(44, 15),
+(41, 16);
 
 -- --------------------------------------------------------
 
@@ -339,7 +354,10 @@ INSERT INTO `users` (`id_user`, `username`, `firstname`, `lastname`, `password`,
 (7, 'hziegler7', 'Helmut', 'Ziegler', '$2y$10$cCubd56otzIKiNdKRj3i.u4Crxaxz586Ygn5QmVszFF91z2SgMqFS', 'helmut.ziegler@nerexam.com', '0600102030', 1, 1, 5),
 (8, 'ldubois8', 'Léon', 'Dubois', '$2y$10$0FCcKygW2AKjhbM93u2qg.GchfDaImvsU7dsV8vy8zLYSuV9dlOYe', 'duboisleon@helvionics.com', '0601020304', 1, 1, 6),
 (9, 'jmuller9', 'Johannes', 'Müller', '$2y$10$ZrJPfxjaIWGVJEfu6VjQqeRjeqXrBpuaMl6ks96rYasTgda1Qp7aK', 'johannesmuller@nerexam.com', '0614141414', 1, 0, 5),
-(12, 'vriche74', 'Veronica', 'Riche', '$2y$10$H85YqMiJjN9Z4FT15z32pe3cjwbbv8gGVFA4tiJHXN73DGKply6XW', 'veronica-riche@helvionics.com', '0601020304', 1, 0, 6);
+(12, 'vriche74', 'Veronica', 'Riche', '$2y$10$H85YqMiJjN9Z4FT15z32pe3cjwbbv8gGVFA4tiJHXN73DGKply6XW', 'veronica-riche@helvionics.com', '0601020304', 1, 0, 6),
+(14, 'jnogue18', 'Justine', 'Noguera', '$2y$10$UDoOVNZngCeJ.YDWPXpzvetirugKpgan/W21/pxomQbDDomFj2O9y', 'jnogue@helvionics.com', '0614011401', 1, 0, 6),
+(15, 'jmolas', 'Fréderic', 'Molas', '$2y$10$RTsnwh1JROCpoQ/FXvhM8Ou9ELhvKcN4FnfSEhWNoOnaf2WGqqsFa', 'jdgprod@jdr.fr', '0601020304', 1, 1, 8),
+(16, 'srassiat14', 'Sébastien', 'Rassiat', '$2y$10$dDWqQnpSNuIMLPjCqn5L5OdKqjYoYEEpLGV1CTrJRtuRqBVjLYzcS', 'sebrassiat@jdegprod.com', '0601020304', 1, 1, 8);
 
 --
 -- Index pour les tables déchargées
@@ -424,19 +442,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `brand`
 --
 ALTER TABLE `brand`
-  MODIFY `id_brand` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_brand` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT pour la table `campaign`
 --
 ALTER TABLE `campaign`
-  MODIFY `id_campaign` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id_campaign` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT pour la table `company`
 --
 ALTER TABLE `company`
-  MODIFY `id_company` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_company` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `media`
@@ -448,7 +466,7 @@ ALTER TABLE `media`
 -- AUTO_INCREMENT pour la table `operation`
 --
 ALTER TABLE `operation`
-  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT pour la table `partner`
@@ -472,7 +490,7 @@ ALTER TABLE `type_operation`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Contraintes pour les tables déchargées
