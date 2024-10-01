@@ -32,6 +32,8 @@ generateToken();
 checkConnection($_SESSION);
 
 checkUserClientStatus($_SESSION);
+
+// var_dump($selectedCampaign);
 ?>
 
 <!DOCTYPE html>
@@ -104,7 +106,22 @@ checkUserClientStatus($_SESSION);
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="user_TDC">Chargé de la campagne</label>
                             <select class="form__input form__input--select" type="text" name="user_TDC" id="user_TDC" required aria-label="Sélectionner le chargé de la campagne dans votre entreprise">
-                                <?= getDatasAsHTMLOptions($nonClientUsers, 'Sélectionner un collaborateur', 'id_user', 'firstname', 'lastname') ?>
+                            <option value="">- Sélectionner une entreprise -</option>
+                                <?php
+                                $chargeOptions = '';
+                                foreach ($nonClientUsers as $user) {
+                                    $chargeOptions .= '<option value="' . $user['id_user'] . '"';
+
+                                    if (isset($selectedCampaign['id_user_TDC']) && $user['id_user'] === $selectedCampaign['id_user_TDC']) {
+                                        $chargeOptions .= ' selected';
+                                    }
+
+                                    $chargeOptions .= '>' . $user['firstname'] . ' ' . $user['lastname'];
+                                }
+                                echo $chargeOptions;
+                                ?>
+                            
+                            <!-- <?= getDatasAsHTMLOptions($nonClientUsers, 'Sélectionner un collaborateur', 'id_user', 'firstname', 'lastname') ?> -->
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">
