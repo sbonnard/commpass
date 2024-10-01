@@ -35,7 +35,7 @@ if (isset($_SESSION) && !empty($_SESSION) && isset($_SESSION['id_user'], $_SESSI
 
     <header class="header">
         <?php
-        echo fetchHeader('#');
+        echo fetchHeader('index.php');
         echo fetchLogInForm($_SESSION);
         ?>
     </header>
@@ -48,6 +48,14 @@ if (isset($_SESSION) && !empty($_SESSION) && isset($_SESSION['id_user'], $_SESSI
         <div class="card">
             <h2 class="ttl lineUp">Mentions légales</h2>
         </div>
+
+        <section class="card__section card__legal">
+            <h3>Éditeur de code : Visual Studio Code</h3>
+            <p>Commpass est un outil de gestion de budgets et de communication, créé par <a href="https://www.linkedin.com/in/s%C3%A9bastien-bonnard-72164a239/" target="_blank">Stéphanie Roux</a> et <a href="https://www.linkedin.com/in/julien-bouvet-07b6701b5/" target="_blank">Julien Bouvet</a>.</p>
+            <p>Tous les droits sont réservés.</p>
+            <p>Version : 1.0.0</p>
+            <p>Date de création : 26/08/2024</p>
+        </section>
 
     </main>
 

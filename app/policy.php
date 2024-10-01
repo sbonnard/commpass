@@ -35,7 +35,7 @@ if (isset($_SESSION) && !empty($_SESSION) && isset($_SESSION['id_user'], $_SESSI
 
     <header class="header">
         <?php
-        echo fetchHeader('#');
+        echo fetchHeader('index.php');
         echo fetchLogInForm($_SESSION);
         ?>
     </header>
@@ -45,8 +45,21 @@ if (isset($_SESSION) && !empty($_SESSION) && isset($_SESSION['id_user'], $_SESSI
     </nav>
 
     <main class="container">
-        <div class="card">
+        <div class="card card__legal">
             <h2 class="ttl lineUp">Politique de confidentialité</h2>
+
+            <section class="card__section">
+                <h3>Commpass est un outil de communication et de budgeting destiné à faciliter la gestion de votre entreprise. Nous respectons votre vie privée et vos données personnelles. Voici les principes de notre politique de confidentialité:</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate nesciunt accusantium esse vero quibusdam. Veniam asperiores maiores amet doloribus deleniti molestiae placeat magni? Iste omnis ut consequuntur illo quod aperiam!</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate nesciunt accusantium esse vero quibusdam. Veniam asperiores maiores amet doloribus deleniti molestiae placeat magni? Iste omnis ut consequuntur illo quod aperiam!</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate nesciunt accusantium esse vero quibusdam. Veniam asperiores maiores amet doloribus deleniti molestiae placeat magni? Iste omnis ut consequuntur illo quod aperiam!</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate nesciunt accusantium esse vero quibusdam. Veniam asperiores maiores amet doloribus deleniti molestiae placeat magni? Iste omnis ut consequuntur illo quod aperiam!</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate nesciunt accusantium esse vero quibusdam. Veniam asperiores maiores amet doloribus deleniti molestiae placeat magni? Iste omnis ut consequuntur illo quod aperiam!</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate nesciunt accusantium esse vero quibusdam. Veniam asperiores maiores amet doloribus deleniti molestiae placeat magni? Iste omnis ut consequuntur illo quod aperiam!</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate nesciunt accusantium esse vero quibusdam. Veniam asperiores maiores amet doloribus deleniti molestiae placeat magni? Iste omnis ut consequuntur illo quod aperiam!</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate nesciunt accusantium esse vero quibusdam. Veniam asperiores maiores amet doloribus deleniti molestiae placeat magni? Iste omnis ut consequuntur illo quod aperiam!</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate nesciunt accusantium esse vero quibusdam. Veniam asperiores maiores amet doloribus deleniti molestiae placeat magni? Iste omnis ut consequuntur illo quod aperiam!</p>
+            </section>
         </div>
     </main>
 
