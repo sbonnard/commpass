@@ -58,6 +58,7 @@
         &--grid {
             display: grid;
             grid-template-columns: 1fr 1fr; // ou 31 rem
+            align-items: baseline;
 
             &--3columns {
                 grid-template-columns: repeat(3, 1fr);
