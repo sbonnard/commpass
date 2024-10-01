@@ -193,7 +193,7 @@ function calculateAnnualSpentBudget(PDO $dbCo, array $session): string
     $query = $dbCo->prepare(
         'SELECT SUM(price) AS total_spent
         FROM operation
-        WHERE YEAR(date_) = YEAR(CURDATE()) AND id_company = :id_company
+        WHERE YEAR(operation_date) = YEAR(CURDATE()) AND id_company = :id_company
         GROUP BY id_company;'
     );
 
@@ -233,7 +233,7 @@ function calculateAnnualRemainingBudget(PDO $dbCo, array $session): string
         'SELECT annual_budget - SUM(price) AS remaining_budget
         FROM company
             JOIN operation ON company.id_company = operation.id_company
-        WHERE YEAR(date_) = YEAR(CURDATE()) AND company.id_company = :id_company
+        WHERE YEAR(operation_date) = YEAR(CURDATE()) AND company.id_company = :id_company
         GROUP BY company.id_company;'
     );
 

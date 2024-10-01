@@ -45,7 +45,7 @@ if (!isset($_GET['myo'])) {
     $operation = [
         "description" => "",
         "price" => "",
-        "date_" => ""
+        "operation_date" => ""
     ];
 }
 ?>
@@ -126,7 +126,7 @@ if (!isset($_GET['myo'])) {
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="date">Date de l'opération</label>
-                            <input class="form__input form__input--date" type="date" name="date" id="date" required aria-label="Sélectionner la date de l'opération" value="<?= $operation['date_']; ?>">
+                            <input class="form__input form__input--date" type="date" name="date" id="date" required aria-label="Sélectionner la date de l'opération" value="<?= $operation['operation_date']; ?>">
                         </li>
 
                         <?php

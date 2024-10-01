@@ -772,7 +772,7 @@ function getCampaignOperations(PDO $dbCo, array $get): array
                 JOIN operation_brand USING (id_operation)
                 JOIN brand USING (id_brand)
             WHERE id_campaign = :id_campaign
-            ORDER BY date_ DESC;'
+            ORDER BY operation_date DESC;'
         );
 
         $bindValues = [
@@ -806,7 +806,7 @@ function getCampaignOperationsAsList(array $operations, array $session, array $s
 
     foreach ($operations as $operation) {
         $operationsList .= '
-            <li class="operation" data-js-operation="operation"><h4 class="operation__date">' . formatFrenchDate($operation['date_']) . '</h4>
+            <li class="operation" data-js-operation="operation"><h4 class="operation__date">' . formatFrenchDate($operation['operation_date']) . '</h4>
             <p class="campaign__operation"><span class="campaign__legend-square" style="background-color:' . $operation['legend_colour_hex'] . '"></span>' . $operation['description'] .
             ' ⮕ ' . formatPrice(floatval($operation['price']), '€') . ' H.T.';
 
@@ -869,7 +869,7 @@ function getSpendingByBrandByCampaign(PDO $dbCo, array $campaigns, array $get): 
 // function filterCampaigns(PDO $dbCo, array $campaigns)
 // {
 //     if (!isset($_POST['date-from'], $_POST['date-to'])) {
-//         addError('date_ko');
+//         addError('>ko');
 //         redirectTo();
 //         exit;
 //     }
@@ -972,7 +972,7 @@ function deleteCampaignButton(array $selectedCampaign, array $session): string
 {
     return '
         <form method="post" action="actions-campaign.php" onsubmit="return confirmDelete();">
-            <input type="submit" value="" class="button--trash" aria-label="Supprimer l\'opération ' . $selectedCampaign['campaign_name'] . '">
+            <button type="submit" value="" class="button--trash" aria-label="Supprimer l\'opération ' . $selectedCampaign['campaign_name'] . '">
             <input type="hidden" name="token" value="' . $session['token'] . '">
             <input type="hidden" name="action" value="delete-campaign">
             <input type="hidden" name="id_campaign" value="' . $selectedCampaign['id_campaign'] . '">

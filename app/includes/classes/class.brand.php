@@ -123,7 +123,7 @@ function getAnnualSpendingByBrand(PDO $dbCo, array $session): array
         FROM brand b
             JOIN operation_brand ob ON b.id_brand = ob.id_brand
             JOIN operation o ON ob.id_operation = o.id_operation
-        WHERE YEAR(o.date_) = YEAR(CURDATE()) AND o.id_company = :id_company
+        WHERE YEAR(o.operation_date) = YEAR(CURDATE()) AND o.id_company = :id_company
         GROUP BY id_brand;'
     );
 

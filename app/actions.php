@@ -102,7 +102,7 @@ if ($_POST['action'] === 'modify-pwd') {
         $dbCo->beginTransaction();
 
         $queryOperation = $dbCo->prepare(
-            'INSERT INTO operation (description, price, date_, id_campaign, id_company, id_media, id_partner)  
+            'INSERT INTO operation (description, price, operation_date, id_campaign, id_company, id_media, id_partner)  
         VALUES (:description, :price, :date, :id_campaign, :id_company, :id_media, :id_partner);'
         );
 
@@ -169,7 +169,7 @@ if ($_POST['action'] === 'modify-pwd') {
 
         $queryOperation = $dbCo->prepare(
             'UPDATE operation 
-            SET description = :description, price = :price, date_ = :date, id_media = :id_media, id_partner = :id_partner
+            SET description = :description, price = :price, operation_date = :date, id_media = :id_media, id_partner = :id_partner
             WHERE id_operation = :id_operation;'
         );
 

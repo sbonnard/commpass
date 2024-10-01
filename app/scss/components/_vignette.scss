@@ -24,6 +24,7 @@
     padding: 0.5rem;
     border-radius: 0.75rem 0.75rem 0.75rem 0;
     height: fit-content;
+    min-width: 8.875rem;
     filter: drop-shadow(0.25rem 0.25rem 0.25rem $shadow);
 
     &__ttl {
