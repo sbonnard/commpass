@@ -68,7 +68,7 @@ checkUserClientStatus($_SESSION);
             <h2 class="ttl lineUp" id="new-client-ttl">Nouveau client</h2>
 
             <section class="card__section" aria-labelledby="new-client-ttl">
-                <form class="form" action="actions.php" method="post" aria-label="Formulaire de création d'une nouvelle opération">
+                <form class="form" action="actions.php" method="post" aria-label="Formulaire de création d'un nouveau client">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="company_name">Nom de l'entreprise</label>

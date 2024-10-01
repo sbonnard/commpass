@@ -54,7 +54,7 @@ if (isset($_SESSION) && !empty($_SESSION) && isset($_SESSION['id_user'], $_SESSI
     <main class="container container__flex">
 
         <div class="card" data-card="">
-            <h2 class="ttl lineUp" id="take-control">
+            <h2 class="ttl lineUp" id="take-control" aria-hidden="true">
                 Prenez le contrôle<br>
                 de votre budget<br>
                 <span class="ttl--tertiary">communication</span>
@@ -66,7 +66,7 @@ if (isset($_SESSION) && !empty($_SESSION) && isset($_SESSION['id_user'], $_SESSI
         </div>
 
         <div class="card" data-card="">
-            <h2 class="ttl lineUp" id="report">
+            <h2 class="ttl lineUp" id="report" aria-hidden="true">
                 <span class="ttl--tertiary">Comptes rendus<br></span>
                 EN TEMPS RÉEL
             </h2>

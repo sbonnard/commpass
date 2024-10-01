@@ -10,11 +10,11 @@
 function fetchHeader(string $url, string $linkTitle = null): string
 {
     return '
-        <a href="' . $url . '" title="' . $linkTitle . '">
+        <a href="' . $url . '" title="' . $linkTitle . '" aria-label="Lien vers l\'accueil">
             <h1 class="header__ttl">Commpass</h1>
         </a>
         <div class="hamburger">
-            <a href="#menu" id="hamburger-menu-icon">
+            <a href="#menu" id="hamburger-menu-icon" aria-label="Ouvrir le hamburger">
                 <img src="img/hamburger.svg" alt="Menu Hamburger">
             </a>
         </div>

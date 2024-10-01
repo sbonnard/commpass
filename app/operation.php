@@ -136,7 +136,7 @@ if (!isset($_GET['myo'])) {
                             <input type="hidden" name="action" value="create-operation">';
                         } else if (isset($_GET['myc']) && isset($_GET['myo'])) {
                             echo '
-                            <input class="button button--edit" type="submit" value="Éditer l\'opération" aria-label="Valider la création de la nouvelle campagne">
+                            <input class="button button--confirm" type="submit" value="Éditer l\'opération" aria-label="Valider la création de la nouvelle campagne">
                             <input type="hidden" name="action" value="edit-operation">';
                         }
                         ?>

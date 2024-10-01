@@ -146,7 +146,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
             echo
             '<div class="card">
-                <form class="card__section" action="actions-filter.php" method="post" id="filter-form">
+                <form class="card__section" action="actions-filter.php" method="post" id="filter-form" aria-label="formulaire de filtre">
                     <ul class="form__lst form__lst--app">
                         <div class="form__lst--flex">
                             <li class="form__itm">
