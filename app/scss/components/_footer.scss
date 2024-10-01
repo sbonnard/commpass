@@ -18,4 +18,12 @@
         justify-content: space-around;
         gap: 1rem;
     }
+
+    &__lnk {
+        color: $white;
+
+        &:hover {
+            color: $tertiary;
+        }
+    }
 }
