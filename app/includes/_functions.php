@@ -236,3 +236,16 @@ function turnVignetteRedIfNegative(string $companyRemainings): string
 
     return $className;
 }
+
+
+/**
+ * Unset filters if set.
+ *
+ * @param array $session - Superglobal $_SESSION.
+ * @return void
+ */
+function unsetFilters(array $session) {
+    if(isset($session['filter'])) {
+        unset($session['filter']);
+    }
+}

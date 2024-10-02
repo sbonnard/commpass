@@ -151,24 +151,6 @@ var_dump($_SESSION);
             echo '</section></div>';
         }
         ?>
-        <!-- <div class="card flex-column">
-            <form class="card__section form" method="post" action="actions-filter.php">
-                <ul class="form__lst form__lst--app">
-                    <li class="form__itm">
-                        <label class="form__label" for="year">Sélectionner une année</label>
-                        <select class="form__input form__input--select" name="year" id="year">
-                            <option value="">- Sélectionner une année -</option>
-                            <option value="2023">2023</option>
-                            <option value="2022">2022</option>
-                            <option value="2021">2021</option>
-                        </select>
-                    </li>
-                    <input type="submit" class="button button--filter" id="filter-button" aria-label="Filtrer les données entrées" value="Filtrer">
-                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                    <input type="hidden" name="action" value="filter-date">
-                </ul>
-            </form>
-        </div> -->
 
         <section class="card campaign">
             <?= getMessageIfNoCampaign($campaigns) ?>
@@ -176,15 +158,18 @@ var_dump($_SESSION);
             if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
                 // Cas où l'utilisateur est un client
                 echo getHistoryCampaignTemplateClient($dbCo, $pastYearsCampaigns, $_SESSION);
+                var_dump('CAS N°1');
             }
             // Si le filtre 'id_company' est défini, mais que c'est une session différente du client
             else if (isset($_SESSION['filter']['id_company'])) {
                 $pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, $campaigns);
                 echo getHistoryCampaignTemplateClient($dbCo, $pastYearsCampaigns, $_SESSION, $companies);
+                var_dump('CAS N°2');
             }
-            // Cas général (pas de client et pas de filtre de company)
+            // Cas général (pas de client et pas de filtre de company. Prend en compte le filtre 'year' si il est en place)
             else {
                 echo getHistoryCampaignTemplateByCompany($dbCo, $pastYearsCampaigns, $_SESSION, $companies);
+                var_dump('CAS N°3');
             }
             ?>
         </section>

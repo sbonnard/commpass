@@ -36,9 +36,7 @@ checkConnection($_SESSION);
 
 checkUserClientStatus($_SESSION);
 
-if(isset($_SESSION['filter']['date'])) {
-    unset($_SESSION['filter']['date']);
-}
+unsetFilters($_SESSION);
 ?>
 
 <!DOCTYPE html>

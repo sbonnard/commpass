@@ -48,8 +48,6 @@ if (!isset($_GET['myo'])) {
         "operation_date" => ""
     ];
 }
-
-// var_dump($selectedCampaign);
 ?>
 
 <!DOCTYPE html>
