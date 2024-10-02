@@ -153,14 +153,14 @@ var_dump($_SESSION);
         ?>
 
         <?php
-        if (isset($_SESSION['filter']['id_company'], $_SESSION['filter']['year'])) {
+        if (isset($_SESSION['filter']['id_company'], $_SESSION['filter']['year']) && $_SESSION['filter']['year'] != '') {
 
             echo
             '<div class="vignette vignette--secondary vignette--big">
                 <h4 class="vignette__ttl vignette__ttl--big">
-                    Budget dépensé
+                    Budget dépensé<br>en ' . $_SESSION['filter']['year'] . '
                 </h4>
-                <p class="vignette__price vignette__price--big">' . implode('', calculateHistorySpentBudget($dbCo, $_SESSION)) . '</p>
+                <p class="vignette__price vignette__price--big">' . calculateHistorySpentBudget($dbCo, $_SESSION) . '</p>
             </div>';
         }
         ?>

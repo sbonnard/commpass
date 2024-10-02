@@ -129,7 +129,7 @@ function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session): array
  * @param array $session - Superglobal $_SESSION.
  * @return array - array of campaigns for past years.
  */
-function getCompanyCampaignsPastYears(PDO $dbCo, array $session, $year = null): array
+function getCompanyCampaignsPastYears(PDO $dbCo, array $session, $campaigns, $year = null): array
 {
     if (!isset($session['client'], $session['boss'], $session['id_company'], $session['id_user'])) {
         return [];
@@ -664,23 +664,6 @@ function calculateRemainingBudget(PDO $dbCo, array $campaigns): string
 }
 
 
-function calculateHistorySpentBudget(PDO $dbCo, array $session) {
-    $query = $dbCo->prepare(
-        'SELECT SUM(price) as total_spent
-        FROM operation
-        WHERE id_company = :id_company AND YEAR(operation_date) = :year;'
-    );
-
-    $bindValues = [
-        'id_company' => intval($session['filter']['id_company']),
-        'year' => intval($session['filter']['year'])
-    ];
-
-    $query->execute($bindValues);
-    
-    return $query->fetch();
-}
-
 /**
  * Get brands that were spotlighted during a campaign. 
  * If the user is a client, id_company is taken from $_SESSION; 
@@ -1016,4 +999,31 @@ function deleteCampaignButton(array $selectedCampaign, array $session): string
             <input type="hidden" name="action" value="delete-campaign">
             <input type="hidden" name="id_campaign" value="' . $selectedCampaign['id_campaign'] . '">
         </form>';
+}
+
+
+/**
+ * Calculates spent budget for the specified year (filters)
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $session - Superglobal $_SESSION
+ * @return void 
+ */
+function calculateHistorySpentBudget(PDO $dbCo, array $session) {
+    $query = $dbCo->prepare(
+        'SELECT SUM(price) as total_spent
+        FROM operation
+        WHERE id_company = :id_company AND YEAR(operation_date) = :year;'
+    );
+
+    $bindValues = [
+        'id_company' => intval($session['filter']['id_company']),
+        'year' => intval($session['filter']['year'])
+    ];
+
+    $query->execute($bindValues);
+    
+    $result = $query->fetch();
+
+    return formatPrice(floatval($result['total_spent'] ?? 0), '€');
 }
