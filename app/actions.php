@@ -300,33 +300,6 @@ if ($_POST['action'] === 'modify-pwd') {
         addError('brand_creation_ko');
         redirectTo('');
     }
-} else if ($_POST['action'] === 'set_annual_budget') {
-    if (!isset($_POST['budget']) || empty($_POST['budget']) || !is_numeric($_POST['budget'])) {
-        addError('budget_ko');
-        redirectTo();
-        exit;
-    }
-
-    $queryBudget = $dbCo->prepare('
-        UPDATE company 
-        SET annual_budget = :budget
-        WHERE id_company = :id_company;
-    ');
-
-    $bindValues = [
-        'budget' => floatval($_POST['budget']),
-        'id_company' => $_SESSION['filter']['id_company']
-    ];
-
-    $isUpdateOk = $queryBudget->execute($bindValues);
-
-    if ($isUpdateOk) {
-        addMessage('budget_update_ok');
-        redirectTo('dashboard.php');
-    } else {
-        addError('budget_update_ko');
-        redirectTo();
-    }
 } else if ($_POST['action'] === 'create_client') {
     if (!isset($_POST['company_name']) || empty($_POST['company_name']) || !is_string($_POST['company_name']) || strlen($_POST['company_name']) > 100) {
         addError('company_name_ko');

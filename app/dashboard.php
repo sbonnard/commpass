@@ -33,7 +33,7 @@ generateToken();
 
 checkConnection($_SESSION);
 
-if(isset($_SESSION['filter']['year'])) {
+if (isset($_SESSION['filter']['year'])) {
     unset($_SESSION['filter']['year']);
 }
 
@@ -179,7 +179,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         }
         ?>
 
-<?php
+        <?php
         if (isset($_SESSION['filter'])) {
             echo '
             <div class="card">
@@ -224,12 +224,12 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                             </h4>
                             <p class="vignette__price vignette__price--big">' . formatPrice(calculateAnnualSpentBudget($dbCo, $_SESSION, $_GET), '€') . '</p>
                         </div>
-                        <div class="vignette vignette--bigger vignette--tertiary ' . turnVignetteRedIfNegative($companyAnnualRemainings) . '" data-vignette="">
+                        <div class="vignette vignette--bigger vignette--tertiary ' . ($companyAnnualBudget > 0 ? turnVignetteRedIfNegative($companyAnnualRemainings) : '') . '" data-vignette="">
                             <h4 class="vignette__ttl vignette__ttl--big">
                                 Budget restant
                             </h4>
-                            <p class="vignette__price vignette__price--big">' . formatPrice(calculateAnnualRemainingBudget($dbCo, $_SESSION), '€') . '</p>
-                        </div>
+                            <p class="vignette__price vignette__price--big">'. ($companyAnnualRemainings > 0 ? formatPrice($companyAnnualRemainings, '€') : formatPrice(0, '€')) . // Affiche 0 si budget restant est 0'</p>
+                        '</div>
                     </div>
                 </section>
             </div>';
