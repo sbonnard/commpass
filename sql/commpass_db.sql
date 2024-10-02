@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mar. 01 oct. 2024 à 14:00
+-- Généré le : mer. 02 oct. 2024 à 12:58
 -- Version du serveur : 8.0.37
 -- Version de PHP : 8.2.8
 
@@ -57,7 +57,8 @@ INSERT INTO `brand` (`id_brand`, `brand_name`, `id_company`, `legend_colour_hex`
 (14, 'Joueur du Grenier', 8, '#fbff00'),
 (15, 'Bazar du Grenier', 8, '#00d604'),
 (16, 'L\'Arcadia', 8, '#0074cc'),
-(17, 'Pignottes', 4, '#ff61a0');
+(17, 'Pignottes', 4, '#ff61a0'),
+(18, 'patate', 10, '#ebff52');
 
 -- --------------------------------------------------------
 
@@ -90,14 +91,15 @@ INSERT INTO `campaign` (`id_campaign`, `campaign_name`, `budget`, `date`, `id_us
 (16, 'Fête des pères', 8500.00, '2025-06-09 00:00:00', 6, 2, 3, 2),
 (18, 'Soldes d\'hiver', 4500.00, '2024-11-01 00:00:00', 5, 4, 3, 2),
 (19, 'Green days', 12500.00, '2024-01-04 00:00:00', 5, 4, 2, 2),
-(20, 'Salon des métiers', 7000.00, '2024-09-23 00:00:00', 6, 2, 1, 2),
+(20, 'Salon des métiers', 0.00, '2024-09-23 00:00:00', 6, 2, 1, 2),
 (26, 'Test 445', 8500.00, '2024-09-25 00:00:00', 7, 5, 1, 2),
 (28, 'Peau neuve', 16000.00, '2024-11-06 00:00:00', 8, 6, 2, 2),
 (29, 'Test 8548', 4500.00, '2023-02-22 00:00:00', 3, 2, 1, 2),
 (30, 'Zevent', 1000.00, '2024-09-05 00:00:00', 15, 8, 3, 2),
 (31, 'Ouverture de l\'Arcadia', 2500.00, '2024-09-30 00:00:00', 15, 8, 1, 2),
 (32, 'Soldes d\'automne', 7800.00, '2024-09-30 00:00:00', 4, 3, 1, 2),
-(37, 'Rentrée scolaire', 2000.00, '2024-09-02 00:00:00', 7, 5, 2, 1);
+(37, 'Rentrée scolaire', 2000.00, '2024-09-02 00:00:00', 7, 5, 2, 1),
+(39, 'test', 16000.00, '2024-10-01 00:00:00', 7, 5, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -117,13 +119,14 @@ CREATE TABLE `company` (
 
 INSERT INTO `company` (`id_company`, `company_name`, `annual_budget`) VALUES
 (1, 'Toile de Com', 0.00),
-(2, 'FakeBusiness', 84000.00),
+(2, 'FakeBusiness', 27000.00),
 (3, 'Luminase', 52000.00),
 (4, 'Groupe Pignon', 15750.00),
 (5, 'Nerexam Solutions', 76000.00),
 (6, 'Helvionics SA', 128000.00),
 (7, 'En un Écl\'Hair', 4200.00),
-(8, 'JDG Production', 15000.00);
+(8, 'JDG Production', 15000.00),
+(10, 'Patate', 12500.00);
 
 -- --------------------------------------------------------
 
@@ -205,7 +208,11 @@ INSERT INTO `operation` (`id_operation`, `description`, `price`, `operation_date
 (43, 'Flocage chaise de gaming', 52.00, '2024-09-05', 30, 8, 2, 0),
 (44, 'Redesign logo Bazar du grenier', 852.00, '2024-08-31', 30, 8, 2, 0),
 (46, 'Impression d\'une nappe à motifs feuilles de palmier', 125.00, '2024-09-07', 30, 8, 2, 0),
-(48, 'Affiches abribus', 900.00, '2024-10-01', 37, 5, 6, 0);
+(48, 'Affiches abribus', 900.00, '2024-10-01', 37, 5, 6, 0),
+(50, 'test', 6712.00, '2024-10-02', 39, 5, 4, 5),
+(51, 'test', 273.00, '2024-10-02', 39, 5, 5, 0),
+(52, 'achtung', 2762.00, '2024-10-02', 39, 5, 3, 3),
+(53, 'Pataplouf', 6252.00, '2024-10-03', 39, 5, 7, 0);
 
 -- --------------------------------------------------------
 
@@ -229,6 +236,7 @@ INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 (38, 0),
 (39, 0),
 (42, 0),
+(53, 0),
 (4, 1),
 (5, 1),
 (6, 1),
@@ -251,9 +259,12 @@ INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 (20, 7),
 (21, 8),
 (33, 10),
+(52, 10),
 (34, 11),
 (48, 11),
+(51, 11),
 (35, 12),
+(50, 12),
 (40, 13),
 (43, 14),
 (46, 14),
@@ -357,7 +368,8 @@ INSERT INTO `users` (`id_user`, `username`, `firstname`, `lastname`, `password`,
 (12, 'vriche74', 'Veronica', 'Riche', '$2y$10$H85YqMiJjN9Z4FT15z32pe3cjwbbv8gGVFA4tiJHXN73DGKply6XW', 'veronica-riche@helvionics.com', '0601020304', 1, 0, 6),
 (14, 'jnogue18', 'Justine', 'Noguera', '$2y$10$UDoOVNZngCeJ.YDWPXpzvetirugKpgan/W21/pxomQbDDomFj2O9y', 'jnogue@helvionics.com', '0614011401', 1, 0, 6),
 (15, 'jmolas', 'Fréderic', 'Molas', '$2y$10$RTsnwh1JROCpoQ/FXvhM8Ou9ELhvKcN4FnfSEhWNoOnaf2WGqqsFa', 'jdgprod@jdr.fr', '0601020304', 1, 1, 8),
-(16, 'srassiat14', 'Sébastien', 'Rassiat', '$2y$10$dDWqQnpSNuIMLPjCqn5L5OdKqjYoYEEpLGV1CTrJRtuRqBVjLYzcS', 'sebrassiat@jdegprod.com', '0601020304', 1, 1, 8);
+(16, 'srassiat14', 'Sébastien', 'Rassiat', '$2y$10$dDWqQnpSNuIMLPjCqn5L5OdKqjYoYEEpLGV1CTrJRtuRqBVjLYzcS', 'sebrassiat@jdegprod.com', '0601020304', 1, 1, 8),
+(18, 'patate', 'patate', 'patate', '$2y$10$kZZDsakb2pOoR2tk65q/8u4KB3ILFrpQTNw9OPHZDSxQP5WdQ6p4S', 'patate@patate.fr', '0614011401', 1, 1, 10);
 
 --
 -- Index pour les tables déchargées
@@ -442,19 +454,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `brand`
 --
 ALTER TABLE `brand`
-  MODIFY `id_brand` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_brand` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT pour la table `campaign`
 --
 ALTER TABLE `campaign`
-  MODIFY `id_campaign` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_campaign` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT pour la table `company`
 --
 ALTER TABLE `company`
-  MODIFY `id_company` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_company` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `media`
@@ -466,7 +478,7 @@ ALTER TABLE `media`
 -- AUTO_INCREMENT pour la table `operation`
 --
 ALTER TABLE `operation`
-  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT pour la table `partner`
@@ -490,7 +502,7 @@ ALTER TABLE `type_operation`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Contraintes pour les tables déchargées
