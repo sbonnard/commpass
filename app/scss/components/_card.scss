@@ -28,6 +28,10 @@
         &--company {
             min-width: 20.5rem;
         }
+
+        &--row {
+            flex-direction: row;
+        }
     }
 
     &--over {

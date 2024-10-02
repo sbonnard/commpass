@@ -33,6 +33,10 @@ generateToken();
 
 checkConnection($_SESSION);
 
+if(isset($_SESSION['filter']['year'])) {
+    unset($_SESSION['filter']['year']);
+}
+
 $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
 
 $chartData = [];
@@ -172,6 +176,22 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                     <input type="hidden" name="action" value="filter-reinit">
                 </form>
             </div>';
+        }
+        ?>
+
+<?php
+        if (isset($_SESSION['filter'])) {
+            echo '
+            <div class="card">
+            <section class="card__section card__section--row" aria-labelledby="filter-ttl">
+            <h3 id="filter-ttl">Filtres appliqués :</h3>';
+            if (isset($_SESSION['filter']['id_company'])) {
+                echo '<p class="filter__text">' . getClientName($dbCo, $_SESSION) . ' |';
+            }
+            if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_target']) && isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+                echo '<p class="filter__text">Objectif</p>';
+            }
+            echo '</section></div>';
         }
         ?>
 

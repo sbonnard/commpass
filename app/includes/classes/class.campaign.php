@@ -129,67 +129,79 @@ function getCompanyCampaignsCurrentYear(PDO $dbCo, array $session): array
  * @param array $session - Superglobal $_SESSION.
  * @return array - array of campaigns for past years.
  */
-function getCompanyCampaignsPastYears(PDO $dbCo, array $session, $campaigns): array
+function getCompanyCampaignsPastYears(PDO $dbCo, array $session, $campaigns, $year = null): array
 {
     if (!isset($session['client'], $session['boss'], $session['id_company'], $session['id_user'])) {
         return [];
     }
 
+    $yearCondition = $year ? ' AND YEAR(date) = :year' : ' AND YEAR(date) < YEAR(CURDATE())';
+
     if (isset($session['client']) && $session['client'] === 0 && $session['boss'] === 1) {
         // Si l'utilisateur est le gérant de l'entreprise Toile de Com.
         $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, budget, date, company.id_company, company_name, YEAR(date) AS year, target.id_target, target_com
+            "SELECT id_campaign, campaign_name, budget, date, company.id_company, company_name, YEAR(date) AS year, target.id_target, target_com
             FROM campaign
                 JOIN company USING (id_company)
                 JOIN target USING (id_target)
-            HAVING year < YEAR(CURDATE())
-            ORDER BY id_company, date DESC;'
+            WHERE 1=1 $yearCondition
+            ORDER BY id_company, date DESC;"
         );
 
-        $bindValues = [];
+        $bindValues = $year ? ['year' => intval($year)] : [];
     } else if (isset($session['client']) && $session['client'] === 0 && $session['boss'] === 0) {
         // Si l'utilisateur est le gérant de l'entreprise Toile de Com.
         $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, budget, date, company.id_company, company_name, YEAR(date) AS year, target.id_target, target_com
+            "SELECT id_campaign, campaign_name, budget, date, company.id_company, company_name, YEAR(date) AS year, target.id_target, target_com
             FROM campaign
                 JOIN company USING (id_company)
                 JOIN target USING (id_target)
-            WHERE id_user_TDC = :id_user
-            HAVING year < YEAR(CURDATE())
-            ORDER BY id_company, date DESC;'
+            WHERE id_user_TDC = :id_user $yearCondition
+            ORDER BY id_company, date DESC;"
         );
 
         $bindValues = [
-            'id_user' => intval($session['id_user'])
+            'id_user' => intval($session['id_user']),
         ];
+
+        if ($year) {
+            $bindValues['year'] = intval($year);
+        }
     } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
         // Si l'utilisateur est un client mais qu'il est aussi le gérant de l'entreprise cliente.
         $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, id_company, budget, date, YEAR(date) AS year, target.id_target, target_com
+            "SELECT id_campaign, campaign_name, id_company, budget, date, YEAR(date) AS year, target.id_target, target_com
             FROM campaign
                 JOIN target USING (id_target)
-            WHERE id_company = :id
-            HAVING year < YEAR(CURDATE())
-            ORDER BY id_company, date DESC;'
+            WHERE id_company = :id $yearCondition
+            ORDER BY id_company, date DESC;"
         );
 
         $bindValues = [
-            'id' => intval($session['id_company'])
+            'id' => intval($session['id_company']),
         ];
+
+        if ($year) {
+            $bindValues['year'] = intval($year);
+        }
     } else {
         // Si l'utilisateur est un client mais qu'il n'est pas gérant de l'entreprise. Il est donc simple interlocuteur sur ses campagnes.
         $queryCampaigns = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, id_company, budget, date, YEAR(date) AS year, target.id_target, target_com
+            "SELECT id_campaign, campaign_name, id_company, budget, date, YEAR(date) AS year, target.id_target, target_com
             FROM campaign
                 JOIN target USING (id_target)
-            WHERE id_company = :id AND id_user = :id_user
-            HAVING year < YEAR(CURDATE())
-            ORDER BY id_company, date DESC;'
+            WHERE id_company = :id AND id_user = :id_user $yearCondition
+            ORDER BY id_company, date DESC;"
         );
+
         $bindValues = [
             'id' => intval($session['id_company']),
-            'id_user' => intval($session['id_user'])
+            'id_user' => intval($session['id_user']),
         ];
+
+        if ($year) {
+            $bindValues['year'] = intval($year);
+        }
     }
 
     $queryCampaigns->execute($bindValues);
@@ -393,8 +405,11 @@ function getHistoryCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array 
 {
     $campaignList = '';
 
+    // Récupère l'année filtrée ou l'année actuelle si non définie
+    $filteredYear = isset($session['filter']['year']) ? $session['filter']['year'] : null;
+
     foreach ($companies as $company) {
-        // Démarre une section pour cette entreprise
+        // Démarre une section pour cette entreprise (ignore si id_company est 1)
         if ($company['id_company'] !== 1) {
             // Récupère les campagnes de l'entreprise, triées par année
             $companyCampaignsByYear = [];
@@ -403,6 +418,12 @@ function getHistoryCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array 
                 if ($campaign['id_company'] === $company['id_company']) {
                     // Regroupe les campagnes par année
                     $year = getYearOnly($dbCo, $campaign);
+
+                    // Applique le filtre si une année est spécifiée
+                    if ($filteredYear && $year != $filteredYear) {
+                        continue; // Ignore les campagnes qui ne correspondent pas à l'année filtrée
+                    }
+
                     $companyCampaignsByYear[$year][] = $campaign;
                 }
             }
@@ -414,7 +435,6 @@ function getHistoryCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array 
 
                 // Affiche les campagnes année par année
                 foreach ($companyCampaignsByYear as $year => $campaignsByYear) {
-                    // Section pour chaque année
                     $campaignList .= '<li class="history__year-section"><h4 class="ttl ttl--medium">Année ' . $year . '</h4>';
                     $campaignList .= '<ul class="campaign__grid">';
 
@@ -452,12 +472,12 @@ function getHistoryCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array 
                             </li>';
                     }
 
-                    $campaignList .= '</ul>'; // Ferme la liste des campagnes pour l'année
-                    $campaignList .= '</li>'; // Ferme la section pour l'année
+                    $campaignList .= '</ul>';
+                    $campaignList .= '</li>';
                 }
 
-                $campaignList .= '</ul>'; // Ferme la liste des campagnes de l'entreprise
-                $campaignList .= '</div>'; // Ferme la section pour l'entreprise
+                $campaignList .= '</ul>';
+                $campaignList .= '</div>';
             }
         }
     }
@@ -478,39 +498,39 @@ function getHistoryCampaignTemplateClient(PDO $dbCo, array $campaigns, array $se
 {
     $campaignList = '';
 
-            $companyCampaignsByYear = [];
+    $companyCampaignsByYear = [];
 
-            
-            foreach ($campaigns as $campaign) {
-                if ($campaign['id_company'] === $session['id_company']) {
-                    // Regroupe les campagnes par année
-                    $year = getYearOnly($dbCo, $campaign);
-                    $companyCampaignsByYear[$year][] = $campaign;
-                }
-            }
-            
-            // Vérifie si l'entreprise a des campagnes
-            if (!empty($companyCampaignsByYear)) {
-                $campaignList .= '<div class="gradient-border gradient-border--top">';
-                $campaignList .= '<ul class="history">';
-                
-                // Affiche les campagnes année par année
-                foreach ($companyCampaignsByYear as $year => $campaignsByYear) {
-                    // Section pour chaque année
-                    $campaignList .= '<li class="history__year-section"><h4 class="ttl ttl--medium">Année ' . $year . '</h4>';
-                    $campaignList .= '<ul class="campaign__grid">';
 
-                    foreach ($campaignsByYear as $campaign) {
-                        $campaignId = $campaign['id_campaign'];
+    foreach ($campaigns as $campaign) {
+        if ($campaign['id_company'] === $session['id_company']) {
+            // Regroupe les campagnes par année
+            $year = getYearOnly($dbCo, $campaign);
+            $companyCampaignsByYear[$year][] = $campaign;
+        }
+    }
 
-                        $campaignList .= '
+    // Vérifie si l'entreprise a des campagnes
+    if (!empty($companyCampaignsByYear)) {
+        $campaignList .= '<div class="gradient-border gradient-border--top">';
+        $campaignList .= '<ul class="history">';
+
+        // Affiche les campagnes année par année
+        foreach ($companyCampaignsByYear as $year => $campaignsByYear) {
+            // Section pour chaque année
+            $campaignList .= '<li class="history__year-section"><h4 class="ttl ttl--medium">Année ' . $year . '</h4>';
+            $campaignList .= '<ul class="campaign__grid">';
+
+            foreach ($campaignsByYear as $campaign) {
+                $campaignId = $campaign['id_campaign'];
+
+                $campaignList .= '
                             <li>
                                 <a href="campaign.php?myc=' . $campaignId . '">
                                     <div class="card__section" data-card="">
                                         <div class="campaign__ttl">
-                                            <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>'
-                            . getCompanyNameIfTDC($campaign, $session) .
-                            $campaign['target_com'] . '
+                                            <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . ' - ' . $year . '</h3>'
+                    . getCompanyNameIfTDC($campaign, $session) .
+                    $campaign['target_com'] . '
                                         </div>
                                         <div class="campaign__stats">
                                             <div class="js-chart" id="chart-' . $campaignId . '"></div>
@@ -532,17 +552,17 @@ function getHistoryCampaignTemplateClient(PDO $dbCo, array $campaigns, array $se
                                     </div>
                                 </a>
                             </li>';
-                    }
-
-                    $campaignList .= '</ul>'; // Ferme la liste des campagnes pour l'année
-                    $campaignList .= '</li>'; // Ferme la section pour l'année
-                }
-
-                $campaignList .= '</ul>'; // Ferme la liste des campagnes de l'entreprise
-                $campaignList .= '</div>'; // Ferme la section pour l'entreprise
             }
-            return $campaignList;
+
+            $campaignList .= '</ul>'; // Ferme la liste des campagnes pour l'année
+            $campaignList .= '</li>'; // Ferme la section pour l'année
         }
+
+        $campaignList .= '</ul>'; // Ferme la liste des campagnes de l'entreprise
+        $campaignList .= '</div>'; // Ferme la section pour l'entreprise
+    }
+    return $campaignList;
+}
 
 
 //  Not working for now.

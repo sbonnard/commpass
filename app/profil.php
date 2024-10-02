@@ -30,6 +30,10 @@ require_once "includes/templates/_nav.php";
 generateToken();
 
 checkConnection($_SESSION);
+
+if(isset($_SESSION['filter']['date'])) {
+    unset($_SESSION['filter']['date']);
+}
 ?>
 
 <!DOCTYPE html>

@@ -69,7 +69,8 @@ $errors = [
     'company_id_ko' => 'Aucune entreprise sélectionnée.',
     'brand_creation_ko' => 'Échec lors de la création de la marque.',
     'campaign_update_ko' => 'Échec de la modification de la campagne',
-    'campaign_deletion_ko' => 'Erreur lors de la suppression de la campagne.'
+    'campaign_deletion_ko' => 'Erreur lors de la suppression de la campagne.',
+    'no_date_range' => 'Aucune date correspondante.'
 ];
 
 
