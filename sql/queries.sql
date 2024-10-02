@@ -89,6 +89,15 @@ CREATE TABLE operation_brand(
    FOREIGN KEY(id_brand) REFERENCES brand(id_brand)
 );
 
+CREATE TABLE budgets (
+   id_budget INT AUTO_INCREMENT NOT NULL,
+   year INT NOT NULL,
+   annual_budget DECIMAL(15.2) NOT NULL DEFAULT 0,
+   id_company INT NOT NULL,
+   PRIMARY KEY (id_budget),
+   FOREIGN KEY (id_company) REFERENCES company(id_company)
+);
+
 -- INSERTS 
 
 INSERT INTO company (company_name) 
@@ -171,3 +180,6 @@ VALUES
 (9, 1),
 (10, 1),
 (11, 1);
+
+INSERT INTO budgets (year, annual_budget, id_company)
+VALUES (2024, 27500, 2), (2023, 40000, 2), (2023, 40000, 3), (2024, 45000.50, 3);
