@@ -143,12 +143,25 @@ var_dump($_SESSION);
             <section class="card__section card__section--row" aria-labelledby="filter-ttl">
             <h3 id="filter-ttl">Filtres appliqués :</h3>';
             if (isset($_SESSION['filter']) && isset($_SESSION['filter']['year']) && isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                echo '<p class="filter__text">'. $_SESSION['filter']['year'] . '</p>';
+                echo '<p class="filter__text">' . $_SESSION['filter']['year'] . '</p>';
             }
             if (isset($_SESSION['filter']['id_company'])) {
                 echo '<p class="filter__text">' . getClientName($dbCo, $_SESSION);
             }
             echo '</section></div>';
+        }
+        ?>
+
+        <?php
+        if (isset($_SESSION['filter']['id_company'], $_SESSION['filter']['year'])) {
+
+            echo
+            '<div class="vignette vignette--secondary vignette--big">
+                <h4 class="vignette__ttl vignette__ttl--big">
+                    Budget dépensé
+                </h4>
+                <p class="vignette__price vignette__price--big">' . implode('', calculateHistorySpentBudget($dbCo, $_SESSION)) . '</p>
+            </div>';
         }
         ?>
 
