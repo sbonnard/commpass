@@ -61,7 +61,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
     $targetAnnualSpendings = getAnnualSpendingsByTarget($dbCo, $_SESSION);
 }
 
-var_dump($_SESSION);
+// var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -171,18 +171,21 @@ var_dump($_SESSION);
             if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
                 // Cas où l'utilisateur est un client
                 echo getHistoryCampaignTemplateClient($dbCo, $pastYearsCampaigns, $_SESSION);
-                var_dump('CAS N°1');
+                // var_dump('CAS N°1');
             }
             // Si le filtre 'id_company' est défini, mais que c'est une session différente du client
             else if (isset($_SESSION['filter']['id_company'])) {
                 $pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, $campaigns);
                 echo getHistoryCampaignTemplateClient($dbCo, $pastYearsCampaigns, $_SESSION, $companies);
-                var_dump('CAS N°2');
+                // var_dump('CAS N°2');
+
+                // var_dump($pastYearsCampaigns);
+                // var_dump(getOneCompanyPastYearCampaigns($dbCo, $_SESSION, ));
             }
             // Cas général (pas de client et pas de filtre de company. Prend en compte le filtre 'year' si il est en place)
             else {
                 echo getHistoryCampaignTemplateByCompany($dbCo, $pastYearsCampaigns, $_SESSION, $companies);
-                var_dump('CAS N°3');
+                // var_dump('CAS N°3');
             }
             ?>
         </section>

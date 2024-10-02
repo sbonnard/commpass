@@ -212,6 +212,30 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session, $campaigns, $ye
 }
 
 
+function getOneCompanyPastYearCampaigns(PDO $dbCo, array $session, $year = null) {
+    $yearCondition = $year ? ' AND YEAR(date) = :year' : ' AND YEAR(date) < YEAR(CURDATE())';
+
+    $query = $dbCo->prepare(
+        'SELECT id_campaign, campaign_name, budget, date, company.id_company, company_name, YEAR(date) AS year, target.id_target, target_com
+            FROM campaign
+                JOIN company USING (id_company)
+                JOIN target USING (id_target)
+            WHERE 1=1 ' . $yearCondition . ' AND campaign.id_company = :id_company
+            ORDER BY date DESC;'
+    );
+
+    $bindValues = $year ? ['year' => intval($year)] : [];
+
+    $bindValues['id_company'] = intval($session['filter']['id_company']);
+
+    $query->execute($bindValues);
+
+    $campaignDatas = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    return $campaignDatas;
+}
+
+
 /**
  * Get filtered campaigns for current year considering your status of client or not, your company and if you are the inrlocutor or not.
  *
