@@ -85,10 +85,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             ?>
         </div>
 
-        <h2 class="ttl lineUp">
-            Bonjour <?= $user['firstname'] ?><br>
-            <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
-        </h2>
+        <h2 class="ttl lineUp">Historique</h2>
 
         <?php
         if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {

@@ -11,6 +11,7 @@ function fetchHead(string $title): string
     return '
      <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Commpass, le CRM spécialisé dans la gestion des budgets de communication, vous aide à créer des comptes-rendus clients clairs et performants. Simplifiez la gestion de vos campagnes.">
     <title>' . $title . '</title>
     <link rel="shortcut icon" href="https://www.toiledecom.fr/wp-content/uploads/2020/06/Flavicon-toiledecom-150x150.webp" type="image/x-icon">
     <!-- if development -->

@@ -2,6 +2,8 @@
 
 .hamburger {
     @media screen and (max-width: 768px) {
+        width: 2.125rem;
+        height: 1.6875rem;
   
         &__menu {
             z-index: 1;
