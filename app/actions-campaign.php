@@ -195,7 +195,7 @@ if ($_POST['action'] === 'create-campaign') {
         redirectTo();
     }
 } else if ($_POST['action'] === 'set_campaign_budget') {
-    if (!isset($_POST['budget']) || empty($_POST['budget']) || !is_numeric($_POST['budget'])) {
+    if (!isset($_POST['budget']) || !is_numeric($_POST['budget'])) {
         addError('budget_ko');
         redirectTo();
         exit;
@@ -209,7 +209,7 @@ if ($_POST['action'] === 'create-campaign') {
 
     $bindValues = [
         'budget' => floatval($_POST['budget']),
-        'id_campaign' => $_POST['myc']
+        'id_campaign' => intval($_POST['myc'])
     ];
 
     $isUpdateOk = $queryBudget->execute($bindValues);
