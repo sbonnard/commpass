@@ -19,6 +19,7 @@ $messages = [
 ];
 
 $errors = [
+    'database_error' => 'Problème de connexion à la base de données.',
     'csrf' => 'Votre session est invalide.',
     'referer' => 'D\'où venez vous ?',
     'authorization_ko' => 'Vous n\'êtes pas autorisé à accéder à cette page.',
@@ -70,7 +71,8 @@ $errors = [
     'brand_creation_ko' => 'Échec lors de la création de la marque.',
     'campaign_update_ko' => 'Échec de la modification de la campagne',
     'campaign_deletion_ko' => 'Erreur lors de la suppression de la campagne.',
-    'no_date_range' => 'Aucune date correspondante.'
+    'no_date_range' => 'Aucune date correspondante.',
+    'year_ko' => 'L\'année n\'a pas pu être déterminée.'
 ];
 
 

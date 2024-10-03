@@ -159,7 +159,8 @@ function fetchCompanyAnnualBudget(PDO $dbCo, array $session): string
     $query = $dbCo->prepare(
         'SELECT annual_budget
         FROM company
-        WHERE id_company = :id_company;'
+            JOIN budgets ON budgets.id_company = company.id_company
+        WHERE budgets.id_company = :id_company;'
     );
 
     if (isset($session['id_company']) && $session['id_company'] !== 1) {
@@ -232,9 +233,10 @@ function calculateAnnualRemainingBudget(PDO $dbCo, array $session): string
     $query = $dbCo->prepare(
         'SELECT annual_budget - SUM(price) AS remaining_budget
         FROM company
+            JOIN budgets ON company.id_company = budgets.id_company
             JOIN operation ON company.id_company = operation.id_company
         WHERE YEAR(operation_date) = YEAR(CURDATE()) AND company.id_company = :id_company
-        GROUP BY company.id_company;'
+        GROUP BY budgets.id_budget;'
     );
 
     if (isset($session['id_company']) && $session['id_company'] !== 1) {

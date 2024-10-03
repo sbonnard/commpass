@@ -295,8 +295,10 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                 echo getMessageIfNoCampaign($currentYearCampaigns);
             } else if ($_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
                 $currentYearCampaigns = getCompanyFilteredCampaigns($dbCo, $_SESSION);
+                echo getMessageIfNoCampaign($currentYearCampaigns);
                 echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
             } else if ($_SESSION['client'] === 1 && $_SESSION['boss'] === 0) {
+                echo getMessageIfNoCampaign($currentYearCampaigns);
                 echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
             } else {
                 echo 'Aucun bloc atteint';
