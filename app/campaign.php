@@ -89,33 +89,18 @@ $jsonData = json_encode($chartData);
                 ?>
                 <div class="flex-row">
                     <p class="ttl--smaller">Campagne : <?= $selectedCampaign['campaign_name'] ?></p>
-                    <a class="button--edit" href="new-campaign.php?myc=<?= $selectedCampaign['id_campaign'] ?>" title="éditer la campagne <?= $selectedCampaign['campaign_name'] ?>"></a>
-                    |
-                    <?= deleteCampaignButton($selectedCampaign, $_SESSION) ?>
+                    <?php
+                    if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+                        echo
+                        '<a class="button--edit" href="new-campaign.php?myc=' . $selectedCampaign['id_campaign'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
+                    |' . deleteCampaignButton($selectedCampaign, $_SESSION);
+                    }
+                    ?>
+
                 </div>
                 <p class="campaign__interlocutor">Interlocuteur : <?= $selectedCampaign['firstname'] . ' ' . $selectedCampaign['lastname'] ?></p>
                 <p class="campaign__interlocutor">Objectif : <?= $selectedCampaign['target_com'] ?></p>
             </section>
-        </div>
-
-        <!-- <div class="button__section">
-            <button class="button button--filter" id="filter-button" aria-label="Ouvre un formulaire de filtres">Filtres</button>
-        </div> -->
-
-        <div class="hidden" id="filter-container">
-            <form class="card__section form hidden" action="api.php" method="post" id="filter-form" aria-label="Formulaire pour filtrer les campagnes">
-                <ul class="form__lst form__lst--app">
-                    <li>
-                        <input class="form__input form__input--from" type="date" name="date-from" id="date-from">
-                    </li>
-                    <li>
-                        <input class="form__input form__input--to" type="date" name="date-to" id="date-to">
-                    </li>
-                    <input class="button button--filter button--filter--primary" type="submit" value="Filtrer" aria-label="Valider la création de la nouvelle campagne">
-                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                    <input type="hidden" name="action" value="filter-campaigns">
-                </ul>
-            </form>
         </div>
 
         <h2 class="ttl lineUp">Données globales</h2>

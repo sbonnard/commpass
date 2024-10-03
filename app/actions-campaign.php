@@ -52,15 +52,15 @@ if ($_POST['action'] === 'create-campaign') {
         exit;
     }
 
-    if (!isset($_POST['date']) || empty($_POST['date'])) {
+    if (!isset($_POST['date_start']) || empty($_POST['date_start']) || !isset($_POST['date_end']) || empty($_POST['date_end'])) {
         addError('date_ko');
         redirectTo();
         exit;
     }
 
     $queryCampaign = $dbCo->prepare(
-        'INSERT INTO campaign (campaign_name, id_company, id_user, budget, id_target, date, id_user_TDC)  
-        VALUES (:name, :id_company, :id_interlocutor, :budget, :id_target, :date, :id_user_TDC);'
+        'INSERT INTO campaign (campaign_name, id_company, id_user, budget, id_target, date_start, date_end, id_user_TDC)  
+        VALUES (:name, :id_company, :id_interlocutor, :budget, :id_target, :date_start, :date_end, :id_user_TDC);'
     );
 
     $bindValues = [
@@ -69,7 +69,8 @@ if ($_POST['action'] === 'create-campaign') {
         'id_interlocutor' => intval($_POST['campaign_interlocutor']),
         'budget' => floatval($_POST['budget']),
         'id_target' => intval($_POST['campaign_target']),
-        'date' => strip_tags($_POST['date']),
+        'date_start' => strip_tags($_POST['date_start']),
+        'date_end' => strip_tags($_POST['date_end']),
         'id_user_TDC' => intval($_POST['user_TDC'])
     ];
 
@@ -112,7 +113,7 @@ if ($_POST['action'] === 'create-campaign') {
         exit;
     }
 
-    if (!isset($_POST['date']) || empty($_POST['date'])) {
+    if (!isset($_POST['date_start']) || empty($_POST['date_start'])) {
         addError('date_ko');
         redirectTo();
         exit;
@@ -122,7 +123,8 @@ if ($_POST['action'] === 'create-campaign') {
         'UPDATE campaign 
         SET campaign_name = :campaign_name,
             budget = :budget,
-            date = :date,
+            date_start = :date_start,
+            date_end = :date_end,
             id_user = :user, 
             id_company = :company, 
             id_target = :target,
@@ -133,7 +135,8 @@ if ($_POST['action'] === 'create-campaign') {
     $bindValues = [
         'campaign_name' => strip_tags($_POST['campaign_name']),
         'budget' => floatval($_POST['budget']),
-        'date' => strip_tags($_POST['date']),
+        'date_start' => strip_tags($_POST['date_start']),
+        'date_end' => strip_tags($_POST['date_end']),
         'user' => intval($_POST['campaign_interlocutor']),
         'company' => intval($_POST['campaign_company']),
         'target' => intval($_POST['campaign_target']),
