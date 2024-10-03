@@ -249,3 +249,20 @@ function unsetFilters(array $session) {
         unset($session['filter']);
     }
 }
+
+
+/**
+ * Permet d'obtenir une date au format français. Exemple : 2024-01-01 -> 1 Janvier 2024.
+ *
+ * @param [type] $date - La date à convertir.
+ * @return string - La date convertie en chaîne de caractères.
+ */
+function getDateText($date): string
+{
+    $jour = getdate(strtotime($date));
+    $semaine = array(" Dimanche "," Lundi "," Mardi "," Mercredi "," Jeudi ",
+        " vendredi "," samedi ");
+    $mois =array(1=>" Janvier "," Février "," Mars "," Avril "," Mai "," Juin ",
+        " Juillet "," Août "," Septembre "," Octobre "," Novembre "," Décembre ");
+    return /*$semaine[$jour['wday']] . */$jour['mday'] . $mois[$jour['mon']] . $jour['year'];
+}

@@ -253,7 +253,7 @@ function getCompanyFilteredCampaigns(PDO $dbCo, array $session): array
     }
 
     $query = '
-        SELECT id_campaign, campaign_name, budget, date_start, company_name, YEAR(date_start) AS year_start, YEAR(date_end) AS year_end, target.id_target, target_com
+        SELECT id_campaign, campaign_name, budget, date_start, date_end, company_name, YEAR(date_start) AS year_start, YEAR(date_end) AS year_end, target.id_target, target_com
         FROM campaign
             JOIN company USING (id_company)
             JOIN target USING (id_target)
@@ -310,7 +310,8 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $session): strin
         <a href="campaign.php?myc=' . $campaignId . '">
             <div class="card__section" data-card="">
                 <div class="campaign__ttl">
-                    <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . ' - ' . getYearOnly($dbCo, $campaign) . '</h3>'
+                    <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>
+                    <p>' . getDateText($campaign['date_start']) . ' - ' . getDateText($campaign['date_end']) . '</p>'
             . getCompanyNameIfTDC($campaign, $session) .
             $campaign['target_com'] .
             '</div>
@@ -380,7 +381,8 @@ function getCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array $sessio
                     <a href="campaign.php?myc=' . $campaignId . '">
                         <div class="card__section" data-card="">
                             <div class="campaign__ttl">
-                                    <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . ' - ' . getYearOnly($dbCo, $campaign) . '</h3>'
+                                    <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>
+                                    <p>' . getDateText($campaign['date_start']) . ' - ' . getDateText($campaign['date_end']) . '</p>'
                     . getCompanyNameIfTDC($campaign, $session) .
                     $campaign['target_com'] .
                     '</div>
