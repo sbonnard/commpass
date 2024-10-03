@@ -1,3 +1,3 @@
 <?php
 
-$globalURL = 'http://localhost:8989';
+$globalURL = 'https://commpass.toiledecom.fr/';
