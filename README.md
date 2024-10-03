@@ -1,6 +1,6 @@
 # Commpass
 
-Commpass est un CRM servant à gérer ses budgets en communication. L'idée est de faciliter le travail de Fabrice (Toile de Com) pour ses comptes-rendus et de donner accès aux clients à toutes les données concernant leur budget.
+Commpass est un CRM servant à gérer ses budgets en communication. L'idée est de faciliter le travail des employés de Toile de Com pour leurs comptes-rendus et de donner accès aux clients à toutes les données concernant leur budget.
 
 # LAMP ENVIRONMENT
 
