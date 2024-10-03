@@ -142,7 +142,7 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session, $campaigns, $ye
     if (isset($session['client']) && $session['client'] === 0 && $session['boss'] === 1) {
         // Si l'utilisateur est le gérant de l'entreprise Toile de Com.
         $queryCampaigns = $dbCo->prepare(
-            "SELECT id_campaign, campaign_name, budget, date_start, company.id_company, company_name, YEAR(date_start) AS year, target.id_target, target_com
+            "SELECT id_campaign, campaign_name, budget, date_start, date_end, company.id_company, company_name, YEAR(date_start) AS year, target.id_target, target_com
             FROM campaign
                 JOIN company USING (id_company)
                 JOIN target USING (id_target)
@@ -154,7 +154,7 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session, $campaigns, $ye
     } else if (isset($session['client']) && $session['client'] === 0 && $session['boss'] === 0) {
         // Si l'utilisateur est le gérant de l'entreprise Toile de Com.
         $queryCampaigns = $dbCo->prepare(
-            "SELECT id_campaign, campaign_name, budget, date_start, company.id_company, company_name, YEAR(date_start) AS year, target.id_target, target_com
+            "SELECT id_campaign, campaign_name, budget, date_start, date_end, company.id_company, company_name, YEAR(date_start) AS year, target.id_target, target_com
             FROM campaign
                 JOIN company USING (id_company)
                 JOIN target USING (id_target)
@@ -172,7 +172,7 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session, $campaigns, $ye
     } else if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
         // Si l'utilisateur est un client mais qu'il est aussi le gérant de l'entreprise cliente.
         $queryCampaigns = $dbCo->prepare(
-            "SELECT id_campaign, campaign_name, id_company, budget, date_start, YEAR(date_start) AS year, target.id_target, target_com
+            "SELECT id_campaign, campaign_name, id_company, budget, date_start, date_end, YEAR(date_start) AS year, target.id_target, target_com
             FROM campaign
                 JOIN target USING (id_target)
             WHERE id_company = :id $yearCondition
@@ -189,7 +189,7 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session, $campaigns, $ye
     } else {
         // Si l'utilisateur est un client mais qu'il n'est pas gérant de l'entreprise. Il est donc simple interlocuteur sur ses campagnes.
         $queryCampaigns = $dbCo->prepare(
-            "SELECT id_campaign, campaign_name, id_company, budget, date_start, YEAR(date_start) AS year, target.id_target, target_com
+            "SELECT id_campaign, campaign_name, id_company, budget, date_start, date_end, YEAR(date_start) AS year, target.id_target, target_com
             FROM campaign
                 JOIN target USING (id_target)
             WHERE id_company = :id AND id_user = :id_user $yearCondition
@@ -475,7 +475,8 @@ function getHistoryCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array 
                                 <a href="campaign.php?myc=' . $campaignId . '">
                                     <div class="card__section" data-card="">
                                         <div class="campaign__ttl">
-                                            <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>'
+                                            <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>
+                                            <p>' . getDateText($campaign['date_start']) . ' - ' . getDateText($campaign['date_end']) . '</p>'
                             . getCompanyNameIfTDC($campaign, $session) .
                             $campaign['target_com'] . '
                                         </div>
@@ -557,7 +558,8 @@ function getHistoryCampaignTemplateClient(PDO $dbCo, array $campaigns, array $se
                                 <a href="campaign.php?myc=' . $campaignId . '">
                                     <div class="card__section" data-card="">
                                         <div class="campaign__ttl">
-                                            <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . ' - ' . $year . '</h3>'
+                                            <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . ' - ' . $year . '</h3>
+                                            <p>' . getDateText($campaign['date_start']) . ' - ' . getDateText($campaign['date_end']) . '</p>'
                     . getCompanyNameIfTDC($campaign, $session) .
                     $campaign['target_com'] . '
                                         </div>
