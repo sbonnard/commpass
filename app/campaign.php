@@ -89,9 +89,14 @@ $jsonData = json_encode($chartData);
                 ?>
                 <div class="flex-row">
                     <p class="ttl--smaller">Campagne : <?= $selectedCampaign['campaign_name'] ?></p>
-                    <a class="button--edit" href="new-campaign.php?myc=<?= $selectedCampaign['id_campaign'] ?>" title="éditer la campagne <?= $selectedCampaign['campaign_name'] ?>"></a>
-                    |
-                    <?= deleteCampaignButton($selectedCampaign, $_SESSION) ?>
+                    <?php
+                    if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+                        echo
+                        '<a class="button--edit" href="new-campaign.php?myc=' . $selectedCampaign['id_campaign'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
+                    |' . deleteCampaignButton($selectedCampaign, $_SESSION);
+                    }
+                    ?>
+
                 </div>
                 <p class="campaign__interlocutor">Interlocuteur : <?= $selectedCampaign['firstname'] . ' ' . $selectedCampaign['lastname'] ?></p>
                 <p class="campaign__interlocutor">Objectif : <?= $selectedCampaign['target_com'] ?></p>

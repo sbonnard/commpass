@@ -795,7 +795,7 @@ function getOneCampaignDatas(PDO $dbCo, array $get): array
 
     if (isset($get['myc'])) {
         $queryOneCampaign = $dbCo->prepare(
-            'SELECT id_campaign, campaign_name, date_start, budget, c.id_user, c.id_user_TDC, firstname, lastname, co.id_company, company_name, id_target, target_com
+            'SELECT id_campaign, campaign_name, date_start, date_end, budget, c.id_user, c.id_user_TDC, firstname, lastname, co.id_company, company_name, id_target, target_com
             FROM campaign c
                 JOIN users u ON c.id_user = u.id_user
                 JOIN company co ON c.id_company = co.id_company
