@@ -229,9 +229,9 @@ if ($_POST['action'] === 'create-campaign') {
     }
 
     $queryBudget = $dbCo->prepare('
-        UPDATE company 
+        UPDATE budgets 
         SET annual_budget = :budget
-        WHERE id_company = :id_company;
+        WHERE id_company = :id_company AND year = YEAR(CURDATE());
     ');
 
     $bindValues = [
