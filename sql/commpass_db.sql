@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : jeu. 03 oct. 2024 à 08:40
+-- Généré le : jeu. 03 oct. 2024 à 09:57
 -- Version du serveur : 8.0.37
 -- Version de PHP : 8.2.8
 
@@ -96,6 +96,7 @@ CREATE TABLE `campaign` (
   `campaign_name` varchar(100) NOT NULL,
   `budget` decimal(15,2) NOT NULL,
   `date_start` datetime NOT NULL,
+  `date_end` datetime DEFAULT NULL,
   `id_user` int NOT NULL,
   `id_company` int DEFAULT NULL,
   `id_target` int NOT NULL,
@@ -106,27 +107,28 @@ CREATE TABLE `campaign` (
 -- Déchargement des données de la table `campaign`
 --
 
-INSERT INTO `campaign` (`id_campaign`, `campaign_name`, `budget`, `date_start`, `id_user`, `id_company`, `id_target`, `id_user_TDC`) VALUES
-(1, 'Soldes d\'été', 10500.00, '2024-06-27 00:00:00', 3, 2, 3, 2),
-(2, 'Promos d\'hiver', 18000.00, '2023-11-14 00:00:00', 3, 2, 3, 1),
-(3, 'Tous plus verts', 25000.00, '2024-02-01 00:00:00', 3, 2, 2, 1),
-(13, 'Salon du luminaire', 178000.10, '2022-05-05 00:00:00', 4, 3, 1, 2),
-(14, 'Lancement Groupe Pignon', 21000.00, '2023-05-14 00:00:00', 5, 4, 1, 2),
-(15, 'Tous plus verts', 25000.00, '2022-02-01 00:00:00', 3, 2, 2, 2),
-(16, 'Fête des pères', 8500.00, '2025-06-09 00:00:00', 6, 2, 3, 2),
-(18, 'Soldes d\'hiver', 4500.00, '2024-11-01 00:00:00', 5, 4, 3, 2),
-(19, 'Green days', 12500.00, '2024-01-04 00:00:00', 5, 4, 2, 2),
-(20, 'Salon des métiers', 0.00, '2024-09-23 00:00:00', 6, 2, 1, 2),
-(26, 'Test 445', 8500.00, '2024-09-25 00:00:00', 7, 5, 1, 2),
-(28, 'Peau neuve', 16000.00, '2024-11-06 00:00:00', 8, 6, 2, 2),
-(29, 'Test 8548', 4500.00, '2023-02-22 00:00:00', 3, 2, 1, 2),
-(30, 'Zevent', 1000.00, '2024-09-05 00:00:00', 15, 8, 3, 2),
-(31, 'Ouverture de l\'Arcadia', 2500.00, '2024-09-30 00:00:00', 15, 8, 1, 2),
-(32, 'Soldes d\'automne', 7800.00, '2024-09-30 00:00:00', 4, 3, 1, 2),
-(37, 'Rentrée scolaire', 2000.00, '2024-09-02 00:00:00', 7, 5, 2, 1),
-(39, 'test', 16000.00, '2024-10-01 00:00:00', 7, 5, 1, 1),
-(41, 'Bayou Festival', 8500.00, '2024-11-01 00:00:00', 19, 11, 1, 1),
-(42, 'Bluegrass Show', 2000.00, '2024-12-01 00:00:00', 19, 11, 3, 1);
+INSERT INTO `campaign` (`id_campaign`, `campaign_name`, `budget`, `date_start`, `date_end`, `id_user`, `id_company`, `id_target`, `id_user_TDC`) VALUES
+(1, 'Soldes d\'été', 10500.00, '2024-06-27 00:00:00', '2024-07-14 10:45:55', 3, 2, 3, 2),
+(2, 'Promos d\'hiver', 18000.00, '2023-11-14 00:00:00', '2024-01-04 10:46:23', 6, 2, 3, 1),
+(3, 'Tous plus verts', 25000.00, '2024-02-01 00:00:00', '2024-05-02 10:46:55', 3, 2, 2, 1),
+(13, 'Salon du luminaire', 178000.10, '2022-05-05 00:00:00', '2022-05-14 10:47:41', 4, 3, 1, 2),
+(14, 'Lancement Groupe Pignon', 21000.00, '2023-05-14 00:00:00', '2023-06-14 10:48:09', 5, 4, 1, 2),
+(15, 'Tous plus verts', 25000.00, '2022-02-01 00:00:00', '2022-05-02 10:48:41', 3, 2, 2, 2),
+(16, 'Fête des pères', 8500.00, '2025-06-09 00:00:00', '2025-06-15 10:48:58', 6, 2, 3, 2),
+(18, 'Soldes d\'hiver', 4500.00, '2024-11-01 00:00:00', '2025-01-15 10:49:27', 5, 4, 3, 2),
+(19, 'Green days', 12500.00, '2024-01-04 00:00:00', '2024-07-01 10:49:57', 5, 4, 2, 2),
+(20, 'Salon des métiers', 0.00, '2024-09-23 00:00:00', '2024-09-28 10:50:14', 6, 2, 1, 2),
+(26, 'Test 445', 8500.00, '2024-09-25 00:00:00', '2024-10-03 10:50:25', 7, 5, 1, 2),
+(28, 'Peau neuve', 16000.00, '2024-11-06 00:00:00', '2025-02-12 10:50:37', 8, 6, 2, 2),
+(29, 'Test 8548', 4500.00, '2023-02-22 00:00:00', '2023-04-04 10:51:06', 3, 2, 1, 2),
+(30, 'Zevent', 1000.00, '2024-09-06 00:00:00', '2024-09-08 10:51:19', 15, 8, 3, 2),
+(31, 'Ouverture de l\'Arcadia', 2500.00, '2024-09-30 00:00:00', '2024-10-01 10:51:46', 15, 8, 1, 2),
+(32, 'Soldes d\'automne', 7800.00, '2024-09-30 00:00:00', '2024-10-15 10:51:53', 4, 3, 1, 2),
+(37, 'Rentrée scolaire', 2000.00, '2024-07-01 00:00:00', '2024-09-08 10:52:12', 7, 5, 2, 1),
+(39, 'test', 16000.00, '2024-10-01 00:00:00', '2024-10-31 10:52:22', 7, 5, 1, 1),
+(41, 'Bayou Festival', 8500.00, '2024-11-01 00:00:00', '2024-11-16 10:52:30', 19, 11, 1, 1),
+(42, 'Bluegrass Show', 2000.00, '2024-12-01 00:00:00', '2024-12-24 10:52:41', 19, 11, 3, 1),
+(43, 'Jambalaya In Caen', 2200.00, '2024-12-31 00:00:00', '2025-01-31 00:00:00', 19, 11, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -250,7 +252,9 @@ INSERT INTO `operation` (`id_operation`, `description`, `price`, `operation_date
 (54, 'Flocage de marmite à Jambalaya', 2133.25, '2024-11-01', 41, 11, 15, 0),
 (55, 'Affichages Boulevard du Maréchal Juin à Caen', 1300.00, '2024-10-30', 41, 11, 11, 0),
 (56, 'Pub vidéo', 1982.00, '2024-11-27', 42, 11, 4, 5),
-(57, 'Pub Tendance Ouest', 800.00, '2024-11-02', 42, 11, 3, 3);
+(57, 'Pub Tendance Ouest', 800.00, '2024-11-02', 42, 11, 3, 3),
+(58, 'test annual_budget si j\'ajoute une opération en janvier 2024', 800.00, '2024-01-02', 2, 2, 10, 2),
+(59, 'Publications intagram, linkedin et facebook', 800.00, '2024-12-31', 43, 11, 5, 0);
 
 -- --------------------------------------------------------
 
@@ -290,6 +294,7 @@ INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 (15, 3),
 (22, 3),
 (25, 3),
+(58, 3),
 (4, 4),
 (8, 4),
 (26, 4),
@@ -311,7 +316,8 @@ INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 (41, 16),
 (54, 19),
 (55, 20),
-(57, 20);
+(57, 20),
+(59, 20);
 
 -- --------------------------------------------------------
 
@@ -491,7 +497,7 @@ ALTER TABLE `budgets`
 -- AUTO_INCREMENT pour la table `campaign`
 --
 ALTER TABLE `campaign`
-  MODIFY `id_campaign` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id_campaign` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT pour la table `company`
@@ -509,7 +515,7 @@ ALTER TABLE `media`
 -- AUTO_INCREMENT pour la table `operation`
 --
 ALTER TABLE `operation`
-  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT pour la table `partner`
