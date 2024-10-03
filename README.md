@@ -37,3 +37,10 @@ Launch docker container
  ```sh
 npm run dev
 ```
+
+# RUN BUILD
+Creates an asset directory for prod.
+
+ ```sh
+npm run build
+```
