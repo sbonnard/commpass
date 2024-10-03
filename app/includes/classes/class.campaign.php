@@ -212,7 +212,8 @@ function getCompanyCampaignsPastYears(PDO $dbCo, array $session, $campaigns, $ye
 }
 
 
-function getOneCompanyPastYearCampaigns(PDO $dbCo, array $session, $year = null) {
+function getOneCompanyPastYearCampaigns(PDO $dbCo, array $session, $year = null)
+{
     $yearCondition = $year ? ' AND YEAR(date) = :year' : ' AND YEAR(date) < YEAR(CURDATE())';
 
     $query = $dbCo->prepare(
@@ -617,11 +618,23 @@ function getHistoryCampaignTemplateClient(PDO $dbCo, array $campaigns, array $se
 function getMessageIfNoCampaign(array $campaigns): string
 {
     if (empty($campaigns)) {
-        return '
+        $message = '';
+
+        if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+            $message .= '
+        <div class="button__section">
+            <a href="new-campaign.php" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>
+        </div>';
+        }
+
+        $message .= '
         <div class="card card__section">
             <p class="big-text">Vous n\'avez pas encore de campagnes de comm\' !</p>
         </div>
         ';
+
+
+        return $message;
     }
 
     return '';
@@ -1033,7 +1046,8 @@ function deleteCampaignButton(array $selectedCampaign, array $session): string
  * @param array $session - Superglobal $_SESSION
  * @return void 
  */
-function calculateHistorySpentBudget(PDO $dbCo, array $session) {
+function calculateHistorySpentBudget(PDO $dbCo, array $session)
+{
     $query = $dbCo->prepare(
         'SELECT SUM(price) as total_spent
         FROM operation
@@ -1046,7 +1060,7 @@ function calculateHistorySpentBudget(PDO $dbCo, array $session) {
     ];
 
     $query->execute($bindValues);
-    
+
     $result = $query->fetch();
 
     return formatPrice(floatval($result['total_spent'] ?? 0), '€');

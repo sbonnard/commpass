@@ -307,29 +307,59 @@ if ($_POST['action'] === 'modify-pwd') {
         exit;
     }
 
-    if (!isset($_POST['annual_budget']) || empty($_POST['annual_budget']) || !is_numeric($_POST['annual_budget'])) {
+    if (!isset($_POST['annual_budget']) || $_POST['annual_budget'] < 0) {
         addError('budget_ko');
         redirectTo();
         exit;
     }
 
-    $queryNewClient = $dbCo->prepare(
-        'INSERT INTO company (company_name, annual_budget)
-        VALUES (:company_name, :budget);'
-    );
+    if (!isset($_POST['year']) || !intval($_POST['year'])) {
+        addError('year_ko');
+        redirectTo();
+        exit;
+    }
 
-    $bindValues = [
-        'company_name' => htmlspecialchars($_POST['company_name']),
-        'budget' => floatval($_POST['annual_budget'])
-    ];
+    try {
+        $dbCo->beginTransaction();
 
-    $isInsertClientOk = $queryNewClient->execute($bindValues);
+        $queryNewClient = $dbCo->prepare('INSERT INTO company (company_name) VALUES (:company_name);');
 
-    if ($isInsertClientOk) {
-        addMessage('new_client_created_ok');
-        redirectTo('clients.php');
-    } else {
-        addError('new_client_creation_ko');
+        $bindValuesClient = [
+            'company_name' => htmlspecialchars($_POST['company_name'])
+        ];
+
+        $isInsertClientOk = $queryNewClient->execute($bindValuesClient);
+
+        if ($isInsertClientOk) {
+            $companyId = $dbCo->lastInsertId();
+
+            $queryAnnualBudget = $dbCo->prepare(
+                'INSERT INTO budgets (year, annual_budget, id_company)
+                VALUES (:year, :annual_budget, :id_company);'
+            );
+            $bindValuesBudget = [
+                'year' => intval($_POST['year']),
+                'annual_budget' => floatval($_POST['annual_budget']),
+                'id_company' => $companyId
+            ];
+            $isAnnualBudgetInsertOk = $queryAnnualBudget->execute($bindValuesBudget);
+
+            if ($isAnnualBudgetInsertOk) {
+                $dbCo->commit();
+                addMessage('new_client_created_ok');
+                redirectTo('clients.php');
+                exit;
+            } else {
+                throw new PDOException('Failed to insert annual budget');
+            }
+        } else {
+            throw new PDOException('Failed to insert new client');
+        }
+    } catch (PDOException $e) {
+        $dbCo->rollBack();
+        addError('database_error: ' . $e->getMessage());
+        redirectTo();
+        exit;
     }
 } else if ($_POST['action'] === 'create_user') {
     if (!isset($_POST['username']) || empty($_POST['username']) || !is_string($_POST['username']) || strlen($_POST['username']) > 100) {
