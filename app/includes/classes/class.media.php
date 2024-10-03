@@ -22,12 +22,18 @@ function fetchAllMedia(PDO $dbCo): array
  * @param array $mediaDatas - Array of media datas.
  * @return string - HTML options.
  */
-function getMediaAsHTMLOptions(array $mediaDatas): string
+function getMediaAsHTMLOptions(array $mediaDatas, array $operation = []): string
 {
     $mediaHTML = '<option value="0">- Sélectionner un média -</option>';
 
     foreach ($mediaDatas as $media) {
-        $mediaHTML .= '<option class="form__input--select-option" value="' . $media['id_media'] . '">' . $media['media_name'] . '</option>';
+        $mediaHTML .= '<option class="form__input--select-option" value="' . $media['id_media'] . '"';
+
+        if (isset($operation['media']) && $media['id_media'] === $operation['id_media']) {
+            $mediaHTML .= ' selected';
+        }
+
+        $mediaHTML .= '>' . $media['media_name'] . '</option>';
     }
 
     return $mediaHTML;

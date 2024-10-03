@@ -115,7 +115,7 @@ if (!isset($_GET['myo'])) {
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="operation_media" aria-label="Sélectionner le media utilisé">Média</label>
                             <select class="form__input form__input--select" type="text" name="operation_media" id="operation_media" required aria-label="Sélectionner le media de l'opération.">
-                                <?= getMediaAsHTMLOptions($media) ?>
+                                <?= getMediaAsHTMLOptions($media, $operation) ?>
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">
