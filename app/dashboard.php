@@ -287,19 +287,27 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             <?php
 
             if (!isset($_SESSION['filter']) && $_SESSION['client'] === 0) {
+                // CAS ACCESSIBLE UNIQUEMENT POUR UN PROFIL NON-CLIENT
                 echo getCampaignTemplateByCompany($dbCo, $currentYearCampaigns, $_SESSION, $companies);
                 echo getMessageIfNoCampaign($currentYearCampaigns);
+                var_dump('Cas 1');
             } else if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && $_SESSION['client'] === 0) {
+                // CAS ACCESSIBLE UNIQUEMENT POUR UN PROFIL NON-CLIENT
                 $currentYearCampaigns = getCompanyFilteredCampaigns($dbCo, $_SESSION);
                 echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
                 echo getMessageIfNoCampaign($currentYearCampaigns);
+                var_dump('Cas 2');
             } else if ($_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
+                // CAS ACCESSIBLE POUR UN PROFIL CLIENT ET GÉRANT
                 $currentYearCampaigns = getCompanyFilteredCampaigns($dbCo, $_SESSION);
                 echo getMessageIfNoCampaign($currentYearCampaigns);
                 echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
+                var_dump('Cas 3');
             } else if ($_SESSION['client'] === 1 && $_SESSION['boss'] === 0) {
+                // CAS ACCESSIBLE POUR UN PROFIL CLIENT ET EMPLOYÉ
                 echo getMessageIfNoCampaign($currentYearCampaigns);
                 echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
+                var_dump('Cas 4');
             } else {
                 echo 'Aucun bloc atteint';
             }

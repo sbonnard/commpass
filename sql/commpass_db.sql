@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : jeu. 03 oct. 2024 à 08:15
+-- Généré le : jeu. 03 oct. 2024 à 08:40
 -- Version du serveur : 8.0.37
 -- Version de PHP : 8.2.8
 
@@ -95,7 +95,7 @@ CREATE TABLE `campaign` (
   `id_campaign` int NOT NULL,
   `campaign_name` varchar(100) NOT NULL,
   `budget` decimal(15,2) NOT NULL,
-  `date` datetime NOT NULL,
+  `date_start` datetime NOT NULL,
   `id_user` int NOT NULL,
   `id_company` int DEFAULT NULL,
   `id_target` int NOT NULL,
@@ -106,7 +106,7 @@ CREATE TABLE `campaign` (
 -- Déchargement des données de la table `campaign`
 --
 
-INSERT INTO `campaign` (`id_campaign`, `campaign_name`, `budget`, `date`, `id_user`, `id_company`, `id_target`, `id_user_TDC`) VALUES
+INSERT INTO `campaign` (`id_campaign`, `campaign_name`, `budget`, `date_start`, `id_user`, `id_company`, `id_target`, `id_user_TDC`) VALUES
 (1, 'Soldes d\'été', 10500.00, '2024-06-27 00:00:00', 3, 2, 3, 2),
 (2, 'Promos d\'hiver', 18000.00, '2023-11-14 00:00:00', 3, 2, 3, 1),
 (3, 'Tous plus verts', 25000.00, '2024-02-01 00:00:00', 3, 2, 2, 1),
@@ -125,7 +125,8 @@ INSERT INTO `campaign` (`id_campaign`, `campaign_name`, `budget`, `date`, `id_us
 (32, 'Soldes d\'automne', 7800.00, '2024-09-30 00:00:00', 4, 3, 1, 2),
 (37, 'Rentrée scolaire', 2000.00, '2024-09-02 00:00:00', 7, 5, 2, 1),
 (39, 'test', 16000.00, '2024-10-01 00:00:00', 7, 5, 1, 1),
-(41, 'Bayou Festival', 8500.00, '2024-11-01 00:00:00', 19, 11, 1, 1);
+(41, 'Bayou Festival', 8500.00, '2024-11-01 00:00:00', 19, 11, 1, 1),
+(42, 'Bluegrass Show', 2000.00, '2024-12-01 00:00:00', 19, 11, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -247,7 +248,9 @@ INSERT INTO `operation` (`id_operation`, `description`, `price`, `operation_date
 (52, 'achtung', 2762.00, '2024-10-02', 39, 5, 3, 3),
 (53, 'Pataplouf', 6252.00, '2024-10-03', 39, 5, 7, 0),
 (54, 'Flocage de marmite à Jambalaya', 2133.25, '2024-11-01', 41, 11, 15, 0),
-(55, 'Affichages Boulevard du Maréchal Juin à Caen', 1300.00, '2024-10-30', 41, 11, 11, 0);
+(55, 'Affichages Boulevard du Maréchal Juin à Caen', 1300.00, '2024-10-30', 41, 11, 11, 0),
+(56, 'Pub vidéo', 1982.00, '2024-11-27', 42, 11, 4, 5),
+(57, 'Pub Tendance Ouest', 800.00, '2024-11-02', 42, 11, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -272,6 +275,7 @@ INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 (39, 0),
 (42, 0),
 (53, 0),
+(56, 0),
 (4, 1),
 (5, 1),
 (6, 1),
@@ -306,7 +310,8 @@ INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 (44, 15),
 (41, 16),
 (54, 19),
-(55, 20);
+(55, 20),
+(57, 20);
 
 -- --------------------------------------------------------
 
@@ -486,7 +491,7 @@ ALTER TABLE `budgets`
 -- AUTO_INCREMENT pour la table `campaign`
 --
 ALTER TABLE `campaign`
-  MODIFY `id_campaign` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id_campaign` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT pour la table `company`
@@ -504,7 +509,7 @@ ALTER TABLE `media`
 -- AUTO_INCREMENT pour la table `operation`
 --
 ALTER TABLE `operation`
-  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT pour la table `partner`
