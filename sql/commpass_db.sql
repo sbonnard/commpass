@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mer. 02 oct. 2024 à 12:58
+-- Généré le : jeu. 03 oct. 2024 à 08:15
 -- Version du serveur : 8.0.37
 -- Version de PHP : 8.2.8
 
@@ -42,7 +42,7 @@ CREATE TABLE `brand` (
 
 INSERT INTO `brand` (`id_brand`, `brand_name`, `id_company`, `legend_colour_hex`) VALUES
 (0, 'Toutes les marques', 1, '#D35DB5'),
-(1, 'Lumosphère', 2, '#ff772e'),
+(1, 'Lumosphère', 2, '#d17a00'),
 (2, 'Vélocitix', 2, '#ECFF12'),
 (3, 'Stellar Threads', 2, '#24ff99'),
 (4, 'Aurélys', 2, '#2ecbff'),
@@ -58,7 +58,32 @@ INSERT INTO `brand` (`id_brand`, `brand_name`, `id_company`, `legend_colour_hex`
 (15, 'Bazar du Grenier', 8, '#00d604'),
 (16, 'L\'Arcadia', 8, '#0074cc'),
 (17, 'Pignottes', 4, '#ff61a0'),
-(18, 'patate', 10, '#ebff52');
+(19, 'Bayou Bang Bang', 11, '#09c38b'),
+(20, 'Bayou Crusher', 11, '#ff6714');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `budgets`
+--
+
+CREATE TABLE `budgets` (
+  `id_budget` int NOT NULL,
+  `year` int NOT NULL,
+  `annual_budget` decimal(15,0) NOT NULL DEFAULT '0',
+  `id_company` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `budgets`
+--
+
+INSERT INTO `budgets` (`id_budget`, `year`, `annual_budget`, `id_company`) VALUES
+(1, 2024, 22000, 2),
+(2, 2023, 40000, 2),
+(3, 2023, 38000, 3),
+(4, 2024, 45001, 3),
+(5, 2024, 19000, 11);
 
 -- --------------------------------------------------------
 
@@ -99,7 +124,8 @@ INSERT INTO `campaign` (`id_campaign`, `campaign_name`, `budget`, `date`, `id_us
 (31, 'Ouverture de l\'Arcadia', 2500.00, '2024-09-30 00:00:00', 15, 8, 1, 2),
 (32, 'Soldes d\'automne', 7800.00, '2024-09-30 00:00:00', 4, 3, 1, 2),
 (37, 'Rentrée scolaire', 2000.00, '2024-09-02 00:00:00', 7, 5, 2, 1),
-(39, 'test', 16000.00, '2024-10-01 00:00:00', 7, 5, 1, 1);
+(39, 'test', 16000.00, '2024-10-01 00:00:00', 7, 5, 1, 1),
+(41, 'Bayou Festival', 8500.00, '2024-11-01 00:00:00', 19, 11, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -109,24 +135,23 @@ INSERT INTO `campaign` (`id_campaign`, `campaign_name`, `budget`, `date`, `id_us
 
 CREATE TABLE `company` (
   `id_company` int NOT NULL,
-  `company_name` varchar(100) NOT NULL,
-  `annual_budget` decimal(15,2) NOT NULL
+  `company_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `company`
 --
 
-INSERT INTO `company` (`id_company`, `company_name`, `annual_budget`) VALUES
-(1, 'Toile de Com', 0.00),
-(2, 'FakeBusiness', 27000.00),
-(3, 'Luminase', 52000.00),
-(4, 'Groupe Pignon', 15750.00),
-(5, 'Nerexam Solutions', 76000.00),
-(6, 'Helvionics SA', 128000.00),
-(7, 'En un Écl\'Hair', 4200.00),
-(8, 'JDG Production', 15000.00),
-(10, 'Patate', 12500.00);
+INSERT INTO `company` (`id_company`, `company_name`) VALUES
+(1, 'Toile de Com'),
+(2, 'FakeBusiness'),
+(3, 'Luminase'),
+(4, 'Groupe Pignon'),
+(5, 'Nerexam Solutions'),
+(6, 'Helvionics SA'),
+(7, 'En un Écl\'Hair'),
+(8, 'JDG Production'),
+(11, 'Jambalaya In The Bayou');
 
 -- --------------------------------------------------------
 
@@ -150,7 +175,15 @@ INSERT INTO `media` (`id_media`, `media_name`) VALUES
 (4, 'télévision'),
 (5, 'réseaux sociaux'),
 (6, 'affichage'),
-(7, 'web');
+(7, 'web'),
+(8, 'cinema'),
+(9, 'mobile'),
+(10, 'vidéos en ligne'),
+(11, 'publicité extérieure dynamique'),
+(12, 'évènement'),
+(13, 'guerilla marketing'),
+(14, 'marketing direct'),
+(15, 'goodies');
 
 -- --------------------------------------------------------
 
@@ -212,7 +245,9 @@ INSERT INTO `operation` (`id_operation`, `description`, `price`, `operation_date
 (50, 'test', 6712.00, '2024-10-02', 39, 5, 4, 5),
 (51, 'test', 273.00, '2024-10-02', 39, 5, 5, 0),
 (52, 'achtung', 2762.00, '2024-10-02', 39, 5, 3, 3),
-(53, 'Pataplouf', 6252.00, '2024-10-03', 39, 5, 7, 0);
+(53, 'Pataplouf', 6252.00, '2024-10-03', 39, 5, 7, 0),
+(54, 'Flocage de marmite à Jambalaya', 2133.25, '2024-11-01', 41, 11, 15, 0),
+(55, 'Affichages Boulevard du Maréchal Juin à Caen', 1300.00, '2024-10-30', 41, 11, 11, 0);
 
 -- --------------------------------------------------------
 
@@ -269,7 +304,9 @@ INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 (43, 14),
 (46, 14),
 (44, 15),
-(41, 16);
+(41, 16),
+(54, 19),
+(55, 20);
 
 -- --------------------------------------------------------
 
@@ -317,24 +354,6 @@ INSERT INTO `target` (`id_target`, `target_com`, `target_legend_hex`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `type_operation`
---
-
-CREATE TABLE `type_operation` (
-  `id_type_operation` int NOT NULL,
-  `operation` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `type_operation`
---
-
-INSERT INTO `type_operation` (`id_type_operation`, `operation`) VALUES
-(4, 'undefined');
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `users`
 --
 
@@ -369,7 +388,7 @@ INSERT INTO `users` (`id_user`, `username`, `firstname`, `lastname`, `password`,
 (14, 'jnogue18', 'Justine', 'Noguera', '$2y$10$UDoOVNZngCeJ.YDWPXpzvetirugKpgan/W21/pxomQbDDomFj2O9y', 'jnogue@helvionics.com', '0614011401', 1, 0, 6),
 (15, 'jmolas', 'Fréderic', 'Molas', '$2y$10$RTsnwh1JROCpoQ/FXvhM8Ou9ELhvKcN4FnfSEhWNoOnaf2WGqqsFa', 'jdgprod@jdr.fr', '0601020304', 1, 1, 8),
 (16, 'srassiat14', 'Sébastien', 'Rassiat', '$2y$10$dDWqQnpSNuIMLPjCqn5L5OdKqjYoYEEpLGV1CTrJRtuRqBVjLYzcS', 'sebrassiat@jdegprod.com', '0601020304', 1, 1, 8),
-(18, 'patate', 'patate', 'patate', '$2y$10$kZZDsakb2pOoR2tk65q/8u4KB3ILFrpQTNw9OPHZDSxQP5WdQ6p4S', 'patate@patate.fr', '0614011401', 1, 1, 10);
+(19, 'shawkins62', 'Simeon', 'Hawkins', '$2y$10$KKB2I44p.2WSyREQLLnUVelgJZHq9BRMdSmqnz4icJ00m/3gHrICG', 'simeon.hawkins@jambalaya.com', '0688112222', 1, 1, 11);
 
 --
 -- Index pour les tables déchargées
@@ -381,6 +400,13 @@ INSERT INTO `users` (`id_user`, `username`, `firstname`, `lastname`, `password`,
 ALTER TABLE `brand`
   ADD PRIMARY KEY (`id_brand`),
   ADD KEY `fk_company_brand` (`id_company`);
+
+--
+-- Index pour la table `budgets`
+--
+ALTER TABLE `budgets`
+  ADD PRIMARY KEY (`id_budget`),
+  ADD KEY `id_company` (`id_company`);
 
 --
 -- Index pour la table `campaign`
@@ -434,12 +460,6 @@ ALTER TABLE `target`
   ADD PRIMARY KEY (`id_target`);
 
 --
--- Index pour la table `type_operation`
---
-ALTER TABLE `type_operation`
-  ADD PRIMARY KEY (`id_type_operation`);
-
---
 -- Index pour la table `users`
 --
 ALTER TABLE `users`
@@ -454,31 +474,37 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `brand`
 --
 ALTER TABLE `brand`
-  MODIFY `id_brand` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_brand` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT pour la table `budgets`
+--
+ALTER TABLE `budgets`
+  MODIFY `id_budget` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `campaign`
 --
 ALTER TABLE `campaign`
-  MODIFY `id_campaign` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id_campaign` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT pour la table `company`
 --
 ALTER TABLE `company`
-  MODIFY `id_company` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_company` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT pour la table `media`
 --
 ALTER TABLE `media`
-  MODIFY `id_media` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_media` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT pour la table `operation`
 --
 ALTER TABLE `operation`
-  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT pour la table `partner`
@@ -493,16 +519,10 @@ ALTER TABLE `target`
   MODIFY `id_target` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT pour la table `type_operation`
---
-ALTER TABLE `type_operation`
-  MODIFY `id_type_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Contraintes pour les tables déchargées
@@ -513,6 +533,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `brand`
   ADD CONSTRAINT `fk_company_brand` FOREIGN KEY (`id_company`) REFERENCES `company` (`id_company`);
+
+--
+-- Contraintes pour la table `budgets`
+--
+ALTER TABLE `budgets`
+  ADD CONSTRAINT `budgets_ibfk_1` FOREIGN KEY (`id_company`) REFERENCES `company` (`id_company`);
 
 --
 -- Contraintes pour la table `campaign`

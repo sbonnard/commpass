@@ -265,7 +265,7 @@ function calculateAnnualRemainingBudget(PDO $dbCo, array $session): string
 function getAnnualSpendingsByTarget(PDO $dbCo, array $session): array
 {
     $query = $dbCo->prepare(
-        'SELECT c.id_company, c.id_target, t.target_com AS target, target_legend_hex, SUM(o.price) AS total, YEAR(c.date) AS year 
+        'SELECT c.id_company, c.id_target, t.target_com AS target, target_legend_hex, SUM(o.price) AS total, YEAR(c.date_start) AS year 
         FROM campaign c 
             JOIN operation o ON c.id_campaign = o.id_campaign 
             JOIN target t ON c.id_target = t.id_target

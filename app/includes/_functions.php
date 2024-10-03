@@ -107,7 +107,7 @@ function formatFrenchDate(string $yearMonthDay): string
 function getYearOnly(PDO $dbCo, array $campaign): string
 {
     $queryYear = $dbCo->prepare(
-        'SELECT YEAR(date) AS year
+        'SELECT YEAR(date_start) AS year
         FROM campaign
         WHERE id_campaign = :id_campaign;'
     );

@@ -125,8 +125,8 @@ unsetFilters($_SESSION);
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">
-                            <label class="form__label" for="date">Date de la campagne</label>
-                            <input class="form__input form__input--date" type="date" name="date" id="date" required aria-label="Sélectionner la date de l'opération" value="<?php if (isset($selectedCampaign['date'])) echo formatDateForInput($selectedCampaign['date']) ?>">
+                            <label class="form__label" for="date_start">Date de la campagne</label>
+                            <input class="form__input form__input--date" type="date" name="date_start" id="date_start" required aria-label="Sélectionner la date de l'opération" value="<?php if (isset($selectedCampaign['date'])) echo formatDateForInput($selectedCampaign['date']) ?>">
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="budget">Budget investi (sans €)</label>
