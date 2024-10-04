@@ -23,6 +23,10 @@
             &--center {
                 text-align: center;
             }
+
+            &--operations {
+                width: 100%;
+            }
         }
 
 
@@ -30,9 +34,6 @@
             padding: 1rem 3.125rem;
         }
 
-        &--operations {
-            width: 100%;
-        }
 
         &--company {
             min-width: 20.5rem;

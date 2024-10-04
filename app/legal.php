@@ -43,17 +43,20 @@ unsetFilters($_SESSION);
     </nav>
 
     <main class="container">
-        <div class="card">
+        <div class="card big-padding">
             <h2 class="ttl lineUp">Mentions légales</h2>
+            <section class="card__section card__legal">
+                <h3>Éditeur de code : Visual Studio Code</h3>
+                <p>Commpass est un outil de gestion de budgets et de communication, développé par <a class="text-tertiary" href="https://www.linkedin.com/in/s%C3%A9bastien-bonnard-72164a239/" target="_blank">Sébastien Bonnard</a> pour <a class="secondary"  href="https://www.toiledecom.fr/" target="_blank">Toile de Com.</a></p>
+                <p>Tous les droits sont réservés.</p>
+                <p>Version : 1.0.0</p>
+                <p>Date de création : 26/08/2024</p>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem ex commodi, eius, saepe laborum, repudiandae ratione expedita fuga repellat illum sapiente rem dicta culpa modi similique officia quis debitis? Amet.</p>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem ex commodi, eius, saepe laborum, repudiandae ratione expedita fuga repellat illum sapiente rem dicta culpa modi similique officia quis debitis? Amet.</p>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem ex commodi, eius, saepe laborum, repudiandae ratione expedita fuga repellat illum sapiente rem dicta culpa modi similique officia quis debitis? Amet.</p>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem ex commodi, eius, saepe laborum, repudiandae ratione expedita fuga repellat illum sapiente rem dicta culpa modi similique officia quis debitis? Amet.</p>
+            </section>
         </div>
-
-        <section class="card__section card__legal">
-            <h3>Éditeur de code : Visual Studio Code</h3>
-            <p>Commpass est un outil de gestion de budgets et de communication, créé par <a href="https://www.linkedin.com/in/s%C3%A9bastien-bonnard-72164a239/" target="_blank">Sébastien Bonnard</a> pour <a href="https://www.toiledecom.fr/" target="_blank">Toile de Com.</a></p>
-            <p>Tous les droits sont réservés.</p>
-            <p>Version : 1.0.0</p>
-            <p>Date de création : 26/08/2024</p>
-        </section>
 
     </main>
 
