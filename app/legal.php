@@ -43,7 +43,7 @@ unsetFilters($_SESSION);
     </nav>
 
     <main class="container">
-        <div class="card big-padding">
+        <div class="card">
             <h2 class="ttl lineUp">Mentions légales</h2>
             <section class="card__section card__legal">
                 <h3>Éditeur de code : Visual Studio Code</h3>

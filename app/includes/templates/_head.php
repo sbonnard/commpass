@@ -21,8 +21,8 @@ function fetchHead(string $title): string
     <!-- <script type="module" src="http://localhost:5173/js/script.js"></script> -->
 
     <!-- Production -->
-    <link rel="stylesheet" href="assets/assets/script-CGDRv66F.css">
-    <script type="module" src="assets/assets/script-1T5Bak74.js"></script>
+    <link rel="stylesheet" href="assets/assets/script-BZptuRmU.css">
+    <script type="module" src="assets/assets/script-af4uWyhZ.js"></script>
 
     <!-- C3 CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.css" />
