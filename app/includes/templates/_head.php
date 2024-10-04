@@ -1,3 +1,5 @@
+<a href="../../assets/assets/jura-oeZM-I3y.woff2"></a>
+
 <?php
 
 /**
@@ -19,8 +21,8 @@ function fetchHead(string $title): string
     <!-- <script type="module" src="http://localhost:5173/js/script.js"></script> -->
 
     <!-- Production -->
-    <link rel="stylesheet" href="/app/assets/assets/script-fCr7tJ9T.css">
-    <script type="module" src="/app/assets/assets/script-D6rLY-iU.js"></script>
+    <link rel="stylesheet" href="assets/assets/script-fCr7tJ9T.css">
+    <script type="module" src="assets/assets/script-D6rLY-iU.js"></script>
 
     <!-- C3 CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.css" />
