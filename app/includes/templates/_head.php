@@ -31,3 +31,59 @@ function fetchHead(string $title): string
     <!-- C3 JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.js"></script>';
 }
+
+
+function automatizeScriptsForDeploy()
+{
+    $manifest = json_decode(file_get_contents(__DIR__ . '/../assets/.vite/manifest.json'), true);
+
+    // Injecter les CSS
+    if (isset($manifest['js/script.js']['css'])) {
+        foreach ($manifest['js/script.js']['css'] as $cssFile) {
+            echo '<link rel="stylesheet" href="/assets/' . $cssFile . '">';
+        }
+    }
+
+    // Injecter les JS
+    echo '<script type="module" src="/assets/' . $manifest['js/script.js']['file'] . '"></script>';
+}
+
+
+/**
+ * Automatize font for deployment reading assets/manifest.json file.
+ *
+ * @return string - A string that defines fonts.
+ */
+function automatizeFontsForDeploy(): string
+{
+    $manifest = json_decode(file_get_contents(__DIR__ . '/assets/.vite/manifest.json'), true);
+
+    // Exemple pour les polices
+    $fontJura = $manifest['assets/assets/jura-oeZM-I3y.woff2']['file'];
+    $fontRoboto = $manifest['assets/assets/roboto-regular-webfont-DmTtHm-J.woff']['file'];
+    $fontRobotoBold = $manifest['assets/assets/roboto-bold-webfont-DLEC0mPx.woff']['file'];
+
+    return
+        '<style>
+@font-face {
+    font-family: \'jura\';
+    src: url(\'/assets/' . $fontJura . ') format(\'woff2\');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: \'roboto\';
+    src: url(\'/assets/' . $fontRoboto . ') format(\'woff\');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: \'roboto\';
+    src: url(\'/assets/' . $fontRobotoBold . ') format(\'woff\');
+    font-weight: normal;
+    font-style: normal;
+}
+</style>';
+}
