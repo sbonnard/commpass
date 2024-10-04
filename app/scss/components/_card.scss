@@ -16,9 +16,14 @@
         padding: 1rem 0.625rem;
         min-width: 20.5rem;
 
-    @media screen and (max-width: 768px) {
-        max-width: 21rem;
-    }
+        @media screen and (max-width: 768px) {
+            max-width: 21rem;
+
+            &--center {
+                text-align: center;
+            }
+        }
+
 
         &--vignettes {
             padding: 1rem 3.125rem;

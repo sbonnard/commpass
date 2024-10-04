@@ -135,7 +135,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             Bonjour <?= $user['firstname'] ?><br>
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>
-        
+
         <div class="button__section">
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
@@ -204,6 +204,11 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 
         <?php
         if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
+
+            if ($companyAnnualBudget === 0) {
+                $companyAnnualRemainings = 0;
+            }
+            
             echo
             '<div class="card">
                 <section class="card__section">
@@ -228,8 +233,8 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                             <h4 class="vignette__ttl vignette__ttl--big">
                                 Budget restant
                             </h4>
-                            <p class="vignette__price vignette__price--big">' . ($companyAnnualRemainings > 0 ? formatPrice($companyAnnualRemainings, '€') : formatPrice(0, '€')) . // Affiche 0 si budget restant est 0'</p>
-                '</div>
+                            <p class="vignette__price vignette__price--big">' . formatPrice($companyAnnualRemainings, '€') . '</p>
+                </div>
                     </div>
                 </section>
             </div>';

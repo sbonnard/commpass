@@ -81,7 +81,7 @@ $jsonData = json_encode($chartData);
         </h2>
 
         <div class="card">
-            <section class="card__section">
+            <section class="card__section card__section--center">
                 <?php
                 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                     echo '<p class="campaign__company">' . $selectedCampaign['company_name'] . '</p>';
