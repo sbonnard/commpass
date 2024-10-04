@@ -1,0 +1,28 @@
+{
+  "fonts/jura.woff2": {
+    "file": "assets/jura-oeZM-I3y.woff2",
+    "src": "fonts/jura.woff2"
+  },
+  "fonts/roboto-bold-webfont.woff2": {
+    "file": "assets/roboto-bold-webfont-DLEC0mPx.woff2",
+    "src": "fonts/roboto-bold-webfont.woff2"
+  },
+  "fonts/roboto-regular-webfont.woff2": {
+    "file": "assets/roboto-regular-webfont-Dh2UyALx.woff2",
+    "src": "fonts/roboto-regular-webfont.woff2"
+  },
+  "js/script.js": {
+    "file": "assets/script-D6rLY-iU.js",
+    "name": "script",
+    "src": "js/script.js",
+    "isEntry": true,
+    "css": [
+      "assets/script-fCr7tJ9T.css"
+    ],
+    "assets": [
+      "assets/roboto-regular-webfont-Dh2UyALx.woff2",
+      "assets/roboto-bold-webfont-DLEC0mPx.woff2",
+      "assets/jura-oeZM-I3y.woff2"
+    ]
+  }
+}

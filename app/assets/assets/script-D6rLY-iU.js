@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",function(){const e=document.getElementById("error-message"),t=document.getElementById("success-message");e&&setTimeout(()=>{e.style.opacity=0,setTimeout(()=>{e.remove()},600)},8e3),t&&setTimeout(()=>{t.style.opacity=0,setTimeout(()=>{t.remove()},600)},8e3)});
