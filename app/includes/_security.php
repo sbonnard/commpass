@@ -40,11 +40,13 @@ function preventFromCSRF(): void
 {
     if (!isRefererOk()) {
         addError('referer');
+        redirectTo();
         exit;
     }
 
     if (!isTokenOk()) {
         addError('csrf');
+        redirectTo();
         exit;
     }
 }
