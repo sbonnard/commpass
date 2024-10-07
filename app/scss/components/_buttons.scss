@@ -37,10 +37,12 @@
         width: 11.125rem;
         color: $tertiary;
         background-image: url(../../img/filter-btn.svg);
+        border: 2px solid $tertiary;
 
         &:hover {
             background-image: url(../../img/filter-btn-primary.svg);
             color: $primary;
+            border: 2px solid $primary;
         }
     }
 

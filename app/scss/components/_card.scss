@@ -1,9 +1,10 @@
 .card {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    transition: transform 5s ease-in-out;
     align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+    transition: transform 5s ease-in-out;
 
     &__section {
         display: flex;
@@ -16,18 +17,23 @@
         padding: 1rem 0.625rem;
         min-width: 20.5rem;
 
-    @media screen and (max-width: 768px) {
-        max-width: 21rem;
-    }
+        @media screen and (max-width: 768px) {
+            max-width: 21rem;
+
+            &--center {
+                text-align: center;
+            }
+
+            &--operations {
+                width: 100%;
+            }
+        }
+
 
         &--vignettes {
             padding: 1rem 3.125rem;
         }
 
-        &--operations {
-            width: 100%;
-            align-self: flex-start;
-        }
 
         &--company {
             min-width: 20.5rem;
