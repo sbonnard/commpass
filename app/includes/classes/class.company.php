@@ -325,7 +325,6 @@ function generateTableFromTargetDatas(array $targetSpendings): string
  */
 function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, array $session)
 {
-
     if (isset($session['filter']['year'])) {
         $query = $dbCo->prepare(
             'SELECT annual_budget
