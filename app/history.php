@@ -173,7 +173,7 @@ $jsonChartColors = json_encode($chartColors);
         if (isset($_SESSION['filter']['id_company'], $_SESSION['filter']['year']) && $_SESSION['filter']['year'] != '') {
             $remainingBudget = floatval($historyBudget) - floatval($historySpentBudget);
 
-            if ($historyBudget = 0) {
+            if ($historyBudget === 0) {
                 $remainingBudget = 0;
             }
 
@@ -210,6 +210,10 @@ $jsonChartColors = json_encode($chartColors);
         </div>';
         } else if (isset($_SESSION['filter']['year']) && $_SESSION['client'] === 1) {
             $remainingBudget = floatval($historyBudget) - floatval($historySpentBudget);
+
+            if ($historyBudget === 0) {
+                $remainingBudget = 0;
+            }
 
             echo
             '
