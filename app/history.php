@@ -187,7 +187,7 @@ $jsonChartColors = json_encode($chartColors);
                         <div class="vignette vignette--bigger vignette--primary">
                             <div class="flex-row">
                                 <h4 class="vignette__ttl vignette__ttl--big">
-                                    Budget attribué<br>en ' . $_SESSION['filter']['year'] . '
+                                    Budget annuel attribué<br>en ' . $_SESSION['filter']['year'] . '
                                 </h4>
                                  </div>
                             <p class="vignette__price vignette__price--big">' . formatPrice(floatval($historyBudget), "€") . '</p>
@@ -225,7 +225,7 @@ $jsonChartColors = json_encode($chartColors);
                         <div class="vignette vignette--bigger vignette--primary">
                             <div class="flex-row">
                                 <h4 class="vignette__ttl vignette__ttl--big">
-                                    Budget attribué<br>en ' . $_SESSION['filter']['year'] . '
+                                    Budget annuel attribué<br>en ' . $_SESSION['filter']['year'] . '
                                 </h4>
                                  </div>
                             <p class="vignette__price vignette__price--big">' . formatPrice(floatval($historyBudget), "€") . '</p>
