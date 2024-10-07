@@ -362,7 +362,6 @@ function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, array $session)
  *
  * @param PDO $dbCo - DB connection
  * @param array $session - Superglobal session
- * @return array - array of campaigns for a selected year
  */
 function getOneCompanyDatasFilteredHistory(PDO $dbCo, array $session)
 {
