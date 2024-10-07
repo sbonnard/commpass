@@ -69,3 +69,7 @@ $currentYear = date('Y');
 // HISTORY
 
 $history = getOneCompanyDatasFilteredHistory($dbCo, $_SESSION, '2023');
+
+$historyBudget = fetchAnnualBudgetPerYearPerCompany($dbCo, $_SESSION);
+
+$historySpentBudget = calculateHistorySpentBudget($dbCo, $_SESSION);

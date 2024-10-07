@@ -316,11 +316,17 @@ function generateTableFromTargetDatas(array $targetSpendings): string
     return $htmlTable;
 }
 
-
-function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, $year)
+/**
+ * 
+ *
+ * @param PDO $dbCo
+ * @param [type] $year
+ * @return void
+ */
+function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, array $session)
 {
     $query = $dbCo->prepare(
-        'SELECT id_budget, year, annual_budget, id_company
+        'SELECT annual_budget
         FROM budgets
         WHERE id_company = :id_company AND year = :year;'
     );
@@ -328,18 +334,24 @@ function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, $year)
     if (isset($session['client']) && $session['client'] === 1) {
         $bindValues = [
             'id_company' => $session['client'],
-            'year' => $year
+            'year' => date('Y')
         ];
-    } else if (isset($session['client']) && $session['client'] === 0 && isset($session['filter']['id_company'])) {
+    } else if (isset($session['client']) && $session['client'] === 0 && isset($session['filter']['id_company']) && isset($session['filter']['year'])) {
         $bindValues = [
             'id_company' => $session['filter']['id_company'],
-            'year' => $year
+            'year' => $session['filter']['year']
         ];
     }
 
     $query->execute($bindValues);
 
-    return $query->fetchAll(PDO::FETCH_ASSOC);
+    $result = $query->fetch();
+
+    if($result === false) {
+        return 0;
+     }
+
+    return implode('', $result);
 }
 
 /**

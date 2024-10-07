@@ -154,14 +154,41 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 
         <?php
         if (isset($_SESSION['filter']['id_company'], $_SESSION['filter']['year']) && $_SESSION['filter']['year'] != '') {
+            $remainingBudget = floatval($historyBudget) - floatval($historySpentBudget);
 
+            // var_dump($historySpentBudget);
             echo
-            '<div class="vignette vignette--secondary vignette--big">
+            '
+            <div class="card">
+            <section class="card__section card__section--vignettes">
+                <div class="campaign__stats">
+                    <div class="vignettes-section vignettes-section--row">
+                        <div class="vignette vignette--bigger vignette--primary">
+                            <div class="flex-row">
+                                <h4 class="vignette__ttl vignette__ttl--big">
+                                    Budget attribué<br>en ' . $_SESSION['filter']['year'] . '
+                                </h4>
+                                 </div>
+                            <p class="vignette__price vignette__price--big">' . formatPrice(floatval($historyBudget), "€") . '</p>
+                        </div>
+            <div class="vignette vignette--secondary vignette--big">
                 <h4 class="vignette__ttl vignette__ttl--big">
                     Budget dépensé<br>en ' . $_SESSION['filter']['year'] . '
                 </h4>
-                <p class="vignette__price vignette__price--big">' . calculateHistorySpentBudget($dbCo, $_SESSION) . '</p>
-            </div>';
+                <p class="vignette__price vignette__price--big">' . formatPrice(floatval($historySpentBudget), '€') . '</p>
+            </div>
+             <div class="vignette vignette--tertiary vignette--big <?= turnVignetteRedIfNegative(calculateRemainingBudget($dbCo, $selectedCampaign)) ?>">
+                            <h4 class="vignette__ttl vignette__ttl--big">
+                                Budget restant<br>en ' . $_SESSION['filter']['year'] . '
+                            </h4>
+                            <p class="vignette__price vignette__price--big">' . formatPrice($remainingBudget, '€') . '</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>';
+
+            // var_dump(fetchAnnualBudgetPerYearPerCompany($dbCo, $_SESSION));
         }
         ?>
 
