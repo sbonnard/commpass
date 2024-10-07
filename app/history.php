@@ -56,10 +56,10 @@ foreach ($campaignResults as $campaignData) {
 $jsonChartData = json_encode($chartData);
 $jsonChartColors = json_encode($chartColors);
 
-if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || isset($_SESSION['client']) && $_SESSION['client'] === 1) {
-    // Récupérer les dépenses annuelles par objectif
-    $targetAnnualSpendings = getAnnualSpendingsByTarget($dbCo, $_SESSION);
-}
+// if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || isset($_SESSION['client']) && $_SESSION['client'] === 1) {
+//     // Récupérer les dépenses annuelles par objectif
+//     $targetAnnualSpendings = getAnnualSpendingsByTarget($dbCo, $_SESSION);
+// }
 
 // var_dump($_SESSION);
 ?>
