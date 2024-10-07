@@ -336,7 +336,7 @@ function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, array $session)
         if (isset($session['client']) && $session['client'] === 1) {
             $bindValues = [
                 'id_company' => $session['id_company'],
-                'year' => date('Y')
+                'year' => $session['filter']['year']
             ];
         } else if (isset($session['client']) && $session['client'] === 0 && isset($session['filter']['id_company']) && isset($session['filter']['year'])) {
             $bindValues = [
