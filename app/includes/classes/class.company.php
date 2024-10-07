@@ -315,3 +315,66 @@ function generateTableFromTargetDatas(array $targetSpendings): string
 
     return $htmlTable;
 }
+
+/**
+ * Fetch annual budget for each company
+ *
+ * @param PDO $dbCo - PDO connection
+ * @param [type] $year - year for budgets
+ * @return array - array of annual budget for each company
+ */
+function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, $year)
+{
+    $query = $dbCo->prepare(
+        'SELECT id_budget, year, annual_budget, id_company
+        FROM budgets
+        WHERE id_company = :id_company AND year = :year;'
+    );
+
+    if (isset($session['client']) && $session['client'] === 1) {
+        $bindValues = [
+            'id_company' => $session['client'],
+            'year' => $year
+        ];
+    } else if (isset($session['client']) && $session['client'] === 0 && isset($session['filter']['id_company'])) {
+        $bindValues = [
+            'id_company' => $session['filter']['id_company'],
+            'year' => $year
+        ];
+    }
+
+    $query->execute($bindValues);
+
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Fetch history campaign per year if filter is applied.
+ *
+ * @param PDO $dbCo - DB connection
+ * @param array $session - Superglobal session
+ * @return array - array of campaigns for a selected year
+ */
+function getOneCompanyDatasFilteredHistory(PDO $dbCo, array $session)
+{
+    $query = $dbCo->prepare(
+        'SELECT id_campaign, campaign_name, budget, date_start, date_end, id_user, id_user_TDC, 
+        target.id_target, target_com,
+        company.id_company, company_name,
+        year, annual_budget
+        FROM campaign
+            JOIN target USING (id_target)
+            JOIN company USING (id_company)
+            JOIN budgets USING(id_company)
+        WHERE id_company = :id_company AND YEAR(date_start) = :year;'
+    );
+
+    $bindValues = [
+        'id_company' => $session['filter']['id_company'],
+        'year' => $session['filter']['year']
+    ];
+
+    $query->execute($bindValues);
+
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
