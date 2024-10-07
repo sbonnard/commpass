@@ -1055,6 +1055,7 @@ function deleteCampaignButton(array $selectedCampaign, array $session): string
  */
 function calculateHistorySpentBudget(PDO $dbCo, array $session)
 {
+    if (isset($session['filter']['id_company']) && isset($session['filter']['year'])) {
     $query = $dbCo->prepare(
         'SELECT SUM(price) as total_spent
         FROM operation
@@ -1071,4 +1072,5 @@ function calculateHistorySpentBudget(PDO $dbCo, array $session)
     $result = $query->fetch();
 
     return implode('', $result);
+}
 }
