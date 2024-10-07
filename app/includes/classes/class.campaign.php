@@ -621,7 +621,7 @@ function getHistoryCampaignTemplateClient(PDO $dbCo, array $campaigns, array $se
  * @param array $campaigns - Array containing all campaigns.
  * @return string - HTML to display a message.
  */
-function getMessageIfNoCampaign(array $campaigns): string
+function getMessageIfNoCampaign(array $campaigns, string $history =''): string
 {
     if (empty($campaigns)) {
         $message = '';
@@ -635,7 +635,7 @@ function getMessageIfNoCampaign(array $campaigns): string
 
         $message .= '
         <div class="card card__section">
-            <p class="big-text">Vous n\'avez pas encore de campagnes de comm\' !</p>
+            <p class="big-text">Vous n\'avez pas encore de campagnes de comm\' ' . $history . '!</p>
         </div>
         ';
 
