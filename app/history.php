@@ -177,7 +177,6 @@ $jsonChartColors = json_encode($chartColors);
                 $remainingBudget = 0;
             }
 
-            // var_dump($historySpentBudget);
             echo
             '
             <div class="card">
