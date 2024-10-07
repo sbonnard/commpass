@@ -107,12 +107,6 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                                 </select>
                             </li>
                             <li class="form__itm">
-                                <label for="target-filter">Objectifs de la campagne (optionnel)</label>
-                                <select class="form__input form__input--select" type="date" name="target-filter" id="target-filter">
-                                    ' . getTargetsAsHTMLOptions($communicationObjectives) . '
-                                </select>
-                            </li>
-                            <li class="form__itm">
                                 <label class="form__label" for="year">Sélectionner une année</label>
                                 <select class="form__input form__input--select" name="year" id="year">
                                     <option value="">- Sélectionner une année -</option>
