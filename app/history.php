@@ -33,9 +33,9 @@ generateToken();
 
 checkConnection($_SESSION);
 
-// if(isset($_SESSION['filter']['year'])) {
-//     unset($_SESSION['filter']['year']);
-// }
+if (isset($_SESSION['filter']['year'])) {
+    var_dump(getAnnualSpendingsByTarget($dbCo, $_SESSION));
+}
 
 $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
 
