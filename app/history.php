@@ -174,9 +174,9 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                 // var_dump('CAS N°1');
             }
             // Si le filtre 'id_company' est défini, mais que c'est une session différente du client
-            else if (isset($_SESSION['filter']['id_company'])) {
+            else if (isset($_SESSION['filter']['id_company']) && isset($_SESSION['filter']['year'])) {
                 $pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, $campaigns);
-                echo getHistoryCampaignTemplateClient($dbCo, $pastYearsCampaigns, $_SESSION, $companies);
+                echo getCampaignTemplate($dbCo, $history, $_SESSION);
                 // var_dump('CAS N°2');
 
                 // var_dump($pastYearsCampaigns);
