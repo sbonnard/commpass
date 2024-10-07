@@ -173,6 +173,10 @@ $jsonChartColors = json_encode($chartColors);
         if (isset($_SESSION['filter']['id_company'], $_SESSION['filter']['year']) && $_SESSION['filter']['year'] != '') {
             $remainingBudget = floatval($historyBudget) - floatval($historySpentBudget);
 
+            if ($historyBudget == 0) {
+                $remainingBudget = 0;
+            }
+
             // var_dump($historySpentBudget);
             echo
             '
@@ -207,6 +211,10 @@ $jsonChartColors = json_encode($chartColors);
         } else if (isset($_SESSION['filter']['year']) && $_SESSION['client'] === 1) {
             $remainingBudget = floatval($historyBudget) - floatval($historySpentBudget);
 
+            if ($historyBudget == 0) {
+                $remainingBudget = 0;
+            }
+            
             echo
             '
             <div class="card">
@@ -241,27 +249,27 @@ $jsonChartColors = json_encode($chartColors);
         }
         ?>
 
-        <section class="card campaign">
+<section class="card campaign">
             <?= getMessageIfNoCampaign($pastYearsCampaigns, 'dans votre historique ') ?>
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1 && isset($_SESSION['filter']['year'])) {
                 echo getCampaignTemplate($dbCo, $history, $_SESSION);
-                var_dump('CAS N°1');
+                // var_dump('CAS N°1');
             } else if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
                 // Cas où l'utilisateur est un client
                 echo getHistoryCampaignTemplateClient($dbCo, $pastYearsCampaigns, $_SESSION);
-                var_dump('CAS N°2');
+                // var_dump('CAS N°2');
             }
             // Si le filtre 'id_company' est défini, mais que c'est une session différente du client
             else if (isset($_SESSION['filter']['id_company'])) {
                 $pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, $campaigns);
                 echo getCampaignTemplate($dbCo, $history, $_SESSION);
-                var_dump('CAS N°3');
+                // var_dump('CAS N°3');
             }
             // Cas général (pas de client et pas de filtre de company. Prend en compte le filtre 'year' si il est en place)
             else {
                 echo getHistoryCampaignTemplateByCompany($dbCo, $pastYearsCampaigns, $_SESSION, $companies);
-                var_dump('CAS N°4');
+                // var_dump('CAS N°4');
             }
             ?>
         </section>
