@@ -366,7 +366,7 @@ function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, array $session)
  */
 function getOneCompanyDatasFilteredHistory(PDO $dbCo, array $session)
 {
-    if ($session['filter']['year']) {
+    if (isset($session['filter']['year'])) {
         $query = $dbCo->prepare(
             'SELECT id_campaign, campaign_name, budget, date_start, date_end, id_user, id_user_TDC, 
         target.id_target, target_com,
