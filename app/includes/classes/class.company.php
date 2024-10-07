@@ -325,6 +325,8 @@ function generateTableFromTargetDatas(array $targetSpendings): string
  */
 function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, array $session)
 {
+
+if(isset($session['filter']['id_company']) && $session['filter']['year']){
     $query = $dbCo->prepare(
         'SELECT annual_budget
         FROM budgets
@@ -353,6 +355,7 @@ function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, array $session)
 
     return implode('', $result);
 }
+}
 
 /**
  * Fetch history campaign per year if filter is applied.
@@ -363,6 +366,7 @@ function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, array $session)
  */
 function getOneCompanyDatasFilteredHistory(PDO $dbCo, array $session)
 {
+    if(isset($session['filter']['id_company']) && $session['filter']['year']){
     $query = $dbCo->prepare(
         'SELECT id_campaign, campaign_name, budget, date_start, date_end, id_user, id_user_TDC, 
         target.id_target, target_com,
@@ -382,5 +386,7 @@ function getOneCompanyDatasFilteredHistory(PDO $dbCo, array $session)
 
     $query->execute($bindValues);
 
-    return $query->fetchAll(PDO::FETCH_ASSOC);
+    return $query->fetchAll(PDO::FETCH_ASSOC);}
+
+    return []; // if no filter is applied
 }
