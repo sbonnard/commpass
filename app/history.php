@@ -166,7 +166,6 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         ?>
 
         <section class="card campaign">
-            <?php $pastYearsCampaigns = [] ?>
             <?= getMessageIfNoCampaign($pastYearsCampaigns, 'dans votre historique ') ?>
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
@@ -176,8 +175,9 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             }
             // Si le filtre 'id_company' est défini, mais que c'est une session différente du client
             else if (isset($_SESSION['filter']['id_company'])) {
+                // var_dump($history);
                 $pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, $campaigns);
-                echo getHistoryCampaignTemplateClient($dbCo, $pastYearsCampaigns, $_SESSION, $companies);
+                echo getCampaignTemplate($dbCo, $history, $_SESSION);
                 // var_dump('CAS N°2');
 
                 // var_dump($pastYearsCampaigns);

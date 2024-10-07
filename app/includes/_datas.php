@@ -64,3 +64,8 @@ $media = fetchAllMedia($dbCo);
 $partners = fetchAllPartners($dbCo);
 
 $currentYear = date('Y');
+
+
+// HISTORY
+
+$history = getOneCompanyDatasFilteredHistory($dbCo, $_SESSION, '2023');
