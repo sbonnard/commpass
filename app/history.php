@@ -166,7 +166,8 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         ?>
 
         <section class="card campaign">
-            <?= getMessageIfNoCampaign($campaigns) ?>
+            <?php $pastYearsCampaigns = [] ?>
+            <?= getMessageIfNoCampaign($pastYearsCampaigns) ?>
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
                 // Cas où l'utilisateur est un client
