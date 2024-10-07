@@ -1081,22 +1081,29 @@ function deleteCampaignButton(array $selectedCampaign, array $session): string
  */
 function calculateHistorySpentBudget(PDO $dbCo, array $session)
 {
-    if (isset($session['filter']['id_company']) && isset($session['filter']['year'])) {
-    $query = $dbCo->prepare(
-        'SELECT SUM(price) as total_spent
+    if (isset($session['filter']['year'])) {
+        $query = $dbCo->prepare(
+            'SELECT SUM(price) as total_spent
         FROM operation
         WHERE id_company = :id_company AND YEAR(operation_date) = :year;'
-    );
+        );
 
-    $bindValues = [
-        'id_company' => intval($session['filter']['id_company']),
-        'year' => intval($session['filter']['year'])
-    ];
+        if (isset($session['filter']['id_company'])) {
+            $bindValues = [
+                'id_company' => intval($session['filter']['id_company']),
+                'year' => intval($session['filter']['year'])
+            ];
+        } else if (!isset($session['filter']['id_company'])) {
+            $bindValues = [
+                'id_company' => $session['id_company'],
+                'year' => intval($session['filter']['year'])
+            ];
+        }
 
-    $query->execute($bindValues);
+        $query->execute($bindValues);
 
-    $result = $query->fetch();
+        $result = $query->fetch();
 
-    return implode('', $result);
-}
+        return implode('', $result);
+    }
 }
