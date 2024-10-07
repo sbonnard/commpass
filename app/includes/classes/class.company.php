@@ -282,6 +282,10 @@ function getAnnualSpendingsByTarget(PDO $dbCo, array $session): array
         $bindValues = [
             'id_company' => intval($session['filter']['id_company'])
         ];
+    } else {
+        $bindValues = [
+            'id_company' => intval($_SESSION['id_company'])
+        ];
     }
 
     $query->execute($bindValues);
@@ -326,35 +330,35 @@ function generateTableFromTargetDatas(array $targetSpendings): string
 function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, array $session)
 {
 
-if(isset($session['filter']['id_company']) && $session['filter']['year']){
-    $query = $dbCo->prepare(
-        'SELECT annual_budget
+    if (isset($session['filter']['year'])) {
+        $query = $dbCo->prepare(
+            'SELECT annual_budget
         FROM budgets
         WHERE id_company = :id_company AND year = :year;'
-    );
+        );
 
-    if (isset($session['client']) && $session['client'] === 1) {
-        $bindValues = [
-            'id_company' => $session['client'],
-            'year' => date('Y')
-        ];
-    } else if (isset($session['client']) && $session['client'] === 0 && isset($session['filter']['id_company']) && isset($session['filter']['year'])) {
-        $bindValues = [
-            'id_company' => $session['filter']['id_company'],
-            'year' => $session['filter']['year']
-        ];
+        if (isset($session['client']) && $session['client'] === 1) {
+            $bindValues = [
+                'id_company' => $session['id_company'],
+                'year' => date('Y')
+            ];
+        } else if (isset($session['client']) && $session['client'] === 0 && isset($session['filter']['id_company']) && isset($session['filter']['year'])) {
+            $bindValues = [
+                'id_company' => $session['filter']['id_company'],
+                'year' => $session['filter']['year']
+            ];
+        }
+
+        $query->execute($bindValues);
+
+        $result = $query->fetch();
+
+        if ($result === false) {
+            return 0;
+        }
+
+        return implode('', $result);
     }
-
-    $query->execute($bindValues);
-
-    $result = $query->fetch();
-
-    if($result === false) {
-        return 0;
-     }
-
-    return implode('', $result);
-}
 }
 
 /**
@@ -366,9 +370,9 @@ if(isset($session['filter']['id_company']) && $session['filter']['year']){
  */
 function getOneCompanyDatasFilteredHistory(PDO $dbCo, array $session)
 {
-    if(isset($session['filter']['id_company']) && $session['filter']['year']){
-    $query = $dbCo->prepare(
-        'SELECT id_campaign, campaign_name, budget, date_start, date_end, id_user, id_user_TDC, 
+    if (isset($session['filter']['year'])) {
+        $query = $dbCo->prepare(
+            'SELECT id_campaign, campaign_name, budget, date_start, date_end, id_user, id_user_TDC, 
         target.id_target, target_com,
         company.id_company, company_name,
         year, annual_budget
@@ -377,16 +381,24 @@ function getOneCompanyDatasFilteredHistory(PDO $dbCo, array $session)
             JOIN company USING (id_company)
             JOIN budgets USING(id_company)
         WHERE id_company = :id_company AND YEAR(date_start) = :year;'
-    );
+        );
 
-    $bindValues = [
-        'id_company' => $session['filter']['id_company'],
-        'year' => $session['filter']['year']
-    ];
+        if(!isset($session['filter']['id_company'])) {
+            $bindValues = [
+                'id_company' => $session['id_company'],
+                'year' => $session['filter']['year']
+            ];
+        } else {
+            $bindValues = [
+                'id_company' => $session['filter']['id_company'],
+                'year' => $session['filter']['year']
+            ];
+        }
 
-    $query->execute($bindValues);
+        $query->execute($bindValues);
 
-    return $query->fetchAll(PDO::FETCH_ASSOC);}
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     return []; // if no filter is applied
 }
