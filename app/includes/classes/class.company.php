@@ -326,7 +326,7 @@ function generateTableFromTargetDatas(array $targetSpendings): string
 function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, array $session)
 {
 
-    if (isset($session['filter']['id_company']) && $session['filter']['year']) {
+    if (isset($session['filter']['year'])) {
         $query = $dbCo->prepare(
             'SELECT annual_budget
         FROM budgets
@@ -335,7 +335,7 @@ function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, array $session)
 
         if (isset($session['client']) && $session['client'] === 1) {
             $bindValues = [
-                'id_company' => $session['client'],
+                'id_company' => $session['id_company'],
                 'year' => date('Y')
             ];
         } else if (isset($session['client']) && $session['client'] === 0 && isset($session['filter']['id_company']) && isset($session['filter']['year'])) {
