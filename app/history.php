@@ -173,6 +173,10 @@ $jsonChartColors = json_encode($chartColors);
         if (isset($_SESSION['filter']['id_company'], $_SESSION['filter']['year']) && $_SESSION['filter']['year'] != '') {
             $remainingBudget = floatval($historyBudget) - floatval($historySpentBudget);
 
+            if ($historyBudget = 0) {
+                $remainingBudget = 0;
+            }
+
             // var_dump($historySpentBudget);
             echo
             '
@@ -242,7 +246,7 @@ $jsonChartColors = json_encode($chartColors);
         ?>
 
         <section class="card campaign">
-            <?= getMessageIfNoCampaignHistory($history, 'dans votre historique ') ?>
+            <?= getMessageIfNoCampaignHistory($pastYearsCampaigns, 'dans votre historique ') ?>
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1 && isset($_SESSION['filter']['year'])) {
                 echo getCampaignTemplate($dbCo, $history, $_SESSION);
