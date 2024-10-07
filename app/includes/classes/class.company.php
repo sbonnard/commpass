@@ -282,10 +282,6 @@ function getAnnualSpendingsByTarget(PDO $dbCo, array $session): array
         $bindValues = [
             'id_company' => intval($session['filter']['id_company'])
         ];
-    } else {
-        $bindValues = [
-            'id_company' => intval($_SESSION['id_company'])
-        ];
     }
 
     $query->execute($bindValues);
@@ -321,10 +317,10 @@ function generateTableFromTargetDatas(array $targetSpendings): string
 }
 
 /**
- * 
+ * Fetch annual budget of a company if a filter is applied
  *
- * @param PDO $dbCo
- * @param [type] $year
+ * @param PDO $dbCo - the PDO connection
+ * @param [type] $year - the year of the filter applied.
  * @return void
  */
 function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, array $session)
@@ -370,7 +366,7 @@ function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, array $session)
  */
 function getOneCompanyDatasFilteredHistory(PDO $dbCo, array $session)
 {
-    if (isset($session['filter']['year'])) {
+    if (isset($session['filter']['id_company']) && $session['filter']['year']) {
         $query = $dbCo->prepare(
             'SELECT id_campaign, campaign_name, budget, date_start, date_end, id_user, id_user_TDC, 
         target.id_target, target_com,
@@ -383,17 +379,10 @@ function getOneCompanyDatasFilteredHistory(PDO $dbCo, array $session)
         WHERE id_company = :id_company AND YEAR(date_start) = :year;'
         );
 
-        if(!isset($session['filter']['id_company'])) {
-            $bindValues = [
-                'id_company' => $session['id_company'],
-                'year' => $session['filter']['year']
-            ];
-        } else {
-            $bindValues = [
-                'id_company' => $session['filter']['id_company'],
-                'year' => $session['filter']['year']
-            ];
-        }
+        $bindValues = [
+            'id_company' => $session['filter']['id_company'],
+            'year' => $session['filter']['year']
+        ];
 
         $query->execute($bindValues);
 
