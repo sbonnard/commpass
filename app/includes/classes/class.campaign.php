@@ -619,9 +619,10 @@ function getHistoryCampaignTemplateClient(PDO $dbCo, array $campaigns, array $se
  * Get a message if you don't have any campaign on your dashboard
  *
  * @param array $campaigns - Array containing all campaigns.
+ * @param string $history - A string to add if message is for history page.
  * @return string - HTML to display a message.
  */
-function getMessageIfNoCampaign(array $campaigns, string $history =''): string
+function getMessageIfNoCampaign(array $campaigns): string
 {
     if (empty($campaigns)) {
         $message = '';
@@ -635,7 +636,33 @@ function getMessageIfNoCampaign(array $campaigns, string $history =''): string
 
         $message .= '
         <div class="card card__section">
-            <p class="big-text">Vous n\'avez pas encore de campagnes de comm\' ' . $history . '!</p>
+            <p class="big-text">Vous n\'avez pas encore de campagnes de comm\' !</p>
+        </div>
+        ';
+
+
+        return $message;
+    }
+
+    return '';
+}
+
+
+/**
+ * Get a message if you don't have any campaign on your dashboard
+ *
+ * @param array $campaigns - Array containing all campaigns.
+ * @param string $history - A string to add if message is for history page.
+ * @return string - HTML to display a message.
+ */
+function getMessageIfNoCampaignHistory(array $pastYearCampaigns): string
+{
+    if (empty($pastYearCampaigns)) {
+        $message = '';
+
+        $message .= '
+        <div class="card card__section">
+            <p class="big-text">Vous n\'avez pas encore de campagnes de comm\' dans votre historique !</p>
         </div>
         ';
 
@@ -1042,4 +1069,34 @@ function deleteCampaignButton(array $selectedCampaign, array $session): string
             <input type="hidden" name="action" value="delete-campaign">
             <input type="hidden" name="id_campaign" value="' . $selectedCampaign['id_campaign'] . '">
         </form>';
+}
+
+
+/**
+ * Calculates spent budget for the specified year (filters)
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $session - Superglobal $_SESSION
+ * @return void 
+ */
+function calculateHistorySpentBudget(PDO $dbCo, array $session)
+{
+    if (isset($session['filter']['id_company']) && isset($session['filter']['year'])) {
+    $query = $dbCo->prepare(
+        'SELECT SUM(price) as total_spent
+        FROM operation
+        WHERE id_company = :id_company AND YEAR(operation_date) = :year;'
+    );
+
+    $bindValues = [
+        'id_company' => intval($session['filter']['id_company']),
+        'year' => intval($session['filter']['year'])
+    ];
+
+    $query->execute($bindValues);
+
+    $result = $query->fetch();
+
+    return implode('', $result);
+}
 }
