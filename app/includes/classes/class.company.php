@@ -357,16 +357,16 @@ function fetchAnnualBudgetPerYearPerCompany(PDO $dbCo, array $session)
     }
 }
 
+
 /**
  * Fetch history campaign per year if filter is applied.
  *
  * @param PDO $dbCo - DB connection
  * @param array $session - Superglobal session
- * @return array - array of campaigns for a selected year
  */
 function getOneCompanyDatasFilteredHistory(PDO $dbCo, array $session)
 {
-    if (isset($session['filter']['id_company']) && $session['filter']['year']) {
+    if (isset($session['filter']['year'])) {
         $query = $dbCo->prepare(
             'SELECT id_campaign, campaign_name, budget, date_start, date_end, id_user, id_user_TDC, 
         target.id_target, target_com,
@@ -379,10 +379,17 @@ function getOneCompanyDatasFilteredHistory(PDO $dbCo, array $session)
         WHERE id_company = :id_company AND YEAR(date_start) = :year;'
         );
 
-        $bindValues = [
-            'id_company' => $session['filter']['id_company'],
-            'year' => $session['filter']['year']
-        ];
+        if (isset($session['filter']['id_company'])) {
+            $bindValues = [
+                'id_company' => $session['filter']['id_company'],
+                'year' => $session['filter']['year']
+            ];
+        } else if (isset($session['client']) && $session['client'] === 1) {
+            $bindValues = [
+                'id_company' => $session['id_company'],
+                'year' => $session['filter']['year']
+            ];
+        }
 
         $query->execute($bindValues);
 
