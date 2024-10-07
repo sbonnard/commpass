@@ -33,8 +33,8 @@ generateToken();
 
 checkConnection($_SESSION);
 
-if ($_SESSION['client'] === 1 && isset($_SESSION['filter'])) {
-    unset($_SESSION['filter']);
+if (isset($_SESSION['filter']['year'])) {
+    unset($_SESSION['filter']['year']);
 }
 
 $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
@@ -180,7 +180,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         ?>
 
         <?php
-        if (isset($_SESSION['filter']['id_company'])) {
+        if (isset($_SESSION['filter'])) {
             echo '
             <div class="card">
             <section class="card__section card__section--row" aria-labelledby="filter-ttl">
