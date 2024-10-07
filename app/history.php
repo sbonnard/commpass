@@ -177,6 +177,7 @@ $jsonChartColors = json_encode($chartColors);
                 $remainingBudget = 0;
             }
 
+            // var_dump($historySpentBudget);
             echo
             '
             <div class="card">
@@ -186,7 +187,7 @@ $jsonChartColors = json_encode($chartColors);
                         <div class="vignette vignette--bigger vignette--primary">
                             <div class="flex-row">
                                 <h4 class="vignette__ttl vignette__ttl--big">
-                                    Budget attribué<br>en ' . $_SESSION['filter']['year'] . '
+                                    Budget annuel<br>attribué en ' . $_SESSION['filter']['year'] . '
                                 </h4>
                                  </div>
                             <p class="vignette__price vignette__price--big">' . formatPrice(floatval($historyBudget), "€") . '</p>
@@ -213,7 +214,7 @@ $jsonChartColors = json_encode($chartColors);
             if ($historyBudget == 0) {
                 $remainingBudget = 0;
             }
-            
+
             echo
             '
             <div class="card">
@@ -224,7 +225,7 @@ $jsonChartColors = json_encode($chartColors);
                         <div class="vignette vignette--bigger vignette--primary">
                             <div class="flex-row">
                                 <h4 class="vignette__ttl vignette__ttl--big">
-                                    Budget attribué<br>en ' . $_SESSION['filter']['year'] . '
+                                    Budget annuel<br>attribué en ' . $_SESSION['filter']['year'] . '
                                 </h4>
                                  </div>
                             <p class="vignette__price vignette__price--big">' . formatPrice(floatval($historyBudget), "€") . '</p>
@@ -253,22 +254,22 @@ $jsonChartColors = json_encode($chartColors);
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1 && isset($_SESSION['filter']['year'])) {
                 echo getCampaignTemplate($dbCo, $history, $_SESSION);
-                // var_dump('CAS N°1');
+                var_dump('CAS N°1');
             } else if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
                 // Cas où l'utilisateur est un client
-                echo getHistoryCampaignTemplateClient($dbCo, $pastYearsCampaigns, $_SESSION);
-                // var_dump('CAS N°2');
+                echo getHistoryCampaignTemplateClient($dbCo, $history, $_SESSION);
+                var_dump('CAS N°2');
             }
             // Si le filtre 'id_company' est défini, mais que c'est une session différente du client
             else if (isset($_SESSION['filter']['id_company'])) {
-                $pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, $campaigns);
+                // $pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, $campaigns);
                 echo getCampaignTemplate($dbCo, $history, $_SESSION);
-                // var_dump('CAS N°3');
+                var_dump('CAS N°3');
             }
             // Cas général (pas de client et pas de filtre de company. Prend en compte le filtre 'year' si il est en place)
             else {
                 echo getHistoryCampaignTemplateByCompany($dbCo, $pastYearsCampaigns, $_SESSION, $companies);
-                // var_dump('CAS N°4');
+                var_dump('CAS N°4');
             }
             ?>
         </section>

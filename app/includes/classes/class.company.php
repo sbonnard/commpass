@@ -374,7 +374,7 @@ function getOneCompanyDatasFilteredHistory(PDO $dbCo, array $session)
             JOIN target USING (id_target)
             JOIN company USING (id_company)
             JOIN budgets USING(id_company)
-        WHERE id_company = :id_company AND YEAR(date_start) = :year;'
+        WHERE id_company = :id_company AND YEAR(date_start) = :year'
         );
 
         if (isset($session['filter']['id_company'])) {
