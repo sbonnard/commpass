@@ -1070,5 +1070,5 @@ function calculateHistorySpentBudget(PDO $dbCo, array $session)
 
     $result = $query->fetch();
 
-    return formatPrice(floatval($result['total_spent'] ?? 0), '€');
+    return implode('', $result);
 }
