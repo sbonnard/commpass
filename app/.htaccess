@@ -1,9 +1,5 @@
-RewriteEngine on
+RewriteEngine On
 
-# Masquer les extensions .php dans l'URL (réécriture interne, pas de redirection)
-RewriteCond %{THE_REQUEST} /([^.]+)\.php [NC]
-RewriteRule ^ %1 [L]
+RewriteCond %{REQUEST_FILENAME} !-f
 
-# Ajouter .php si le fichier sans extension est demandé
-RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^ %{REQUEST_URI}.php [L]
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
