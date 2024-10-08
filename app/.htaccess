@@ -1,6 +1,8 @@
-RewriteEngine On
+RewriteEngine on
 
-# Pour éviter d'afficher les .php
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L]
+
+RewriteCond %{THE_REQUEST} /([^.]+)\.php [NC]
+RewriteRule ^ /%1 [NC,L,R]
+
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^ %{REQUEST_URI}.php [NC,L]

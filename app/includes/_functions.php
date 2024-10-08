@@ -129,7 +129,8 @@ function getYearOnly(PDO $dbCo, array $campaign): string
  * @param string $date - The date to format
  * @return string - The formatted date
  */
-function formatDateForInput(string $date): string {
+function formatDateForInput(string $date): string
+{
     $dateTime = new DateTime($date);
     return $dateTime->format('Y-m-d');
 }
@@ -244,8 +245,9 @@ function turnVignetteRedIfNegative(string $companyRemainings): string
  * @param array $session - Superglobal $_SESSION.
  * @return void
  */
-function unsetFilters(array $session) {
-    if(isset($session['filter'])) {
+function unsetFilters(array $session)
+{
+    if (isset($session['filter'])) {
         unset($session['filter']);
     }
 }
@@ -260,9 +262,51 @@ function unsetFilters(array $session) {
 function getDateText($date): string
 {
     $jour = getdate(strtotime($date));
-    $semaine = array(" Dimanche "," Lundi "," Mardi "," Mercredi "," Jeudi ",
-        " vendredi "," samedi ");
-    $mois =array(1=>" Janvier "," Février "," Mars "," Avril "," Mai "," Juin ",
-        " Juillet "," Août "," Septembre "," Octobre "," Novembre "," Décembre ");
-    return /*$semaine[$jour['wday']] . */$jour['mday'] . $mois[$jour['mon']] . $jour['year'];
+    $semaine = array(
+        " Dimanche ",
+        " Lundi ",
+        " Mardi ",
+        " Mercredi ",
+        " Jeudi ",
+        " vendredi ",
+        " samedi "
+    );
+    $mois = array(
+        1 => " Janvier ",
+        " Février ",
+        " Mars ",
+        " Avril ",
+        " Mai ",
+        " Juin ",
+        " Juillet ",
+        " Août ",
+        " Septembre ",
+        " Octobre ",
+        " Novembre ",
+        " Décembre "
+    );
+    return /*$semaine[$jour['wday']] . */ $jour['mday'] . $mois[$jour['mon']] . $jour['year'];
+}
+
+
+/**
+ * Get a message if history is empty.
+ *
+ * @param array $history - A list of history
+ * @return string - The message to display.
+ */
+function getMessageIfNoHistory(array $history, array $session):string
+{
+    if (empty($history)) {
+        return
+            '
+            <div class="card">
+                <section class="card__section">
+                    <p class="big-text">Pas d\'historique sur l\'année ' . $session['filter']['year'] . '.</p>
+                </section>
+            </div>
+            ';
+    }
+
+    return '';
 }
