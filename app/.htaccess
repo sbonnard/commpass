@@ -1,8 +1,9 @@
 RewriteEngine on
 
-
+# Réécriture interne sans redirection explicite
 RewriteCond %{THE_REQUEST} /([^.]+)\.php [NC]
-RewriteRule ^ /%1 [NC,L,R]
+RewriteRule ^ /%1 [NC,L]
 
+# Ajoute .php s'il manque et si le fichier existe
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^ %{REQUEST_URI}.php [NC,L]
