@@ -6,7 +6,7 @@
  * @param PDO $dbCo
  * @return void
  */
-function fetchAllBrands(PDO $dbCo):array
+function fetchAllBrands(PDO $dbCo): array
 {
     $query = $dbCo->query(
         'SELECT id_brand, brand_name, legend_colour_hex, id_company
@@ -127,7 +127,7 @@ function getAnnualSpendingByBrand(PDO $dbCo, array $session): array
         GROUP BY id_brand;'
     );
 
-    if(isset($session['filter'])) {
+    if (isset($session['filter'])) {
         $bindValues = [
             'id_company' => $session['filter']['id_company']
         ];
