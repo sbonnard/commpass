@@ -255,10 +255,19 @@ $jsonChartColors = json_encode($chartColors);
         ?>
 
         <section class="card campaign">
-            <?= getMessageIfNoCampaign($pastYearsCampaigns, 'dans votre historique ') ?>
+            <?= getMessageIfNoCampaignHistory($pastYearsCampaigns) ?>
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1 && isset($_SESSION['filter']['year'])) {
                 echo getCampaignTemplate($dbCo, $history, $_SESSION);
+                if(!empty($history)) {
+                    echo '
+                    <div class="card">
+                        <section class="card__section">
+                            <p class="big-text">Pas d\'historique sur l\'année' . $_SESSION['filter']['year'] . '</p>
+                        </section>
+                    </div>
+                    ';
+                }
                 // var_dump('CAS N°1');
             }  else if (isset($_SESSION['filter']['id_company'])) {
                 // $pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, $campaigns);
