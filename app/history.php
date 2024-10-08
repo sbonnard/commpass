@@ -149,6 +149,11 @@ $jsonChartColors = json_encode($chartColors);
                         <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
                         <input type="hidden" name="action" value="filter-history">
                 </form>
+                <form action="actions-filter.php" method="post" id="reinit-form">
+                    <input type="submit" class="button button--reinit" id="filter-reinit" aria-label="Réinitialise tous les filtres" value="" title="Réinitialiser les filtres">
+                    <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
+                    <input type="hidden" name="action" value="filter-reinit">
+                </form>
                 </div>';
         }
         ?>
@@ -249,28 +254,27 @@ $jsonChartColors = json_encode($chartColors);
         }
         ?>
 
-<section class="card campaign">
+        <section class="card campaign">
             <?= getMessageIfNoCampaign($pastYearsCampaigns, 'dans votre historique ') ?>
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1 && isset($_SESSION['filter']['year'])) {
                 echo getCampaignTemplate($dbCo, $history, $_SESSION);
-                // var_dump('CAS N°1');
-            } else if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
-                // Cas où l'utilisateur est un client
-                echo getHistoryCampaignTemplateClient($dbCo, $history, $_SESSION);
-                // var_dump('CAS N°2');
-            }
-            // Si le filtre 'id_company' est défini, mais que c'est une session différente du client
-            else if (isset($_SESSION['filter']['id_company'])) {
+                var_dump('CAS N°1');
+            }  else if (isset($_SESSION['filter']['id_company'])) {
                 // $pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, $campaigns);
                 echo getCampaignTemplate($dbCo, $history, $_SESSION);
-                // var_dump('CAS N°3');
-            }
-            // Cas général (pas de client et pas de filtre de company. Prend en compte le filtre 'year' si il est en place)
-            else {
+                var_dump('CAS N°2');
+            }else if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 echo getHistoryCampaignTemplateByCompany($dbCo, $pastYearsCampaigns, $_SESSION, $companies);
-                // var_dump('CAS N°4');
+                var_dump('CAS N°3');
+            } else {
+                // Cas où l'utilisateur est un client
+                echo getHistoryCampaignTemplateClient($dbCo, $pastYearsCampaigns, $_SESSION);
+                var_dump('CAS N°4');
             }
+            // Si le filtre 'id_company' est défini, mais que c'est une session différente du client
+            
+            // Cas général (pas de client et pas de filtre de company. Prend en compte le filtre 'year' si il est en place)
             ?>
         </section>
     </main>
