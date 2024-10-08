@@ -145,3 +145,42 @@ function getAnnualSpendingByBrand(PDO $dbCo, array $session): array
 
     return $queryAnnualSpending->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+/**
+ * Get annual spending by brand for a company for a date in filters.
+ *
+ * @param PDO $dbCo - Connection to the database.
+ * @param array $session - Superglobal $_SESSION.
+ * @return array - Array of annual spending by brand.
+ */
+function getAnnualSpendingByBrandHistory(PDO $dbCo, array $session): array
+{
+    if (isset($session['filter']['year'])) {
+        $queryAnnualSpending = $dbCo->prepare(
+            'SELECT b.id_brand, brand_name, legend_colour_hex, SUM(o.price) AS total_spent
+        FROM brand b
+            JOIN operation_brand ob ON b.id_brand = ob.id_brand
+            JOIN operation o ON ob.id_operation = o.id_operation
+        WHERE YEAR(o.operation_date) = :year AND o.id_company = :id_company
+        GROUP BY id_brand;'
+        );
+
+        if (isset($session['filter']['id_company'])) {
+            $bindValues = [
+                'id_company' => $session['filter']['id_company'],
+                'year' => $session['filter']['year']
+            ];
+        } else if (!isset($session['filter']['id_company'])) {
+            $bindValues = [
+                'id_company' => intval($session['id_company']),
+                'year' => $session['filter']['year']
+            ];
+        }
+
+        $queryAnnualSpending->execute($bindValues);
+
+        return $queryAnnualSpending->fetchAll(PDO::FETCH_ASSOC);
+    }
+    return [];
+}
