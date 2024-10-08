@@ -291,6 +291,45 @@ function getAnnualSpendingsByTarget(PDO $dbCo, array $session): array
 
 
 /**
+ * Get annual spendings grouped by communication campaign objectives for a date in filters.
+ *
+ * @param PDO $dbCo - Connection to database.
+ * @param array $session - Superglobal $_SESSION.
+ * @return array - An array containing the annual spendings grouped by communication campaign objectives.
+ */
+function getAnnualSpendingsByTargetHistory(PDO $dbCo, array $session): array
+{
+    if (isset($session['filter']['year'])) {
+        $query = $dbCo->prepare(
+            'SELECT c.id_company, c.id_target, t.target_com AS target, target_legend_hex, SUM(o.price) AS total, YEAR(c.date_start) AS year 
+        FROM campaign c 
+            JOIN operation o ON c.id_campaign = o.id_campaign 
+            JOIN target t ON c.id_target = t.id_target
+        WHERE c.id_company = :id_company 
+        GROUP BY c.id_company, c.id_target, year 
+        HAVING year = :year;'
+        );
+
+        if (!isset($session['filter']) && !isset($session['filter']['id_company'])) {
+            $bindValues = [
+                'id_company' => intval($session['id_company']),
+                'year' => intval($session['filter']['year'])
+            ];
+        } else if (isset($session['filter']) && isset($session['filter']['id_company'])) {
+            $bindValues = [
+                'id_company' => intval($session['filter']['id_company']),
+                'year' => intval($session['filter']['year'])
+            ];
+        }
+
+        $query->execute($bindValues);
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    return [];
+}
+
+/**
  * Generates a table from objective datas (objective) .
  *
  * @param array $target - An array containing communication objective data.
