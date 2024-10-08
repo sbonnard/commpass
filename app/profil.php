@@ -77,7 +77,7 @@ unsetFilters($_SESSION);
         if (isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
             echo
             '<div class="card">
-                <h2 class="ttl" id="my-brands">Mes marques</h2>
+                <h2 class="ttl lineUp" id="my-brands">Mes marques</h2>
                 <section class="card__section profil__modify" aria-labelledby="my-brands">
                     <ul class="profil__brands">
                         ' . getBrandsAsList(fetchCompanyBrands($dbCo, $_SESSION)) . '
@@ -106,7 +106,7 @@ unsetFilters($_SESSION);
         ?>
 
         <div class="card">
-            <h2 class="ttl" id="modify-infos">Modifier</h2>
+            <h2 class="ttl lineUp" id="modify-infos">Modifier</h2>
             <section class="card__section profil__modify" aria-labelledby="profil">
                 <div class="profil__modify--lnk-list">
                     <button class="profil__lnk" id="button-email">email</button>
