@@ -310,7 +310,7 @@ function getAnnualSpendingsByTargetHistory(PDO $dbCo, array $session): array
         HAVING year = :year;'
         );
 
-        if (!isset($session['filter']) && !isset($session['filter']['id_company'])) {
+        if (isset($session['filter']) && !isset($session['filter']['id_company'])) {
             $bindValues = [
                 'id_company' => intval($session['id_company']),
                 'year' => intval($session['filter']['year'])
