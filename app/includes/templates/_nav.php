@@ -16,10 +16,8 @@ function fetchNav(array $session, string $dashboardActive = '', string $NetworkA
                     <a href="dashboard.php" class="nav__lnk nav__lnk--dashboard" aria-label="Lien vers le tableau de bord contenant les campagnes de communications de l\'année en cours">Tableau de bord</a>
                 </li>'
             . displayNetworkLinkIfTDC($session, $NetworkActive) .
-            '<li class="nav__itm ' . $historyActive . '">
-                    <a href="history.php" class="nav__lnk nav__lnk--history" aria-label="Lien vers l\'historique des campagnes">Historique</a>
-                </li>
-                <li class="nav__itm ' . $profilActive . '">
+            displayHistoryLinkIfPermissionOK($session, $historyActive) .
+            '<li class="nav__itm ' . $profilActive . '">
                     <a href="profil.php" class="nav__lnk nav__lnk--profile" aria-label="Lien vers mon profil d\'utilisateur">Mon profil</a>
                 </li>
                 <li class="nav__itm">
@@ -66,6 +64,25 @@ function displayNetworkLinkIfTDC(array $session, string $NetworkActive): string
                 </li>
             </ul>
         </li>';
+    } else {
+        return '';
+    }
+}
+
+
+/**
+ * Displays a special link to history if user is not a client or if he is a client/boss.
+ *
+ * @param array $session - Superglobal $_SESSION.
+ * @return string - HTML code for the link.
+ */
+function displayHistoryLinkIfPermissionOK(array $session, string $historyActive): string
+{
+    if (isset($session['client']) && $session['client'] === 0 || $session['boss'] === 1) {
+        return '
+            <li class="nav__itm ' . $historyActive . '">
+                <a href="history.php" class="nav__lnk nav__lnk--history" aria-label="Lien vers l\'historique des campagnes">Historique</a>
+            </li>';
     } else {
         return '';
     }
