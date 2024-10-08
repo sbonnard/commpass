@@ -33,9 +33,11 @@ generateToken();
 
 checkConnection($_SESSION);
 
-// if(isset($_SESSION['filter']['year'])) {
-//     unset($_SESSION['filter']['year']);
-// }
+if(isset($_SESSION['client']) && $_SESSION['client'] === 1 && isset($_SESSION['boss']) && $_SESSION['boss'] === 0) {
+    addError('authorization_ko');
+    redirectTo('dashboard.php');
+    exit;
+}
 
 $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
 
@@ -268,18 +270,18 @@ $jsonChartColors = json_encode($chartColors);
                     </div>
                     ';
                 }
-                var_dump('CAS N°1');
+                // var_dump('CAS N°1');
             }  else if (isset($_SESSION['filter']['id_company'])) {
                 // $pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, $campaigns);
                 echo getCampaignTemplate($dbCo, $history, $_SESSION);
-                var_dump('CAS N°2');
+                // var_dump('CAS N°2');
             }else if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 echo getHistoryCampaignTemplateByCompany($dbCo, $pastYearsCampaigns, $_SESSION, $companies);
-                var_dump('CAS N°3');
+                // var_dump('CAS N°3');
             } else {
                 // Cas où l'utilisateur est un client
                 echo getHistoryCampaignTemplateClient($dbCo, $pastYearsCampaigns, $_SESSION);
-                var_dump('CAS N°4');
+                // var_dump('CAS N°4');
             }
             // Si le filtre 'id_company' est défini, mais que c'est une session différente du client
             
