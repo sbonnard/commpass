@@ -329,6 +329,7 @@ function getAnnualSpendingsByTargetHistory(PDO $dbCo, array $session): array
     return [];
 }
 
+
 /**
  * Generates a table from objective datas (objective) .
  *
