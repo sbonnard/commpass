@@ -47,11 +47,9 @@
 }
 
 #reinit-form {
-    position: absolute;
-    bottom: 10%;
-    right: 30%;
-
     @media screen and (max-width: 768px) {
+        position: absolute;
+        bottom: 10%;
         right: 5%;
     }
 }
