@@ -58,12 +58,55 @@ foreach ($campaignResults as $campaignData) {
 $jsonChartData = json_encode($chartData);
 $jsonChartColors = json_encode($chartColors);
 
-// if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || isset($_SESSION['client']) && $_SESSION['client'] === 1) {
-//     // Récupérer les dépenses annuelles par objectif
-//     $targetAnnualSpendings = getAnnualSpendingsByTarget($dbCo, $_SESSION);
-// }
+if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && isset($_SESSION['filter']['year'])
+ || isset($_SESSION['client']) && $_SESSION['client'] === 1 && isset($_SESSION['filter']['year'])) {
+    // Récupérer les dépenses annuelles par objectif
+    $targetAnnualSpendings = getAnnualSpendingsByTargetHistory($dbCo, $_SESSION);
+    $brandsAnnualSpendings = getAnnualSpendingByBrandHistory($dbCo, $_SESSION);
 
-// var_dump($_SESSION);
+    // Préparer les données et les couleurs pour le graphique
+    $targetChartData = [];
+    $targetchartColors = [];
+
+    foreach ($targetAnnualSpendings as $targetData) {
+        $targetName = $targetData['target'];
+        $totalSpent = $targetData['total'];
+        $targetHex = $targetData['target_legend_hex'];
+
+        // Ajouter les données pour chaque objectif
+        $targetChartData[] = [$targetName, $totalSpent];
+
+        // Associer la couleur hexadécimale de l'objectif
+        $targetChartColors[$targetName] = $targetHex;
+    }
+
+    // Convertir les données en JSON pour les transmettre à JavaScript
+    $jsonTargetChartData = json_encode($targetChartData);
+    if (!empty($targetChartColors)) {
+        $jsonTargetChartColors = json_encode($targetChartColors);
+    }
+
+    $brandChartData = [];
+    $brandChartColors = [];
+
+    foreach ($brandsAnnualSpendings as $brandData) {
+        $brandName = $brandData['brand_name'];
+        $totalSpent = $brandData['total_spent'];
+        $brandHex = $brandData['legend_colour_hex'];
+
+        // Ajouter les données pour chaque marque
+        $brandChartData[] = [$brandName, $totalSpent];
+
+        // Associer la couleur hexadécimale de la marque
+        $brandChartColors[$brandName] = $brandHex;
+    }
+
+    // Convertir les données en JSON pour les transmettre à JavaScript
+    $jsonBrandChartData = json_encode($brandChartData);
+    if (!empty($brandChartColors)) {
+        $jsonBrandChartColors = json_encode($brandChartColors);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -256,6 +299,49 @@ $jsonChartColors = json_encode($chartColors);
         }
         ?>
 
+<?php
+        if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
+            // DISPLAY TABLE & DONUT CHART FOR OBJECTIVES
+            echo
+            '<div class="card card--grid">
+        <div class="card">
+            <h2 class="ttl lineUp">Répartition du budget annuel<br> dépensé par objectif</h2>
+            <!-- GRAPHIQUES DONUT  -->
+            <section class="card__section">
+                <div id="chart-target"></div>
+            </section>
+        </div>
+        <div class="card">
+            <h2 class="ttl lineUp">Budget annuel attribué<br> par objectif</h2>
+            <!-- TABLEAU DES DÉPENSES PAR OBJECTIF -->
+            <section class="card__section">'
+                . generateTableFromTargetDatas($targetAnnualSpendings) .
+                '</section>
+        </div>
+    </div>';
+
+
+            // DISPLAY TABLE & DONUT CHART FOR BRANDS
+            echo
+            '<div class="card card--grid card--reverse">
+        <div class="card">
+            <h2 class="ttl lineUp">Répartition du budget annuel<br> dépensé par marque</h2>
+            <!-- GRAPHIQUES DONUT  -->
+            <section class="card__section">
+                <div id="chart-brand"></div>
+            </section>
+        </div>
+        <div class="card">
+            <h2 class="ttl lineUp">Budget annuel attribué<br> par marque</h2>
+            <!-- TABLEAU DES DÉPENSES PAR MARQUE -->
+            <section class="card__section">'
+                . generateTableFromDatas($brandsAnnualSpendings) .
+                '</section>
+        </div>
+    </div>';
+        }
+        ?>
+
         <section class="card campaign">
             <?= getMessageIfNoCampaign($pastYearsCampaigns, 'dans votre historique ') ?>
             <?php
@@ -307,5 +393,122 @@ $jsonChartColors = json_encode($chartColors);
     var chartColors = <?php echo $jsonChartColors; ?>;
 </script>
 <script type="module" src="js/dashboard-charts.js"></script>
+<!-- Script pour le graphique donut des dépenses par objectif. -->
+<script type="module">
+    // Récupérer les données PHP encodées en JSON
+    var targetChartData = <?php echo $jsonTargetChartData ?? '[]'; ?>;
+    var targetChartColors = <?php echo $jsonTargetChartColors ?? '{}'; ?>;
+
+    // Vérifier si des données sont disponibles pour générer le graphique
+    if (targetChartData.length === 0) {
+        var width = window.innerWidth < 768 ? 495 : 495;
+        var height = window.innerWidth < 768 ? 330 : 330;
+
+        // Si aucune donnée, on affiche un donut grisé
+        var chart = c3.generate({
+            bindto: '#chart-target',
+            data: {
+                columns: [
+                    ['En attente d\'opération', 1] // Donut "Aucune donnée"
+                ],
+                type: 'donut',
+                colors: {
+                    'En attente d\'opération': '#d3d3d3' // Couleur grise pour "Aucune donnée"
+                }
+            },
+            size: {
+                width: width,
+                height: height
+            },
+            padding: {
+                right: 20,
+                left: 20
+            },
+            donut: {
+                title: "Aucune opération"
+            }
+        });
+    } else {
+        // Générer le graphique avec les données et couleurs
+        var chart = c3.generate({
+            bindto: '#chart-target',
+            data: {
+                columns: targetChartData,
+                type: 'donut',
+                colors: targetChartColors // Appliquer les couleurs des objectifs
+            },
+            size: {
+                width: width,
+                height: height
+            },
+            padding: {
+                right: 20,
+                left: 20
+            },
+            donut: {
+                title: ""
+            }
+        });
+    }
+</script>
+
+<!-- Script pour le graphique donut des dépenses par marque. -->
+<script type="module">
+    // Récupérer les données PHP encodées en JSON
+    var brandChartData = <?php echo $jsonBrandChartData ?? '[]'; ?>;
+    var brandChartColors = <?php echo $jsonBrandChartColors ?? '{}'; ?>;
+
+    // Vérifier si des données sont disponibles pour générer le graphique
+    if (brandChartData.length === 0) {
+        var width = window.innerWidth < 768 ? 495 : 495;
+        var height = window.innerWidth < 768 ? 330 : 330;
+
+        // Si aucune donnée, on affiche un donut grisé
+        var chart = c3.generate({
+            bindto: '#chart-brand',
+            data: {
+                columns: [
+                    ['En attente d\'opération', 1] // Donut "Aucune donnée"
+                ],
+                type: 'donut',
+                colors: {
+                    'En attente d\'opération': '#d3d3d3' // Couleur grise pour "Aucune donnée"
+                }
+            },
+            size: {
+                width: width,
+                height: height
+            },
+            padding: {
+                right: 20,
+                left: 20
+            },
+            donut: {
+                title: "Aucune opération"
+            }
+        });
+    } else {
+        // Générer le graphique avec les données et couleurs
+        var chart = c3.generate({
+            bindto: '#chart-brand',
+            data: {
+                columns: brandChartData,
+                type: 'donut',
+                colors: brandChartColors // Appliquer les couleurs des objectifs
+            },
+            size: {
+                width: width,
+                height: height
+            },
+            padding: {
+                right: 20,
+                left: 20
+            },
+            donut: {
+                title: ""
+            }
+        });
+    }
+</script>
 
 </html>
