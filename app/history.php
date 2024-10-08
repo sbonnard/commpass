@@ -58,6 +58,9 @@ foreach ($campaignResults as $campaignData) {
 $jsonChartData = json_encode($chartData);
 $jsonChartColors = json_encode($chartColors);
 
+$targetAnnualSpendings = [];
+$brandsAnnualSpendings = [];
+
 if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && isset($_SESSION['filter']['year'])
  || isset($_SESSION['client']) && $_SESSION['client'] === 1 && isset($_SESSION['filter']['year'])) {
     // Récupérer les dépenses annuelles par objectif
@@ -300,7 +303,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && is
         ?>
 
 <?php
-        if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
+        if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1 && isset($_SESSION['filter']['year'])) {
             // DISPLAY TABLE & DONUT CHART FOR OBJECTIVES
             echo
             '<div class="card card--grid">
