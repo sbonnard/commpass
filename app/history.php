@@ -37,6 +37,12 @@ checkConnection($_SESSION);
 //     unset($_SESSION['filter']['year']);
 // }
 
+if(isset($_SESSION['client']) && $_SESSION['client'] === 1 && isset($_SESSION['boss']) && $_SESSION['boss'] === 0) {
+    addError('authorization_ko');
+    redirectTo('dashboard.php');
+    exit;
+}
+
 $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
 
 $chartData = [];
