@@ -78,3 +78,26 @@
 .secondary {
     color: $secondary;
 }
+
+
+
+.compass {
+    position: relative;
+
+    &__arrow {
+        position: absolute;
+        z-index: 1;
+        top: 30%;
+        left: 30%;
+        animation: rotating 12s linear(0, 0.25 45%, 0.5 55%, 0.35 70%, 1) infinite;
+    }
+}
+
+@keyframes rotating {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
