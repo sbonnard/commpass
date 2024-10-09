@@ -62,7 +62,10 @@ unsetFilters($_SESSION);
                 <span class="ttl--tertiary">communication</span>
             </h2>
             <section class="card__section" aria-labelledby="take-control">
-                <img src="img/working-team.webp" alt="Équipe travaillant avec des graphiques">
+                <div class="compass">
+                        <img src="../img/compass-border.svg" alt="Une boussole rose">
+                        <img class="compass__arrow" src="../img/compass-arrow.svg" alt="Flèche de boussole">
+                </div>
                 <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nunc nulla, rutrum at lacinia ut, bibendum eget lectus. Duis tortor diam, aliquet a ullamcorper vel, sagittis ac urna. Donec et faucibus nisi. Suspendisse in velit purus. Aenean sodales nunc nisi, id euismod lorem semper ultrices. Nulla vulputate blandit orci, congue tempus purus gravida ultricies.</p>
             </section>
         </div>
