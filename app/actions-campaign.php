@@ -148,7 +148,7 @@ if ($_POST['action'] === 'create-campaign') {
 
     if ($isUpdateOk) {
         addMessage('campaign_updated_ok');
-        redirectTo('dashboard.php');
+        redirectTo('/dashboard');
     } else {
         addError('campaign_update_ko');
     }

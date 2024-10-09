@@ -14,7 +14,7 @@ require_once "includes/_message.php";
 
 
 if (!isset($_REQUEST['action'])) {
-    redirectTo('dashboard.php');
+    redirectTo('/dashboard');
     exit;
 }
 

@@ -12,7 +12,7 @@ function fetchLogInForm(array $session): string
     <form class="form login__menu" action="login.php" method="post" id="connection-form" aria-label="Formulaire de connexion">
         <div class="login__section">
             <h2 class="header__ttl login__ttl">Commpass</h2>
-            <a class="button--close" href="index.php" aria-label="Fermer le formulaire de connexion">
+            <a class="button--close" href="/index" aria-label="Fermer le formulaire de connexion">
                 <img src="img/close-btn.svg" alt="Bouton fermer">
             </a>
         </div>
