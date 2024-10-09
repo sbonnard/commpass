@@ -1,8 +1,8 @@
 RewriteEngine On
 
-RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.php -f
 
-RewriteRule ^([^\.]+)$ $1.php [NC,L]
+RewriteRule ^(.*)$ $1.php [NC,L]
 
 ErrorDocument 403 /errors/403.php
 
