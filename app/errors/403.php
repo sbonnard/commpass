@@ -22,7 +22,7 @@ generateToken();
 <html lang="fr">
 
 <head>
-    <?= fetchHead('Commpass'); ?>
+    <?= fetchHeadErrorsPage('Commpass'); ?>
 </head>
 
 <header class="header">
