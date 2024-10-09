@@ -26,4 +26,13 @@
             color: $tertiary;
         }
     }
+
+    &--error {
+        line-height: 0;
+        height: 0;
+    }
+
+    &__wave {
+        width: 100%;
+    }
 }

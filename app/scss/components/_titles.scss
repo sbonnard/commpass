@@ -1,34 +1,44 @@
 .ttl {
-    color: $primary;
+  color: $primary;
+  font-family: 'jura';
+  font-size: 1.875rem;
+  text-transform: uppercase;
+  text-align: center;
+
+  &--small {
+    font-size: 1.5rem;
+    text-align: left;
+    color: $black;
+
+    &-lowercase {
+      text-transform: capitalize;
+    }
+  }
+
+  &--smaller {
+    font-size: 1.25rem;
     font-family: 'jura';
-    font-size: 1.875rem;
-    text-transform: uppercase;
-    text-align: center;
+  }
 
-    &--small {
-      font-size: 1.5rem;
-      text-align: left;
-      color: $black;
+  &--secondary {
+    color: $secondary;
+  }
 
-      &-lowercase {
-        text-transform: capitalize;
+  &--tertiary {
+    color: $tertiary;
+  }
+
+  &--budget {
+    padding-bottom: 1rem;
+  }
+
+  &--huge {
+    font-size: 3.375rem;
+
+    @media screen and (min-width: 768px) {
+      & {
+        font-size: 4.5rem;
       }
     }
-
-    &--smaller {
-      font-size: 1.25rem;
-      font-family: 'jura';
-    }
-
-    &--secondary {
-      color: $secondary;
-    }
-
-    &--tertiary {
-      color: $tertiary;
-    }
-
-    &--budget {
-      padding-bottom: 1rem;
-    }
+  }
 }
