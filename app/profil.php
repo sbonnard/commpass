@@ -136,6 +136,5 @@ unsetFilters($_SESSION);
 <script type="module" src="js/burger.js"></script>
 <script type="module" src="js/dropdown-menu.js"></script>
 <script type="module" src="js/profil-forms.js"></script>
-<script type="module" src="js/scroll-top.js"></script>
 
 </html>

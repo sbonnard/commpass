@@ -334,7 +334,6 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 <script type="module" src="js/dropdown-menu.js"></script>
 <script type="module" src="js/cards.js"></script>
 <script type="module" src="js/vignette.js"></script>
-<script type="module" src="js/scroll-top.js"></script>
 
 <!-- Script pour les multiple graphiques de campagne. -->
 <script>

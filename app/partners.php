@@ -114,4 +114,3 @@ unsetFilters($_SESSION);
 <script type="module" src="js/dropdown-menu.js"></script>
 <script type="module" src="js/cards.js"></script>
 <script type="module" src="js/ajax-partner.js"></script>
-<script type="module" src="js/scroll-top.js"></script>
