@@ -15,18 +15,18 @@
 
     &__lnk {
         display: flex;
-        align-items: center;
+        // align-items: center;
         gap: 0.75rem;
         font-size: 1.25rem;
     
         @media screen and (min-width: 768px) {
-            align-items: center;
+            // align-items: center;
             justify-content: center;
         }
     
         &::before {
-            width: 1.5rem;
-            height: 1.5rem;
+            // width: 1.5rem;
+            // height: 1.5rem;
         }
     
         &--profile::before {
