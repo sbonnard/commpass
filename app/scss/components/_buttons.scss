@@ -209,4 +209,21 @@
             }
         }
     }
+
+    &--up {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.75rem;
+        aspect-ratio: 1;
+        border-radius: 100%;
+        background-color: $secondary60;
+        position: fixed;
+        bottom: 20%;
+        right: 5%;
+
+        &:hover {
+            background-color: $tertiary;
+        }
+    }
 }
