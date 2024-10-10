@@ -123,6 +123,10 @@ unsetFilters($_SESSION);
 
     </main>
 
+    <a class="button--up" href="#" aria-label="Renvoie en haut de la page." id="scrollTop">
+        <img src="img/arrow-up.svg" alt="Flèche vers le haut">
+    </a>
+
     <footer class="footer">
         <?= fetchFooter() ?>
     </footer>
@@ -132,5 +136,6 @@ unsetFilters($_SESSION);
 <script type="module" src="js/burger.js"></script>
 <script type="module" src="js/dropdown-menu.js"></script>
 <script type="module" src="js/profil-forms.js"></script>
+<script type="module" src="js/scroll-top.js"></script>
 
 </html>

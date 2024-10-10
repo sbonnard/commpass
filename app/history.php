@@ -372,6 +372,10 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && is
         </section>
     </main>
 
+    <a class="button--up" href="#" aria-label="Renvoie en haut de la page." id="scrollTop">
+        <img src="img/arrow-up.svg" alt="Flèche vers le haut">
+    </a>
+
     <footer class="footer">
         <?= fetchFooter() ?>
     </footer>
@@ -382,6 +386,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && is
 <script type="module" src="js/dropdown-menu.js"></script>
 <script type="module" src="js/cards.js"></script>
 <script type="module" src="js/vignette.js"></script>
+<script type="module" src="js/scroll-top.js"></script>
 
 <script>
     // Récupération des données PHP

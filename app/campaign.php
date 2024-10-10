@@ -169,6 +169,10 @@ $jsonData = json_encode($chartData);
         </div>
     </main>
 
+    <a class="button--up" href="#" aria-label="Renvoie en haut de la page." id="scrollTop">
+        <img src="img/arrow-up.svg" alt="Flèche vers le haut">
+    </a>
+
     <footer class="footer">
         <?= fetchFooter() ?>
     </footer>
@@ -180,6 +184,7 @@ $jsonData = json_encode($chartData);
 <script type="module" src="js/cards.js"></script>
 <script type="module" src="js/vignette.js"></script>
 <script type="module" src="js/ajax-operation.js"></script>
+<script type="module" src="js/scroll-top.js"></script>
 <script>
     function confirmDelete() {
         return confirm("Êtes-vous sûr de vouloir supprimer cette campagne ?");
