@@ -1064,7 +1064,7 @@ function deleteCampaignButton(array $selectedCampaign, array $session): string
 {
     return '
         <form method="post" action="actions-campaign.php" onsubmit="return confirmDelete();">
-            <button type="submit" value="" class="button--trash" aria-label="Supprimer l\'opération ' . $selectedCampaign['campaign_name'] . '">
+            <button type="submit" value="" class="button--trash" aria-label="Supprimer l\'opération ' . $selectedCampaign['campaign_name'] . '"></button>
             <input type="hidden" name="token" value="' . $session['token'] . '">
             <input type="hidden" name="action" value="delete-campaign">
             <input type="hidden" name="id_campaign" value="' . $selectedCampaign['id_campaign'] . '">
