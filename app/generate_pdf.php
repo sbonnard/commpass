@@ -10,15 +10,19 @@ error_reporting(E_ALL);
 if (isset($_POST['htmlContent'])) {
 
     // Initialiser Dompdf
-    $dompdf = new Dompdf();
     // Récupérer le contenu HTML posté depuis le formulaire
     $htmlContent = $_POST['htmlContent'];
-
+    
+    $chartImage = $_POST['chartImage'];
+    
+    $dompdf = new Dompdf();
     // Date du jour 
     $today = formatFrenchDate(date('Y-m-d'));
 
     $header = '<h1 class="ttl">Toile de Com</h1>
     <h3>Rapport du ' . $today . '</h3>';
+
+    $chart = '<img src="' . $chartImage . '">';
 
     $css = "
     <style>
@@ -202,7 +206,7 @@ p {
 }
     </style>
     ";
-    $dompdf->loadHtml($css . $header . $htmlContent);
+    $dompdf->loadHtml($css . $header . $htmlContent . $chartImage);
     // Définir la taille et l'orientation du papier
     $dompdf->setPaper('A4', 'paysage');
     // Rendu du PDF

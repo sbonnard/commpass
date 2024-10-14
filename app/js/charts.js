@@ -73,12 +73,34 @@ if (!chartData || chartData.length === 0) {
     });
 };
 
-window.onload = function() {
-    html2canvas(document.getElementById('chart')).then(function(canvas) {
-        var imgData = canvas.toDataURL('img/png');
-        var link = document.createElement('a');
-        link.href = imgData;
-        link.download = 'donut_chart.png';
-        link.click();
-    });
-};
+function exportChartAsImage() {
+    var svgElement = document.querySelector('#chart svg');
+    var svgData = new XMLSerializer().serializeToString(svgElement);
+
+    var canvas = document.createElement("canvas");
+    var ctx = canvas.getContext("2d");
+
+    var img = new Image();
+    img.setAttribute("src", "data:image/svg+xml;base64," + btoa(svgData));
+
+    img.onload = function() {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+
+        // Convertir en PNG
+        var pngFile = canvas.toDataURL("image/png");
+
+        // Télécharger l'image ou l'envoyer au serveur
+        downloadImage(pngFile, 'chart.png');
+    };
+}
+
+function downloadImage(dataUrl, filename) {
+    var a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
