@@ -1,5 +1,6 @@
 <?php
 require 'vendor/autoload.php';
+require_once 'includes/_functions.php';
 
 use Dompdf\Dompdf;
 
@@ -7,25 +8,40 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 if (isset($_POST['htmlContent'])) {
+
     // Initialiser Dompdf
     $dompdf = new Dompdf();
     // Récupérer le contenu HTML posté depuis le formulaire
     $htmlContent = $_POST['htmlContent'];
+
+    // Date du jour 
+    $today = formatFrenchDate(date('Y-m-d'));
+
+    $header = '<h1 class="ttl">Toile de Com</h1>
+    <h3>Rapport du ' . $today . '</h3>';
+
     $css = "
     <style>
+:root {
+    font-size: 16px;
+}
+
 body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 20px;
         text-align: center;
-    }
+}
+
  h1, h2, h3 {
         color: #DA428F;
-    }
+}
+
 p {
         font-size: 14px;
         color: #555;
-    }
+}
+
 .flex-row {
     display: flex;
     flex-direction: row;
@@ -33,13 +49,15 @@ p {
     justify-content: space-between;
     gap: 1rem;
 }
+
 .card {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
     width: 100%;
-        }
+}
+
 .card__section {
     display: flex;
     flex-direction: column;
@@ -52,25 +70,31 @@ p {
     min-width: 20.5rem;
     text-align: left;
 }
+
 .card__section--vignettes {
     padding: 1rem 3.125rem;
 }
+
 .card__section--operations {
     width: 100%;
 }
+
 .campaign__company {
     font-family: 'jura';
     font-size: 1.875rem;
 }
+
 .campaign__interlocutor {
     font-size: 1.25rem;
 }
+
 .campaign__stats {
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
 }
+
 .ttl {
   color: #44277a;
   font-family: 'jura';
@@ -78,12 +102,15 @@ p {
   text-transform: uppercase;
   text-align: center;
 }
+
 .ttl--smaller {
     font-size: 1.25rem;
 }
+
 .ttl--tertiary {
     color: #DA428F;
 }
+
 .vignettes--section {
     display: flex;
     flex-direction: row;
@@ -91,7 +118,9 @@ p {
     justify-content: center;
     align-items: center;
     flex-wrap: no-wrap;
-    }
+    height: 1000px;
+    position: relative;
+}
     
 .vignette {
     text-align: center;
@@ -101,36 +130,46 @@ p {
     border-radius: 0.75rem 0.75rem 0.75rem 0;
     height: fit-content;
     min-width: 8rem;
-    margin-bottom : 1rem;
+    position: relative;
 }
+
 .vignette__ttl {
     font-family: 'jura';
     font-size: 1rem;
     text-transform: uppercase;
 }  
+
 .vignette__price {
     font-family: 'jura';
     font-size: 1.5rem;
     color: #FFF;
     text-align: center;
 }
+
 .vignette--big {
         width: 14.875rem;
         gap: 1.5rem;
         font-size: 1.25rem;
     }
+
 .vignette--primary {
         background-color: #44277A;
+        left: 30%;
+        bottom: 2%;
     }
+
 .vignette--secondary {
         background-color: #842078;
+        left: 30%;
+        bottom: 1%;
     }
+
 .vignette--tertiary {
         background-color: #DA428F;
+        left: 30%;
+        bottom: 0%;
     }
-.vignette--negative {
-        background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(195, 0, 0, 0.90));
-    }
+
 .vignette--bigger {
         width: 14.875rem;
         gap: 1.5rem;
@@ -163,7 +202,7 @@ p {
 }
     </style>
     ";
-    $dompdf->loadHtml($css . $htmlContent);
+    $dompdf->loadHtml($css . $header . $htmlContent);
     // Définir la taille et l'orientation du papier
     $dompdf->setPaper('A4', 'paysage');
     // Rendu du PDF
