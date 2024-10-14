@@ -8,21 +8,23 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 if (isset($_POST['htmlContent'])) {
-
+    define("DOMPDF_ENABLE_REMOTE", false);
     // Initialiser Dompdf
     // Récupérer le contenu HTML posté depuis le formulaire
     $htmlContent = $_POST['htmlContent'];
-    
+
     $chartImage = $_POST['chartImage'];
-    
+
     $dompdf = new Dompdf();
     // Date du jour 
     $today = formatFrenchDate(date('Y-m-d'));
 
+    $logo = '<img src="/var/www/https://commpass.toiledecom.fr/img/logo-tdc.jpg">';
+
     $header = '<h1 class="ttl">Toile de Com</h1>
     <h3>Rapport du ' . $today . '</h3>';
 
-    $chart = '<img src="' . $chartImage . '">';
+    $chart = '<img class="chart-png" src="' . $chartImage . '">';
 
     $css = "
     <style>
@@ -206,7 +208,7 @@ p {
 }
     </style>
     ";
-    $dompdf->loadHtml($css . $header . $htmlContent . $chartImage);
+    $dompdf->loadHtml($css . $logo . $header . $htmlContent . $chartImage);
     // Définir la taille et l'orientation du papier
     $dompdf->setPaper('A4', 'paysage');
     // Rendu du PDF
