@@ -3,23 +3,29 @@ require 'vendor/autoload.php';
 require_once 'includes/_functions.php';
 
 use Dompdf\Dompdf;
+use Dompdf\Options;
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 if (isset($_POST['htmlContent'])) {
     define("DOMPDF_ENABLE_REMOTE", false);
-    // Initialiser Dompdf
+
+    // Lire les images
+    $options = new Options();
+
+    $options->setIsRemoteEnabled(true);
+
     // Récupérer le contenu HTML posté depuis le formulaire
     $htmlContent = $_POST['htmlContent'];
 
     $chartImage = $_POST['chartImage'];
 
-    $dompdf = new Dompdf();
+    $dompdf = new Dompdf($options);
     // Date du jour 
     $today = formatFrenchDate(date('Y-m-d'));
 
-    $logo = '<img src="/var/www/https://commpass.toiledecom.fr/img/logo-tdc.jpg">';
+    $logo = '<img src="http://localhost:8989/app/img/logo-tdc.jpg">';
 
     $header = '<h1 class="ttl">Toile de Com</h1>
     <h3>Rapport du ' . $today . '</h3>';
@@ -208,7 +214,10 @@ p {
 }
     </style>
     ";
+
+    // Charge le contenu HTML dans le PDF.
     $dompdf->loadHtml($css . $logo . $header . $htmlContent . $chartImage);
+
     // Définir la taille et l'orientation du papier
     $dompdf->setPaper('A4', 'paysage');
     // Rendu du PDF
