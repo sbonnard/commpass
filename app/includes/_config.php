@@ -4,4 +4,5 @@
 $globalURL = 'https://commpass.toiledecom.fr/';
 
 // Développement
-$globalURL = 'https://commpass.toiledecom.fr/';
+// $globalURL = 'http://localhost:8989';
+
