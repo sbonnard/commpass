@@ -171,7 +171,8 @@ $jsonData = json_encode($chartData);
         <div class="card">
             <form id="formPDF" action="generate_pdf.php" method="post">
                 <input type="hidden" id="htmlContent" name="htmlContent" value="">
-                <button class="button button--confirm" type="submit">Générer le PDF</button>
+                <input type="hidden" id="chartImage" name="chartImage" value="">
+                <button class="button button--confirm" type="submit" id="generatePDF">Générer le PDF</button>
             </form>
         </div>
 
@@ -182,7 +183,13 @@ $jsonData = json_encode($chartData);
 
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/burger.js"></script>
-<script type="module" src="js/dropdown-menu.js"></script>
+
+<?php 
+if(isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+    echo '<script type="module" src="js/dropdown-menu.js"></script>';
+}
+?>
+
 <script type="module" src="js/cards.js"></script>
 <script type="module" src="js/vignette.js"></script>
 <script type="module" src="js/ajax-operation.js"></script>
