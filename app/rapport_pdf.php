@@ -3,6 +3,7 @@ require 'vendor/autoload.php';
 require_once 'includes/_functions.php';
 
 use Dompdf\Dompdf;
+use Dompdf\Options;
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -19,7 +20,7 @@ if (isset($_POST['htmlContent'])) {
     // Date du jour 
     $today = formatFrenchDate(date('Y-m-d'));
 
-    $logo = '<img src="/var/www/https://commpass.toiledecom.fr/img/logo-tdc.jpg">';
+    $logo = '<img src="https://commpass.toiledecom.fr/img/logo-tdc.jpg">';
 
     $header = '<h1 class="ttl">Toile de Com</h1>
     <h3>Rapport du ' . $today . '</h3>';
@@ -208,7 +209,15 @@ p {
 }
     </style>
     ";
+
+    // Charge le contenu HTML dans le PDF.
     $dompdf->loadHtml($css . $logo . $header . $htmlContent . $chartImage);
+
+    // Lire les images
+    $options = new Options();
+
+    $options->setIsRemoteEnabled(true);
+
     // Définir la taille et l'orientation du papier
     $dompdf->setPaper('A4', 'paysage');
     // Rendu du PDF
