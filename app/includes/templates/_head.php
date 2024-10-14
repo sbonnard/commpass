@@ -19,8 +19,8 @@ function fetchHead(string $title): string
     <!-- <script type="module" src="http://localhost:5173/js/script.js"></script> -->
 
     <!-- Production -->
-    <link rel="stylesheet" href="assets/assets/script-DToRSPHY.css">
-    <script type="module" src="assets/assets/script-DGgmiS5D.js"></script>
+    <link rel="stylesheet" href="assets/assets/script-B_N4WivK.css">
+    <script type="module" src="assets/assets/script-BqnDzb4M.js"></script>
 
     <!-- C3 CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.css" />
@@ -108,8 +108,8 @@ function fetchHeadErrorsPage(string $title): string
     <!-- <script type="module" src="http://localhost:5173/js/script.js"></script> -->
 
     <!-- Production -->
-    <link rel="stylesheet" href="../assets/assets/script-DToRSPHY.css">
-    <script type="module" src="../assets/assets/script-DGgmiS5D.js"></script>
+    <link rel="stylesheet" href="../assets/assets/script-B_N4WivK.css">
+    <script type="module" src="../assets/assets/script-BqnDzb4M.js"></script>
 
     <!-- C3 CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.css" />
