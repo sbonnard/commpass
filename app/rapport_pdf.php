@@ -20,7 +20,7 @@ if (isset($_POST['htmlContent'])) {
     // Date du jour 
     $today = formatFrenchDate(date('Y-m-d'));
 
-    $logo = '<img src="https://commpass.toiledecom.fr/img/logo-tdc.jpg">';
+    $logo = '<img src="img/logo-tdc.jpg">';
 
     $header = '<h1 class="ttl">Toile de Com</h1>
     <h3>Rapport du ' . $today . '</h3>';
