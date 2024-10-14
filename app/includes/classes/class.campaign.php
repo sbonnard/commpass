@@ -898,7 +898,7 @@ function getCampaignOperationsAsList(array $operations, array $session, array $s
         $operationsList .= '
             <li class="operation" data-js-operation="operation"><h4 class="operation__date">' . formatFrenchDate($operation['operation_date']) . '</h4>
             <p class="campaign__operation"><span class="campaign__legend-square" style="background-color:' . $operation['legend_colour_hex'] . '"></span>' . $operation['description'] .
-            ' ⮕ ' . formatPrice(floatval($operation['price']), '€') . ' H.T.';
+            ' ► ' . formatPrice(floatval($operation['price']), '€') . ' H.T.';
 
         if (isset($session['client']) && $session['client'] === 0) {
             $operationsList .=
