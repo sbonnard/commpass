@@ -3,4 +3,5 @@
 // Déploiement
 $globalURL = 'https://commpass.toiledecom.fr/';
 
-// Développement 
+// Développement
+$globalURL = 'https://commpass.toiledecom.fr/';
