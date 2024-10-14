@@ -71,4 +71,14 @@ if (!chartData || chartData.length === 0) {
             title: ""
         }
     });
-}
+};
+
+window.onload = function() {
+    html2canvas(document.getElementById('chart')).then(function(canvas) {
+        var imgData = canvas.toDataURL('img/png');
+        var link = document.createElement('a');
+        link.href = imgData;
+        link.download = 'donut_chart.png';
+        link.click();
+    });
+};
