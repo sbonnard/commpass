@@ -10,23 +10,35 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 if (isset($_POST['htmlContent'])) {
     define("DOMPDF_ENABLE_REMOTE", false);
-    // Initialiser Dompdf
+
+    // Lire les images
+    $options = new Options();
+
+    $options->setIsRemoteEnabled(true);
+
     // Récupérer le contenu HTML posté depuis le formulaire
     $htmlContent = $_POST['htmlContent'];
 
     $chartImage = $_POST['chartImage'];
 
-    $dompdf = new Dompdf();
-    // Date du jour 
-    $today = formatFrenchDate(date('Y-m-d'));
+    $dompdf = new Dompdf($options);
+    // Date du jour.
+    $today = date('Y-m-d');
 
+    // Le logo de Toile de Com.
     $logo = '<img src="img/logo-tdc.jpg">';
 
+    // Le header avec la date du rapport et le nom Toile de Com.
     $header = '<h1 class="ttl">Toile de Com</h1>
-    <h3>Rapport du ' . $today . '</h3>';
+    <h3>Rapport du ' . formatFrenchDate($today) . '</h3>';
 
+    // Le graphique transformé en image.
     $chart = '<img class="chart-png" src="' . $chartImage . '">';
 
+    // Le nom du fichier une fois téléchargé.
+    $fileName = "rapport_tdc_$today.pdf"; 
+
+    // Le CSS pour styliser le PDF.
     $css = "
     <style>
 :root {
@@ -34,7 +46,7 @@ if (isset($_POST['htmlContent'])) {
 }
 
 body {
-        font-family: Arial, sans-serif;
+        font-family: Helvetica, sans-serif;
         margin: 0;
         padding: 20px;
         text-align: center;
@@ -45,7 +57,7 @@ body {
 }
 
 p {
-        font-size: 14px;
+        font-size: 16px;
         color: #555;
 }
 
@@ -213,15 +225,10 @@ p {
     // Charge le contenu HTML dans le PDF.
     $dompdf->loadHtml($css . $logo . $header . $htmlContent . $chartImage);
 
-    // Lire les images
-    $options = new Options();
-
-    $options->setIsRemoteEnabled(true);
-
     // Définir la taille et l'orientation du papier
     $dompdf->setPaper('A4', 'paysage');
     // Rendu du PDF
     $dompdf->render();
     // Sortie du PDF dans le navigateur
-    $dompdf->stream("document.pdf", ["Attachment" => false]);
+    $dompdf->stream($fileName, ["Attachment" => false]);
 }
