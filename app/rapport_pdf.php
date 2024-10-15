@@ -13,17 +13,13 @@ if (isset($_POST['htmlContent'])) {
     $chartImage = $_POST['chartImage'] ?? '';
 
     // Initialisation de MPDF
-    $mpdf = new \Mpdf\Mpdf(
-        [
-            'default_font' => 'Helvetica'
-        ]
-    );
+    $mpdf = new \Mpdf\Mpdf();
 
     // Date du jour
     $today = date('Y-m-d');
 
     // Le logo de Toile de Com
-    $logo = '<img class="logo" src="img/logo-tdc.jpg" alt="Logo Toile de Com">';
+    $logo = '<img class="logo" src="img/logo-tdc.jpg" alt="Logo Toile de Com" style="width:150px;">';
 
     // Le header avec la date du rapport
     $header = '
@@ -31,7 +27,7 @@ if (isset($_POST['htmlContent'])) {
     ';
 
     // Le graphique en image base64
-    $chart = '<img src="' . $chartImage . '" alt="Graphique" style="width:500px;background-color:#FFF;">';
+    $chart = '<img src="' . $chartImage . '" alt="Graphique" style="width:500px;">';
 
     // Le CSS pour styliser le PDF
     $css = "
@@ -41,7 +37,7 @@ if (isset($_POST['htmlContent'])) {
 }
 
 body {
-        font-family: 'Helvetica', sans-serif;
+        font-family: Helvetica, sans-serif;
         margin: 0;
         padding: 20px;
         text-align: center;
@@ -134,6 +130,8 @@ p {
     justify-content: center;
     align-items: center;
     flex-wrap: no-wrap;
+    height: 1000px;
+    position: relative;
 }
     
 .vignette {
@@ -144,8 +142,6 @@ p {
     border-radius: 0.75rem 0.75rem 0.75rem 0;
     height: fit-content;
     min-width: 8rem;
-    margin-bottom: 0.5rem;
-    margin-left: 12rem;
 }
 
 .vignette__ttl {
@@ -208,14 +204,6 @@ p {
     border : 1px solid #44277A;
     text-align: center;
     font-size: 1.25rem;
-}
-
-.logo {
-    width: 350px;
-}
-
-.c3 {
-background-color: #FFF;
 }
 </style>
 ";
