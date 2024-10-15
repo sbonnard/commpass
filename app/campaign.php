@@ -80,101 +80,101 @@ $jsonData = json_encode($chartData);
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>
 
-            <div class="card">
-                <section class="card__section">
+        <div class="card">
+            <section class="card__section">
+                <?php
+                if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+                    echo '<p class="campaign__company">' . $selectedCampaign['company_name'] . '</p>';
+                }
+                ?>
+                <div class="flex-row">
+                    <p class="ttl--smaller">Campagne : <?= $selectedCampaign['campaign_name'] ?></p>
                     <?php
                     if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                        echo '<p class="campaign__company">' . $selectedCampaign['company_name'] . '</p>';
+                        echo
+                        '<a class="button--edit" href="new-campaign.php?myc=' . $selectedCampaign['id_campaign'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
+                    |' . deleteCampaignButton($selectedCampaign, $_SESSION);
                     }
                     ?>
-                    <div class="flex-row">
-                        <p class="ttl--smaller">Campagne : <?= $selectedCampaign['campaign_name'] ?></p>
-                        <?php
-                        if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                            echo
-                            '<a class="button--edit" href="new-campaign.php?myc=' . $selectedCampaign['id_campaign'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
-                    |' . deleteCampaignButton($selectedCampaign, $_SESSION);
-                        }
-                        ?>
 
-                    </div>
-                    <p class="campaign__interlocutor">Interlocuteur : <?= $selectedCampaign['firstname'] . ' ' . $selectedCampaign['lastname'] ?></p>
-                    <p class="campaign__interlocutor">Objectif : <?= $selectedCampaign['target_com'] ?></p>
-                </section>
-            </div>
+                </div>
+                <p class="campaign__interlocutor">Interlocuteur : <?= $selectedCampaign['firstname'] . ' ' . $selectedCampaign['lastname'] ?></p>
+                <p class="campaign__interlocutor">Objectif : <?= $selectedCampaign['target_com'] ?></p>
+            </section>
+        </div>
 
-            <h2 class="ttl lineUp">Données globales</h2>
+        <h2 class="ttl lineUp">Données globales</h2>
 
-            <div class="card">
-                <section class="card__section card__section--vignettes vignettes-PDF">
-                    <div class="campaign__stats">
-                        <div class="vignettes-section vignettes-section--row">
-                            <div class="vignette vignette--bigger vignette--primary">
-                                <div class="flex-row">
-                                    <h4 class="vignette__ttl vignette__ttl--big">
-                                        Budget attribué
-                                    </h4>
-                                    <?= displayButtonIfNotClient($_SESSION, '?myc=' . $_GET['myc']) ?>
-                                </div>
-                                <p class="vignette__price vignette__price--big"><?= formatPrice($selectedCampaign['budget'], "€") ?></p>
-                            </div>
-                            <div class="vignette vignette--secondary vignette--big">
+        <div class="card">
+            <section class="card__section card__section--vignettes vignettes-PDF">
+                <div class="campaign__stats">
+                    <div class="vignettes-section vignettes-section--row">
+                        <div class="vignette vignette--bigger vignette--primary">
+                            <div class="flex-row">
                                 <h4 class="vignette__ttl vignette__ttl--big">
-                                    Budget dépensé
+                                    Budget attribué
                                 </h4>
-                                <p class="vignette__price vignette__price--big"><?= calculateSpentBudget($dbCo, $selectedCampaign) ?></p>
+                                <?= displayButtonIfNotClient($_SESSION, '?myc=' . $_GET['myc']) ?>
                             </div>
-                            <div class="vignette vignette--tertiary vignette--big <?= turnVignetteRedIfNegative(calculateRemainingBudget($dbCo, $selectedCampaign)) ?>">
-                                <h4 class="vignette__ttl vignette__ttl--big">
-                                    Budget restant
-                                </h4>
-                                <p class="vignette__price vignette__price--big"><?= calculateRemainingBudget($dbCo, $selectedCampaign) ?></p>
-                            </div>
+                            <p class="vignette__price vignette__price--big"><?= formatPrice($selectedCampaign['budget'], "€") ?></p>
+                        </div>
+                        <div class="vignette vignette--secondary vignette--big">
+                            <h4 class="vignette__ttl vignette__ttl--big">
+                                Budget dépensé
+                            </h4>
+                            <p class="vignette__price vignette__price--big"><?= calculateSpentBudget($dbCo, $selectedCampaign) ?></p>
+                        </div>
+                        <div class="vignette vignette--tertiary vignette--big <?= turnVignetteRedIfNegative(calculateRemainingBudget($dbCo, $selectedCampaign)) ?>">
+                            <h4 class="vignette__ttl vignette__ttl--big">
+                                Budget restant
+                            </h4>
+                            <p class="vignette__price vignette__price--big"><?= calculateRemainingBudget($dbCo, $selectedCampaign) ?></p>
                         </div>
                     </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="card card--grid">
+
+            <div class="card">
+                <h2 class="ttl lineUp">Répartition du budget dépensé<br> par marque</h2>
+                <!-- GRAPHIQUES DONUT  -->
+                <section class="card__section">
+                    <div id="chart"></div>
                 </section>
-            </div>
-
-            <div class="card card--grid">
-
-                <div class="card">
-                    <h2 class="ttl lineUp">Répartition du budget dépensé<br> par marque</h2>
-                    <!-- GRAPHIQUES DONUT  -->
-                    <section class="card__section">
-                        <div id="chart"></div>
-                    </section>
-                </div>
-                <div class="card">
-                    <h2 class="ttl lineUp">Budget attribué<br> par marque</h2>
-                    <!-- TABLEAU DES DÉPENSES PAR MARQUES -->
-                    <section class="card__section">
-                        <?= generateTableFromDatas($brandsSpendings); ?>
-                    </section>
-                </div>
             </div>
             <div class="card">
-                <h2 class="ttl lineUp">Opérations</h2>
-                <!-- OPÉRATIONS DE LA CAMPAGNE DE COMMUNICATION  -->
-                <section class="card__section card__section--operations">
-                    <?php
-
-                    if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                        echo '<div class="operation__button"><a href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '" class="button button--add" aria-label="Créer une nouvelle opération">Ajouter opération</a></div>';
-                    }
-                    ?>
-                    <ul>
-                        <?= getCampaignOperationsAsList($campaignOperations, $_SESSION, $selectedCampaign); ?>
-                    </ul>
+                <h2 class="ttl lineUp">Budget attribué<br> par marque</h2>
+                <!-- TABLEAU DES DÉPENSES PAR MARQUES -->
+                <section class="card__section">
+                    <?= generateTableFromDatas($brandsSpendings); ?>
                 </section>
             </div>
-        </main>
-        <div class="card">
-            <form id="formPDF" action="rapport_pdf" method="post">
-                <input type="hidden" id="htmlContent" name="htmlContent" value="">
-                <input type="hidden" id="chartImage" name="chartImage" value="">
-                <button class="button button--pdf" type="submit" id="generatePDF"></button>
-            </form>
         </div>
+        <div class="card">
+            <h2 class="ttl lineUp">Opérations</h2>
+            <!-- OPÉRATIONS DE LA CAMPAGNE DE COMMUNICATION  -->
+            <section class="card__section card__section--operations">
+                <?php
+
+                if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+                    echo '<div class="operation__button"><a href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '" class="button button--add" aria-label="Créer une nouvelle opération">Ajouter opération</a></div>';
+                }
+                ?>
+                <ul>
+                    <?= getCampaignOperationsAsList($campaignOperations, $_SESSION, $selectedCampaign); ?>
+                </ul>
+            </section>
+        </div>
+    </main>
+    <div class="card">
+        <form id="formPDF" action="rapport_pdf.php" method="post">
+            <input type="hidden" id="htmlContent" name="htmlContent" value="">
+            <input type="hidden" id="chartImage" name="chartImage" value="">
+            <button class="button button--pdf" type="submit" id="generatePDF"></button>
+        </form>
+    </div>
 
     <footer class="footer">
         <?= fetchFooter() ?>
@@ -184,8 +184,8 @@ $jsonData = json_encode($chartData);
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/burger.js"></script>
 
-<?php 
-if(isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+<?php
+if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
     echo '<script type="module" src="js/dropdown-menu.js"></script>';
 }
 ?>
