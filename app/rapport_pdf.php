@@ -13,13 +13,17 @@ if (isset($_POST['htmlContent'])) {
     $chartImage = $_POST['chartImage'] ?? '';
 
     // Initialisation de MPDF
-    $mpdf = new \Mpdf\Mpdf();
+    $mpdf = new \Mpdf\Mpdf(
+        [
+            'default_font' => 'Helvetica'
+        ]
+    );
 
     // Date du jour
     $today = date('Y-m-d');
 
     // Le logo de Toile de Com
-    $logo = '<img class="logo" src="img/logo-tdc.jpg" alt="Logo Toile de Com" style="width:150px;">';
+    $logo = '<img class="logo" src="img/logo-tdc.jpg" alt="Logo Toile de Com">';
 
     // Le header avec la date du rapport
     $header = '
@@ -27,7 +31,7 @@ if (isset($_POST['htmlContent'])) {
     ';
 
     // Le graphique en image base64
-    $chart = '<img src="' . $chartImage . '" alt="Graphique" style="width:500px;">';
+    $chart = '<img src="' . $chartImage . '" alt="Graphique" style="width:500px;background-color:#FFF;">';
 
     // Le CSS pour styliser le PDF
     $css = "
@@ -37,7 +41,7 @@ if (isset($_POST['htmlContent'])) {
 }
 
 body {
-        font-family: Helvetica, sans-serif;
+        font-family: 'Helvetica', sans-serif;
         margin: 0;
         padding: 20px;
         text-align: center;
@@ -130,8 +134,6 @@ p {
     justify-content: center;
     align-items: center;
     flex-wrap: no-wrap;
-    height: 1000px;
-    position: relative;
 }
     
 .vignette {
@@ -142,6 +144,8 @@ p {
     border-radius: 0.75rem 0.75rem 0.75rem 0;
     height: fit-content;
     min-width: 8rem;
+    margin-bottom: 0.5rem;
+    margin-left: 12rem;
 }
 
 .vignette__ttl {
@@ -161,29 +165,31 @@ p {
         width: 14.875rem;
         gap: 1.5rem;
         font-size: 1.25rem;
-    }
+}
 
 .vignette--primary {
         background-color: #44277A;
-    }
+}
 
 .vignette--secondary {
         background-color: #842078;
-    }
+}
 
 .vignette--tertiary {
         background-color: #DA428F;
-    }
+}
 
 .vignette--bigger {
         width: 14.875rem;
         gap: 1.5rem;
         font-size: 1.5rem;
 }
+
 .vignettes-PDF {
     display: flex;
     justify-content: center;
 }
+
 .table {
     background-color: #FFF;
     font-family: 'jura';
@@ -193,17 +199,32 @@ p {
     border-collapse: collapse;
     min-width: 27.25rem;
 }
+
 .table__head {
     font-size: 1.25rem;
     text-transform: uppercase;
     color: #44277A;
     padding: 0.5rem 1rem;
 }
+
 .table__cell {
     padding: 0.5rem 1rem;
     border : 1px solid #44277A;
     text-align: center;
     font-size: 1.25rem;
+}
+
+.logo {
+    width: 350px;
+}
+
+.c3 {
+    background-color: #FFF !important;
+    margin-left: 12rem;
+}
+
+.c3-chart {
+    background-color: #FFF !important;
 }
 </style>
 ";
