@@ -19,7 +19,7 @@ if (isset($_POST['htmlContent'])) {
     $today = date('Y-m-d');
 
     // Le logo de Toile de Com
-    $logo = '<img class="logo" src="img/logo-tdc.jpg" alt="Logo Toile de Com" style="width:150px;">';
+    $logo = '<img class="logo" src="img/logo-tdc.jpg" alt="Logo Toile de Com" style="width:350px;">';
 
     // Le header avec la date du rapport
     $header = '
@@ -142,6 +142,8 @@ p {
     border-radius: 0.75rem 0.75rem 0.75rem 0;
     height: fit-content;
     min-width: 8rem;
+    margin-bottom: 0.5rem;
+    margin-left: 12rem;
 }
 
 .vignette__ttl {
@@ -161,29 +163,31 @@ p {
         width: 14.875rem;
         gap: 1.5rem;
         font-size: 1.25rem;
-    }
+}
 
 .vignette--primary {
         background-color: #44277A;
-    }
+}
 
 .vignette--secondary {
         background-color: #842078;
-    }
+}
 
 .vignette--tertiary {
         background-color: #DA428F;
-    }
+}
 
 .vignette--bigger {
         width: 14.875rem;
         gap: 1.5rem;
         font-size: 1.5rem;
 }
+
 .vignettes-PDF {
     display: flex;
     justify-content: center;
 }
+
 .table {
     background-color: #FFF;
     font-family: 'jura';
@@ -193,17 +197,24 @@ p {
     border-collapse: collapse;
     min-width: 27.25rem;
 }
+
 .table__head {
     font-size: 1.25rem;
     text-transform: uppercase;
     color: #44277A;
     padding: 0.5rem 1rem;
 }
+
 .table__cell {
     padding: 0.5rem 1rem;
     border : 1px solid #44277A;
     text-align: center;
     font-size: 1.25rem;
+}
+
+.c3 {
+    background-color: #FFF;
+    margin-left: 12rem;
 }
 </style>
 ";
