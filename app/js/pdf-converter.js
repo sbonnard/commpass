@@ -7,7 +7,7 @@ document.getElementById('generatePDF').addEventListener('click', function (event
     event.preventDefault();
 
     // Récupération du contenu HTML de la page
-    const campaignContent = document.querySelector('.container--campaigns').innerHTML;
+    const campaignContent = document.querySelector('#pdfContent').innerHTML;
     const chartImage = document.getElementById('chartImage').value;
 
     // Construction du document PDF avec le contenu récupéré

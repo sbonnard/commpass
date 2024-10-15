@@ -165,31 +165,29 @@ p {
         width: 14.875rem;
         gap: 1.5rem;
         font-size: 1.25rem;
-}
+    }
 
 .vignette--primary {
         background-color: #44277A;
-}
+    }
 
 .vignette--secondary {
         background-color: #842078;
-}
+    }
 
 .vignette--tertiary {
         background-color: #DA428F;
-}
+    }
 
 .vignette--bigger {
         width: 14.875rem;
         gap: 1.5rem;
         font-size: 1.5rem;
 }
-
 .vignettes-PDF {
     display: flex;
     justify-content: center;
 }
-
 .table {
     background-color: #FFF;
     font-family: 'jura';
@@ -199,14 +197,12 @@ p {
     border-collapse: collapse;
     min-width: 27.25rem;
 }
-
 .table__head {
     font-size: 1.25rem;
     text-transform: uppercase;
     color: #44277A;
     padding: 0.5rem 1rem;
 }
-
 .table__cell {
     padding: 0.5rem 1rem;
     border : 1px solid #44277A;
@@ -219,12 +215,7 @@ p {
 }
 
 .c3 {
-    background-color: #FFF !important;
-    margin-left: 12rem;
-}
-
-.c3-chart {
-    background-color: #FFF !important;
+background-color: #FFF;
 }
 </style>
 ";
