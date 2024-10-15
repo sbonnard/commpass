@@ -2,45 +2,36 @@
 require 'vendor/autoload.php';
 require_once 'includes/_functions.php';
 
-use Dompdf\Dompdf;
-use Dompdf\Options;
-
+// Gestion des erreurs
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
+// Vérification des données POST
 if (isset($_POST['htmlContent'])) {
-    define("DOMPDF_ENABLE_REMOTE", false);
+    $htmlContent = $_POST['htmlContent'] ?? '';
+    $chartImage = $_POST['chartImage'] ?? '';
 
-    // Lire les images
-    $options = new Options();
+    // Initialisation de MPDF
+    $mpdf = new \Mpdf\Mpdf();
 
-    $options->setIsRemoteEnabled(true);
-
-    // Récupérer le contenu HTML posté depuis le formulaire
-    $htmlContent = $_POST['htmlContent'];
-
-    $chartImage = $_POST['chartImage'];
-
-    $dompdf = new Dompdf($options);
-    // Date du jour.
+    // Date du jour
     $today = date('Y-m-d');
 
-    // Le logo de Toile de Com.
-    $logo = '<img src="img/logo-tdc.jpg">';
+    // Le logo de Toile de Com
+    $logo = '<img class="logo" src="img/logo-tdc.jpg" alt="Logo Toile de Com" style="width:150px;">';
 
-    // Le header avec la date du rapport et le nom Toile de Com.
-    $header = '<h1 class="ttl">Toile de Com</h1>
-    <h3>Rapport du ' . formatFrenchDate($today) . '</h3>';
+    // Le header avec la date du rapport
+    $header = '
+        <h3>Rapport du ' . formatFrenchDate($today) . '</h3>
+    ';
 
-    // Le graphique transformé en image.
-    $chart = '<img class="chart-png" src="' . $chartImage . '">';
+    // Le graphique en image base64
+    $chart = '<img src="' . $chartImage . '" alt="Graphique" style="width:500px;">';
 
-    // Le nom du fichier une fois téléchargé.
-    $fileName = "rapport_tdc_$today.pdf"; 
-
-    // Le CSS pour styliser le PDF.
+    // Le CSS pour styliser le PDF
     $css = "
-    <style>
+<style>
 :root {
     font-size: 16px;
 }
@@ -92,6 +83,8 @@ p {
 
 .card__section--vignettes {
     padding: 1rem 3.125rem;
+    justify-content: center;
+    align-items: center;
 }
 
 .card__section--operations {
@@ -149,7 +142,6 @@ p {
     border-radius: 0.75rem 0.75rem 0.75rem 0;
     height: fit-content;
     min-width: 8rem;
-    position: relative;
 }
 
 .vignette__ttl {
@@ -173,20 +165,14 @@ p {
 
 .vignette--primary {
         background-color: #44277A;
-        left: 30%;
-        bottom: 2%;
     }
 
 .vignette--secondary {
         background-color: #842078;
-        left: 30%;
-        bottom: 1%;
     }
 
 .vignette--tertiary {
         background-color: #DA428F;
-        left: 30%;
-        bottom: 0%;
     }
 
 .vignette--bigger {
@@ -219,16 +205,18 @@ p {
     text-align: center;
     font-size: 1.25rem;
 }
-    </style>
-    ";
+</style>
+";
 
-    // Charge le contenu HTML dans le PDF.
-    $dompdf->loadHtml($css . $logo . $header . $htmlContent . $chartImage);
+    // Combiner le contenu HTML avec le CSS
+    $html = $css . $logo . $header . $htmlContent;
 
-    // Définir la taille et l'orientation du papier
-    $dompdf->setPaper('A4', 'paysage');
-    // Rendu du PDF
-    $dompdf->render();
-    // Sortie du PDF dans le navigateur
-    $dompdf->stream($fileName, ["Attachment" => false]);
+    // Charger le contenu HTML dans MPDF
+    $mpdf->WriteHTML($html);
+
+    // Nom du fichier
+    $fileName = "rapport_tdc_$today.pdf";
+
+    // Générer le fichier PDF et l'afficher dans le navigateur
+    $mpdf->Output($fileName, 'I'); // 'I' pour afficher, 'D' pour forcer le téléchargement
 }
