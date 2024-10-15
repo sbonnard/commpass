@@ -94,6 +94,7 @@ unsetFilters($_SESSION);
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="campaign_company" aria-label="Sélectionner l'entreprise concernée">Entreprise</label>
                             <select class="form__input form__input--select" type="text" name="campaign_company" id="campaign_company" required aria-label="Sélectionner l'entreprise lançant une nouvelle campagne">
+                                <!-- Une fois l'entreprise sélectionnée, récupération en AJAX des interlocuteurs potentiels.  -->
                                 <?= getDatasAsHTMLOptions($companies, 'Sélectionner une entreprise', 'id_company', 'company_name'); ?>
                             </select>
                         </li>
@@ -106,7 +107,7 @@ unsetFilters($_SESSION);
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="user_TDC">Chargé de la campagne</label>
                             <select class="form__input form__input--select" type="text" name="user_TDC" id="user_TDC" required aria-label="Sélectionner le chargé de la campagne dans votre entreprise">
-                            <option value="">- Sélectionner une entreprise -</option>
+                            <option value="">- Sélectionner un chargé -</option>
                                 <?php
                                 $chargeOptions = '';
                                 foreach ($nonClientUsers as $user) {
@@ -126,11 +127,11 @@ unsetFilters($_SESSION);
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="date_start">Début de la campagne</label>
-                            <input class="form__input form__input--from" type="date" name="date_start" id="date_start" required aria-label="Sélectionner la date de l'opération" value="<?php if (isset($selectedCampaign['date_start'])) echo formatDateForInput($selectedCampaign['date_start']) ?>">
+                            <input class="form__input form__input--from" type="date" name="date_start" id="date_start" required aria-label="Sélectionner la date de début de l'opération" value="<?php if (isset($selectedCampaign['date_start'])) echo formatDateForInput($selectedCampaign['date_start']) ?>">
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="date_end">Fin de la campagne</label>
-                            <input class="form__input form__input--to" type="date" name="date_end" id="date_end" required aria-label="Sélectionner la date de l'opération" value="<?php if (isset($selectedCampaign['date_end'])) echo formatDateForInput($selectedCampaign['date_end']) ?>">
+                            <input class="form__input form__input--to" type="date" name="date_end" id="date_end" required aria-label="Sélectionner la date de fin de l'opération" value="<?php if (isset($selectedCampaign['date_end'])) echo formatDateForInput($selectedCampaign['date_end']) ?>">
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="budget">Budget investi (sans €)</label>
@@ -142,10 +143,12 @@ unsetFilters($_SESSION);
                         </li>
                         <?php
                         if (isset($_GET['myc']) && intval($_GET['myc'])) {
+                            // Les inputs dans le cas où il s'agit d'une modification de campagne. 
                             echo '<input class="button button--new-campaign" type="submit" value="Modifier campagne" aria-label="Valider la création de la nouvelle campagne">';
                             echo '<input type="hidden" name="action" value="modify-campaign">';
                             echo '<input type="hidden" name="id_campaign" value="' . $selectedCampaign['id_campaign'] . '">';
                         } else {
+                            // Les inputs dans le cas où il s'agit d'une création de campagne.
                             echo '<input class="button button--new-campaign" type="submit" value="Créer la campagne" aria-label="Valider la création de la nouvelle campagne">';
                             echo '<input type="hidden" name="action" value="create-campaign">';
                         }
