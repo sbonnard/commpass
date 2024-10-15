@@ -73,34 +73,24 @@ if (!chartData || chartData.length === 0) {
     });
 };
 
-function exportChartAsImage() {
-    var svgElement = document.querySelector('#chart svg');
-    var svgData = new XMLSerializer().serializeToString(svgElement);
+var chart = c3.generate({
+    // Configuration de ton graphique
+});
 
-    var canvas = document.createElement("canvas");
-    var ctx = canvas.getContext("2d");
-
+// Capture du graphique en tant qu'image
+setTimeout(function () {
+    var chartElement = document.querySelector('#chart svg');  // Sélectionne l'élément SVG du graphique
+    var svgData = new XMLSerializer().serializeToString(chartElement);
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
     var img = new Image();
-    img.setAttribute("src", "data:image/svg+xml;base64," + btoa(svgData));
 
-    img.onload = function() {
-        canvas.width = img.width;
-        canvas.height = img.height;
+    img.onload = function () {
         ctx.drawImage(img, 0, 0);
-
-        // Convertir en PNG
-        var pngFile = canvas.toDataURL("image/png");
-
-        // Télécharger l'image ou l'envoyer au serveur
-        downloadImage(pngFile, 'chart.png');
+        var chartImage = canvas.toDataURL('image/png');
+        document.getElementById('chartImage').value = chartImage;  // Stocke l'image du graphique
     };
-}
+    
+    img.src = 'data:image/svg+xml;base64,' + btoa(svgData);
+}, 1000);
 
-function downloadImage(dataUrl, filename) {
-    var a = document.createElement('a');
-    a.href = dataUrl;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-}
