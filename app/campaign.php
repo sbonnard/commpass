@@ -172,7 +172,7 @@ $jsonData = json_encode($chartData);
         <form id="formPDF" action="rapport_pdf" method="post">
             <input type="hidden" id="htmlContent" name="htmlContent" value="">
             <input type="hidden" id="chartImage" name="chartImage" value="">
-            <button class="button button--pdf" type="submit" id="generatePDF"></button>
+            <button class="button--pdf" type="submit" id="generatePDF"></button>
         </form>
     </div>
 
