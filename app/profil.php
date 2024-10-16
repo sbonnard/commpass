@@ -45,7 +45,7 @@ unsetFilters($_SESSION);
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
+        echo fetchHeader('dashboard', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -82,7 +82,7 @@ unsetFilters($_SESSION);
                     <ul class="profil__brands">
                         ' . getBrandsAsList(fetchCompanyBrands($dbCo, $_SESSION)) . '
                     </ul>
-                    <form class="form" action="actions.php" method="post">
+                    <form class="form" action="actions" method="post">
                         <ul class="form__lst form__lst--app">
                             <li class="form__itm form__itm--app">
                                 <label class="form__label" for="profile_brand" aria-label="Sélectionner la marque concernée">Sélectionnez la marque à modifier</label>

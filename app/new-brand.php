@@ -47,7 +47,7 @@ unsetFilters($_SESSION);
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
+        echo fetchHeader('dashboard', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -71,7 +71,7 @@ unsetFilters($_SESSION);
             </h2>
 
             <section class="card__section" aria-labelledby="new-budget-ttl">
-                <form class="form" method="post" action="actions.php">
+                <form class="form" method="post" action="actions">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="budget">Nom de la marque</label>

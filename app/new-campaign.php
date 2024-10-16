@@ -47,7 +47,7 @@ unsetFilters($_SESSION);
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
+        echo fetchHeader('dashboard', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -74,7 +74,7 @@ unsetFilters($_SESSION);
 
 
             <section class="card__section" aria-labelledby="new-campaign-ttl">
-                <form class="form" action="actions-campaign.php" method="post" aria-label="Formulaire de création d'une nouvelle campagne">
+                <form class="form" action="actions-campaign" method="post" aria-label="Formulaire de création d'une nouvelle campagne">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="campaign_name">Nom de la campagne</label>

@@ -9,7 +9,7 @@
 function fetchLogInForm(array $session): string
 {
     return '
-    <form class="form login__menu" action="login.php" method="post" id="connection-form" aria-label="Formulaire de connexion">
+    <form class="form login__menu" action="login" method="post" id="connection-form" aria-label="Formulaire de connexion">
         <div class="login__section">
             <h2 class="header__ttl login__ttl">Commpass</h2>
             <a class="button--close" href="/index" aria-label="Fermer le formulaire de connexion">
@@ -46,7 +46,7 @@ function fetchLogInForm(array $session): string
 function getModifyEmailForm(): string
 {
     return '
-    <form class="form hidden" action="actions.php" method="post" id="email_form" aria-label="Formulaire de modification de l\'email utilisateur">
+    <form class="form hidden" action="actions" method="post" id="email_form" aria-label="Formulaire de modification de l\'email utilisateur">
         <ul class="form__lst form__lst--app">
             <li class="form__itm form__itm--app">
                 <label class="form__label" for="email">Nouvel email</label>
@@ -68,7 +68,7 @@ function getModifyEmailForm(): string
 function getModifyPhoneForm(): string
 {
     return '
-    <form class="form hidden" action="actions.php" method="post" id="phone_form" aria-label="Formulaire de modification du numéro de téléphone">
+    <form class="form hidden" action="actions" method="post" id="phone_form" aria-label="Formulaire de modification du numéro de téléphone">
         <ul class="form__lst form__lst--app">
             <li class="form__itm form__itm--app">
                 <label class="form__label" for="phone">Modifier le numéro de téléphone</label>
@@ -90,7 +90,7 @@ function getModifyPhoneForm(): string
 function getModifyPwdForm(): string
 {
     return '
-    <form class="form" action="actions.php" method="post" id="pwd_form" aria-label="Formulaire de modification du mot de passe">
+    <form class="form" action="actions" method="post" id="pwd_form" aria-label="Formulaire de modification du mot de passe">
         <ul class="form__lst form__lst--app">
             <li class="form__itm form__itm--app">
                 <label class="form__label" for="password">Nouveau mot de passe</label>
@@ -119,7 +119,7 @@ function displayFilterFormNotClient(array $companies, array $communicationObject
 {
     return
         '<div class="card">
-                <form class="card__section" action="actions-filter.php" method="post" id="filter-form">
+                <form class="card__section" action="actions-filter" method="post" id="filter-form">
                     <ul class="form__lst form__lst--app">
                         <div class="form__lst--flex">
                             <li class="form__itm">
@@ -140,7 +140,7 @@ function displayFilterFormNotClient(array $companies, array $communicationObject
                         <input type="hidden" name="action" value="filter-campaigns">
                     </ul>
                 </form>
-                <form action="actions-filter.php" method="post" id="reinit-form">
+                <form action="actions-filter" method="post" id="reinit-form">
                     <input type="submit" class="button button--reinit" id="filter-reinit" aria-label="Réinitialise tous les filtres" value="" title="Réinitialiser les filtres">
                     <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
                     <input type="hidden" name="action" value="filter-reinit">

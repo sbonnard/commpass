@@ -116,7 +116,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 <body>
 
     <header class="header">
-        <?= fetchHeader('dashboard.php', 'Mon tableau de bord') ?>
+        <?= fetchHeader('dashboard', 'Mon tableau de bord') ?>
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
@@ -139,7 +139,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         <div class="button__section">
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                echo '<a href="/new-campaign.php" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>';
+                echo '<a href="/new-campaign" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>';
             }
             ?>
         </div>
@@ -150,7 +150,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
             echo
             '<div class="card">
-                <form class="card__section" action="actions-filter.php" method="post" id="filter-form" aria-label="formulaire de filtre">
+                <form class="card__section" action="actions-filter" method="post" id="filter-form" aria-label="formulaire de filtre">
                     <ul class="form__lst form__lst--app">
                         <div class="form__lst--flex">
                             <li class="form__itm">
@@ -170,7 +170,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                         <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
                         <input type="hidden" name="action" value="filter-campaigns">
                 </form>
-                <form action="actions-filter.php" method="post" id="reinit-form">
+                <form action="actions-filter" method="post" id="reinit-form">
                     <input type="submit" class="button button--reinit" id="filter-reinit" aria-label="Réinitialise tous les filtres" value="" title="Réinitialiser les filtres">
                     <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
                     <input type="hidden" name="action" value="filter-reinit">
