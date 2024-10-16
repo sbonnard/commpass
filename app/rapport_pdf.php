@@ -13,7 +13,10 @@ if (isset($_POST['htmlContent'])) {
     $chartImage = $_POST['chartImage'] ?? '';
 
     // Initialisation de MPDF
-    $mpdf = new \Mpdf\Mpdf();
+    $mpdf = new \Mpdf\Mpdf([
+        'useDiskCache' => false,   // Désactive l'écriture sur le disque
+        'tempDir' => __DIR__ . '/tmp'  // Indiquer un répertoire temporaire dédié
+    ]);
 
     // Date du jour
     $today = date('Y-m-d');
@@ -142,8 +145,6 @@ p {
     border-radius: 0.75rem 0.75rem 0.75rem 0;
     height: fit-content;
     min-width: 8rem;
-    margin-bottom: 0.5rem;
-    margin-left: 12rem;
 }
 
 .vignette__ttl {
@@ -163,31 +164,29 @@ p {
         width: 14.875rem;
         gap: 1.5rem;
         font-size: 1.25rem;
-}
+    }
 
 .vignette--primary {
         background-color: #44277A;
-}
+    }
 
 .vignette--secondary {
         background-color: #842078;
-}
+    }
 
 .vignette--tertiary {
         background-color: #DA428F;
-}
+    }
 
 .vignette--bigger {
         width: 14.875rem;
         gap: 1.5rem;
         font-size: 1.5rem;
 }
-
 .vignettes-PDF {
     display: flex;
     justify-content: center;
 }
-
 .table {
     background-color: #FFF;
     font-family: 'jura';
@@ -197,14 +196,12 @@ p {
     border-collapse: collapse;
     min-width: 27.25rem;
 }
-
 .table__head {
     font-size: 1.25rem;
     text-transform: uppercase;
     color: #44277A;
     padding: 0.5rem 1rem;
 }
-
 .table__cell {
     padding: 0.5rem 1rem;
     border : 1px solid #44277A;
@@ -213,11 +210,6 @@ p {
 }
 
 .c3 {
-    background-color: #FFF;
-    margin-left: 12rem;
-}
-
-#chart {
     background-color: #FFF;
 }
 </style>
