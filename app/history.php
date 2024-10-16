@@ -123,7 +123,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && is
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard', 'Mon tableau de bord');
+        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
         ?>
     </header>
 
