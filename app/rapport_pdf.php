@@ -13,7 +13,9 @@ if (isset($_POST['htmlContent'])) {
     $chartImage = $_POST['chartImage'] ?? '';
 
     // Initialisation de MPDF
-    $mpdf = new \Mpdf\Mpdf();
+    $mpdf = new \Mpdf\Mpdf([
+        'tempDir' => __DIR__ . '/temp'
+    ]);
 
     // Date du jour
     $today = date('Y-m-d');
