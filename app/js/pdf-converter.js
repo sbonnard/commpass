@@ -6,10 +6,13 @@ document.getElementById('generatePDF').addEventListener('click', function(event)
 
     // Convertir le graphique C3.js en image base64
     const svg = document.querySelector('#chart svg');
-    const svgData = new XMLSerializer().serializeToString(svg);
 
+    
+    const svgData = new XMLSerializer().serializeToString(svg);
+    
     // Créer une image base64 à partir du SVG
     const canvas = document.createElement('canvas');
+    // canvas.setAttribute('style', 'background-color: white;');
     const ctx = canvas.getContext('2d');
     const img = new Image();
 
