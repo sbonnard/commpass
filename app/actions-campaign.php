@@ -14,7 +14,7 @@ require_once "includes/_message.php";
 
 
 if (!isset($_REQUEST['action'])) {
-    redirectTo('dashboard.php');
+    redirectTo('dashboard');
     exit;
 }
 
@@ -78,7 +78,7 @@ if ($_POST['action'] === 'create-campaign') {
 
     if ($isInsertOk) {
         addMessage('campaign_created_ok');
-        redirectTo('dashboard.php');
+        redirectTo('dashboard');
     } else {
         addError('campaign_creation_ko');
     }
@@ -148,7 +148,7 @@ if ($_POST['action'] === 'create-campaign') {
 
     if ($isUpdateOk) {
         addMessage('campaign_updated_ok');
-        redirectTo('dashboard.php');
+        redirectTo('dashboard');
     } else {
         addError('campaign_update_ko');
     }
@@ -188,7 +188,7 @@ if ($_POST['action'] === 'create-campaign') {
         if ($isDeleteOk && $isDeleteOperationOk) {
             $dbCo->commit();
             addMessage('campaign_deleted_ok');
-            redirectTo('dashboard.php');
+            redirectTo('dashboard');
         } else {
             throw new Exception('Erreur lors de la suppression des opérations');
         }
@@ -219,7 +219,7 @@ if ($_POST['action'] === 'create-campaign') {
 
     if ($isUpdateOk) {
         addMessage('budget_update_ok');
-        redirectTo('campaign.php?myc=' . $_POST['myc']);
+        redirectTo('campaign?myc=' . $_POST['myc']);
     } else {
         addError('budget_update_ko');
         redirectTo();
@@ -246,7 +246,7 @@ if ($_POST['action'] === 'create-campaign') {
 
     if ($isUpdateOk) {
         addMessage('budget_update_ok');
-        redirectTo('dashboard.php');
+        redirectTo('dashboard');
     } else {
         addError('budget_update_ko');
         redirectTo();
