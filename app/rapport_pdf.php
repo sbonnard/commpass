@@ -216,6 +216,10 @@ p {
     background-color: #FFF;
     margin-left: 12rem;
 }
+
+#chart {
+    background-color: #FFF;
+}
 </style>
 ";
 
