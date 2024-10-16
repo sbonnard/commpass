@@ -142,6 +142,8 @@ p {
     border-radius: 0.75rem 0.75rem 0.75rem 0;
     height: fit-content;
     min-width: 8rem;
+    margin-left: 12rem;
+    margin-bottom: 0.5rem;
 }
 
 .vignette__ttl {
@@ -208,6 +210,7 @@ p {
 
 .c3 {
     background-color: #FFF;
+    margin-left: 12rem;
 }
 </style>
 ";
