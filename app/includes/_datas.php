@@ -67,8 +67,6 @@ $currentYear = date('Y');
 
 // HISTORY
 
-// HISTORY
-
 $history = getOneCompanyDatasFilteredHistory($dbCo, $_SESSION);
 
 $historyBudget = fetchAnnualBudgetPerYearPerCompany($dbCo, $_SESSION);

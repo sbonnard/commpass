@@ -18,7 +18,11 @@ function fetchNav(array $session, string $dashboardActive = '', string $NetworkA
             . displayNetworkLinkIfTDC($session, $NetworkActive) .
             displayHistoryLinkIfPermissionOK($session, $historyActive) .
             '<li class="nav__itm ' . $profilActive . '">
+<<<<<<< HEAD
+                    <a href="profil.php" class="nav__lnk nav__lnk--profile" aria-label="Lien vers mon profil d\'utilisateur">Mon profil</a>
+=======
                     <a href="/profil" class="nav__lnk nav__lnk--profile" aria-label="Lien vers mon profil d\'utilisateur">Mon profil</a>
+>>>>>>> master
                 </li>
                 <li class="nav__itm">
                     <a href="logout.php" class="nav__lnk nav__lnk--logout" aria-label="Se déconnecter de l\'application">Déconnexion</a>
@@ -81,7 +85,11 @@ function displayHistoryLinkIfPermissionOK(array $session, string $historyActive)
     if (isset($session['client']) && $session['client'] === 0 || $session['boss'] === 1) {
         return '
             <li class="nav__itm ' . $historyActive . '">
+<<<<<<< HEAD
+                <a href="history.php" class="nav__lnk nav__lnk--history" aria-label="Lien vers l\'historique des campagnes">Historique</a>
+=======
                 <a href="/history" class="nav__lnk nav__lnk--history" aria-label="Lien vers l\'historique des campagnes">Historique</a>
+>>>>>>> master
             </li>';
     } else {
         return '';
