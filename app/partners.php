@@ -49,7 +49,7 @@ unsetFilters($_SESSION);
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
+        echo fetchHeader('dashboard', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -99,6 +99,10 @@ unsetFilters($_SESSION);
         </div>
 
     </main>
+
+    <a class="button--up" href="#" aria-label="Renvoie en haut de la page." id="scrollTop">
+        <img src="img/arrow-up.svg" alt="Flèche vers le haut">
+    </a>
 
     <footer class="footer">
         <?= fetchFooter() ?>

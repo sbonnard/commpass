@@ -45,7 +45,7 @@ unsetFilters($_SESSION);
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
+        echo fetchHeader('dashboard', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -77,12 +77,12 @@ unsetFilters($_SESSION);
         if (isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
             echo
             '<div class="card">
-                <h2 class="ttl" id="my-brands">Mes marques</h2>
+                <h2 class="ttl lineUp" id="my-brands">Mes marques</h2>
                 <section class="card__section profil__modify" aria-labelledby="my-brands">
                     <ul class="profil__brands">
                         ' . getBrandsAsList(fetchCompanyBrands($dbCo, $_SESSION)) . '
                     </ul>
-                    <form action="actions.php" method="post">
+                    <form class="form" action="actions.php" method="post">
                         <ul class="form__lst form__lst--app">
                             <li class="form__itm form__itm--app">
                                 <label class="form__label" for="profile_brand" aria-label="Sélectionner la marque concernée">Sélectionnez la marque à modifier</label>
@@ -106,7 +106,7 @@ unsetFilters($_SESSION);
         ?>
 
         <div class="card">
-            <h2 class="ttl" id="modify-infos">Modifier</h2>
+            <h2 class="ttl lineUp" id="modify-infos">Modifier</h2>
             <section class="card__section profil__modify" aria-labelledby="profil">
                 <div class="profil__modify--lnk-list">
                     <button class="profil__lnk" id="button-email">email</button>
@@ -122,6 +122,10 @@ unsetFilters($_SESSION);
         </div>
 
     </main>
+
+    <a class="button--up" href="#" aria-label="Renvoie en haut de la page." id="scrollTop">
+        <img src="img/arrow-up.svg" alt="Flèche vers le haut">
+    </a>
 
     <footer class="footer">
         <?= fetchFooter() ?>

@@ -40,11 +40,13 @@ function preventFromCSRF(): void
 {
     if (!isRefererOk()) {
         addError('referer');
+        redirectTo();
         exit;
     }
 
     if (!isTokenOk()) {
         addError('csrf');
+        redirectTo();
         exit;
     }
 }
@@ -79,7 +81,7 @@ function preventFromCSRFAPI(array $inputData): void
  */
 function checkConnection(array $session) {
     if (!isset($session['username'])) {
-        redirectTo('index.php');
+        redirectTo('index');
         addError('please_connect');
         exit();
     }
@@ -154,7 +156,7 @@ function sanitizeInput(string $input): string
 function checkUserClientStatus(array $session) {
     if (!isset($session['client']) || $session['client'] === 1) {
         addError('authorization_ko');
-        redirectTo('dashboard.php');
+        redirectTo('dashboard');
         exit();
     }
 }

@@ -1,0 +1,28 @@
+{
+  "js/script.js": {
+    "file": "assets/script-BqnDzb4M.js",
+    "name": "script",
+    "src": "js/script.js",
+    "isEntry": true,
+    "css": [
+      "assets/script-B_N4WivK.css"
+    ],
+    "assets": [
+      "assets/roboto-regular-webfont-Dh2UyALx.woff2",
+      "assets/roboto-bold-webfont-DLEC0mPx.woff2",
+      "assets/jura-oeZM-I3y.woff2"
+    ]
+  },
+  "scss/fonts/jura.woff2": {
+    "file": "assets/jura-oeZM-I3y.woff2",
+    "src": "scss/fonts/jura.woff2"
+  },
+  "scss/fonts/roboto-bold-webfont.woff2": {
+    "file": "assets/roboto-bold-webfont-DLEC0mPx.woff2",
+    "src": "scss/fonts/roboto-bold-webfont.woff2"
+  },
+  "scss/fonts/roboto-regular-webfont.woff2": {
+    "file": "assets/roboto-regular-webfont-Dh2UyALx.woff2",
+    "src": "scss/fonts/roboto-regular-webfont.woff2"
+  }
+}

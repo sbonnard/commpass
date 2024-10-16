@@ -35,7 +35,7 @@ checkConnection($_SESSION);
 
 if(isset($_SESSION['client']) && $_SESSION['client'] === 1 && isset($_SESSION['boss']) && $_SESSION['boss'] === 0) {
     addError('authorization_ko');
-    redirectTo('dashboard.php');
+    redirectTo('dashboard');
     exit;
 }
 
@@ -123,7 +123,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && is
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
+        echo fetchHeader('dashboard', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -350,19 +350,12 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && is
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1 && isset($_SESSION['filter']['year'])) {
                 echo getCampaignTemplate($dbCo, $history, $_SESSION);
-                if(empty($history)) {
-                    echo '
-                    <div class="card">
-                        <section class="card__section">
-                            <p class="big-text">Pas d\'historique sur l\'année ' . $_SESSION['filter']['year'] . '.</p>
-                        </section>
-                    </div>
-                    ';
-                }
+                getMessageIfNoHistory($history, $_SESSION);
                 // var_dump('CAS N°1');
             }  else if (isset($_SESSION['filter']['id_company'])) {
                 // $pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, $campaigns);
                 echo getCampaignTemplate($dbCo, $history, $_SESSION);
+                getMessageIfNoHistory($history, $_SESSION);
                 // var_dump('CAS N°2');
             }else if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 echo getHistoryCampaignTemplateByCompany($dbCo, $pastYearsCampaigns, $_SESSION, $companies);
@@ -378,6 +371,10 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && is
             ?>
         </section>
     </main>
+
+    <a class="button--up" href="#" aria-label="Renvoie en haut de la page." id="scrollTop">
+        <img src="img/arrow-up.svg" alt="Flèche vers le haut">
+    </a>
 
     <footer class="footer">
         <?= fetchFooter() ?>

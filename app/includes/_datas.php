@@ -65,7 +65,6 @@ $partners = fetchAllPartners($dbCo);
 
 $currentYear = date('Y');
 
-
 // HISTORY
 
 $history = getOneCompanyDatasFilteredHistory($dbCo, $_SESSION);
