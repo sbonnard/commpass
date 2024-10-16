@@ -13,13 +13,16 @@ if (isset($_POST['htmlContent'])) {
     $chartImage = $_POST['chartImage'] ?? '';
 
     // Initialisation de MPDF
-    $mpdf = new \Mpdf\Mpdf();
+    $mpdf = new \Mpdf\Mpdf([
+        'useDiskCache' => false,   // Désactive l'écriture sur le disque
+        'tempDir' => __DIR__ . '/tmp'  // Indiquer un répertoire temporaire dédié
+    ]);
 
     // Date du jour
     $today = date('Y-m-d');
 
     // Le logo de Toile de Com
-    $logo = '<img class="logo" src="img/logo-tdc.jpg" alt="Logo Toile de Com" style="width:150px;">';
+    $logo = '<img class="logo" src="img/logo-tdc.jpg" alt="Logo Toile de Com" style="width:350px;">';
 
     // Le header avec la date du rapport
     $header = '
@@ -204,6 +207,10 @@ p {
     border : 1px solid #44277A;
     text-align: center;
     font-size: 1.25rem;
+}
+
+.c3 {
+    background-color: #FFF;
 }
 </style>
 ";
