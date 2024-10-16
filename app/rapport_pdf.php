@@ -13,10 +13,7 @@ if (isset($_POST['htmlContent'])) {
     $chartImage = $_POST['chartImage'] ?? '';
 
     // Initialisation de MPDF
-    $mpdf = new \Mpdf\Mpdf([
-        'useDiskCache' => false,   // Désactive l'écriture sur le disque
-        'tempDir' => __DIR__ . '/tmp'  // Indiquer un répertoire temporaire dédié
-    ]);
+    $mpdf = new \Mpdf\Mpdf();
 
     // Date du jour
     $today = date('Y-m-d');
@@ -145,6 +142,8 @@ p {
     border-radius: 0.75rem 0.75rem 0.75rem 0;
     height: fit-content;
     min-width: 8rem;
+    margin-left: 12rem;
+    margin-bottom: 0.5rem;
 }
 
 .vignette__ttl {
@@ -211,6 +210,7 @@ p {
 
 .c3 {
     background-color: #FFF;
+    margin-left: 12rem;
 }
 </style>
 ";
