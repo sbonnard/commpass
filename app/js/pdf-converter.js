@@ -2,7 +2,7 @@ document.getElementById('generatePDF').addEventListener('click', function(event)
     event.preventDefault();
 
     // Récupérer le contenu HTML (données de la campagne)
-    const campaignContent = document.querySelector('.container--campaigns').innerHTML;
+    const campaignContent = document.querySelector('#pdfContent').innerHTML;
 
     // Convertir le graphique C3.js en image base64
     const svg = document.querySelector('#chart svg');
