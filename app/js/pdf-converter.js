@@ -12,7 +12,7 @@ document.getElementById('generatePDF').addEventListener('click', function(event)
     
     // Créer une image base64 à partir du SVG
     const canvas = document.createElement('canvas');
-    // canvas.setAttribute('style', 'background-color: white;');
+    canvas.setAttribute('fill', 'white');
     const ctx = canvas.getContext('2d');
     const img = new Image();
 
