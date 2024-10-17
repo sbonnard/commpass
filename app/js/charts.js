@@ -73,24 +73,27 @@ if (!chartData || chartData.length === 0) {
     });
 };
 
-var chart = c3.generate({
-    // Configuration de ton graphique
-});
+// // Capture du graphique en tant qu'image
+// setTimeout(function () {
+//     var chartElement = document.querySelector('#chart svg');  // Sélectionne l'élément SVG du graphique
+//     var svgData = new XMLSerializer().serializeToString(chartElement);
 
-// Capture du graphique en tant qu'image
-setTimeout(function () {
-    var chartElement = document.querySelector('#chart svg');  // Sélectionne l'élément SVG du graphique
-    var svgData = new XMLSerializer().serializeToString(chartElement);
-    var canvas = document.createElement('canvas');
-    var ctx = canvas.getContext('2d');
-    var img = new Image();
+//     // Ajouter un rectangle blanc au SVG
+//     const rect = '<rect width="100%" height="100%" fill="white" />'; // Rectangle blanc
+//     svgData = svgData.replace('<svg', `<svg>${rect}`); // Ajouter le rectangle avant le contenu SVG
 
-    img.onload = function () {
-        ctx.drawImage(img, 0, 0);
-        var chartImage = canvas.toDataURL('image/png');
-        document.getElementById('chartImage').value = chartImage;  // Stocke l'image du graphique
-    };
+//     var canvas = document.createElement('canvas');
+//     var ctx = canvas.getContext('2d');
+//     var img = new Image();
+
+//     img.onload = function () {
+//         canvas.width = chartElement.clientWidth; // Définir la largeur du canvas
+//         canvas.height = chartElement.clientHeight; // Définir la hauteur du canvas
+//         ctx.drawImage(img, 0, 0);
+//         var chartImage = canvas.toDataURL('image/png');
+//         document.getElementById('chartImage').value = chartImage;  // Stocke l'image du graphique
+//     };
     
-    img.src = 'data:image/svg+xml;base64,' + btoa(svgData);
-}, 1000);
+//     img.src = 'data:image/svg+xml;base64,' + btoa(svgData); // Convertir le SVG modifié
+// }, 1000);
 
