@@ -7,10 +7,20 @@
     font-family: 'roboto';
     color: $white;
     background-repeat: no-repeat;
+    background-position: center;
     transition: background-color 0.1s ease-in-out;
+    
+    @media screen and (min-width: 1980px) {
+        font-size: 1rem;
+        padding: 0.45rem 0.75rem 0.75rem 4rem;
+    }
 
     &--connection {
         background-image: url(../../img/cta-connection.svg);
+
+        @media screen and (min-width: 1980px) {
+            padding: 0.6rem 0.75rem 0.75rem 2rem;
+        }
 
         &:hover {
             background-image: url(../../img/cta-connection-hover.svg);
@@ -73,6 +83,7 @@
         padding-left: 4rem;
         border: 2px solid $primary;
         border-radius: 0.75rem;
+        background-position: left;
 
         &:hover {
             color: $tertiary;
@@ -151,6 +162,7 @@
         color: $primary;
         background-image: url(../../img/partner.svg);
         border: 2px solid $primary;
+        background-size: cover;
 
         &:hover {
             color: $tertiary;
@@ -233,7 +245,7 @@
         aspect-ratio: 1;
         border-radius: 0.75rem;
         margin-bottom: 2rem;
-        
+
         &:hover {
             background-image: url(../../img/pdf-hover.svg);
         }
