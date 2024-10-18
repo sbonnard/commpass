@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : jeu. 03 oct. 2024 à 09:57
+-- Généré le : ven. 18 oct. 2024 à 12:17
 -- Version du serveur : 8.0.37
 -- Version de PHP : 8.2.8
 
@@ -43,7 +43,7 @@ CREATE TABLE `brand` (
 INSERT INTO `brand` (`id_brand`, `brand_name`, `id_company`, `legend_colour_hex`) VALUES
 (0, 'Toutes les marques', 1, '#D35DB5'),
 (1, 'Lumosphère', 2, '#d17a00'),
-(2, 'Vélocitix', 2, '#ECFF12'),
+(2, 'Vélocitix', 2, '#ffdd00'),
 (3, 'Stellar Threads', 2, '#24ff99'),
 (4, 'Aurélys', 2, '#2ecbff'),
 (5, 'Nexmus', 3, '#44277A'),
@@ -54,7 +54,7 @@ INSERT INTO `brand` (`id_brand`, `brand_name`, `id_company`, `legend_colour_hex`
 (11, 'Nerexam Schutz', 5, '#ff9238'),
 (12, 'VersicherungsNexus', 5, '#DF0000'),
 (13, 'AlpCare', 6, '#1dd7c2'),
-(14, 'Joueur du Grenier', 8, '#fbff00'),
+(14, 'Joueur du Grenier', 8, '#ffea00'),
 (15, 'Bazar du Grenier', 8, '#00d604'),
 (16, 'L\'Arcadia', 8, '#0074cc'),
 (17, 'Pignottes', 4, '#ff61a0'),
@@ -80,7 +80,7 @@ CREATE TABLE `budgets` (
 
 INSERT INTO `budgets` (`id_budget`, `year`, `annual_budget`, `id_company`) VALUES
 (1, 2024, 22000, 2),
-(2, 2023, 40000, 2),
+(2, 2023, 0, 2),
 (3, 2023, 38000, 3),
 (4, 2024, 45001, 3),
 (5, 2024, 19000, 11);
@@ -111,7 +111,6 @@ INSERT INTO `campaign` (`id_campaign`, `campaign_name`, `budget`, `date_start`, 
 (1, 'Soldes d\'été', 10500.00, '2024-06-27 00:00:00', '2024-07-14 10:45:55', 3, 2, 3, 2),
 (2, 'Promos d\'hiver', 18000.00, '2023-11-14 00:00:00', '2024-01-04 10:46:23', 6, 2, 3, 1),
 (3, 'Tous plus verts', 25000.00, '2024-02-01 00:00:00', '2024-05-02 10:46:55', 3, 2, 2, 1),
-(13, 'Salon du luminaire', 178000.10, '2022-05-05 00:00:00', '2022-05-14 10:47:41', 4, 3, 1, 2),
 (14, 'Lancement Groupe Pignon', 21000.00, '2023-05-14 00:00:00', '2023-06-14 10:48:09', 5, 4, 1, 2),
 (15, 'Tous plus verts', 25000.00, '2022-02-01 00:00:00', '2022-05-02 10:48:41', 3, 2, 2, 2),
 (16, 'Fête des pères', 8500.00, '2025-06-09 00:00:00', '2025-06-15 10:48:58', 6, 2, 3, 2),
@@ -216,7 +215,6 @@ INSERT INTO `operation` (`id_operation`, `description`, `price`, `operation_date
 (8, 'Vitrine web mise à jour', 227.92, '2023-11-29', 2, 2, 7, NULL),
 (9, 'Avatars du personnel', 205.00, '2024-01-15', 3, 2, 7, NULL),
 (10, 'Encart presse dans la Manche Libre', 75.00, '2024-02-05', 3, 2, 1, 1),
-(12, 'Mise en lumière de la société Luminase avec un beau panneau néon', 14250.28, '2024-09-12', 13, 3, 6, NULL),
 (14, 'Test Stellar Threads', 1450.00, '2024-09-20', 1, 2, 1, NULL),
 (15, 'Graphisme affiches fête des père', 1200.00, '2025-06-09', 16, 2, 2, NULL),
 (20, 'Affiches soldes', 450.00, '2024-11-09', 18, 4, 2, NULL),
@@ -254,7 +252,15 @@ INSERT INTO `operation` (`id_operation`, `description`, `price`, `operation_date
 (56, 'Pub vidéo', 1982.00, '2024-11-27', 42, 11, 4, 5),
 (57, 'Pub Tendance Ouest', 800.00, '2024-11-02', 42, 11, 3, 3),
 (58, 'test annual_budget si j\'ajoute une opération en janvier 2024', 800.00, '2024-01-02', 2, 2, 10, 2),
-(59, 'Publications intagram, linkedin et facebook', 800.00, '2024-12-31', 43, 11, 5, 0);
+(59, 'Publications intagram, linkedin et facebook', 800.00, '2024-12-31', 43, 11, 5, 0),
+(60, 'truc', 3800.00, '2023-10-13', 29, 2, 10, 0),
+(61, 'truc', 963.00, '2024-10-24', 15, 2, 10, 0),
+(62, 'bidule', 963.00, '2024-10-09', 15, 2, 5, 0),
+(63, 'chose', 986.00, '2024-10-16', 15, 2, 7, 2),
+(64, 'test 78521', 1300.80, '2024-10-23', 32, 3, 5, 0),
+(65, 'Test', 1300.00, '2024-10-25', 20, 2, 11, 0),
+(67, 'Green washing forcing', 1940.00, '2024-10-24', 19, 4, 4, 5),
+(68, 'On est tellement écolos', 1200.00, '2024-09-12', 19, 4, 3, 4);
 
 -- --------------------------------------------------------
 
@@ -287,21 +293,28 @@ INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 (9, 1),
 (10, 1),
 (23, 1),
+(62, 1),
 (24, 2),
 (30, 2),
 (37, 2),
+(63, 2),
 (14, 3),
 (15, 3),
 (22, 3),
 (25, 3),
 (58, 3),
+(60, 3),
+(65, 3),
 (4, 4),
 (8, 4),
 (26, 4),
 (29, 4),
+(61, 4),
 (31, 6),
+(64, 6),
 (20, 7),
 (21, 8),
+(68, 8),
 (33, 10),
 (52, 10),
 (34, 11),
@@ -314,6 +327,7 @@ INSERT INTO `operation_brand` (`id_operation`, `id_brand`) VALUES
 (46, 14),
 (44, 15),
 (41, 16),
+(67, 17),
 (54, 19),
 (55, 20),
 (57, 20),
@@ -390,14 +404,14 @@ INSERT INTO `users` (`id_user`, `username`, `firstname`, `lastname`, `password`,
 (2, 'alemaitre2', 'Alain', 'Lemaître', '$2y$10$KXm8N435ocnGKFY0keVBrudUCjNHwab4DLAvNvCK5hTFRoCPZUrk6', 'alain.lemaitre@toiledecom.fr', '0614011401', 0, 1, 1),
 (3, 'jcarriere3', 'Julie', 'Carrière', '$2y$10$cCubd56otzIKiNdKRj3i.u4Crxaxz586Ygn5QmVszFF91z2SgMqFS', 'julie.carriere@fakebusiness.com', '0600102030', 1, 1, 2),
 (4, 'mhamelin4', 'Marius', 'Hamelin', '$2y$10$ZMkpWcRvhkY0PHUZPlb8COU3sCBTRqIKdvvK4sZd2U84wH2HHNPwK', 'marius.hamelin@luminase.com', '0600102030', 1, 1, 3),
-(5, 'ppignon5', 'Pascale', 'Pignon', '$2y$10$ZMkpWcRvhkY0PHUZPlb8COU3sCBTRqIKdvvK4sZd2U84wH2HHNPwK', 'pascale.pignon@pignon-group.com', '0600102030', 1, 1, 4),
+(5, 'ppignon5', 'Pascal', 'Pignon', '$2y$10$ZMkpWcRvhkY0PHUZPlb8COU3sCBTRqIKdvvK4sZd2U84wH2HHNPwK', 'pascale.pignon@pignon-group.com', '0600102030', 1, 1, 4),
 (6, 'mchampion6', 'Manon', 'Champion', '$2y$10$cCubd56otzIKiNdKRj3i.u4Crxaxz586Ygn5QmVszFF91z2SgMqFS', 'manon.champion@fakebusiness.com', '0600102030', 1, 0, 2),
 (7, 'hziegler7', 'Helmut', 'Ziegler', '$2y$10$cCubd56otzIKiNdKRj3i.u4Crxaxz586Ygn5QmVszFF91z2SgMqFS', 'helmut.ziegler@nerexam.com', '0600102030', 1, 1, 5),
 (8, 'ldubois8', 'Léon', 'Dubois', '$2y$10$0FCcKygW2AKjhbM93u2qg.GchfDaImvsU7dsV8vy8zLYSuV9dlOYe', 'duboisleon@helvionics.com', '0601020304', 1, 1, 6),
 (9, 'jmuller9', 'Johannes', 'Müller', '$2y$10$ZrJPfxjaIWGVJEfu6VjQqeRjeqXrBpuaMl6ks96rYasTgda1Qp7aK', 'johannesmuller@nerexam.com', '0614141414', 1, 0, 5),
 (12, 'vriche74', 'Veronica', 'Riche', '$2y$10$H85YqMiJjN9Z4FT15z32pe3cjwbbv8gGVFA4tiJHXN73DGKply6XW', 'veronica-riche@helvionics.com', '0601020304', 1, 0, 6),
 (14, 'jnogue18', 'Justine', 'Noguera', '$2y$10$UDoOVNZngCeJ.YDWPXpzvetirugKpgan/W21/pxomQbDDomFj2O9y', 'jnogue@helvionics.com', '0614011401', 1, 0, 6),
-(15, 'jmolas', 'Fréderic', 'Molas', '$2y$10$RTsnwh1JROCpoQ/FXvhM8Ou9ELhvKcN4FnfSEhWNoOnaf2WGqqsFa', 'jdgprod@jdr.fr', '0601020304', 1, 1, 8),
+(15, 'fmolas', 'Fréderic', 'Molas', '$2y$10$RTsnwh1JROCpoQ/FXvhM8Ou9ELhvKcN4FnfSEhWNoOnaf2WGqqsFa', 'jdgprod@jdr.fr', '0601020304', 1, 1, 8),
 (16, 'srassiat14', 'Sébastien', 'Rassiat', '$2y$10$dDWqQnpSNuIMLPjCqn5L5OdKqjYoYEEpLGV1CTrJRtuRqBVjLYzcS', 'sebrassiat@jdegprod.com', '0601020304', 1, 1, 8),
 (19, 'shawkins62', 'Simeon', 'Hawkins', '$2y$10$KKB2I44p.2WSyREQLLnUVelgJZHq9BRMdSmqnz4icJ00m/3gHrICG', 'simeon.hawkins@jambalaya.com', '0688112222', 1, 1, 11);
 
@@ -515,7 +529,7 @@ ALTER TABLE `media`
 -- AUTO_INCREMENT pour la table `operation`
 --
 ALTER TABLE `operation`
-  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id_operation` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT pour la table `partner`
