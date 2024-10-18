@@ -38,11 +38,7 @@ generateToken();
         <p class="ttl">VOUS N’AVEZ PAS LA PERMISSION D’ACCÉDER<br>A CETTE RESSOURCE !</p>
         <p class="medium-text">Cliquez sur la boussole pour retrouver votre chemin</p>
         <div class="compass">
-<<<<<<< HEAD
             <a href="../index.php">
-=======
-            <a href="../index">
->>>>>>> master
                 <img src="../img/compass-border.svg" alt="Une boussole rose">
                 <img class="compass__arrow" src="../img/compass-arrow.svg" alt="Flèche de boussole">
             </a>
