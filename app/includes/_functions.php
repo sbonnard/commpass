@@ -295,24 +295,23 @@ function getDateText($date): string
  * @param array $history - A list of history
  * @return string - The message to display.
  */
-function getMessageIfNoHistory(array $history, array $session):string
+function getMessageIfNoHistory(array $history, array $session): string
 {
-    if (empty($history)) {
-        if(isset($session['filter']['year'])) {
-            return
-                '
+    if (empty($history) && isset($session['filter']['year'])) {
+
+        return
+            '
                 <div class="card">
                     <section class="card__section">
                         <p class="big-text">Pas d\'historique sur l\'année ' . $session['filter']['year'] . '.</p>
                     </section>
                 </div>
                 ';
-        }
-
-        return '<div class="card">
-                    <section class="card__section">
-                        <p class="big-text">Pas d\'historique disponible.</p>
-                    </section>
-                </div>';
-    }  
+    }
+    
+    return '<div class="card">
+                <section class="card__section">
+                    <p class="big-text">Pas d\'historique disponible.</p>
+                </section>
+            </div>';
 }
