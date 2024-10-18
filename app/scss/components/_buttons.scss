@@ -113,6 +113,11 @@
         border: 2px solid $tertiary;
         padding-left: 4rem;
 
+        @media screen and (min-width: 1980px) {
+            background-size: cover;
+            padding: 0.45rem 0.75rem 0.5rem 3rem;
+        }
+
         &:hover {
             color: $primary;
             background-image: url(../../img/cta-add-user-hover.svg);
