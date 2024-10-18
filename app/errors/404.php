@@ -34,7 +34,7 @@ generateToken();
 <body>
 
     <main class="container--error container__flex">
-        <h1 class="ttl ttl--huge lineUp">404<br><span class="ttl--tertiary">Page Not Found</span></h1>
+        <h1 class="ttl ttl--huge lineUp">404<br><span class="ttl--tertiary">Page Non Trouvée</span></h1>
         <p class="ttl">Vous êtes égaré ?</p>
         <p class="medium-text">Cliquez sur la boussole pour retrouver votre chemin</p>
         <div class="compass">
