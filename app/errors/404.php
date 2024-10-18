@@ -26,7 +26,7 @@ generateToken();
 </head>
 
 <header class="header">
-    <a href="../index" title="Retour vers le site commpass.toiledecom.fr" aria-label="Lien vers le site">
+    <a href="../index.php" title="Retour vers le site commpass.toiledecom.fr" aria-label="Lien vers le site">
         <h1 class="header__ttl">Commpass</h1>
     </a>
 </header>
