@@ -297,7 +297,7 @@ function getDateText($date): string
  */
 function getMessageIfNoHistory(array $history, array $session):string
 {
-    if (empty($history)) {
+    if (empty($history) && isset($session['filter']['year'])) {
         return
             '
             <div class="card">
