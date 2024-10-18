@@ -13,5 +13,5 @@ require_once "includes/_message.php";
 session_unset();
 session_destroy();
 
-redirectTo('index');
+redirectTo('index.php');
 exit();

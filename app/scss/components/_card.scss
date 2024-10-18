@@ -4,7 +4,7 @@
     align-items: center;
     gap: 1.5rem;
     width: 100%;
-    transition: transform 5s ease-in-out;
+    transition: transform 0.4s ease-in-out;
 
     &__section {
         display: flex;
@@ -47,26 +47,10 @@
     }
 
     &--over {
-        /* Safari and Chrome */
-        -webkit-transition: all 0.6s ease;
-        /* Firefox */
-        -moz-transition: all 0.6s ease;
-        /* IE 9 */
-        -ms-transition: all 0.6s ease;
-        /* Opera */
-        -o-transition: all 0.6s ease;
-        transition: all 0.6s ease;
+        transition: transform 0.6s ease;
 
         &:hover {
-            /* Safari and Chrome */
-            -webkit-transform: scale(1.05);
-            /* Firefox */
-            -moz-transform: scale(1.05);
-            /* IE 9 */
-            -ms-transform: scale(1.05);
-            /* Opera */
-            -o-transform: scale(1.05);
-            transform: scale(1.05);
+            transform: translateY(-10px);
         }
     }
 
