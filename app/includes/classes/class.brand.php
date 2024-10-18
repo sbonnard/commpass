@@ -118,29 +118,34 @@ function getCompanyBrandsAsHTMLOptions(array $companyBrands): string
  */
 function getAnnualSpendingByBrand(PDO $dbCo, array $session): array
 {
-    $queryAnnualSpending = $dbCo->prepare(
-        'SELECT b.id_brand, brand_name, legend_colour_hex, SUM(o.price) AS total_spent
+    $sql = 'SELECT b.id_brand, brand_name, legend_colour_hex, SUM(o.price) AS total_spent
         FROM brand b
             JOIN operation_brand ob ON b.id_brand = ob.id_brand
             JOIN operation o ON ob.id_operation = o.id_operation
-        WHERE YEAR(o.operation_date) = YEAR(CURDATE()) AND o.id_company = :id_company
-        GROUP BY id_brand;'
-    );
+            JOIN campaign c ON o.id_campaign = c.id_campaign
+        WHERE YEAR(o.operation_date) = YEAR(CURDATE()) 
+        AND o.id_company = :id_company';
 
-    if (isset($session['filter'])) {
-        $bindValues = [
-            'id_company' => $session['filter']['id_company']
-        ];
-    } else if (!isset($session['filter'])) {
-        $bindValues = [
-            'id_company' => intval($session['id_company'])
-        ];
-    } else {
-        $bindValues = [
-            'id_company' => 1 // default
-        ];
+    // Ajout du filtre si le filtre cible est défini
+    if (isset($session['filter']['target-filter'])) {
+        $sql .= ' AND id_target = :target_filter';  // Ajout d'un espace avant AND
     }
 
+    $sql .= ' GROUP BY b.id_brand;';
+
+    $queryAnnualSpending = $dbCo->prepare($sql);
+
+    // Gestion des valeurs à lier en fonction des conditions
+    $bindValues = [
+        'id_company' => $session['filter']['id_company'] ?? intval($session['id_company']) // Priorité au filtre
+    ];
+
+    // Si le filtre cible est défini, on l'ajoute dans les valeurs à lier
+    if (isset($session['filter']['target-filter'])) {
+        $bindValues['target_filter'] = $session['filter']['target-filter'];
+    }
+
+    // Exécution de la requête avec les valeurs liées
     $queryAnnualSpending->execute($bindValues);
 
     return $queryAnnualSpending->fetchAll(PDO::FETCH_ASSOC);
