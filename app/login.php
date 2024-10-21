@@ -14,7 +14,7 @@ require_once "includes/_security.php";
 require_once "includes/_message.php";
 
 
-// header('Content-type:application/json');
+header('Content-type:application/json');
 
 
 if (!isset($_POST['action'])) {
