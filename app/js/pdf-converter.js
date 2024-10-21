@@ -67,3 +67,9 @@ const ticks = document.querySelectorAll('.tick');
 ticks.forEach(tick => {
     tick.remove();
 });
+
+const legendsText = document.querySelectorAll('.c3-legend-item');
+
+legendsText.forEach(legendText => {
+    legendText.style.fontSize = '11px';
+});
