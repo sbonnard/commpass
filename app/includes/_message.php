@@ -16,7 +16,8 @@ $messages = [
     'brand_created_ok' => 'Nouvelle marque créée.',
     'campaign_updated_ok' => 'La campagne a été mise à jour',
     'campaign_deleted_ok' => 'La campagne a été supprimée.',
-    'client_disabled_ok' => 'Le client a été désactivé'
+    'client_disabled_ok' => 'Le client a été désactivé',
+    'client_enabled_ok' => 'Le compte client a été réactivé'
 ];
 
 $errors = [
@@ -75,7 +76,9 @@ $errors = [
     'no_date_range' => 'Aucune date correspondante.',
     'year_ko' => 'L\'année n\'a pas pu être déterminée.',
     'client_ko' => 'Aucun client trouvé.',
-    'client_disabled_ko' => 'Erreur lors de la désactivation du client.'
+    'client_disabled_ko' => 'Erreur lors de la désactivation du client.',
+    'client_enabled_ko' => 'Erreur lors de la réactivation du client.'
+
 ];
 
 

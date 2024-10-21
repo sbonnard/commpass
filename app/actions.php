@@ -468,7 +468,8 @@ if ($_POST['action'] === 'modify-pwd') {
 
     $queryDisableClient = $dbCo->prepare(
         'UPDATE users
-        SET enabled = 0 WHERE id_user = :id_user;');
+        SET enabled = 0 WHERE id_user = :id_user;'
+    );
 
     $bindValues = [
         'id_user' => intval($_POST['client-user'])
@@ -476,11 +477,35 @@ if ($_POST['action'] === 'modify-pwd') {
 
     $isDisableClientOk = $queryDisableClient->execute($bindValues);
 
-    if($isDisableClientOk) {
+    if ($isDisableClientOk) {
         addMessage('client_disabled_ok');
         redirectTo();
     } else {
         addError('client_disabled_ko');
+    }
+} else if ($_POST['action'] === 'enable-client') {
+    if (!isset($_POST['client-user'])) {
+        addError('client_ko');
+        redirectTo();
+        exit;
+    }
+
+    $queryEnableClient = $dbCo->prepare(
+        'UPDATE users
+        SET enabled = 1 WHERE id_user = :id_user;'
+    );
+
+    $bindValues = [
+        'id_user' => intval($_POST['client-user'])
+    ];
+
+    $isEnableClientOk = $queryEnableClient->execute($bindValues);
+
+    if ($isEnableClientOk) {
+        addMessage('client_enabled_ok');
+        redirectTo();
+    } else {
+        addError('client_enabled_ko');
     }
 }
 
