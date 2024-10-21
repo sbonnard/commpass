@@ -24,4 +24,35 @@
         justify-content: center;
         gap: 0.5rem;
     }
+    
+    &--disabled {
+        ::before {
+            content: url(../../img/disable.svg);
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+
+    &__name {
+        display: flex;
+        align-items: flex-start;
+        position: relative;
+    }
+
+    &--disable-btn {
+        opacity: 0;
+        background-image: url(../../img/disable.svg);
+        width: 1.25rem;
+        aspect-ratio: 1;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: 0.5rem;
+        margin-left: 0.5rem;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    &__name:hover &--disable-btn, &disable-btn:hover {
+        opacity: 1;
+    }
+
 }

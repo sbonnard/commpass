@@ -14,7 +14,7 @@ require_once "includes/_security.php";
 require_once "includes/_message.php";
 
 
-header('Content-type:application/json');
+// header('Content-type:application/json');
 
 
 if (!isset($_POST['action'])) {
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'log-in') {
     $query->execute(['username' => $username]);
     $user = $query->fetch();
 
-    if ($user && password_verify($password, $user['password'])) {
+    if ($user && password_verify($password, $user['password']) && $user['enabled'] === 1) {
         $_SESSION['username'] = $user['username'];
         $_SESSION['id_user'] = $user['id_user'];
         $_SESSION['client'] = $user['client'];
@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'log-in') {
         $_SESSION['id_company'] = $user['id_company'];
     } else {
         addError('login_fail');
-        redirectTo('index');
+        redirectTo('index.php');
     }
 }
 
-redirectTo('dashboard');
+redirectTo('dashboard.php');

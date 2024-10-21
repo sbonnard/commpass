@@ -49,7 +49,7 @@ unsetFilters($_SESSION);
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard', 'Mon tableau de bord');
+        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -71,8 +71,8 @@ unsetFilters($_SESSION);
         </h2>
 
         <div class="button__section">
-            <a href="/new-client" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouveau client</a>
-            <span class="text-tertiary"><a href="/new-user" class="button button--user" aria-label="Redirige vers un formulaire de création d'utilisateur">Nouvel utilisateur</a></span>
+            <a href="/new-client.php" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouveau client</a>
+            <span class="text-tertiary"><a href="/new-user.php" class="button button--user" aria-label="Redirige vers un formulaire de création d'utilisateur">Nouvel utilisateur</a></span>
         </div>
 
         <div class="card <?php
@@ -97,13 +97,20 @@ unsetFilters($_SESSION);
                         foreach ($users as $user) {
                             if ($user['id_company'] === $company['id_company']) {
                                 $userFound = true;
-                                $companyDatas .= '<li class="';
-
+                                $companyDatas .= '<li class="client__name ';
+                                
                                 if ($user['boss'] === 1) {
-                                    $companyDatas .= 'user--boss';
+                                    $companyDatas .= ' user--boss ';
                                 }
 
-                                $companyDatas .= '">' . $user['firstname'] . ' ' . $user['lastname'] . '</li>';
+                                $companyDatas .= '"';
+
+                                if ($user['enabled'] === 0) {
+                                    $companyDatas .= ' style="color: #b5b5b5c9;"';
+                                }
+
+                                $companyDatas .= '>' . $user['firstname'] . ' ' . $user['lastname'] . '
+                                <button class="client--disable-btn" data-client-disable="' . $user['id_user'] . '"></button></li>';
                             }
                         }
 
@@ -116,7 +123,7 @@ unsetFilters($_SESSION);
                         $companyDatas .= '
                         <div class="client__brands-ttl">
                             <h4 class="client__subttl">Les marques</h4>
-                            <a class="button--plus" href="/new-brand?comp=' . $company['id_company'] . '" title="Ajouter une marque pour ' . $company['company_name'] . '"></a>
+                            <a class="button--plus" href="/new-brand.php?comp=' . $company['id_company'] . '" title="Ajouter une marque pour ' . $company['company_name'] . '"></a>
                         </div>';
 
                         foreach ($allbrands as $brand) {
