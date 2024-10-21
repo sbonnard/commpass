@@ -44,7 +44,7 @@ function fetchUserDatas(PDO $dbCo, array $session): array|bool
 function fetchAllUsers(PDO $dbCo): array
 {
     $query = $dbCo->prepare(
-        'SELECT id_user, username, firstname, lastname, email, phone, client, boss, id_company
+        'SELECT id_user, username, firstname, lastname, email, phone, client, boss, id_company, enabled
         FROM users;'
     );
 

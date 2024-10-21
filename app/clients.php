@@ -97,13 +97,20 @@ unsetFilters($_SESSION);
                         foreach ($users as $user) {
                             if ($user['id_company'] === $company['id_company']) {
                                 $userFound = true;
-                                $companyDatas .= '<li class="';
-
+                                $companyDatas .= '<li class="client__name ';
+                                
                                 if ($user['boss'] === 1) {
-                                    $companyDatas .= 'user--boss';
+                                    $companyDatas .= ' user--boss ';
                                 }
 
-                                $companyDatas .= '">' . $user['firstname'] . ' ' . $user['lastname'] . '</li>';
+                                $companyDatas .= '"';
+
+                                if ($user['enabled'] === 0) {
+                                    $companyDatas .= ' style="color: #b5b5b5c9;"';
+                                }
+
+                                $companyDatas .= '>' . $user['firstname'] . ' ' . $user['lastname'] . '
+                                <button class="client--disable-btn" data-client-disable="' . $user['id_user'] . '"></button></li>';
                             }
                         }
 
