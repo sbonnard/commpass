@@ -109,8 +109,27 @@ unsetFilters($_SESSION);
                                     $companyDatas .= ' style="color: #b5b5b5c9;"';
                                 }
 
-                                $companyDatas .= '>' . $user['firstname'] . ' ' . $user['lastname'] . '
-                                <button class="client--disable-btn" data-client-disable="' . $user['id_user'] . '"></button></li>';
+                                $companyDatas .= '>' . $user['firstname'] . ' ' . $user['lastname'];
+
+                                if ($user['enabled'] === 1) {
+                                $companyDatas .= 
+                                '<form class="client__disabled-form" method="post" action="actions.php">
+                                    <button type="submit" class="client--disable-btn" data-client-disable="' . $user['id_user'] . '"></button>
+                                    <input type="hidden" name="token" value="'. $_SESSION['token']. '">
+                                    <input type="hidden" name="action" value="disable-client">
+                                    <input type="hidden" name="client-user" value="'. $user['id_user'] . '">
+                                </form>';
+                                } else {
+                                    $companyDatas .= 
+                                '<form class="client__enable-form" method="post" action="actions.php">
+                                    <button type="submit" class="client--enable-btn" data-client-enable="' . $user['id_user'] . '"></button>
+                                    <input type="hidden" name="token" value="'. $_SESSION['token']. '">
+                                    <input type="hidden" name="action" value="enable-client">
+                                    <input type="hidden" name="client-user" value="'. $user['id_user'] . '">
+                                </form>';
+                                }
+
+                                $companyDatas .= '</li>';
                             }
                         }
 

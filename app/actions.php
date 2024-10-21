@@ -14,7 +14,7 @@ require_once "includes/_message.php";
 
 
 if (!isset($_REQUEST['action'])) {
-    redirectTo('dashboard');
+    redirectTo('dashboard.php');
     exit;
 }
 
@@ -24,7 +24,7 @@ preventFromCSRF();
 if ($_POST['action'] === 'modify-pwd') {
     if (!isset($_POST['password']) || !isset($_POST['password-confirm']) || $_POST['password'] !== $_POST['password-confirm']) {
         addError('unmatched_pwd');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     }
 
@@ -45,7 +45,7 @@ if ($_POST['action'] === 'modify-pwd') {
 } else if ($_POST['action'] === 'modify-email') {
     if (!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
         addError('invalid_email');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     }
 
@@ -60,17 +60,17 @@ if ($_POST['action'] === 'modify-pwd') {
 
     if ($isUpdateOk) {
         addMessage('update_ok_email');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     } else {
         addError('update_ko_email');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     }
 } else if ($_POST['action'] === 'modify-phone') {
     if (!isset($_POST['phone']) || !preg_match('/^[0-9]{10}$/', $_POST['phone'])) {
         addError('invalid_phone');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     }
 
@@ -85,11 +85,11 @@ if ($_POST['action'] === 'modify-pwd') {
 
     if ($isUpdateOk) {
         addMessage('update_ok_phone');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     } else {
         addError('update_ko_phone');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     }
 } else if ($_POST['action'] === 'create-operation') {
@@ -135,11 +135,11 @@ if ($_POST['action'] === 'modify-pwd') {
 
                 addMessage('operation_created_ok');
 
-                redirectTo('campaign?myc=' . $_POST['id_campaign']);
+                redirectTo('campaign.php?myc=' . $_POST['id_campaign']);
             } else {
                 $dbCo->rollBack();
                 addError('operation_creation_ko');
-                redirectTo('campaign?myc=' . $_POST['id_campaign']);
+                redirectTo('campaign.php?myc=' . $_POST['id_campaign']);
             }
         }
     } catch (PDOException $e) {
@@ -205,11 +205,11 @@ if ($_POST['action'] === 'modify-pwd') {
 
                 addMessage('operation_update_ok');
 
-                redirectTo('campaign?myc=' . $_POST['id_campaign']);
+                redirectTo('campaign.php?myc=' . $_POST['id_campaign']);
             } else {
                 $dbCo->rollBack();
                 addError('operation_update_ko');
-                redirectTo('campaign?myc=' . $_POST['id_campaign']);
+                redirectTo('campaign.php?myc=' . $_POST['id_campaign']);
             }
         }
     } catch (PDOException $e) {
@@ -219,13 +219,13 @@ if ($_POST['action'] === 'modify-pwd') {
 } else if ($_POST['action'] === 'modify-colour') {
     if (!isset($_POST['profile_brand'])) {
         addError('brand_ko');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     }
 
     if (!isset($_POST['color'])) {
         addError('colour_ko');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     }
 
@@ -248,17 +248,17 @@ if ($_POST['action'] === 'modify-pwd') {
 
         if ($isUpdateOk) {
             addMessage('update_ok_colour');
-            redirectTo('profil');
+            redirectTo('profil.php');
             exit;
         } else {
             addError('update_ko_colour');
-            redirectTo('profil');
+            redirectTo('profil.php');
             exit;
         }
     } else {
         // Si la couleur n'est pas valide
         addError('invalid_colour_format');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     }
 } else if ($_POST['action'] === 'new_brand') {
@@ -295,7 +295,7 @@ if ($_POST['action'] === 'modify-pwd') {
 
     if ($isInsertOk) {
         addMessage('brand_created_ok');
-        redirectTo('clients');
+        redirectTo('clients.php');
     } else {
         addError('brand_creation_ko');
         redirectTo('');
@@ -347,7 +347,7 @@ if ($_POST['action'] === 'modify-pwd') {
             if ($isAnnualBudgetInsertOk) {
                 $dbCo->commit();
                 addMessage('new_client_created_ok');
-                redirectTo('clients');
+                redirectTo('clients.php');
                 exit;
             } else {
                 throw new PDOException('Failed to insert annual budget');
@@ -431,7 +431,7 @@ if ($_POST['action'] === 'modify-pwd') {
 
     if ($isInsertUserOk) {
         addMessage('new_user_created_ok');
-        redirectTo('clients');
+        redirectTo('clients.php');
     } else {
         addError('new_user_creation_ko');
     }
@@ -458,6 +458,54 @@ if ($_POST['action'] === 'modify-pwd') {
         redirectTo();
     } else {
         addError('partner_created_ko');
+    }
+} else if ($_POST['action'] === 'disable-client') {
+    if (!isset($_POST['client-user'])) {
+        addError('client_ko');
+        redirectTo();
+        exit;
+    }
+
+    $queryDisableClient = $dbCo->prepare(
+        'UPDATE users
+        SET enabled = 0 WHERE id_user = :id_user;'
+    );
+
+    $bindValues = [
+        'id_user' => intval($_POST['client-user'])
+    ];
+
+    $isDisableClientOk = $queryDisableClient->execute($bindValues);
+
+    if ($isDisableClientOk) {
+        addMessage('client_disabled_ok');
+        redirectTo();
+    } else {
+        addError('client_disabled_ko');
+    }
+} else if ($_POST['action'] === 'enable-client') {
+    if (!isset($_POST['client-user'])) {
+        addError('client_ko');
+        redirectTo();
+        exit;
+    }
+
+    $queryEnableClient = $dbCo->prepare(
+        'UPDATE users
+        SET enabled = 1 WHERE id_user = :id_user;'
+    );
+
+    $bindValues = [
+        'id_user' => intval($_POST['client-user'])
+    ];
+
+    $isEnableClientOk = $queryEnableClient->execute($bindValues);
+
+    if ($isEnableClientOk) {
+        addMessage('client_enabled_ok');
+        redirectTo();
+    } else {
+        addError('client_enabled_ko');
     }
 }
 
