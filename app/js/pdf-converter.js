@@ -61,3 +61,9 @@ c3axis.style.color = '#FFFFFF';
 c3axisX.style.opacity = '0';
 c3axisX.style.display = 'hidden';
 c3axisX.style.color = '#FFFFFF';
+
+const ticks = document.querySelectorAll('.tick');
+
+ticks.forEach(tick => {
+    tick.remove();
+});
