@@ -459,6 +459,29 @@ if ($_POST['action'] === 'modify-pwd') {
     } else {
         addError('partner_created_ko');
     }
+} else if ($_POST['action'] === 'disable-client') {
+    if (!isset($_POST['client-user'])) {
+        addError('client_ko');
+        redirectTo();
+        exit;
+    }
+
+    $queryDisableClient = $dbCo->prepare(
+        'UPDATE users
+        SET enabled = 0 WHERE id_user = :id_user;');
+
+    $bindValues = [
+        'id_user' => intval($_POST['client-user'])
+    ];
+
+    $isDisableClientOk = $queryDisableClient->execute($bindValues);
+
+    if($isDisableClientOk) {
+        addMessage('client_disabled_ok');
+        redirectTo();
+    } else {
+        addError('client_disabled_ko');
+    }
 }
 
 redirectTo();

@@ -15,7 +15,8 @@ $messages = [
     'partner_created_ok' => 'Nouveau partenaire créé avec succès.',
     'brand_created_ok' => 'Nouvelle marque créée.',
     'campaign_updated_ok' => 'La campagne a été mise à jour',
-    'campaign_deleted_ok' => 'La campagne a été supprimée.'
+    'campaign_deleted_ok' => 'La campagne a été supprimée.',
+    'client_disabled_ok' => 'Le client a été désactivé'
 ];
 
 $errors = [
@@ -72,7 +73,9 @@ $errors = [
     'campaign_update_ko' => 'Échec de la modification de la campagne',
     'campaign_deletion_ko' => 'Erreur lors de la suppression de la campagne.',
     'no_date_range' => 'Aucune date correspondante.',
-    'year_ko' => 'L\'année n\'a pas pu être déterminée.'
+    'year_ko' => 'L\'année n\'a pas pu être déterminée.',
+    'client_ko' => 'Aucun client trouvé.',
+    'client_disabled_ko' => 'Erreur lors de la désactivation du client.'
 ];
 
 
