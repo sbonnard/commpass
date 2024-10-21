@@ -113,7 +113,7 @@ unsetFilters($_SESSION);
 
                                 if ($user['enabled'] === 1) {
                                 $companyDatas .= 
-                                '<form class="client__disabled-form" method="post" action="actions.php">
+                                '<form class="client__disabled-form" method="post" action="actions.php" onsubmit="return confirmDisable()">
                                     <button type="submit" class="client--disable-btn" data-client-disable="' . $user['id_user'] . '"></button>
                                     <input type="hidden" name="token" value="'. $_SESSION['token']. '">
                                     <input type="hidden" name="action" value="disable-client">
@@ -121,7 +121,7 @@ unsetFilters($_SESSION);
                                 </form>';
                                 } else {
                                     $companyDatas .= 
-                                '<form class="client__enable-form" method="post" action="actions.php">
+                                '<form class="client__enable-form" method="post" action="actions.php" onsubmit="return confirmEnable()">
                                     <button type="submit" class="client--enable-btn" data-client-enable="' . $user['id_user'] . '"></button>
                                     <input type="hidden" name="token" value="'. $_SESSION['token']. '">
                                     <input type="hidden" name="action" value="enable-client">
@@ -182,3 +182,12 @@ unsetFilters($_SESSION);
 <script type="module" src="js/burger.js"></script>
 <script type="module" src="js/dropdown-menu.js"></script>
 <script type="module" src="js/cards.js"></script>
+<script>
+    function confirmDisable() {
+        return confirm("Êtes-vous sûr de vouloir rendre ce compte utilisateur inactif ?");
+    }
+
+    function confirmEnable() {
+        return confirm("Êtes-vous sûr de vouloir réactiver ce compte utilisateur ?");
+    }
+</script>
