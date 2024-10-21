@@ -45,7 +45,8 @@ function fetchAllUsers(PDO $dbCo): array
 {
     $query = $dbCo->prepare(
         'SELECT id_user, username, firstname, lastname, email, phone, client, boss, id_company, enabled
-        FROM users;'
+        FROM users
+        ORDER BY boss DESC, enabled DESC, firstname ASC;'
     );
 
     $query->execute();
