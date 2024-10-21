@@ -100,6 +100,7 @@ unsetFilters($_SESSION);
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="campaign_interlocutor">Interlocuteur</label>
+                            <p class="small-text">Veuillez d'abord sélectionner une entreprise.</p>
                             <select class="form__input form__input--select" type="text" name="campaign_interlocutor" id="campaign_interlocutor" required aria-label="Sélectionner l'interlocuteur au sein de l'entreprise">
                                 <!-- Les options sont automatiquement générées en javascript quand l'entreprise est sélectionnée. -->
                             </select>
