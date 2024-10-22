@@ -125,7 +125,7 @@ if (
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
+        echo fetchHeader('dashboard', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -144,7 +144,7 @@ if (
         <h2 class="ttl lineUp">Historique</h2>
 
         <div class="card">
-            <form class="card__section" action="actions-filter.php" method="post" id="filter-form">
+            <form class="card__section" action="actions-filter" method="post" id="filter-form">
                 <ul class="form__lst form__lst--row">
                     <div class="form__lst--flex">
                         <li class="form__itm">
@@ -161,7 +161,7 @@ if (
                     <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                     <input type="hidden" name="action" value="filter-history">
             </form>
-            <form action="actions-filter.php" method="post" id="reinit-form">
+            <form action="actions-filter" method="post" id="reinit-form">
                 <input type="submit" class="button button--reinit" id="filter-reinit" aria-label="Réinitialise tous les filtres" value="" title="Réinitialiser les filtres">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 <input type="hidden" name="action" value="filter-reinit">

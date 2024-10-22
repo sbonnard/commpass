@@ -49,12 +49,12 @@ unsetFilters($_SESSION);
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
+        echo fetchHeader('dashboard', 'Mon tableau de bord');
         ?>
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav($_SESSION, '', 'nav__itm--active') ?>
+        <?= fetchNav($_SESSION, $companies, '', '', 'nav__itm--active') ?>
     </nav>
 
     <main class="container container--campaigns container__flex">

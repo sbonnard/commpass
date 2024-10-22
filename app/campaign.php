@@ -64,7 +64,7 @@ $jsonData = json_encode($chartData);
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav($_SESSION) ?>
+        <?= fetchNav($_SESSION, $companies) ?>
     </nav>
 
     <main class="container container--campaigns container__flex" id="pdfContent">
@@ -81,7 +81,7 @@ $jsonData = json_encode($chartData);
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 echo
-                '<a class="button--edit" href="new-campaign.php?myc=' . $selectedCampaign['id_campaign'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
+                '<a class="button--edit" href="new-campaign?myc=' . $selectedCampaign['id_campaign'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
                 |' . deleteCampaignButton($selectedCampaign, $_SESSION);
             }
             ?>
