@@ -86,3 +86,44 @@ function fetchNonClientUsers(PDO $dbCo, array $session): array
 
     return $nonClientUsers;
 }
+
+
+/**
+ * Fetch all intyerlocutors from a company if filter is set.
+ *
+ * @param PDO $dbCo - PDO connection
+ * @param array $session - Superglobal Session
+ * @return array - Array of interlocutors
+ */
+function fetchInterlocutors(PDO $dbCo, array $session): array
+{
+    $query = $dbCo->prepare(
+        'SELECT id_user, firstname, lastname
+        FROM users
+        WHERE id_company = :id_company;'
+    );
+
+    $bindValues = [
+        'id_company' => intval($session['filter']['id_company'])
+    ];
+
+    $query->execute($bindValues);
+
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+/**
+ * Get interlocutors has option if company is defined in session filters.
+ *
+ * @param array $interlocutors - Interlocutors array.
+ * @return string - Interlocutors as HTML options.
+ */
+function getInterlocutorsAsOptions(array $interlocutors):string
+{
+    $options = '';
+    foreach ($interlocutors as $interlocutor) {
+        $options .= '<option value="' . $interlocutor['id_user'] . '">' . $interlocutor['firstname'] . ' ' . $interlocutor['lastname'] . '</option>';
+    }
+    return $options;
+}
