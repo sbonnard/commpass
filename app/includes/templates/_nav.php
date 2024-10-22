@@ -101,7 +101,13 @@ function displayHistoryLinkIfPermissionOK(array $session, string $historyActive)
     }
 }
 
-function getAllClientsAsLnk(array $companies)
+/**
+ * Get all clients as lnk for dropdown items.
+ *
+ * @param array $companies - An array containing the list of clients
+ * @return string - The list of clients or empty string. 
+ */
+function getAllClientsAsLnk(array $companies):string
 {
     $html = '';
 
