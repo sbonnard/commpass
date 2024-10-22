@@ -60,6 +60,10 @@
         &--contact::before {
             content: url(../../img/contact-lnk.svg);
         }
+
+        &--new-campaign::before {
+            content: url(../../img/campaign-lnk.svg);
+        }
     }
 
     @media screen and (min-width: 768px) {
@@ -70,7 +74,7 @@
         &__lst {
             display: flex;
             justify-content: center;
-            gap: 7.5rem;
+            gap: 5rem;
             padding: 0.5rem;
         }
     }
