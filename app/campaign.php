@@ -75,29 +75,20 @@ $jsonData = json_encode($chartData);
             ?>
         </div>
 
-        <h2 class="ttl lineUp">
-            Bonjour <?= $user['firstname'] ?><br>
-            <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
-        </h2>
+        <h2 class="ttl lineUp"><?= $selectedCampaign['company_name'] ?><br></h2>
+        <div class="flex-row">
+            <h2 class="ttl lineUp ttl--tertiary"><?= $selectedCampaign['campaign_name'] ?></h2>
+            <?php
+            if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+                echo
+                '<a class="button--edit" href="new-campaign.php?myc=' . $selectedCampaign['id_campaign'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
+                |' . deleteCampaignButton($selectedCampaign, $_SESSION);
+            }
+            ?>
+        </div>
 
         <div class="card">
             <section class="card__section">
-                <?php
-                if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                    echo '<p class="campaign__company">' . $selectedCampaign['company_name'] . '</p>';
-                }
-                ?>
-                <div class="flex-row">
-                    <p class="ttl--smaller">Campagne : <?= $selectedCampaign['campaign_name'] ?></p>
-                    <?php
-                    if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                        echo
-                        '<a class="button--edit" href="new-campaign?myc=' . $selectedCampaign['id_campaign'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
-                    |' . deleteCampaignButton($selectedCampaign, $_SESSION);
-                    }
-                    ?>
-
-                </div>
                 <p class="campaign__interlocutor">Interlocuteur : <?= $selectedCampaign['firstname'] . ' ' . $selectedCampaign['lastname'] ?></p>
                 <p class="campaign__interlocutor">Objectif : <?= $selectedCampaign['target_com'] ?></p>
             </section>
