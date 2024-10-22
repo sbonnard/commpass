@@ -90,7 +90,7 @@ unsetFilters($_SESSION);
                         $companyDatas .= '
         <div class="card" data-card="">
             <section class="card__section card__section--company" aria-labelledby="company_name' . $company['id_company'] . '">
-                <h3 class="client__ttl" id="company_name' . $company['id_company'] . '">' . $company['company_name'] . '</h3>
+                <a href="my-client.php?client=' . $company['id_company'] . '"><h3 class="client__ttl" id="company_name' . $company['id_company'] . '">' . $company['company_name'] . '</h3></a>
                 <ul class="client__lst gradient-border gradient-border--top">';
                         $userFound = false;
 
