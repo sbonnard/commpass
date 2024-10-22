@@ -74,7 +74,7 @@ unsetFilters($_SESSION);
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="company_name">Nom de l'entreprise</label>
-                            <input class="form__input form__input--number" type="text" name="company_name" id="company_name" placeholder="FakeBusiness" required aria-label="Entrez le nom de l'entreprise cliente.">
+                            <input class="form__input form__input--number" type="text" name="company_name" id="company_name" placeholder="FakeBusiness" required aria-label="Entrez le nom de l'entreprise cliente." autofocus>
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="annual_budget">Budget annuel (sans €)</label>

@@ -97,7 +97,7 @@ if (!isset($_GET['myo'])) {
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="operation_description">Description de l'opération</label>
-                            <textarea class="form__input form__textarea" type="" name="operation_description" id="operation_description" placeholder="Flocage d'un véhicule..." required aria-label="Saississez la description de l'opération."><?= $operation['description']; ?></textarea>
+                            <textarea class="form__input form__textarea" type="" name="operation_description" id="operation_description" placeholder="Flocage d'un véhicule..." required aria-label="Saississez la description de l'opération." autofocus><?= $operation['description']; ?></textarea>
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="operation_amount">Prix de l'opération (sans €)</label>

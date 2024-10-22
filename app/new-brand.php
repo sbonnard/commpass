@@ -75,7 +75,7 @@ unsetFilters($_SESSION);
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="budget">Nom de la marque</label>
-                            <input class="form__input" type="text" name="brand_name" id="brand_name" required aria-label="Entrez le nom de la nouvelle marque.">
+                            <input class="form__input" type="text" name="brand_name" id="brand_name" required aria-label="Entrez le nom de la nouvelle marque." autofocus>
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="color" aria-label="Sélectionner la couleur de la marque">Couleur de la marque</label>
