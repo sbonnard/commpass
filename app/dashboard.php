@@ -116,7 +116,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 <body>
 
     <header class="header">
-        <?= fetchHeader('dashboard.php', 'Mon tableau de bord') ?>
+        <?= fetchHeader('dashboard', 'Mon tableau de bord') ?>
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
@@ -137,7 +137,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         </h2>
 
         <!-- <div class="button__section">
-        <?php
+            <?php
             // if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
             //     echo '<a href="/new-campaign" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>';
             // }
