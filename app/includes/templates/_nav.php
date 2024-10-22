@@ -7,7 +7,7 @@
  * @param string $profilActive - Makes profil active.
  * @return string - Class name that will be applied to the navigation menu.
  */
-function fetchNav(array $session, array $companies, string $dashboardActive = '', string $newCampaignActive = '', string $clientActive = '', string $historyActive = '', string $profilActive = ''): string
+function fetchNav(array $session, array $companies = [], string $dashboardActive = '', string $newCampaignActive = '', string $clientActive = '', string $historyActive = '', string $profilActive = ''): string
 {
     if (isset($_SESSION['id_user'])) {
         return '
