@@ -7,7 +7,7 @@
  * @param string $profilActive - Makes profil active.
  * @return string - Class name that will be applied to the navigation menu.
  */
-function fetchNav(array $session, string $dashboardActive = '', string $NetworkActive = '', string $historyActive = '', string $profilActive = ''): string
+function fetchNav(array $session, string $dashboardActive = '', string $NetworkActive = '', string $newCampaignActive = '', string $historyActive = '', string $profilActive = ''): string
 {
     if (isset($_SESSION['id_user'])) {
         return '
@@ -15,7 +15,7 @@ function fetchNav(array $session, string $dashboardActive = '', string $NetworkA
                 <li class="nav__itm ' . $dashboardActive . '">
                     <a href="/dashboard" class="nav__lnk nav__lnk--dashboard" aria-label="Lien vers le tableau de bord contenant les campagnes de communications de l\'année en cours">Tableau de bord</a>
                 </li>'
-            . displayNetworkLinkIfTDC($session, $NetworkActive) .
+            . displayNetworkLinkIfTDC($session, $NetworkActive, $newCampaignActive) .
             displayHistoryLinkIfPermissionOK($session, $historyActive) .
             '<li class="nav__itm ' . $profilActive . '">
                     <a href="/profil" class="nav__lnk nav__lnk--profile" aria-label="Lien vers mon profil d\'utilisateur">Mon profil</a>
@@ -46,7 +46,7 @@ function fetchNav(array $session, string $dashboardActive = '', string $NetworkA
  * @param array $session - Superglobal $_SESSION.
  * @return string - HTML code for the link.
  */
-function displayNetworkLinkIfTDC(array $session, string $NetworkActive): string
+function displayNetworkLinkIfTDC(array $session, string $NetworkActive, string $newCampaignActive): string
 {
     if (isset($session['client']) && $session['client'] === 0) {
         return '
@@ -63,7 +63,11 @@ function displayNetworkLinkIfTDC(array $session, string $NetworkActive): string
                     <a href="/new-user" class="dropdown__child-lnk" aria-label="Lien vers création d\'un nouvel utilisateur client ou Toile de Com">Nouvel utilisateur</a>
                 </li>
             </ul>
-        </li>';
+        </li>
+        <li class="nav__itm ' . $newCampaignActive . '">
+            <a href="/new-campaign" class="nav__lnk nav__lnk--new-campaign" aria-label="Redirige vers un formulaire de création de campagne">Nouvelle campagne</a>
+        </li>
+        ';
     } else {
         return '';
     }
