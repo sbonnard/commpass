@@ -136,13 +136,13 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>
 
-        <div class="button__section">
-            <?php
-            if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                echo '<a href="/new-campaign.php" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>';
-            }
+        <!-- <div class="button__section">
+        <?php
+            // if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+            //     echo '<a href="/new-campaign" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>';
+            // }
             ?>
-        </div>
+        </div> -->
 
         <?php
         // var_dump($_SESSION);
@@ -151,7 +151,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             echo
             '<div class="card">
                 <form class="card__section" action="actions-filter.php" method="post" id="filter-form" aria-label="formulaire de filtre">
-                    <ul class="form__lst form__lst--app">
+                    <ul class="form__lst form__lst--row">
                         <div class="form__lst--flex">
                             <li class="form__itm">
                                 <label for="client-filter">Sélectionner un client</label>
