@@ -448,6 +448,7 @@ function getOneCompanyDatasFilteredHistory(PDO $dbCo, array $session)
  * @return array Array with company datas
  */
 function getAllCompanyDatas(PDO $dbCo, array $get):array {
+    
     $query = $dbCo->prepare(
         'SELECT id_company, company_name
         FROM company
