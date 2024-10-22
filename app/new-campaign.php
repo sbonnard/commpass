@@ -52,7 +52,7 @@ unsetFilters($_SESSION);
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav($_SESSION, $companies, '', '', 'nav__itm--active') ?>
+        <?= fetchNav($_SESSION, $companies, '', 'nav__itm--active') ?>
     </nav>
 
     <main class="container container--campaigns container__flex">
@@ -79,8 +79,8 @@ unsetFilters($_SESSION);
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="campaign_name">Nom de la campagne</label>
                             <input class="form__input" type="text" name="campaign_name" id="campaign_name" placeholder="Soldes d'Hiver" required autofocus aria-label="Saississez le nom de la nouvelle campagne" value="<?php if (isset($_GET['myc']) && intval($_GET['myc'])) {
-                                                                                                                                                                                                                    echo  $selectedCampaign['campaign_name'];
-                                                                                                                                                                                                                }  ?>">
+                                                                                                                                                                                                                                echo  $selectedCampaign['campaign_name'];
+                                                                                                                                                                                                                            }  ?>">
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="campaign_target">Objectif de la campagne</label>
@@ -108,7 +108,7 @@ unsetFilters($_SESSION);
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="user_TDC">Chargé de la campagne</label>
                             <select class="form__input form__input--select" type="text" name="user_TDC" id="user_TDC" required aria-label="Sélectionner le chargé de la campagne dans votre entreprise">
-                            <option value="">- Sélectionner un chargé -</option>
+                                <option value="">- Sélectionner un chargé -</option>
                                 <?php
                                 $chargeOptions = '';
                                 foreach ($nonClientUsers as $user) {
@@ -122,8 +122,8 @@ unsetFilters($_SESSION);
                                 }
                                 echo $chargeOptions;
                                 ?>
-                            
-                            <!-- <?= getDatasAsHTMLOptions($nonClientUsers, 'Sélectionner un collaborateur', 'id_user', 'firstname', 'lastname') ?> -->
+
+                                <!-- <?= getDatasAsHTMLOptions($nonClientUsers, 'Sélectionner un collaborateur', 'id_user', 'firstname', 'lastname') ?> -->
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">
