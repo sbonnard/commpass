@@ -78,7 +78,7 @@ unsetFilters($_SESSION);
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="campaign_name">Nom de la campagne</label>
-                            <input class="form__input" type="text" name="campaign_name" id="campaign_name" placeholder="Soldes d'Hiver" required aria-label="Saississez le nom de la nouvelle campagne" value="<?php if (isset($_GET['myc']) && intval($_GET['myc'])) {
+                            <input class="form__input" type="text" name="campaign_name" id="campaign_name" placeholder="Soldes d'Hiver" required autofocus aria-label="Saississez le nom de la nouvelle campagne" value="<?php if (isset($_GET['myc']) && intval($_GET['myc'])) {
                                                                                                                                                                                                                     echo  $selectedCampaign['campaign_name'];
                                                                                                                                                                                                                 }  ?>">
                         </li>

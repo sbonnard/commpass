@@ -74,7 +74,7 @@ unsetFilters($_SESSION);
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="username">Nom d'utilisateur</label>
-                            <input class="form__input" type="text" name="username" id="username" placeholder="user94" required aria-label="Entrez le nom de l'utilisateur.">
+                            <input class="form__input" type="text" name="username" id="username" placeholder="user94" required aria-label="Entrez le nom de l'utilisateur." autofocus>
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="firstname">Prénom</label>

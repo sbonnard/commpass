@@ -94,7 +94,7 @@ unsetFilters($_SESSION);
                                                                                                                         } else {
                                                                                                                             echo $companyAnnualBudget;
                                                                                                                         }
-                                                                                                                        ?>" required>
+                                                                                                                        ?>" required autofocus>
                         </li>
                         <input class="button button--confirm" type="submit" value="Fixer le budget">
                     </ul>
