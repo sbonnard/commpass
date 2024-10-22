@@ -128,7 +128,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && is
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav($_SESSION, '', '', 'nav__itm--active') ?>
+        <?= fetchNav($_SESSION, '', '', '', 'nav__itm--active') ?>
     </nav>
 
     <main class="container container--campaigns container__flex">
