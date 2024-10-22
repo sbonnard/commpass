@@ -33,7 +33,9 @@ checkConnection($_SESSION);
 
 checkUserClientStatus($_SESSION);
 
-unsetFilters($_SESSION);
+if (!isset($_GET['client']) || !intval($_GET['client'])) {
+    unset($_SESSION['filter']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +49,7 @@ unsetFilters($_SESSION);
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard', 'Mon tableau de bord');
+        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -70,17 +72,21 @@ unsetFilters($_SESSION);
                                                             } else if (isset($_GET['myc']) || intval($_GET['myc'])) {
                                                                 echo 'Modifier la Campagne';
                                                             }
+
+                                                            if (isset($_SESSION['filter']['id_company'])) {
+                                                                echo '<br><span class="ttl--tertiary">' . getClientName($dbCo, $_SESSION) . '</span>';
+                                                            }
                                                             ?></h2>
 
 
             <section class="card__section" aria-labelledby="new-campaign-ttl">
-                <form class="form" action="actions-campaign" method="post" aria-label="Formulaire de création d'une nouvelle campagne">
+                <form class="form" action="actions-campaign.php" method="post" aria-label="Formulaire de création d'une nouvelle campagne">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="campaign_name">Nom de la campagne</label>
                             <input class="form__input" type="text" name="campaign_name" id="campaign_name" placeholder="Soldes d'Hiver" required autofocus aria-label="Saississez le nom de la nouvelle campagne" value="<?php if (isset($_GET['myc']) && intval($_GET['myc'])) {
-                                                                                                                                                                                                                    echo  $selectedCampaign['campaign_name'];
-                                                                                                                                                                                                                }  ?>">
+                                                                                                                                                                                                                                echo  $selectedCampaign['campaign_name'];
+                                                                                                                                                                                                                            }  ?>">
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="campaign_target">Objectif de la campagne</label>
@@ -91,24 +97,34 @@ unsetFilters($_SESSION);
                                 <option value="3" <?php if (isset($selectedCampaign['id_target']) && $selectedCampaign['id_target'] === 3) echo 'selected'; ?>>Faire agir</option>
                             </select>
                         </li>
-                        <li class="form__itm form__itm--app">
-                            <label class="form__label" for="campaign_company" aria-label="Sélectionner l'entreprise concernée">Entreprise</label>
-                            <select class="form__input form__input--select" type="text" name="campaign_company" id="campaign_company" required aria-label="Sélectionner l'entreprise lançant une nouvelle campagne">
-                                <!-- Une fois l'entreprise sélectionnée, récupération en AJAX des interlocuteurs potentiels.  -->
-                                <?= getDatasAsHTMLOptions($companies, 'Sélectionner une entreprise', 'id_company', 'company_name'); ?>
-                            </select>
-                        </li>
+                        <?php if (!isset($_SESSION['filter']['id_company'])) { ?>
+                            <li class="form__itm form__itm--app">
+                                <label class="form__label" for="campaign_company" aria-label="Sélectionner l'entreprise concernée">Entreprise</label>
+                                <select class="form__input form__input--select" type="text" name="campaign_company" id="campaign_company" required aria-label="Sélectionner l'entreprise lançant une nouvelle campagne">
+                                    <!-- Une fois l'entreprise sélectionnée, récupération en AJAX des interlocuteurs potentiels.  -->
+                                    <?= getDatasAsHTMLOptions($companies, 'Sélectionner une entreprise', 'id_company', 'company_name'); ?>
+                                </select>
+                            </li>
+                        <?php } else {
+                            echo '<input type="hidden" name="campaign_company" value="' . $_SESSION['filter']['id_company'] . '">';
+                        } ?>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="campaign_interlocutor">Interlocuteur</label>
                             <p class="small-text">Veuillez d'abord sélectionner une entreprise.</p>
                             <select class="form__input form__input--select" type="text" name="campaign_interlocutor" id="campaign_interlocutor" required aria-label="Sélectionner l'interlocuteur au sein de l'entreprise">
                                 <!-- Les options sont automatiquement générées en javascript quand l'entreprise est sélectionnée. -->
+                                <?php
+                                $interlocutors = fetchInterlocutors($dbCo, $_SESSION);
+                                if (isset($_SESSION['filter']['id_company'])) {
+                                    echo getInterlocutorsAsOptions($interlocutors);
+                                }
+                                ?>
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="user_TDC">Chargé de la campagne</label>
                             <select class="form__input form__input--select" type="text" name="user_TDC" id="user_TDC" required aria-label="Sélectionner le chargé de la campagne dans votre entreprise">
-                            <option value="">- Sélectionner un chargé -</option>
+                                <option value="">- Sélectionner un chargé -</option>
                                 <?php
                                 $chargeOptions = '';
                                 foreach ($nonClientUsers as $user) {
@@ -122,8 +138,8 @@ unsetFilters($_SESSION);
                                 }
                                 echo $chargeOptions;
                                 ?>
-                            
-                            <!-- <?= getDatasAsHTMLOptions($nonClientUsers, 'Sélectionner un collaborateur', 'id_user', 'firstname', 'lastname') ?> -->
+
+                                <!-- <?= getDatasAsHTMLOptions($nonClientUsers, 'Sélectionner un collaborateur', 'id_user', 'firstname', 'lastname') ?> -->
                             </select>
                         </li>
                         <li class="form__itm form__itm--app">
