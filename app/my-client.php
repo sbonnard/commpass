@@ -37,9 +37,7 @@ checkUserClientStatus($_SESSION);
 
 unsetFilters($_SESSION);
 
-if ($_SESSION['client'] === 1 && isset($_SESSION['filter'])) {
-    unset($_SESSION['filter']);
-}
+// Récupérer les données d'une entreprise. 
 
 $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
 
