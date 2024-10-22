@@ -50,6 +50,14 @@
             position: absolute;
             z-index: 1;
             padding-bottom: 1rem;
+
+            &.dropdown__grid {
+                display: grid; // Afficher le grid
+                grid-template-columns: repeat(3, 1fr);
+                padding: 1rem;
+                width: 50vw;
+                gap: 1;
+            }
         }
     }
 
@@ -58,5 +66,10 @@
             display: block;
             padding: 0 1rem;
         }
+
+        .dropdown__grid {
+            grid-template-columns: 1fr; // Une seule colonne sur les petits écrans
+        }
     }
+
 }

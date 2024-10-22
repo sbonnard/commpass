@@ -54,7 +54,7 @@ unsetFilters($_SESSION);
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav($_SESSION, '', 'nav__itm--active') ?>
+        <?= fetchNav($_SESSION, $companies, '', 'nav__itm--active') ?>
     </nav>
 
     <main class="container container--campaigns container__flex">
@@ -90,7 +90,7 @@ unsetFilters($_SESSION);
                         $companyDatas .= '
         <div class="card" data-card="">
             <section class="card__section card__section--company" aria-labelledby="company_name' . $company['id_company'] . '">
-                <h3 class="client__ttl" id="company_name' . $company['id_company'] . '">' . $company['company_name'] . '</h3>
+                <a href="my-client.php?client=' . $company['id_company'] . '"><h3 class="client__ttl" id="company_name' . $company['id_company'] . '">' . $company['company_name'] . '</h3></a>
                 <ul class="client__lst gradient-border gradient-border--top">';
                         $userFound = false;
 
@@ -98,7 +98,7 @@ unsetFilters($_SESSION);
                             if ($user['id_company'] === $company['id_company']) {
                                 $userFound = true;
                                 $companyDatas .= '<li class="client__name ';
-                                
+
                                 if ($user['boss'] === 1) {
                                     $companyDatas .= ' user--boss ';
                                 }
@@ -112,20 +112,20 @@ unsetFilters($_SESSION);
                                 $companyDatas .= '>' . $user['firstname'] . ' ' . $user['lastname'];
 
                                 if ($user['enabled'] === 1) {
-                                $companyDatas .= 
-                                '<form class="client__disabled-form" method="post" action="actions.php" onsubmit="return confirmDisable()">
+                                    $companyDatas .=
+                                        '<form class="client__disabled-form" method="post" action="actions.php" onsubmit="return confirmDisable()">
                                     <button type="submit" class="client--disable-btn" data-client-disable="' . $user['id_user'] . '"></button>
-                                    <input type="hidden" name="token" value="'. $_SESSION['token']. '">
+                                    <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
                                     <input type="hidden" name="action" value="disable-client">
-                                    <input type="hidden" name="client-user" value="'. $user['id_user'] . '">
+                                    <input type="hidden" name="client-user" value="' . $user['id_user'] . '">
                                 </form>';
                                 } else {
-                                    $companyDatas .= 
-                                '<form class="client__enable-form" method="post" action="actions.php" onsubmit="return confirmEnable()">
+                                    $companyDatas .=
+                                        '<form class="client__enable-form" method="post" action="actions.php" onsubmit="return confirmEnable()">
                                     <button type="submit" class="client--enable-btn" data-client-enable="' . $user['id_user'] . '"></button>
-                                    <input type="hidden" name="token" value="'. $_SESSION['token']. '">
+                                    <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
                                     <input type="hidden" name="action" value="enable-client">
-                                    <input type="hidden" name="client-user" value="'. $user['id_user'] . '">
+                                    <input type="hidden" name="client-user" value="' . $user['id_user'] . '">
                                 </form>';
                                 }
 

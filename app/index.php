@@ -43,7 +43,7 @@ unsetFilters($_SESSION);
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav($_SESSION) ?>
+        <?= fetchNav($_SESSION, $companies) ?>
     </nav>
 
     <div class="notifs">
