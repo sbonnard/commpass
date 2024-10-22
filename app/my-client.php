@@ -35,9 +35,14 @@ checkConnection($_SESSION);
 
 checkUserClientStatus($_SESSION);
 
-unsetFilters($_SESSION);
+// unsetFilters($_SESSION);
 
 // Récupérer les données d'une entreprise. 
+
+$selectedCompany = getAllCompanyDatas($dbCo, $_GET);
+
+// Le filtre permet de récupérer les données d'une entreprise en session.
+$_SESSION['filter']['id_company'] = $selectedCompany['id_company'];
 
 $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
 
@@ -135,13 +140,13 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             ?>
         </div>
 
-        <h2 class="ttl lineUp">
-            <?= getCompanyName($dbCo, $_SESSION) ?>
+        <h2 class="ttl lineUp">Tableau de bord
+            <br><span class="ttl--tertiary"><?= $selectedCompany['company_name'] ?></span>
         </h2>
 
         <div class="button__section">
             <a href="/new-campaign.php" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>
-            <span class="history-lnk"><a class="nav__lnk nav__lnk--history" href="history.php?client=###">Historique du client</a></span>
+            <span class="history-lnk"><a class="nav__lnk nav__lnk--history" href="history.php?client=<?= $selectedCompany['id_company'] ?>">Historique du client</a></span>
         </div>
 
         <?php
@@ -172,29 +177,6 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             </div>';
         }
         ?>
-
-        <?php
-        if (isset($_SESSION['filter']['id_company'])) {
-            echo '
-            <div class="card">
-            <section class="card__section card__section--row" aria-labelledby="filter-ttl">
-            <h3 id="filter-ttl">Filtres appliqués :</h3>';
-            if (isset($_SESSION['filter']['id_company'])) {
-                echo '<p class="filter__text">' . getClientName($dbCo, $_SESSION) . ' |';
-            }
-            if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_target']) && isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                echo '<p class="filter__text">Objectif</p>';
-            }
-            echo '</section></div>';
-        }
-        ?>
-
-        <h2 class="ttl lineUp">Tableau de bord
-            <?php if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
-                echo '<br><span class="ttl--tertiary">' . getClientName($dbCo, $_SESSION) . '</span>';
-            }
-            ?>
-        </h2>
 
         <?php
         if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
@@ -277,7 +259,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
     </div>';
         }
         ?>
-        <h2 class="ttl lineUp">Mes campagnes <?= $currentYear ?></h2>
+        <h2 class="ttl lineUp">Les campagnes <?= $currentYear ?></h2>
         <section class="card <?php
                                 if (!empty($companyCurrentYearCampaigns) || $_SESSION['client'] === 0) {
                                     echo 'campaign';
