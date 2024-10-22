@@ -76,9 +76,11 @@ if ($_POST['action'] === 'create-campaign') {
 
     $isInsertOk = $queryCampaign->execute($bindValues);
 
+    $lastInsertID = $dbCo->lastInsertId();
+
     if ($isInsertOk) {
         addMessage('campaign_created_ok');
-        redirectTo('dashboard');
+        redirectTo('campaign?myc='. $lastInsertID);
     } else {
         addError('campaign_creation_ko');
     }
