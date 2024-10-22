@@ -54,7 +54,7 @@ function displayNetworkLinkIfTDC(array $session, string $newCampaignActive, stri
             <button class="nav__lnk nav__lnk--network dropdown__button" aria-label="Menu déroulant" id="dropdown-btn">Mes clients<span class="nav__arrow">▼</span></button>
             <ul class="dropdown__child dropdown__grid" id="dropdown-child">
                 <li class="dropdown__child-itm">
-                    <a href="/clients" class="dropdown__child-lnk" aria-label="Lien vers mes clients">Tous les clients</a>
+                    <a href="/clients" class="dropdown__child-lnk" aria-label="Lien vers mes clients">Tous mes clients</a>
                 </li>
                 ' . getAllClientsAsLnk($companies) . '
             </ul>
