@@ -159,12 +159,6 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                                     ' . getCompaniesAsHTMLOptions($companies) . '
                                 </select>
                             </li>
-                            <li class="form__itm">
-                                <label for="target-filter">Objectifs de la campagne (optionnel)</label>
-                                <select class="form__input form__input--select" type="date" name="target-filter" id="target-filter">
-                                    ' . getTargetsAsHTMLOptions($communicationObjectives) . '
-                                </select>
-                            </li>
                         </div>
                         <input type="submit" class="button button--filter" id="filter-button" aria-label="Filtrer les données entrées" value="Filtrer">
                         <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
