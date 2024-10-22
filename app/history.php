@@ -33,7 +33,7 @@ generateToken();
 
 checkConnection($_SESSION);
 
-if(isset($_SESSION['client']) && $_SESSION['client'] === 1 && isset($_SESSION['boss']) && $_SESSION['boss'] === 0) {
+if (isset($_SESSION['client']) && $_SESSION['client'] === 1 && isset($_SESSION['boss']) && $_SESSION['boss'] === 0) {
     addError('authorization_ko');
     redirectTo('dashboard');
     exit;
@@ -61,8 +61,10 @@ $jsonChartColors = json_encode($chartColors);
 $targetAnnualSpendings = [];
 $brandsAnnualSpendings = [];
 
-if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && isset($_SESSION['filter']['year'])
- || isset($_SESSION['client']) && $_SESSION['client'] === 1 && isset($_SESSION['filter']['year'])) {
+if (
+    isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && isset($_SESSION['filter']['year'])
+    || isset($_SESSION['client']) && $_SESSION['client'] === 1 && isset($_SESSION['filter']['year'])
+) {
     // Récupérer les dépenses annuelles par objectif
     $targetAnnualSpendings = getAnnualSpendingsByTargetHistory($dbCo, $_SESSION);
     $brandsAnnualSpendings = getAnnualSpendingByBrandHistory($dbCo, $_SESSION);
@@ -123,12 +125,12 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && is
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard', 'Mon tableau de bord');
+        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
         ?>
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav($_SESSION, '', '', '', 'nav__itm--active') ?>
+        <?= fetchNav($_SESSION, $companies, '', '', '', 'nav__itm--active') ?>
     </nav>
 
     <main class="container container--campaigns container__flex">
@@ -141,82 +143,39 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && is
 
         <h2 class="ttl lineUp">Historique</h2>
 
-        <?php
-        if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-            echo
-            '<div class="card">
-                <form class="card__section" action="actions-filter" method="post" id="filter-form">
-                    <ul class="form__lst form__lst--row">
-                        <div class="form__lst--flex">
-                            <li class="form__itm">
-                                <label for="client-filter">Sélectionner un client</label>
-                                <select class="form__input form__input--select" type="date" name="client-filter" id="client-filter" required>
-                                    ' . getCompaniesAsHTMLOptions($companies) . '
-                                </select>
-                            </li>
-                            <li class="form__itm">
-                                <label class="form__label" for="year">Sélectionner une année</label>
-                                <select class="form__input form__input--select" name="year" id="year" required>
-                                    <option value="">- Sélectionner une année -</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2021">2021</option>
-                                </select>
-                            </li>
-                        </div>
-                        <input type="submit" class="button button--filter" id="filter-button" aria-label="Filtrer les données entrées" value="Filtrer">
-                        <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
-                        <input type="hidden" name="action" value="filter-history">
-                </form>
-                <form action="actions-filter" method="post" id="reinit-form">
-                    <input type="submit" class="button button--reinit" id="filter-reinit" aria-label="Réinitialise tous les filtres" value="" title="Réinitialiser les filtres">
-                    <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
-                    <input type="hidden" name="action" value="filter-reinit">
-                </form>';
-
-            echo '</div>';
-        }
-
-        if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
-            echo
-            '<div class="card">
-                <form class="card__section" action="actions-filter" method="post" id="filter-form">
-                    <ul class="form__lst form__lst--app">
-                        <div class="form__lst--flex">
-                            <li class="form__itm">
-                                <label class="form__label" for="year">Sélectionner une année</label>
-                                <select class="form__input form__input--select" name="year" id="year">
-                                    <option value="">- Sélectionner une année -</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2021">2021</option>
-                                </select>
-                            </li>
-                        </div>
-                        <input type="submit" class="button button--filter" id="filter-button" aria-label="Filtrer les données entrées" value="Filtrer">
-                        <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
-                        <input type="hidden" name="action" value="filter-history">
-                </form>
-                <form action="actions-filter" method="post" id="reinit-form">
-                    <input type="submit" class="button button--reinit" id="filter-reinit" aria-label="Réinitialise tous les filtres" value="" title="Réinitialiser les filtres">
-                    <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
-                    <input type="hidden" name="action" value="filter-reinit">
-                </form>
-                </div>';
-        }
-        ?>
+        <div class="card">
+            <form class="card__section" action="actions-filter.php" method="post" id="filter-form">
+                <ul class="form__lst form__lst--row">
+                    <div class="form__lst--flex">
+                        <li class="form__itm">
+                            <label class="form__label" for="year">Sélectionner une année</label>
+                            <select class="form__input form__input--select" name="year" id="year" required>
+                                <option value="">- Sélectionner une année -</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                            </select>
+                        </li>
+                    </div>
+                    <input type="submit" class="button button--filter" id="filter-button" aria-label="Filtrer les données entrées" value="Filtrer">
+                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                    <input type="hidden" name="action" value="filter-history">
+            </form>
+            <form action="actions-filter.php" method="post" id="reinit-form">
+                <input type="submit" class="button button--reinit" id="filter-reinit" aria-label="Réinitialise tous les filtres" value="" title="Réinitialiser les filtres">
+                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                <input type="hidden" name="action" value="filter-reinit">
+            </form>
+        </div>
 
         <?php
-        if (isset($_SESSION['filter']) && $_SESSION['client'] === 0) {
+        if (isset($_SESSION['filter']['year']) && $_SESSION['client'] === 0) {
             echo '
             <div class="card">
             <section class="card__section card__section--row" aria-labelledby="filter-ttl">
             <h3 id="filter-ttl">Filtres appliqués :</h3>';
             if (isset($_SESSION['filter']) && isset($_SESSION['filter']['year']) && isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 echo '<p class="filter__text">' . $_SESSION['filter']['year'] . '</p>';
-            }
-            if (isset($_SESSION['filter']['id_company'])) {
-                echo '<p class="filter__text">' . getClientName($dbCo, $_SESSION);
             }
             echo '</section></div>';
         }
@@ -302,7 +261,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && is
         }
         ?>
 
-<?php
+        <?php
         if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1 && isset($_SESSION['filter']['year'])) {
             // DISPLAY TABLE & DONUT CHART FOR OBJECTIVES
             echo
@@ -352,12 +311,12 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && is
                 echo getCampaignTemplate($dbCo, $history, $_SESSION);
                 getMessageIfNoHistory($history, $_SESSION);
                 // var_dump('CAS N°1');
-            }  else if (isset($_SESSION['filter']['id_company'])) {
+            } else if (isset($_SESSION['filter']['id_company'])) {
                 // $pastYearsCampaigns = getCompanyCampaignsPastYears($dbCo, $_SESSION, $campaigns);
                 echo getCampaignTemplate($dbCo, $history, $_SESSION);
                 getMessageIfNoHistory($history, $_SESSION);
                 // var_dump('CAS N°2');
-            }else if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+            } else if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 echo getHistoryCampaignTemplateByCompany($dbCo, $pastYearsCampaigns, $_SESSION, $companies);
                 // var_dump('CAS N°3');
             } else {
@@ -366,7 +325,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && is
                 // var_dump('CAS N°4');
             }
             // Si le filtre 'id_company' est défini, mais que c'est une session différente du client
-            
+
             // Cas général (pas de client et pas de filtre de company. Prend en compte le filtre 'year' si il est en place)
             ?>
         </section>
