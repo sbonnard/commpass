@@ -66,6 +66,10 @@
             display: block;
             padding: 0 1rem;
         }
+
+        .dropdown__grid {
+            grid-template-columns: 1fr; // Une seule colonne sur les petits écrans
+        }
     }
 
 }
