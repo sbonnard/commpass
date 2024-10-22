@@ -221,7 +221,7 @@ if ($_POST['action'] === 'create-campaign') {
 
     if ($isUpdateOk) {
         addMessage('budget_update_ok');
-        redirectTo('campaign.php?myc=' . $_POST['myc']);
+        redirectTo('campaign?myc=' . $_POST['myc']);
     } else {
         addError('budget_update_ko');
         redirectTo();
