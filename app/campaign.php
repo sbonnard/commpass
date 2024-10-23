@@ -81,7 +81,7 @@ $jsonData = json_encode($chartData);
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 echo
-                '<a class="button--edit" href="new-campaign?myc=' . $selectedCampaign['id_campaign'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
+                '<a class="button--edit" href="new-campaign?myc=' . $selectedCampaign['id_campaign'] . '&client='. $_SESSION['filter']['id_company'] .'" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
                 |' . deleteCampaignButton($selectedCampaign, $_SESSION);
             }
             ?>
