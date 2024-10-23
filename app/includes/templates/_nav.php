@@ -66,13 +66,10 @@ function displayNetworkLinkIfTDC(array $session, string $newCampaignActive, stri
     <button class="nav__lnk nav__lnk--agency dropdown__button" aria-label="Menu déroulant" id="dropdown-btn-agency">Mon agence<span class="nav__arrow">▼</span></button>
     <ul class="dropdown__child" id="dropdown-child-agency">
         <li class="dropdown__child-itm">
-            <a href="/my-agency.php" class="dropdown__child-lnk" aria-label="Lien vers mon agence">Les collaborateurs</a>
+            <a href="/my-agency.php" class="dropdown__child-lnk" aria-label="Lien vers mon agence">Mon équipe</a>
         </li>
         <li class="dropdown__child-itm">
             <a href="/partners.php" class="dropdown__child-lnk" aria-label="Lien vers les partenaires de l\'agence">Nos partenaires</a>
-        </li>
-        <li class="dropdown__child-itm">
-            <a href="/media.php" class="dropdown__child-lnk" aria-label="Lien vers les médias de l\'agence">Nouveau média</a>
         </li>
     </ul>
 </li>
