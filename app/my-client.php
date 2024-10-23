@@ -125,7 +125,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 <body>
 
     <header class="header">
-        <?= fetchHeader('dashboard', 'Mon tableau de bord') ?>
+        <?= fetchHeader('dashboard.php', 'Mon tableau de bord') ?>
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
@@ -145,9 +145,16 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         </h2>
 
         <div class="button__section">
-            <a href="/new-campaign?client=<?= $selectedCompany['id_company']?>" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>
-            <span class="history-lnk"><a class="nav__lnk nav__lnk--new-campaign" href="#client-campaigns">Accéder aux campagnes ▼</a></span>
-            <span class="history-lnk"><a class="nav__lnk nav__lnk--history" href="history?client=<?= $selectedCompany['id_company'] ?>">Historique du client</a></span>
+            <a href="/new-campaign.php?client=<?= $selectedCompany['id_company'] ?>" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>
+            <span class="history-lnk"><a class="nav__lnk nav__lnk--new-campaign" href="#client-campaigns" aria-label="Vous amène directement aux campagnes clients">Accéder aux campagnes ▼</a></span>
+            <span class="history-lnk"><a class="nav__lnk nav__lnk--history" href="history.php?client=<?= $selectedCompany['id_company'] ?>" aria-label="Consulter l'historique de <?= $selectedCompany['company_name'] ?>">Historique du client</a></span>
+            <div class="client__menu-box">
+                <button class="client__menu-plus-btn" data-plus-button=""></button>
+                <ul class="client__menu" data-client-menu="" aria-label="Options multiples d'ajout d'interlocuteur ou de marque">
+                    <li><a class="client__menu-link" href="new-user.php?client=<?= $_SESSION['filter']['id_company'] ?>" aria-label="Lien vers un formulaire de création d'interlocuteur pour l'entreprise <?= $selectedCompany['company_name'] ?>">+ Nouvel interlocuteur</a></li>
+                    <li><a class="client__menu-link" href="new-brand.php?client=<?= $_SESSION['filter']['id_company'] ?>" aria-label="Lien vers un formulaire de création de marque pour l'entreprise <?= $selectedCompany['company_name'] ?>">+ Nouvelle marque</a></li>
+                </ul>
+            </div>
         </div>
 
         <?php
@@ -231,29 +238,29 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
     </div>';
         }
         ?>
-        
-<h2 class="ttl lineUp" id="client-campaigns">Les campagnes <?= $currentYear ?></h2>
-<div class="card">
-                <form class="card__section" action="actions-filter" method="post" id="filter-form" aria-label="formulaire de filtre">
-                    <ul class="form__lst form__lst--row">
-                        <div class="form__lst--flex">
-                            <li class="form__itm">
-                                <label for="target-filter">Objectifs de la campagne (optionnel)</label>
-                                <select class="form__input form__input--select" type="date" name="target-filter" id="target-filter">
-                                    <?= getTargetsAsHTMLOptions($communicationObjectives) ?>
-                                </select>
-                            </li>
-                        </div>
-                        <input type="submit" class="button button--filter" id="filter-button" aria-label="Filtrer les données entrées" value="Filtrer">
-                        <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                        <input type="hidden" name="action" value="filter-campaigns">
-                </form>
-                <form action="actions-filter" method="post" id="reinit-form">
-                    <input type="submit" class="button button--reinit" id="filter-reinit" aria-label="Réinitialise tous les filtres" value="" title="Réinitialiser les filtres">
+
+        <h2 class="ttl lineUp" id="client-campaigns">Les campagnes <?= $currentYear ?></h2>
+        <div class="card">
+            <form class="card__section" action="actions-filter.php" method="post" id="filter-form" aria-label="formulaire de filtre">
+                <ul class="form__lst form__lst--row">
+                    <div class="form__lst--flex">
+                        <li class="form__itm">
+                            <label for="target-filter">Objectifs de la campagne (optionnel)</label>
+                            <select class="form__input form__input--select" type="date" name="target-filter" id="target-filter">
+                                <?= getTargetsAsHTMLOptions($communicationObjectives) ?>
+                            </select>
+                        </li>
+                    </div>
+                    <input type="submit" class="button button--filter" id="filter-button" aria-label="Filtrer les données entrées" value="Filtrer">
                     <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                    <input type="hidden" name="action" value="filter-reinit">
-                </form>
-            </div>
+                    <input type="hidden" name="action" value="filter-campaigns">
+            </form>
+            <form action="actions-filter.php" method="post" id="reinit-form">
+                <input type="submit" class="button button--reinit" id="filter-reinit" aria-label="Réinitialise tous les filtres" value="" title="Réinitialiser les filtres">
+                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                <input type="hidden" name="action" value="filter-reinit">
+            </form>
+        </div>
         <section class="card <?php
                                 if (!empty($companyCurrentYearCampaigns) || $_SESSION['client'] === 0) {
                                     echo 'campaign';
@@ -304,6 +311,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 <script type="module" src="js/dropdown-menu.js"></script>
 <script type="module" src="js/cards.js"></script>
 <script type="module" src="js/vignette.js"></script>
+<script type="module" src="js/client-menu.js"></script>
 
 <!-- Script pour les multiple graphiques de campagne. -->
 <script>
