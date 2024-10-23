@@ -36,7 +36,7 @@ checkConnection($_SESSION);
 
 checkUserClientStatus($_SESSION);
 
-if(isset($_SESSION['client']) && $_SESSION['client'] === 0 && $_GET['client'] == $_SESSION['id_company']) {
+if (isset($_SESSION['client']) && $_SESSION['client'] === 0 && $_GET['client'] == $_SESSION['id_company']) {
     $_SESSION['filter']['id_company'] = $_SESSION['id_company'];
 }
 ?>
@@ -120,11 +120,11 @@ if(isset($_SESSION['client']) && $_SESSION['client'] === 0 && $_GET['client'] ==
                             <input class="form__input" type="tel" name="phone" id="phone" placeholder="0688120668" required aria-label="Entrez le numéro de téléphone de l'utilisateur.">
                         </li>
 
-                        <input type="hidden" name="status" id="status" value="<?php if(isset($_SESSION['client']) && $_SESSION['client'] === 0 && $_GET['client'] == $_SESSION['id_company']) {
-                            echo '0';
-                        } else {
-                            echo '1';
-                        } ?>">
+                        <input type="hidden" name="status" id="status" value="<?php if (isset($_SESSION['client']) && $_SESSION['client'] === 0 && $_GET['client'] == $_SESSION['id_company']) {
+                                                                                    echo '0';
+                                                                                } else {
+                                                                                    echo '1';
+                                                                                } ?>">
                         <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                         <input type="hidden" name="action" value="create_user">
                         <input class="button button--user" type="submit" value="Créer l'utilisateur" aria-label="Valider la création de l'utilisateur">
