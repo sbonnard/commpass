@@ -55,7 +55,7 @@ unsetFilters($_SESSION);
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav($_SESSION, $companies, '', 'nav__itm--active') ?>
+        <?= fetchNav($_SESSION, $companies, 'nav__itm--active') ?>
     </nav>
 
     <main class="container container--campaigns container__flex">

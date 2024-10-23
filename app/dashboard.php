@@ -153,8 +153,8 @@ unset($_SESSION['filter']);
 
         if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {?>
             <div class="button__section">
-            <a href="/new-client.php" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouveau client</a>
-            <!-- <span class="text-tertiary"><a href="/new-user.php" class="button button--user" aria-label="Redirige vers un formulaire de création d'utilisateur">Nouvel utilisateur</a></span> -->
+            <a href="/new-client" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouveau client</a>
+            <!-- <span class="text-tertiary"><a href="/new-user" class="button button--user" aria-label="Redirige vers un formulaire de création d'utilisateur">Nouvel utilisateur</a></span> -->
         </div>
 
         <div class="card <?php
@@ -172,7 +172,7 @@ unset($_SESSION['filter']);
                         $companyDatas .= '
         <div class="card" data-card="">
             <section class="card__section card__section--company" aria-labelledby="company_name' . $company['id_company'] . '">
-                <a href="my-client.php?client=' . $company['id_company'] . '"><h3 class="client__ttl" id="company_name' . $company['id_company'] . '">' . $company['company_name'] . '</h3></a>
+                <a href="my-client?client=' . $company['id_company'] . '"><h3 class="client__ttl" id="company_name' . $company['id_company'] . '">' . $company['company_name'] . '</h3></a>
                 <ul class="client__lst gradient-border gradient-border--top">';
                         $userFound = false;
 
@@ -195,7 +195,7 @@ unset($_SESSION['filter']);
 
                                 if ($user['enabled'] === 1) {
                                     $companyDatas .=
-                                        '<form class="client__disabled-form" method="post" action="actions.php" onsubmit="return confirmDisable()">
+                                        '<form class="client__disabled-form" method="post" action="actions" onsubmit="return confirmDisable()">
                                     <button type="submit" class="client--disable-btn" data-client-disable="' . $user['id_user'] . '"></button>
                                     <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
                                     <input type="hidden" name="action" value="disable-client">
@@ -203,7 +203,7 @@ unset($_SESSION['filter']);
                                 </form>';
                                 } else {
                                     $companyDatas .=
-                                        '<form class="client__enable-form" method="post" action="actions.php" onsubmit="return confirmEnable()">
+                                        '<form class="client__enable-form" method="post" action="actions" onsubmit="return confirmEnable()">
                                     <button type="submit" class="client--enable-btn" data-client-enable="' . $user['id_user'] . '"></button>
                                     <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
                                     <input type="hidden" name="action" value="enable-client">
@@ -224,7 +224,7 @@ unset($_SESSION['filter']);
                         $companyDatas .= '
                         <div class="client__brands-ttl">
                             <h4 class="client__subttl">Les marques</h4>
-                            <a class="button--plus" href="/new-brand.php?comp=' . $company['id_company'] . '" title="Ajouter une marque pour ' . $company['company_name'] . '"></a>
+                            <a class="button--plus" href="/new-brand?comp=' . $company['id_company'] . '" title="Ajouter une marque pour ' . $company['company_name'] . '"></a>
                         </div>';
 
                         foreach ($allbrands as $brand) {

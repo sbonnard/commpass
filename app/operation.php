@@ -35,7 +35,7 @@ generateToken();
 checkConnection($_SESSION);
 
 if (!isset($_GET['myc'])) {
-    header('Location: dashboard.php');
+    header('Location: dashboard');
     exit;
 }
 
@@ -61,7 +61,7 @@ if (!isset($_GET['myo'])) {
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
+        echo fetchHeader('dashboard', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -93,7 +93,7 @@ if (!isset($_GET['myo'])) {
             </h2>
 
             <section class="card__section" aria-labelledby="new-operation-ttl">
-                <form class="form" action="actions.php" method="post" aria-label="Formulaire de création d'une nouvelle opération">
+                <form class="form" action="actions" method="post" aria-label="Formulaire de création d'une nouvelle opération">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="operation_description">Description de l'opération</label>
@@ -156,7 +156,7 @@ if (!isset($_GET['myo'])) {
             </section>
 
             <!-- Formulaire de création d'un nouveau média si absent de la liste dans le select.  -->
-            <form class="form" action="api.php" method="post" id="new-media-form" aria-label="Création d'un nouveau média si absent de la liste précédente.">
+            <form class="form" action="api" method="post" id="new-media-form" aria-label="Création d'un nouveau média si absent de la liste précédente.">
                 <ul class="form__lst">
                     <li class="form__itm form__itm--small">
                         <label for="add-media" class="text-small">Créer un média</label>
@@ -169,7 +169,7 @@ if (!isset($_GET['myo'])) {
             </form>
             
             <!-- Formulaire de création d'un nouveau partenaire si absent de la liste dans le select.  -->
-            <form class="form" action="api.php" method="post" id="new-partner-form" aria-label="Création d'un nouveau partenaire si absent de la liste précédente.">
+            <form class="form" action="api" method="post" id="new-partner-form" aria-label="Création d'un nouveau partenaire si absent de la liste précédente.">
                 <ul class="form__lst">
                     <li class="form__itm form__itm--small">
                         <label for="add-partner" class="text-small">Créer un partenaire</label>

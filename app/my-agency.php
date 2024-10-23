@@ -49,12 +49,12 @@ unsetFilters($_SESSION);
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
+        echo fetchHeader('dashboard', 'Mon tableau de bord');
         ?>
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav($_SESSION, $companies, '', '', 'nav__itm--active') ?>
+        <?= fetchNav($_SESSION, $companies, '', '', '', 'nav__itm--active') ?>
     </nav>
 
     <main class="container container--campaigns container__flex">
@@ -71,7 +71,7 @@ unsetFilters($_SESSION);
         </h2>
 
         <div class="button__section">
-            <a href="/new-user.php?client=<?= $_SESSION['id_company'] ?>" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouvel utilisateur</a>
+            <a href="/new-user?client=<?= $_SESSION['id_company'] ?>" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouvel utilisateur</a>
         </div>
 
         <div class="card">
@@ -108,7 +108,7 @@ unsetFilters($_SESSION);
 
                                 if ($user['enabled'] === 1) {
                                     $companyDatas .=
-                                        '<form class="client__disabled-form" method="post" action="actions.php" onsubmit="return confirmDisable()">
+                                        '<form class="client__disabled-form" method="post" action="actions" onsubmit="return confirmDisable()">
                                     <button type="submit" class="client--disable-btn" data-client-disable="' . $user['id_user'] . '"></button>
                                     <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
                                     <input type="hidden" name="action" value="disable-client">
@@ -116,7 +116,7 @@ unsetFilters($_SESSION);
                                 </form>';
                                 } else {
                                     $companyDatas .=
-                                        '<form class="client__enable-form" method="post" action="actions.php" onsubmit="return confirmEnable()">
+                                        '<form class="client__enable-form" method="post" action="actions" onsubmit="return confirmEnable()">
                                     <button type="submit" class="client--enable-btn" data-client-enable="' . $user['id_user'] . '"></button>
                                     <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
                                     <input type="hidden" name="action" value="enable-client">

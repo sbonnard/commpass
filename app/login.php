@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'log-in') {
         $_SESSION['id_company'] = $user['id_company'];
     } else {
         addError('login_fail');
-        redirectTo('index.php');
+        redirectTo('index');
     }
 }
 
-redirectTo('dashboard.php');
+redirectTo('dashboard');
