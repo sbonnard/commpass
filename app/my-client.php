@@ -146,6 +146,9 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 
         <div class="button__section">
             <a href="/new-campaign?client=<?= $selectedCompany['id_company'] ?>" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>
+        </div>
+
+        <div class="button__section">
             <span class="history-lnk"><a class="nav__lnk nav__lnk--new-campaign" href="#client-campaigns" aria-label="Vous amène directement aux campagnes clients">Accéder aux campagnes ▼</a></span>
             <span class="history-lnk"><a class="nav__lnk nav__lnk--history" href="history?client=<?= $selectedCompany['id_company'] ?>" aria-label="Consulter l'historique de <?= $selectedCompany['company_name'] ?>">Historique du client</a></span>
             <div class="client__menu-box">
