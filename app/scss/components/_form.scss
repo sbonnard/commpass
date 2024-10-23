@@ -64,6 +64,10 @@
             flex-direction: row-reverse;
             align-items: center;
         }
+
+        &--small {
+            position: relative;
+        }
     }
 
     &__label {
@@ -101,6 +105,11 @@
             & {
                 width: 18.75rem;
             }
+        }
+
+        &--small {
+            padding: 0.5rem 0.5rem;
+            width: 100%;
         }
 
         &--password {
@@ -169,5 +178,11 @@
 
     &__placeholder {
         color: $shadow;
+    }
+
+    &__plus {
+        position: absolute;
+        right: 3%;
+        top: 55%;
     }
 }
