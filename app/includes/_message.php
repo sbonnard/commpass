@@ -77,8 +77,8 @@ $errors = [
     'year_ko' => 'L\'année n\'a pas pu être déterminée.',
     'client_ko' => 'Aucun client trouvé.',
     'client_disabled_ko' => 'Erreur lors de la désactivation du client.',
-    'client_enabled_ko' => 'Erreur lors de la réactivation du client.'
-
+    'client_enabled_ko' => 'Erreur lors de la réactivation du client.',
+    'add-media-empty' => 'Aucun média saisi.'
 ];
 
 
