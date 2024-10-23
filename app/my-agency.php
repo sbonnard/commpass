@@ -66,7 +66,7 @@ unsetFilters($_SESSION);
         </div>
 
         <h2 class="ttl lineUp">
-            Les effectifs<br>
+            L'équipe<br>
             <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
         </h2>
 
