@@ -169,7 +169,7 @@ if (!isset($_GET['myo'])) {
             </form>
             
             <!-- Formulaire de création d'un nouveau partenaire si absent de la liste dans le select.  -->
-            <form class="form" action="api.php" method="post" aria-label="Création d'un nouveau partenaire si absent de la liste précédente.">
+            <form class="form" action="api.php" method="post" id="new-partner-form" aria-label="Création d'un nouveau partenaire si absent de la liste précédente.">
                 <ul class="form__lst">
                     <li class="form__itm form__itm--small">
                         <label for="add-partner" class="text-small">Créer un partenaire</label>
