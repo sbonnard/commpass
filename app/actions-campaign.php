@@ -79,6 +79,8 @@ if ($_POST['action'] === 'create-campaign') {
     $lastInsertID = $dbCo->lastInsertId();
 
     if ($isInsertOk) {
+        unset($_SESSION['form_data']);
+        $_SESSION['filter']['id_company'] = intval($_POST['campaign_company']);
         addMessage('campaign_created_ok');
         redirectTo('campaign?myc='. $lastInsertID);
     } else {
