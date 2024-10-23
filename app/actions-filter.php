@@ -12,7 +12,6 @@ require_once "includes/_message.php";
 
 // header('Content-type:application/json');
 
-
 if (!isset($_REQUEST['action'])) {
     redirectTo('dashboard');
     exit;
@@ -22,16 +21,6 @@ if (!isset($_REQUEST['action'])) {
 preventFromCSRF();
 
 if ($_POST['action'] === 'filter-campaigns') {
-    if (!isset($_POST['client-filter']) || empty($_POST['client-filter'])) {
-        addError('no_client');
-        redirectTo('dashboard');
-        exit;
-    }
-
-    if (isset($_POST['client-filter']) && intval($_POST['client-filter'])) {
-        $_SESSION['filter']['id_company'] = intval($_POST['client-filter']);
-    }
-
     if (
         isset($_POST['target-filter']) && intval($_POST['target-filter'])
         && intval($_POST['target-filter']) >= 1 && intval($_POST['target-filter']) <= 3
