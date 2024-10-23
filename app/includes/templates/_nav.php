@@ -7,7 +7,7 @@
  * @param string $profilActive - Makes profil active.
  * @return string - Class name that will be applied to the navigation menu.
  */
-function fetchNav(array $session, array $companies = [], string $dashboardActive = '', string $newCampaignActive = '', string $clientActive = '', string $historyActive = '', string $profilActive = ''): string
+function fetchNav(array $session, array $companies = [], string $dashboardActive = '', string $newCampaignActive = '', string $clientActive = '', string $myAgencyActive = '', string $historyActive = '', string $profilActive = ''): string
 {
     if (isset($_SESSION['id_user'])) {
         return '
@@ -15,7 +15,7 @@ function fetchNav(array $session, array $companies = [], string $dashboardActive
                 <li class="nav__itm ' . $dashboardActive . '">
                     <a href="/dashboard.php" class="nav__lnk nav__lnk--dashboard" aria-label="Lien vers le tableau de bord contenant les campagnes de communications de l\'année en cours">Tableau de bord</a>
                 </li>'
-            . displayNetworkLinkIfTDC($session, $newCampaignActive, $clientActive, $companies) .
+            . displayNetworkLinkIfTDC($session, $newCampaignActive, $clientActive, $myAgencyActive, $companies) .
             displayHistoryLinkIfPermissionOK($session, $historyActive) .
             '<li class="nav__itm ' . $profilActive . '">
                     <a href="/profil.php" class="nav__lnk nav__lnk--profile" aria-label="Lien vers mon profil d\'utilisateur">Mon profil</a>
@@ -46,22 +46,36 @@ function fetchNav(array $session, array $companies = [], string $dashboardActive
  * @param array $session - Superglobal $_SESSION.
  * @return string - HTML code for the link.
  */
-function displayNetworkLinkIfTDC(array $session, string $newCampaignActive, string $clientActive, array $companies): string
+function displayNetworkLinkIfTDC(array $session, string $newCampaignActive, string $clientActive, string $myAgencyActive, array $companies): string
 {
     if (isset($session['client']) && $session['client'] === 0) {
         return '
-        <li class="nav__itm ' . $clientActive . ' dropdown">
-            <button class="nav__lnk nav__lnk--network dropdown__button" aria-label="Menu déroulant" id="dropdown-btn">Mes clients<span class="nav__arrow">▼</span></button>
-            <ul class="dropdown__child dropdown__grid" id="dropdown-child">
-                <li class="dropdown__child-itm">
-                    <a href="/clients.php" class="dropdown__child-lnk" aria-label="Lien vers mes clients">Tous mes clients</a>
-                </li>
-                ' . getAllClientsAsLnk($companies) . '
-            </ul>
+       <li class="nav__itm '. $clientActive .' dropdown">
+    <button class="nav__lnk nav__lnk--network dropdown__button" aria-label="Menu déroulant" id="dropdown-btn-client">Mes clients<span class="nav__arrow">▼</span></button>
+    <ul class="dropdown__child dropdown__grid" id="dropdown-child-client">
+        <li class="dropdown__child-itm">
+            <a href="/clients.php" class="dropdown__child-lnk" aria-label="Lien vers mes clients">Tous mes clients</a>
         </li>
-        <li class="nav__itm ' . $newCampaignActive . '">
-            <a href="/new-campaign.php" class="nav__lnk nav__lnk--new-campaign" aria-label="Redirige vers un formulaire de création de campagne">Nouvelle campagne</a>
+        '. getAllClientsAsLnk($companies) .'
+    </ul>
+</li>
+<li class="nav__itm '. $newCampaignActive .'">
+    <a href="/new-campaign.php" class="nav__lnk nav__lnk--new-campaign" aria-label="Redirige vers un formulaire de création de campagne">Nouvelle campagne</a>
+</li>
+<li class="nav__itm '. $myAgencyActive .' dropdown">
+    <button class="nav__lnk nav__lnk--agency dropdown__button" aria-label="Menu déroulant" id="dropdown-btn-agency">Mon agence<span class="nav__arrow">▼</span></button>
+    <ul class="dropdown__child" id="dropdown-child-agency">
+        <li class="dropdown__child-itm">
+            <a href="/new-user.php?pro='. $session['id_company'] .'" class="dropdown__child-lnk" aria-label="Lien vers un nouvel utilisateur de l\'agence">Nouveau collaborateur</a>
         </li>
+        <li class="dropdown__child-itm">
+            <a href="/partners.php" class="dropdown__child-lnk" aria-label="Lien vers les partenaires de l\'agence">Nos partenaires</a>
+        </li>
+        <li class="dropdown__child-itm">
+            <a href="/media.php" class="dropdown__child-lnk" aria-label="Lien vers les médias de l\'agence">Nouveau média</a>
+        </li>
+    </ul>
+</li>
         ';
     } else {
         return '';
@@ -93,7 +107,7 @@ function displayHistoryLinkIfPermissionOK(array $session, string $historyActive)
  * @param array $companies - An array containing the list of clients
  * @return string - The list of clients or empty string. 
  */
-function getAllClientsAsLnk(array $companies):string
+function getAllClientsAsLnk(array $companies): string
 {
     $html = '';
 
