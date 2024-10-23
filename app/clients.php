@@ -72,7 +72,7 @@ unsetFilters($_SESSION);
 
         <div class="button__section">
             <a href="/new-client.php" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouveau client</a>
-            <span class="text-tertiary"><a href="/new-user.php" class="button button--user" aria-label="Redirige vers un formulaire de création d'utilisateur">Nouvel utilisateur</a></span>
+            <!-- <span class="text-tertiary"><a href="/new-user.php" class="button button--user" aria-label="Redirige vers un formulaire de création d'utilisateur">Nouvel utilisateur</a></span> -->
         </div>
 
         <div class="card <?php
