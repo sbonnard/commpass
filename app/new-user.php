@@ -50,7 +50,7 @@ unsetFilters($_SESSION);
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard', 'Mon tableau de bord');
+        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -67,10 +67,13 @@ unsetFilters($_SESSION);
         </div>
 
         <div class="card">
-            <h2 class="ttl lineUp" id="new-user-ttl">Nouvel utilisateur</h2>
+            <h2 class="ttl lineUp" id="new-user-ttl">Nouvel utilisateur
+                <?php if (isset($_SESSION['filter']['id_company'])) {
+                    echo '<br><span class="ttl--tertiary">' . getClientName($dbCo, $_SESSION) . '</span>';
+                } ?></h2>
 
             <section class="card__section" aria-labelledby="new-user-ttl">
-                <form class="form" action="actions" method="post" aria-label="Formulaire de création d'un nouvel utilisateur">
+                <form class="form" action="actions.php" method="post" aria-label="Formulaire de création d'un nouvel utilisateur">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="username">Nom d'utilisateur</label>
@@ -84,12 +87,16 @@ unsetFilters($_SESSION);
                             <label class="form__label" for="lastname">Nom</label>
                             <input class="form__input" type="text" name="lastname" id="lastname" placeholder="McFly" required aria-label="Entrez le nom de famille de l'utilisateur.">
                         </li>
-                        <li class="form__itm form__itm--app">
-                            <label class="form__label" for="company" aria-label="Sélectionner l'entreprise concernée">Entreprise</label>
-                            <select class="form__input form__input--select" type="text" name="company" id="company" required aria-label="Sélectionner l'entreprise pour laquelle l'utilisateur travail">
-                                <?= getDatasAsHTMLOptions($companies, 'Sélectionner une entreprise', 'id_company', 'company_name'); ?>
-                            </select>
-                        </li>
+                        <?php if (isset($_SESSION['filter']['id_company'])) {
+                            echo '<input type="hidden" name="company" value="' . $_SESSION['filter']['id_company'] . '">';
+                        } else { ?>
+                            <li class="form__itm form__itm--app">
+                                <label class="form__label" for="company" aria-label="Sélectionner l'entreprise concernée">Entreprise</label>
+                                <select class="form__input form__input--select" type="text" name="company" id="company" required aria-label="Sélectionner l'entreprise pour laquelle l'utilisateur travail">
+                                    <?= getDatasAsHTMLOptions($companies, 'Sélectionner une entreprise', 'id_company', 'company_name'); ?>
+                                </select>
+                            </li>
+                        <?php } ?>
                         <li class="form__itm form__itm--app form__itm--checkbox">
                             <label class="form__label form__label--root" for="boss">L'utilisateur est gérant de l'entreprise</label>
                             <input type="hidden" name="boss" value="0">
