@@ -203,7 +203,7 @@ unset($_SESSION['filter']);
                                 </form>';
                                 } else {
                                     $companyDatas .=
-                                        '<form class="client__enable-form" method="post" action="actions.php" onsubmit="return confirmEnable()">
+                                '<form class="client__enable-form" method="post" action="actions.php" onsubmit="return confirmEnable()">
                                     <button type="submit" class="client--enable-btn" data-client-enable="' . $user['id_user'] . '"></button>
                                     <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
                                     <input type="hidden" name="action" value="enable-client">
