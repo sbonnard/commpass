@@ -24,7 +24,7 @@
         justify-content: center;
         gap: 0.5rem;
     }
-    
+
     &--disabled {
         ::before {
             content: url(../../img/disable.svg);
@@ -63,12 +63,50 @@
         transition: opacity 0.2s ease-in-out;
     }
 
-    &__name:hover &--disable-btn, &--disable-btn:hover {
+    &__name:hover &--disable-btn,
+    &--disable-btn:hover {
         opacity: 1;
     }
 
-    &__name:hover &--enable-btn, &--enable-btn:hover {
+    &__name:hover &--enable-btn,
+    &--enable-btn:hover {
         opacity: 1;
     }
 
+    &__menu-box {
+        position: relative;
+    }
+
+    &__menu {
+        display: none;
+        position: absolute;
+        z-index: 1;
+        color: $primary;
+        background-color: $white;
+        border-radius: 0.75rem;
+        border: 2px solid $tertiary;
+        padding: 1rem;
+        width: 12rem;
+        left: 0%;
+        top: 95%;
+
+        &-link {
+            &:hover {
+                color: $tertiary;
+            }
+        }
+
+        &-plus-btn {
+            display: inline-block;
+            width: 2rem;
+            aspect-ratio: 1;
+            background-image: url(../img/cta-plus.svg);
+            border: 2px solid $tertiary;
+            border-radius: 0.5rem;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+
+        }
+    }
 }
