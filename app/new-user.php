@@ -79,15 +79,27 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0 && $_GET['client'] =
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="username">Nom d'utilisateur</label>
-                            <input class="form__input" type="text" name="username" id="username" placeholder="user94" required aria-label="Entrez le nom de l'utilisateur." autofocus>
+                            <input class="form__input" type="text" name="username" id="username" placeholder="user94" required aria-label="Entrez le nom de l'utilisateur." autofocus value="<?php
+                                                                                                                                                                                                if (isset($_SESSION['form_data']['username'])) {
+                                                                                                                                                                                                    echo $_SESSION['form_data']['username'];
+                                                                                                                                                                                                }
+                                                                                                                                                                                                ?>">
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="firstname">Prénom</label>
-                            <input class="form__input" type="text" name="firstname" id="firstname" placeholder="Marty" required aria-label="Entrez le prénom de l'utilisateur.">
+                            <input class="form__input" type="text" name="firstname" id="firstname" placeholder="Marty" required aria-label="Entrez le prénom de l'utilisateur." value="<?php
+                                                                                                                                                                                        if (isset($_SESSION['form_data']['firstname'])) {
+                                                                                                                                                                                            echo $_SESSION['form_data']['firstname'];
+                                                                                                                                                                                        }
+                                                                                                                                                                                        ?>">
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="lastname">Nom</label>
-                            <input class="form__input" type="text" name="lastname" id="lastname" placeholder="McFly" required aria-label="Entrez le nom de famille de l'utilisateur.">
+                            <input class="form__input" type="text" name="lastname" id="lastname" placeholder="McFly" required aria-label="Entrez le nom de famille de l'utilisateur." value="<?php
+                                                                                                                                                                                                if (isset($_SESSION['form_data']['lastname'])) {
+                                                                                                                                                                                                    echo $_SESSION['form_data']['lastname'];
+                                                                                                                                                                                                }
+                                                                                                                                                                                                ?>">
                         </li>
                         <?php if (isset($_SESSION['filter']['id_company'])) {
                             echo '<input type="hidden" name="company" id="company" value="' . $_SESSION['filter']['id_company'] . '">';
@@ -113,11 +125,19 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0 && $_GET['client'] =
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="email">Email</label>
-                            <input class="form__input" type="email" name="email" id="email" placeholder="marty-mcfly@hillvalley.com" required aria-label="Entrez l'email de l'utilisateur.">
+                            <input class="form__input" type="email" name="email" id="email" placeholder="marty-mcfly@hillvalley.com" required aria-label="Entrez l'email de l'utilisateur." value="<?php
+                                                                                                                                                                                                    if (isset($_SESSION['form_data']['email'])) {
+                                                                                                                                                                                                        echo $_SESSION['form_data']['email'];
+                                                                                                                                                                                                    }
+                                                                                                                                                                                                    ?>">
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="phone">Téléphone</label>
-                            <input class="form__input" type="tel" name="phone" id="phone" placeholder="0688120668" required aria-label="Entrez le numéro de téléphone de l'utilisateur.">
+                            <input class="form__input" type="tel" name="phone" id="phone" placeholder="0688120668" required aria-label="Entrez le numéro de téléphone de l'utilisateur."  value="<?php 
+                            if(isset($_SESSION['form_data']['phone'])) {
+                                echo $_SESSION['form_data']['phone'];
+                            }
+                            ?>">
                         </li>
 
                         <input type="hidden" name="status" id="status" value="<?php if (isset($_SESSION['client']) && $_SESSION['client'] === 0 && $_GET['client'] == $_SESSION['id_company']) {

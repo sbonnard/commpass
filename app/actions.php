@@ -362,6 +362,18 @@ if ($_POST['action'] === 'modify-pwd') {
         exit;
     }
 } else if ($_POST['action'] === 'create_user') {
+
+    $_SESSION['form_data'] = [
+        'username' => htmlspecialchars($_POST['username']),
+        'firstname' => htmlspecialchars($_POST['firstname']),
+        'lastname' => htmlspecialchars($_POST['lastname']),
+        'company' => intval($_POST['company']),
+        'password' => htmlspecialchars($_POST['password']),
+        'email' => htmlspecialchars($_POST['email']),
+        'phone' => htmlspecialchars($_POST['phone']),
+        'status' => intval($_POST['status'])
+    ];
+
     if (!isset($_POST['username']) || empty($_POST['username']) || !is_string($_POST['username']) || strlen($_POST['username']) > 100) {
         addError('username_ko');
         redirectTo();
@@ -430,6 +442,7 @@ if ($_POST['action'] === 'modify-pwd') {
     $isInsertUserOk = $queryNewUser->execute($bindValues);
 
     if ($isInsertUserOk) {
+        unset($_SESSION['form_data']);
         addMessage('new_user_created_ok');
         redirectTo('my-client.php?client=' . $_SESSION['filter']['id_company']);
     } else {
