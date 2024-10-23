@@ -6,7 +6,6 @@ require_once './includes/_message.php';
 
 header('Content-Type: application/json');
 
-
 if (isset($_POST['id_company'])) {
 
     // Si une entreprise est définie dans le formulaire de création de campagne,
@@ -14,7 +13,7 @@ if (isset($_POST['id_company'])) {
     // avec $_POST['id_company'].
 
     $idCompany = intval($_POST['id_company']);
-    
+
     $query = $dbCo->prepare(
         'SELECT id_user, firstname, lastname
         FROM users
@@ -24,15 +23,39 @@ if (isset($_POST['id_company'])) {
 
     // Exécution des valeurs liées récupérées dans le POST.
     $query->execute(['idCompany' => $idCompany]);
-    
+
     // Récupération des données sous forme de tableau associatif.
     $users = $query->fetchAll(PDO::FETCH_ASSOC);
 
     // Encodage en json pour JavaScript (AJAX).
     echo json_encode($users);
-    
+} else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Décodage du corps JSON envoyé par fetch
+    $inputData = json_decode(file_get_contents('php://input'), true);
+
+    // Vérifie si l'action est définie
+    if (isset($inputData['action']) && $inputData['action'] === 'add-media') {
+        if (empty($inputData['add-media'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Le champ "Ajouter un média" ne peut pas être vide.']);
+            exit; // Arrête le script si une erreur est rencontrée
+        }
+
+        $mediaName = htmlspecialchars($inputData['add-media']);
+
+        try {
+            $query = $dbCo->prepare('INSERT INTO media (media_name) VALUES (:media_name);');
+            $query->bindValue(':media_name', $mediaName);
+            $query->execute();
+
+            // Réponse de succès
+            echo json_encode(['status' => 'success', 'message' => 'Média ajouté avec succès.']);
+        } catch (PDOException $e) {
+            // Gestion des erreurs de base de données
+            echo json_encode(['status' => 'error', 'message' => 'Erreur lors de l\'ajout du média : ' . $e->getMessage()]);
+        }
+    }
 } else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    
+
     $inputData = json_decode(file_get_contents('php://input'), true);
 
     error_log("Données reçues : " . print_r($inputData, true));
