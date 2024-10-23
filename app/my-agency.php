@@ -85,7 +85,7 @@ unsetFilters($_SESSION);
                         $companyDatas .= '
         <div class="card" data-card="">
             <section class="card__section card__section--company" aria-labelledby="company_name' . $company['id_company'] . '">
-                <h3 class="client__ttl" id="company_name' . $company['id_company'] . '">Nos effectifs</h3>
+                <h3 class="client__ttl" id="company_name' . $company['id_company'] . '" style="color:#44277A;">Utilisateurs</h3>
                 <ul class="client__lst gradient-border gradient-border--top">';
                         $userFound = false;
 
