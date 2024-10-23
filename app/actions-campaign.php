@@ -190,7 +190,7 @@ if ($_POST['action'] === 'create-campaign') {
         if ($isDeleteOk && $isDeleteOperationOk) {
             $dbCo->commit();
             addMessage('campaign_deleted_ok');
-            redirectTo('dashboard');
+            redirectTo('my-client?client=' . $_SESSION['filter']['id_company']);
         } else {
             throw new Exception('Erreur lors de la suppression des opérations');
         }
