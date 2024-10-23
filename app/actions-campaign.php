@@ -22,6 +22,18 @@ if (!isset($_REQUEST['action'])) {
 preventFromCSRF();
 
 if ($_POST['action'] === 'create-campaign') {
+
+    $_SESSION['form_data'] = [
+        'name' => strip_tags($_POST['campaign_name']),
+        'id_company' => intval($_POST['campaign_company']),
+        'id_interlocutor' => intval($_POST['campaign_interlocutor']),
+        'budget' => floatval($_POST['budget']),
+        'id_target' => intval($_POST['campaign_target']),
+        'date_start' => strip_tags($_POST['date_start']),
+        'date_end' => strip_tags($_POST['date_end']),
+        'id_user_TDC' => intval($_POST['user_TDC'])
+    ];
+
     if (!isset($_POST['campaign_name']) || empty($_POST['campaign_name'])) {
         addError('campaign_name_ko');
         redirectTo();
@@ -79,6 +91,8 @@ if ($_POST['action'] === 'create-campaign') {
     $lastInsertID = $dbCo->lastInsertId();
 
     if ($isInsertOk) {
+        unset($_SESSION['form_data']);
+        $_SESSION['filter']['id_company'] = intval($_POST['campaign_company']);
         addMessage('campaign_created_ok');
         redirectTo('campaign.php?myc='. $lastInsertID);
     } else {
