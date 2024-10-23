@@ -1,10 +1,13 @@
-const dropdownBtn = document.getElementById('dropdown-btn');
-const dropdownChild = document.getElementById('dropdown-child');
+// GESTION DU DROPDOWN CLIENT POUR LA VERSION MOBILE 
 
-dropdownBtn.addEventListener('click', function () {
-    dropdownChild.classList.toggle('dropdown__child--active');
+const dropdownBtnClient = document.getElementById('dropdown-btn-client');
+const dropdownChildClient = document.getElementById('dropdown-child-client');
+
+dropdownBtnClient.addEventListener('click', function () {
+    dropdownChildClient.classList.toggle('dropdown__child--active');
 });
 
+// GESTION DU DROPDOWN AGENCE POUR LA VERSION MOBILE 
 
 const dropdownBtnAgency = document.getElementById('dropdown-btn-agency');
 const dropdownChildAgency = document.getElementById('dropdown-child-agency');
