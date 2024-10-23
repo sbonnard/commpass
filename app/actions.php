@@ -295,7 +295,7 @@ if ($_POST['action'] === 'modify-pwd') {
 
     if ($isInsertOk) {
         addMessage('brand_created_ok');
-        redirectTo('clients.php');
+        redirectTo('my-client.php?client=' . $_SESSION['filter']['id_company']);
     } else {
         addError('brand_creation_ko');
         redirectTo('');
@@ -431,7 +431,7 @@ if ($_POST['action'] === 'modify-pwd') {
 
     if ($isInsertUserOk) {
         addMessage('new_user_created_ok');
-        redirectTo('clients.php');
+        redirectTo('my-client.php?client=' . $_SESSION['filter']['id_company']);
     } else {
         addError('new_user_creation_ko');
     }

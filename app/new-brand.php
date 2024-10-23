@@ -66,8 +66,9 @@ unsetFilters($_SESSION);
         <div class="card big-padding">
             <h2 class="ttl lineUp" id="new-budget-ttl">
                 Nouvelle marque
-                <br>
-                <span class="ttl--tertiary"><?= getCompanyNameForNewBrand($dbCo, $_GET) ?></span>
+                <?php if (isset($_SESSION['filter']['id_company'])) {
+                    echo '<br><span class="ttl--tertiary">' . getClientName($dbCo, $_SESSION) . '</span>';
+                } ?>
             </h2>
 
             <section class="card__section" aria-labelledby="new-budget-ttl">
@@ -83,7 +84,7 @@ unsetFilters($_SESSION);
                         </li>
                         <input class="button button--confirm" type="submit" value="Créer la marque">
                     </ul>
-                    <input type="hidden" name="id_company" value="<?= $_GET['comp'] ?>">
+                    <input type="hidden" name="id_company" value="<?= $_SESSION['filter']['id_company'] ?>">
                     <input type="hidden" name="action" value="new_brand">
                     <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 </form>
