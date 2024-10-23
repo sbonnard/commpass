@@ -35,6 +35,15 @@ checkConnection($_SESSION);
 
 checkUserClientStatus($_SESSION);
 
+if (
+    isset($_GET['client']) && $_GET['client'] == $_SESSION['id_company']
+    || !intval($_GET['client'])
+    || !is_array(getAllCompanyDatas($dbCo, $_GET)) || getAllCompanyDatas($dbCo, $_GET) == false
+) {
+    redirectTo('errors/403.php');
+    exit;
+}
+
 // unsetFilters($_SESSION);
 
 // Récupérer les données d'une entreprise. 
