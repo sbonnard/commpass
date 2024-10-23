@@ -104,6 +104,8 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         $jsonBrandChartColors = json_encode($brandChartColors);
     }
 }
+
+unset($_SESSION['filter']);
 ?>
 
 <!DOCTYPE html>
@@ -144,60 +146,112 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             ?>
         </div> -->
 
+        <h2 class="ttl lineUp">Tableau de bord</h2>
+
         <?php
         // var_dump($_SESSION);
 
-        if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-            echo
-            '<div class="card">
-                <form class="card__section" action="actions-filter.php" method="post" id="filter-form" aria-label="formulaire de filtre">
-                    <ul class="form__lst form__lst--row">
-                        <div class="form__lst--flex">
-                            <li class="form__itm">
-                                <label for="client-filter">Sélectionner un client</label>
-                                <select class="form__input form__input--select" type="date" name="client-filter" id="client-filter" required>
-                                    ' . getCompaniesAsHTMLOptions($companies) . '
-                                </select>
-                            </li>
-                        </div>
-                        <input type="submit" class="button button--filter" id="filter-button" aria-label="Filtrer les données entrées" value="Filtrer">
-                        <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
-                        <input type="hidden" name="action" value="filter-campaigns">
-                </form>
-                <form action="actions-filter.php" method="post" id="reinit-form">
-                    <input type="submit" class="button button--reinit" id="filter-reinit" aria-label="Réinitialise tous les filtres" value="" title="Réinitialiser les filtres">
-                    <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
-                    <input type="hidden" name="action" value="filter-reinit">
-                </form>
-            </div>';
-        }
-        ?>
+        if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {?>
+            <div class="button__section">
+            <a href="/new-client.php" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouveau client</a>
+            <!-- <span class="text-tertiary"><a href="/new-user.php" class="button button--user" aria-label="Redirige vers un formulaire de création d'utilisateur">Nouvel utilisateur</a></span> -->
+        </div>
 
-        <?php
-        if (isset($_SESSION['filter']['id_company'])) {
-            echo '
-            <div class="card">
-            <section class="card__section card__section--row" aria-labelledby="filter-ttl">
-            <h3 id="filter-ttl">Filtres appliqués :</h3>';
-            if (isset($_SESSION['filter']['id_company'])) {
-                echo '<p class="filter__text">' . getClientName($dbCo, $_SESSION) . ' |';
-            }
-            if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_target']) && isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                echo '<p class="filter__text">Objectif</p>';
-            }
-            echo '</section></div>';
-        }
-        ?>
+        <div class="card <?php
+                            if (!empty($companies)) {
+                                echo 'card--grid card--grid--3columns';
+                            }
+                            ?>">
+            <?php
 
-        <h2 class="ttl lineUp">Tableau de bord
-            <?php if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
-                echo '<br><span class="ttl--tertiary">' . getClientName($dbCo, $_SESSION) . '</span>';
+            // Récupérer les données des entreprises et les afficher sous forme de cartes.
+            $companyDatas = '';
+            if (!empty($companies) && is_array($companies)) {
+                foreach ($companies as $company) {
+                    if ($company['id_company'] !== $_SESSION['id_company']) {
+                        $companyDatas .= '
+        <div class="card" data-card="">
+            <section class="card__section card__section--company" aria-labelledby="company_name' . $company['id_company'] . '">
+                <a href="my-client.php?client=' . $company['id_company'] . '"><h3 class="client__ttl" id="company_name' . $company['id_company'] . '">' . $company['company_name'] . '</h3></a>
+                <ul class="client__lst gradient-border gradient-border--top">';
+                        $userFound = false;
+
+                        foreach ($users as $user) {
+                            if ($user['id_company'] === $company['id_company']) {
+                                $userFound = true;
+                                $companyDatas .= '<li class="client__name ';
+
+                                if ($user['boss'] === 1) {
+                                    $companyDatas .= ' user--boss ';
+                                }
+
+                                $companyDatas .= '"';
+
+                                if ($user['enabled'] === 0) {
+                                    $companyDatas .= ' style="color: #b5b5b5c9;"';
+                                }
+
+                                $companyDatas .= '>' . $user['firstname'] . ' ' . $user['lastname'];
+
+                                if ($user['enabled'] === 1) {
+                                    $companyDatas .=
+                                        '<form class="client__disabled-form" method="post" action="actions.php" onsubmit="return confirmDisable()">
+                                    <button type="submit" class="client--disable-btn" data-client-disable="' . $user['id_user'] . '"></button>
+                                    <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
+                                    <input type="hidden" name="action" value="disable-client">
+                                    <input type="hidden" name="client-user" value="' . $user['id_user'] . '">
+                                </form>';
+                                } else {
+                                    $companyDatas .=
+                                        '<form class="client__enable-form" method="post" action="actions.php" onsubmit="return confirmEnable()">
+                                    <button type="submit" class="client--enable-btn" data-client-enable="' . $user['id_user'] . '"></button>
+                                    <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
+                                    <input type="hidden" name="action" value="enable-client">
+                                    <input type="hidden" name="client-user" value="' . $user['id_user'] . '">
+                                </form>';
+                                }
+
+                                $companyDatas .= '</li>';
+                            }
+                        }
+
+                        if (!$userFound) {
+                            $companyDatas .= '<li>Aucun interlocuteur pour cette entreprise.</li>';
+                        }
+
+                        $companyDatas .= '</ul>';
+                        $companyDatas .= '<ul>';
+                        $companyDatas .= '
+                        <div class="client__brands-ttl">
+                            <h4 class="client__subttl">Les marques</h4>
+                            <a class="button--plus" href="/new-brand.php?comp=' . $company['id_company'] . '" title="Ajouter une marque pour ' . $company['company_name'] . '"></a>
+                        </div>';
+
+                        foreach ($allbrands as $brand) {
+                            if ($brand['id_company'] === $company['id_company']) {
+                                $companyDatas .= '<li class="campaign__legend"><span class="campaign__legend-square" style="background-color:' . $brand['legend_colour_hex'] . '"></span>' . $brand['brand_name'] . '</li>';
+                            } else if (empty($allbrands)) {
+                                echo '<li>Aucune marque pour cette entreprise.</li>';
+                            }
+                        }
+                        $companyDatas .= '</ul>';
+
+                        $companyDatas .= '</section></div>';
+                    }
+                }
+            } else {
+                echo '
+                <div class="card card__section">
+                <p class="big-text">Aucun client pour l\'instant !</p>
+                </div>';
             }
+            echo $companyDatas;
             ?>
-        </h2>
+        </div>
+        <?php } ?>
 
         <?php
-        if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
+        if ($_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
 
             if ($companyAnnualBudget === 0) {
                 $companyAnnualRemainings = 0;
@@ -236,7 +290,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         ?>
 
         <?php
-        if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
+        if (isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
             // DISPLAY TABLE & DONUT CHART FOR OBJECTIVES
             echo
             '<div class="card card--grid">
