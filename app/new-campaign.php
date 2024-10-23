@@ -36,8 +36,6 @@ checkUserClientStatus($_SESSION);
 if (!isset($_GET['client']) || !intval($_GET['client'])) {
     unset($_SESSION['filter']);
 }
-
-var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
