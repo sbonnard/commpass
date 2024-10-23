@@ -47,7 +47,7 @@ unsetFilters($_SESSION);
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard', 'Mon tableau de bord');
+        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -66,12 +66,13 @@ unsetFilters($_SESSION);
         <div class="card big-padding">
             <h2 class="ttl lineUp" id="new-budget-ttl">
                 Nouvelle marque
-                <br>
-                <span class="ttl--tertiary"><?= getCompanyNameForNewBrand($dbCo, $_GET) ?></span>
+                <?php if (isset($_SESSION['filter']['id_company'])) {
+                    echo '<br><span class="ttl--tertiary">' . getClientName($dbCo, $_SESSION) . '</span>';
+                } ?>
             </h2>
 
             <section class="card__section" aria-labelledby="new-budget-ttl">
-                <form class="form" method="post" action="actions">
+                <form class="form" method="post" action="actions.php">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="budget">Nom de la marque</label>
@@ -83,7 +84,7 @@ unsetFilters($_SESSION);
                         </li>
                         <input class="button button--confirm" type="submit" value="Créer la marque">
                     </ul>
-                    <input type="hidden" name="id_company" value="<?= $_GET['comp'] ?>">
+                    <input type="hidden" name="id_company" value="<?= $_SESSION['filter']['id_company'] ?>">
                     <input type="hidden" name="action" value="new_brand">
                     <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 </form>
