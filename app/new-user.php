@@ -36,7 +36,9 @@ checkConnection($_SESSION);
 
 checkUserClientStatus($_SESSION);
 
-unsetFilters($_SESSION);
+if (isset($_SESSION['client']) && $_SESSION['client'] === 0 && $_GET['client'] == $_SESSION['id_company']) {
+    $_SESSION['filter']['id_company'] = $_SESSION['id_company'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -88,7 +90,7 @@ unsetFilters($_SESSION);
                             <input class="form__input" type="text" name="lastname" id="lastname" placeholder="McFly" required aria-label="Entrez le nom de famille de l'utilisateur.">
                         </li>
                         <?php if (isset($_SESSION['filter']['id_company'])) {
-                            echo '<input type="hidden" name="company" value="' . $_SESSION['filter']['id_company'] . '">';
+                            echo '<input type="hidden" name="company" id="company" value="' . $_SESSION['filter']['id_company'] . '">';
                         } else { ?>
                             <li class="form__itm form__itm--app">
                                 <label class="form__label" for="company" aria-label="Sélectionner l'entreprise concernée">Entreprise</label>
@@ -118,7 +120,11 @@ unsetFilters($_SESSION);
                             <input class="form__input" type="tel" name="phone" id="phone" placeholder="0688120668" required aria-label="Entrez le numéro de téléphone de l'utilisateur.">
                         </li>
 
-                        <input type="hidden" name="status" id="status" value="">
+                        <input type="hidden" name="status" id="status" value="<?php if (isset($_SESSION['client']) && $_SESSION['client'] === 0 && $_GET['client'] == $_SESSION['id_company']) {
+                                                                                    echo '0';
+                                                                                } else {
+                                                                                    echo '1';
+                                                                                } ?>">
                         <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                         <input type="hidden" name="action" value="create_user">
                         <input class="button button--user" type="submit" value="Créer l'utilisateur" aria-label="Valider la création de l'utilisateur">
