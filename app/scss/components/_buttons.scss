@@ -191,6 +191,10 @@
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
+
+        &--big {
+            width: 2rem;
+        }
     }
 
     &--eye {
