@@ -57,7 +57,7 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0 && $_GET['client'] =
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav($_SESSION, $companies, '', 'nav__itm--active') ?>
+        <?= fetchNav($_SESSION, $companies, 'nav__itm--active') ?>
     </nav>
 
     <main class="container container--campaigns container__flex">
