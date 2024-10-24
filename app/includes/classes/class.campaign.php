@@ -308,7 +308,7 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $session): strin
         $campaign['id_company'] = $_SESSION['filter']['id_company'];
 
         $campaignList .= '
-        <a href="/campaign?myc=' . $campaignId . '&client=' . $campaign['id_company'] . '">
+        <a href="/campaign.php?myc=' . $campaignId . '&client=' . $campaign['id_company'] . '">
             <div class="card__section" data-card="">
                 <div class="campaign__ttl">
                     <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>
@@ -376,11 +376,11 @@ function getCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array $sessio
 
                 $hasCampaigns = true;
                 $campaignId = $campaign['id_campaign'];
-                $campaign['id_company'] = $_SESSION['filter']['id_company'];
+                // $campaign['id_company'] = $_SESSION['filter']['id_company'];
 
                 $companyCampaigns .= '
                     <li>
-                    <a href="/campaign?myc=' . $campaignId . '&client=' . $campaign['id_company'] . '">
+                    <a href="/campaign.php?myc=' . $campaignId . '&client=' . $campaign['id_company'] . '">
                         <div class="card__section" data-card="">
                             <div class="campaign__ttl">
                                     <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>
@@ -474,7 +474,7 @@ function getHistoryCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array 
 
                         $campaignList .= '
                             <li>
-                                <a href="/campaign?myc=' . $campaignId . '">
+                                <a href="/campaign.php?myc=' . $campaignId . '">
                                     <div class="card__section" data-card="">
                                         <div class="campaign__ttl">
                                             <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>
@@ -557,7 +557,7 @@ function getHistoryCampaignTemplateClient(PDO $dbCo, array $campaigns, array $se
 
                 $campaignList .= '
                             <li>
-                                <a href="/campaign?myc=' . $campaignId . '">
+                                <a href="/campaign.php?myc=' . $campaignId . '">
                                     <div class="card__section" data-card="">
                                         <div class="campaign__ttl">
                                             <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . ' - ' . $year . '</h3>
@@ -632,7 +632,7 @@ function getMessageIfNoCampaign(array $campaigns): string
         if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
             $message .= '
         <div class="button__section">
-            <a href="/new-campaign" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>
+            <a href="/new-campaign.php" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>
         </div>';
         }
 
@@ -905,7 +905,7 @@ function getCampaignOperationsAsList(array $operations, array $session, array $s
         if (isset($session['client']) && $session['client'] === 0) {
             $operationsList .=
                 '<span class="flex-row operation__row">- 
-                <a class="button--edit" href="/operation?myc=' . $selectedCampaign['id_campaign'] . '&myo=' . $operation['id_operation'] . '" title="Éditer l\'opération ' . $operation['description'] . '" aria-label="Éditer l\opération  ' . $operation['description'] . '"></a>
+                <a class="button--edit" href="/operation.php?myc=' . $selectedCampaign['id_campaign'] . '&myo=' . $operation['id_operation'] . '" title="Éditer l\'opération ' . $operation['description'] . '" aria-label="Éditer l\opération  ' . $operation['description'] . '"></a>
                  | 
                 <button class="js-trash button--trash" 
         title="Supprimer l\'opération ' . $operation['description'] . ' " 
