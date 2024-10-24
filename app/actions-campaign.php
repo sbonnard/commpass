@@ -164,7 +164,7 @@ if ($_POST['action'] === 'create-campaign') {
 
     if ($isUpdateOk) {
         addMessage('campaign_updated_ok');
-        redirectTo('dashboard.php');
+        redirectTo('campaign.php?myc=' . $_POST['id_campaign'] . '&client=' . $_POST['campaign_company']);
     } else {
         addError('campaign_update_ko');
     }
