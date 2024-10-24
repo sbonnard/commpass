@@ -61,11 +61,11 @@ if (isset($_POST['id_company'])) {
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Décodage du corps JSON envoyé par fetch
     $inputData = json_decode(file_get_contents('php://input'), true);
-    
+
     // Vérifie si l'action est définie
     if (isset($inputData['action']) && $inputData['action'] === 'add-partner') {
         if (empty($inputData['add-partner'])) {
-            echo json_encode(['status' => 'error', 'message' => 'Le champ "Ajouter un média" ne peut pas être vide.']);
+            echo json_encode(['status' => 'error', 'message' => 'Le champ "Ajouter un partenaire" ne peut pas être vide.']);
             exit; // Arrête le script si une erreur est rencontrée
         }
 
@@ -77,10 +77,10 @@ if (isset($_POST['id_company'])) {
             $query->execute();
 
             // Réponse de succès
-            echo json_encode(['status' => 'success', 'message' => 'Média ajouté avec succès.']);
+            echo json_encode(['status' => 'success', 'message' => 'Partenaire ajouté avec succès.']);
         } catch (PDOException $e) {
             // Gestion des erreurs de base de données
-            echo json_encode(['status' => 'error', 'message' => 'Erreur lors de l\'ajout du média : ' . $e->getMessage()]);
+            echo json_encode(['status' => 'error', 'message' => 'Erreur lors de l\'ajout du partenaire : ' . $e->getMessage()]);
         }
     }
 } else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
