@@ -43,4 +43,4 @@ if ($_POST['action'] === 'filter-campaigns') {
     unset($_SESSION['filter']);
 }
 
-redirectTo();
+redirectTo('my-client?client=' . $_SESSION['filter']['id_company'] . '#client-campaigns');
