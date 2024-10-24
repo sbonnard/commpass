@@ -127,7 +127,7 @@ if (!isset($_GET['myo'])) {
                             <select class="form__input form__input--select" type="text" name="operation_media" id="operation_media" required aria-label="Sélectionner le media de l'opération.">
                                 <?= getMediaAsHTMLOptions($media, $operation) ?>
                             </select>
-
+                            <button class="create-lnk" style="text-align:left;" id="media-lnk">+ Créer un média</button>
                         </li>
 
                         <li class="form__itm form__itm--app">
@@ -135,15 +135,16 @@ if (!isset($_GET['myo'])) {
                             <select class="form__input form__input--select" type="text" name="operation_partner" id="operation_partner" aria-label="Sélectionner un partenaire de l'opération s'il y en a un.">
                                 <?= getPartnersAsHTMLOptions($partners) ?>
                             </select>
+                            <button type="button" class="create-lnk" style="text-align:left;" id="partner-lnk">+ Créer un partenaire</ submit="false">
                         </li>
 
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="date">Date de l'opération</label>
                             <input class="form__input form__input--date" type="date" name="date" id="date" required aria-label="Sélectionner la date de l'opération" value="<?php echo $operation['operation_date'];
-                            if(isset($_SESSION['form_data']['date'])) {
-                                echo $_SESSION['form_data']['date'];
-                            }
-                            ?>">
+                                                                                                                                                                            if (isset($_SESSION['form_data']['date'])) {
+                                                                                                                                                                                echo $_SESSION['form_data']['date'];
+                                                                                                                                                                            }
+                                                                                                                                                                            ?>">
                         </li>
 
                         <?php
@@ -169,7 +170,7 @@ if (!isset($_GET['myo'])) {
             </section>
 
             <!-- Formulaire de création d'un nouveau média si absent de la liste dans le select.  -->
-            <form class="form" action="api" method="post" id="new-media-form" aria-label="Création d'un nouveau média si absent de la liste précédente.">
+            <form class="form hidden" action="api" method="post" id="new-media-form" aria-label="Création d'un nouveau média si absent de la liste précédente.">
                 <ul class="form__lst">
                     <li class="form__itm form__itm--small">
                         <label for="add-media" class="text-small">Créer un média</label>
@@ -182,7 +183,7 @@ if (!isset($_GET['myo'])) {
             </form>
 
             <!-- Formulaire de création d'un nouveau partenaire si absent de la liste dans le select.  -->
-            <form class="form" action="api" method="post" id="new-partner-form" aria-label="Création d'un nouveau partenaire si absent de la liste précédente.">
+            <form class="form hidden" action="api" method="post" id="new-partner-form" aria-label="Création d'un nouveau partenaire si absent de la liste précédente.">
                 <ul class="form__lst">
                     <li class="form__itm form__itm--small">
                         <label for="add-partner" class="text-small">Créer un partenaire</label>
