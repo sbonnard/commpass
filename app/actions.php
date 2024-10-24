@@ -354,6 +354,8 @@ if ($_POST['action'] === 'modify-pwd') {
 
         $isInsertClientOk = $queryNewClient->execute($bindValuesClient);
 
+        $lastInsertClient = $dbCo->lastInsertId();
+
         if ($isInsertClientOk) {
             $companyId = $dbCo->lastInsertId();
 
@@ -371,7 +373,7 @@ if ($_POST['action'] === 'modify-pwd') {
             if ($isAnnualBudgetInsertOk) {
                 $dbCo->commit();
                 addMessage('new_client_created_ok');
-                redirectTo('clients');
+                redirectTo('my-client?client=' . $lastInsertClient);
                 exit;
             } else {
                 throw new PDOException('Failed to insert annual budget');
