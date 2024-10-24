@@ -9,10 +9,10 @@
 function fetchLogInForm(array $session): string
 {
     return '
-    <form class="form login__menu" action="login" method="post" id="connection-form" aria-label="Formulaire de connexion">
+    <form class="form login__menu" action="login.php" method="post" id="connection-form" aria-label="Formulaire de connexion">
         <div class="login__section">
             <h2 class="header__ttl login__ttl">Commpass</h2>
-            <a class="button--close" href="/index" aria-label="Fermer le formulaire de connexion">
+            <a class="button--close" href="/index.php" aria-label="Fermer le formulaire de connexion">
                 <img src="img/close-btn.svg" alt="Bouton fermer">
             </a>
         </div>
@@ -46,7 +46,7 @@ function fetchLogInForm(array $session): string
 function getModifyEmailForm(): string
 {
     return '
-    <form class="form hidden" action="actions" method="post" id="email_form" aria-label="Formulaire de modification de l\'email utilisateur">
+    <form class="form hidden" action="actions.php" method="post" id="email_form" aria-label="Formulaire de modification de l\'email utilisateur">
         <ul class="form__lst form__lst--app">
             <li class="form__itm form__itm--app">
                 <label class="form__label" for="email">Nouvel email</label>
@@ -68,7 +68,7 @@ function getModifyEmailForm(): string
 function getModifyPhoneForm(): string
 {
     return '
-    <form class="form hidden" action="actions" method="post" id="phone_form" aria-label="Formulaire de modification du numéro de téléphone">
+    <form class="form hidden" action="actions.php" method="post" id="phone_form" aria-label="Formulaire de modification du numéro de téléphone">
         <ul class="form__lst form__lst--app">
             <li class="form__itm form__itm--app">
                 <label class="form__label" for="phone">Modifier le numéro de téléphone</label>
@@ -90,7 +90,7 @@ function getModifyPhoneForm(): string
 function getModifyPwdForm(): string
 {
     return '
-    <form class="form" action="actions" method="post" id="pwd_form" aria-label="Formulaire de modification du mot de passe">
+    <form class="form" action="actions.php" method="post" id="pwd_form" aria-label="Formulaire de modification du mot de passe">
         <ul class="form__lst form__lst--app">
             <li class="form__itm form__itm--app">
                 <label class="form__label" for="password">Nouveau mot de passe</label>

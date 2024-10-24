@@ -118,7 +118,7 @@ unset($_SESSION['filter']);
 <body>
 
     <header class="header">
-        <?= fetchHeader('dashboard', 'Mon tableau de bord') ?>
+        <?= fetchHeader('dashboard.php', 'Mon tableau de bord') ?>
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
@@ -153,7 +153,7 @@ unset($_SESSION['filter']);
 
         if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {?>
             <div class="button__section">
-            <a href="/new-client" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouveau client</a>
+            <a href="/new-client.php" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouveau client</a>
             <!-- <span class="text-tertiary"><a href="/new-user" class="button button--user" aria-label="Redirige vers un formulaire de création d'utilisateur">Nouvel utilisateur</a></span> -->
         </div>
 
@@ -172,7 +172,7 @@ unset($_SESSION['filter']);
                         $companyDatas .= '
         <div class="card" data-card="">
             <section class="card__section card__section--company" aria-labelledby="company_name' . $company['id_company'] . '">
-                <a href="my-client?client=' . $company['id_company'] . '"><h3 class="client__ttl" id="company_name' . $company['id_company'] . '">' . $company['company_name'] . '</h3></a>
+                <a href="my-client.php?client=' . $company['id_company'] . '"><h3 class="client__ttl" id="company_name' . $company['id_company'] . '">' . $company['company_name'] . '</h3></a>
                 <ul class="client__lst gradient-border gradient-border--top">';
                         $userFound = false;
 
@@ -224,7 +224,7 @@ unset($_SESSION['filter']);
                         $companyDatas .= '
                         <div class="client__brands-ttl">
                             <h4 class="client__subttl">Les marques</h4>
-                            <a class="button--plus" href="/new-brand?comp=' . $company['id_company'] . '" title="Ajouter une marque pour ' . $company['company_name'] . '"></a>
+                            <a class="button--plus" href="/new-brand.php?comp=' . $company['id_company'] . '" title="Ajouter une marque pour ' . $company['company_name'] . '"></a>
                         </div>';
 
                         foreach ($allbrands as $brand) {

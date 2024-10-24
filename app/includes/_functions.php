@@ -212,7 +212,7 @@ function mergeResults(array $campaignResults): array
 function displayButtonIfNotClient(array $session, string $getValue = ""): string
 {
     if (isset($session['client']) && $session['client'] === 0) {
-        return '<a href="/new-budget' . $getValue . '" class="button--setting" aria-label="Redirige vers un formulaire de création de budget" title="Paramétrer le budget"></a>';
+        return '<a href="/new-budget.php' . $getValue . '" class="button--setting" aria-label="Redirige vers un formulaire de création de budget" title="Paramétrer le budget"></a>';
     } else {
         return '';
     }

@@ -63,7 +63,7 @@ $jsonData = json_encode($chartData);
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard', 'Mon tableau de bord');
+        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -85,7 +85,7 @@ $jsonData = json_encode($chartData);
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 echo
-                '<a class="button--edit" href="new-campaign?myc=' . $selectedCampaign['id_campaign'] . '&client='. $_SESSION['filter']['id_company'] .'" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
+                '<a class="button--edit" href="new-campaign.php?myc=' . $selectedCampaign['id_campaign'] . '&client='. $_SESSION['filter']['id_company'] .'" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
                 |' . deleteCampaignButton($selectedCampaign, $_SESSION);
             }
             ?>
@@ -154,7 +154,7 @@ $jsonData = json_encode($chartData);
                 <?php
 
                 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                    echo '<div class="operation__button"><a href="operation?myc=' . $selectedCampaign['id_campaign'] . '" class="button button--add" aria-label="Créer une nouvelle opération">Ajouter opération</a></div>';
+                    echo '<div class="operation__button"><a href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '" class="button button--add" aria-label="Créer une nouvelle opération">Ajouter opération</a></div>';
                 }
                 ?>
                 <ul>

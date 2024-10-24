@@ -49,7 +49,7 @@ unsetFilters($_SESSION);
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard', 'Mon tableau de bord');
+        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -71,7 +71,7 @@ unsetFilters($_SESSION);
         </h2>
 
         <div class="button__section">
-            <a href="/new-user?client=<?= $_SESSION['id_company'] ?>" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouvel utilisateur</a>
+            <a href="/new-user.php?client=<?= $_SESSION['id_company'] ?>" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouvel utilisateur</a>
         </div>
 
         <div class="card">

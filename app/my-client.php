@@ -134,7 +134,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 <body>
 
     <header class="header">
-        <?= fetchHeader('dashboard', 'Mon tableau de bord') ?>
+        <?= fetchHeader('dashboard.php', 'Mon tableau de bord') ?>
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
@@ -154,7 +154,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         </h2>
 
         <div class="button__section">
-            <a href="/new-campaign?client=<?= $selectedCompany['id_company'] ?>" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>
+            <a href="/new-campaign.php?client=<?= $selectedCompany['id_company'] ?>" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>
         </div>
 
         <div class="button__section">
@@ -163,8 +163,8 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             <div class="client__menu-box">
                 <button class="client__menu-plus-btn" data-plus-button=""></button>
                 <ul class="client__menu" data-client-menu="" aria-label="Options multiples d'ajout d'interlocuteur ou de marque">
-                    <li><a class="client__menu-link" href="new-user?client=<?= $_SESSION['filter']['id_company'] ?>" aria-label="Lien vers un formulaire de création d'interlocuteur pour l'entreprise <?= $selectedCompany['company_name'] ?>">+ Nouvel interlocuteur</a></li>
-                    <li><a class="client__menu-link" href="new-brand?client=<?= $_SESSION['filter']['id_company'] ?>" aria-label="Lien vers un formulaire de création de marque pour l'entreprise <?= $selectedCompany['company_name'] ?>">+ Nouvelle marque</a></li>
+                    <li><a class="client__menu-link" href="new-user.php?client=<?= $_SESSION['filter']['id_company'] ?>" aria-label="Lien vers un formulaire de création d'interlocuteur pour l'entreprise <?= $selectedCompany['company_name'] ?>">+ Nouvel interlocuteur</a></li>
+                    <li><a class="client__menu-link" href="new-brand.php?client=<?= $_SESSION['filter']['id_company'] ?>" aria-label="Lien vers un formulaire de création de marque pour l'entreprise <?= $selectedCompany['company_name'] ?>">+ Nouvelle marque</a></li>
                 </ul>
             </div>
         </div>

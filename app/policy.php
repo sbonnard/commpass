@@ -36,7 +36,7 @@ unsetFilters($_SESSION);
 
     <header class="header">
         <?php
-        echo fetchHeader('index');
+        echo fetchHeader('index.php');
         echo fetchLogInForm($_SESSION);
         ?>
     </header>

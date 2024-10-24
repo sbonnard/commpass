@@ -27,7 +27,7 @@ if ($_POST['action'] === 'filter-campaigns') {
         && intval($_POST['target-filter']) >= 1 && intval($_POST['target-filter']) <= 3
     ) {
         $_SESSION['filter']['id_target'] = intval($_POST['target-filter']);
-        redirectTo('my-client?client=' . $_SESSION['filter']['id_company'] . '#client-campaigns');
+        redirectTo('my-client.php?client=' . $_SESSION['filter']['id_company'] . '#client-campaigns');
     }
 } else if ($_POST['action'] === 'filter-history') {
     if (isset($_POST['client-filter']) && intval($_POST['client-filter'])) {

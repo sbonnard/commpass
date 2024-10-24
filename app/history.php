@@ -35,7 +35,7 @@ checkConnection($_SESSION);
 
 if (isset($_SESSION['client']) && $_SESSION['client'] === 1 && isset($_SESSION['boss']) && $_SESSION['boss'] === 0) {
     addError('authorization_ko');
-    redirectTo('dashboard');
+    redirectTo('dashboard.php');
     exit;
 }
 
@@ -125,7 +125,7 @@ if (
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard', 'Mon tableau de bord');
+        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
         ?>
     </header>
 

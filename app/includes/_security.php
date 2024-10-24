@@ -81,7 +81,7 @@ function preventFromCSRFAPI(array $inputData): void
  */
 function checkConnection(array $session) {
     if (!isset($session['username'])) {
-        redirectTo('index');
+        redirectTo('index.php');
         addError('please_connect');
         exit();
     }
@@ -156,7 +156,7 @@ function sanitizeInput(string $input): string
 function checkUserClientStatus(array $session) {
     if (!isset($session['client']) || $session['client'] === 1) {
         addError('authorization_ko');
-        redirectTo('dashboard');
+        redirectTo('dashboard.php');
         exit();
     }
 }

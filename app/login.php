@@ -22,7 +22,7 @@ if (!isset($_POST['action'])) {
 }
 
 // Check CSRF
-preventFromCSRF('index');
+preventFromCSRF('index.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'log-in') {
 
@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'log-in') {
         $_SESSION['id_company'] = $user['id_company'];
     } else {
         addError('login_fail');
-        redirectTo('index');
+        redirectTo('index.php');
     }
 }
 
-redirectTo('dashboard');
+redirectTo('dashboard.php');

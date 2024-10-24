@@ -11,13 +11,13 @@ function fetchFooter(): string
         <nav>
             <ul class="footer__nav">
                 <li>
-                    <a class="footer__lnk" href="/policy">
+                    <a class="footer__lnk" href="/policy.php">
                         Politique de confidentialité
                     </a>
                 </li>
                 <span>|</span>
                 <li>
-                    <a class="footer__lnk" href="/legal">
+                    <a class="footer__lnk" href="/legal.php">
                         Mentions légales
                     </a>
                 </li>

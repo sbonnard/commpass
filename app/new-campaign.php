@@ -49,7 +49,7 @@ if (!isset($_GET['client']) || !intval($_GET['client'])) {
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard', 'Mon tableau de bord');
+        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
         ?>
     </header>
 
