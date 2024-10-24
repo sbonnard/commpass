@@ -305,6 +305,7 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $session): strin
 
     foreach ($campaigns as $campaign) {
         $campaignId = $campaign['id_campaign'];
+        $campaign['id_company'] = $_SESSION['filter']['id_company'];
 
         $campaignList .= '
         <a href="/campaign?myc=' . $campaignId . '&client=' . $campaign['id_company'] . '">
@@ -375,6 +376,7 @@ function getCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array $sessio
 
                 $hasCampaigns = true;
                 $campaignId = $campaign['id_campaign'];
+                $campaign['id_company'] = $_SESSION['filter']['id_company'];
 
                 $companyCampaigns .= '
                     <li>
