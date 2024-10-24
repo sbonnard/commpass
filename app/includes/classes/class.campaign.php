@@ -376,7 +376,7 @@ function getCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array $sessio
 
                 $hasCampaigns = true;
                 $campaignId = $campaign['id_campaign'];
-                $campaign['id_company'] = $_SESSION['filter']['id_company'];
+                // $campaign['id_company'] = $_SESSION['filter']['id_company'];
 
                 $companyCampaigns .= '
                     <li>
