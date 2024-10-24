@@ -51,8 +51,10 @@ if (isset($_POST['id_company'])) {
             $query->bindValue(':media_name', $mediaName);
             $query->execute();
 
+            $lastMediaId = $dbCo->lastInsertId();
+
             // Réponse de succès
-            echo json_encode(['status' => 'success', 'message' => 'Média ajouté avec succès.']);
+            echo json_encode(['status' => 'success', 'message' => 'Média ajouté avec succès.', 'media_id' => $lastMediaId]);
         } catch (PDOException $e) {
             // Gestion des erreurs de base de données
             echo json_encode(['status' => 'error', 'message' => 'Erreur lors de l\'ajout du média : ' . $e->getMessage()]);
@@ -70,8 +72,10 @@ if (isset($_POST['id_company'])) {
             $query->bindValue(':partner_name', $partnerName);
             $query->execute();
 
+            $lastPartnerId = $dbCo->lastInsertId();
+
             // Réponse de succès
-            echo json_encode(['status' => 'success', 'message' => 'Partenaire ajouté avec succès.']);
+            echo json_encode(['status' => 'success', 'message' => 'Partenaire ajouté avec succès.', 'partner_id' => $lastPartnerId]);
         } catch (PDOException $e) {
             // Gestion des erreurs de base de données
             echo json_encode(['status' => 'error', 'message' => 'Erreur lors de l\'ajout du partenaire : ' . $e->getMessage()]);
