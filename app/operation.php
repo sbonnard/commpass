@@ -135,8 +135,7 @@ if (!isset($_GET['myo'])) {
                             <select class="form__input form__input--select" type="text" name="operation_partner" id="operation_partner" aria-label="Sélectionner un partenaire de l'opération s'il y en a un.">
                                 <?= getPartnersAsHTMLOptions($partners) ?>
                             </select>
-                            <!-- Ne pas déployer ce bouton tant que le AJAX ne fonctionne pas  -->
-                            <!-- <button type="button" class="create-lnk" style="text-align:left;" id="partner-lnk">+ Créer un partenaire</ submit="false"> -->
+                            <button type="button" class="create-lnk" style="text-align:left;" id="partner-lnk">+ Créer un partenaire</ submit="false">
                         </li>
 
                         <li class="form__itm form__itm--app">
