@@ -57,13 +57,7 @@ if (isset($_POST['id_company'])) {
             // Gestion des erreurs de base de données
             echo json_encode(['status' => 'error', 'message' => 'Erreur lors de l\'ajout du média : ' . $e->getMessage()]);
         }
-    }
-} else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Décodage du corps JSON envoyé par fetch
-    $inputData = json_decode(file_get_contents('php://input'), true);
-
-    // Vérifie si l'action est définie
-    if (isset($inputData['action']) && $inputData['action'] === 'add-partner') {
+    } else if (isset($inputData['action']) && $inputData['action'] === 'add-partner') {
         if (empty($inputData['add-partner'])) {
             echo json_encode(['status' => 'error', 'message' => 'Le champ "Ajouter un partenaire" ne peut pas être vide.']);
             exit; // Arrête le script si une erreur est rencontrée
