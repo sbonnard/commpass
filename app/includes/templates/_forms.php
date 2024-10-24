@@ -26,7 +26,7 @@ function fetchLogInForm(array $session): string
                 <label for="password">Mot de passe</label>
                 <div class="form__input--password">
                     <input class="form__input" type="password" name="password" id="password" placeholder="•••••••••••" required aria-label="Saississez votre mot de passe">
-                    <button class="button--eye button--eye--inactive" id="eye-button" aria-label="Montrer le mot de passe en clair dans le champs de saisie"></button>
+                    <button type="button" class="button--eye button--eye--inactive" id="eye-button" aria-label="Montrer le mot de passe en clair dans le champs de saisie"></button>
                 </div>
             </li>
         </ul>

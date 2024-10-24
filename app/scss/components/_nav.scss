@@ -23,12 +23,7 @@
             // align-items: center;
             justify-content: center;
         }
-    
-        &::before {
-            // width: 1.5rem;
-            // height: 1.5rem;
-        }
-    
+        
         &--profile::before {
             content: url(../../img/profile-lnk.svg);
         }
@@ -75,7 +70,7 @@
         & {
             position: sticky !important;
             top: 0;
-            z-index: 100;
+            z-index: 5;
         }
 
         &__itm {
