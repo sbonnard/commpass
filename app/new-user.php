@@ -75,7 +75,7 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0 && $_GET['client'] =
                 } ?></h2>
 
             <section class="card__section" aria-labelledby="new-user-ttl">
-                <form class="form" action="actions" method="post" aria-label="Formulaire de création d'un nouvel utilisateur">
+                <form class="form" action="actions.php" method="post" aria-label="Formulaire de création d'un nouvel utilisateur">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="username">Nom d'utilisateur</label>
