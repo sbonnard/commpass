@@ -94,6 +94,16 @@ if ($_POST['action'] === 'modify-pwd') {
     }
 } else if ($_POST['action'] === 'create-operation') {
 
+    $_SESSION['form_data'] = [
+        'description' => strip_tags($_POST['operation_description']),
+        'price' => floatval($_POST['operation_amount']),
+        'date' => strip_tags($_POST['date']),
+        'id_campaign' => intval($_POST['id_campaign']),
+        'id_company' => intval($_POST['id_company']),
+        'id_media' => intval($_POST['operation_media']),
+        'id_partner' => intval($_POST['operation_partner'])
+    ];
+
     checkOperationFormDatas();
 
     try {
@@ -131,6 +141,8 @@ if ($_POST['action'] === 'modify-pwd') {
             $isBrandInsertOk = $queryBrand->execute($brandBindValues);
 
             if ($isBrandInsertOk) {
+                unset($_SESSION['form_data']);
+
                 $dbCo->commit();
 
                 addMessage('operation_created_ok');
@@ -147,6 +159,16 @@ if ($_POST['action'] === 'modify-pwd') {
         addError('operation_creation_ko');
     }
 } elseif ($_POST['action'] === 'edit-operation') {
+
+    $_SESSION['form_data'] = [
+        'description' => strip_tags($_POST['operation_description']),
+        'price' => floatval($_POST['operation_amount']),
+        'date' => strip_tags($_POST['date']),
+        'id_campaign' => intval($_POST['id_campaign']),
+        'id_company' => intval($_POST['id_company']),
+        'id_media' => intval($_POST['operation_media']),
+        'id_partner' => intval($_POST['operation_partner'])
+    ];
 
     if (!isset($_POST['id_campaign']) || empty($_POST['id_campaign']) || !is_numeric($_POST['id_campaign'])) {
         addError('campaign_id_ko');
@@ -201,6 +223,8 @@ if ($_POST['action'] === 'modify-pwd') {
             }
 
             if ($isBrandUpdateOk) {
+                unset($_SESSION['form_data']);
+
                 $dbCo->commit();
 
                 addMessage('operation_update_ok');
