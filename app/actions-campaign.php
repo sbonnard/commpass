@@ -262,7 +262,7 @@ if ($_POST['action'] === 'create-campaign') {
 
     if ($isUpdateOk) {
         addMessage('budget_update_ok');
-        redirectTo('my-client?client=' . $_SESSION['filter']['id_company']);
+        redirectTo('my-client?client=' . $_SESSION['filter']['id_company'] . '#budgets');
     } else {
         addError('budget_update_ko');
         redirectTo();

@@ -177,7 +177,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             }
 
             echo
-            '<div class="card">
+            '<div class="card" id="budgets">
                 <section class="card__section">
                     <h3 class="ttl ttl--budget">Budgets de ' . $currentYear . '</h3>
                     <div class="vignettes-section vignettes-section--row">
