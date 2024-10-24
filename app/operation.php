@@ -174,7 +174,7 @@ if (!isset($_GET['myo'])) {
                 <ul class="form__lst">
                     <li class="form__itm form__itm--small">
                         <label for="add-media" class="text-small">Créer un média</label>
-                        <input class="form__input form__input--small" type="text" name="add-media" id="add-media" placeholder="FakeBrand">
+                        <input class="form__input form__input--small" type="text" name="add-media" id="add-media" placeholder="Nouveau média">
                         <input class="button--plus form__plus" type="submit" value="">
                     </li>
                 </ul>
@@ -187,7 +187,7 @@ if (!isset($_GET['myo'])) {
                 <ul class="form__lst">
                     <li class="form__itm form__itm--small">
                         <label for="add-partner" class="text-small">Créer un partenaire</label>
-                        <input class="form__input form__input--small" type="text" name="add-partner" id="add-partner" placeholder="FakePartner">
+                        <input class="form__input form__input--small" type="text" name="add-partner" id="add-partner" placeholder="Nouveau partenaire">
                         <input class="button--plus form__plus" type="submit" value="">
                     </li>
                 </ul>
