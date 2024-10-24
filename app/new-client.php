@@ -79,7 +79,7 @@ unsetFilters($_SESSION);
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="annual_budget">Budget annuel (sans €)</label>
                             <p class="small-text">Le budget annuel peut être défini plus tard</p>
-                            <input class="form__input form__input--number" type="text" name="annual_budget" id="annual_budget" placeholder="12500" required aria-label="Budget annuel s'il a été défini, sinon 0.">
+                            <input class="form__input form__input--number" type="text" name="annual_budget" id="annual_budget" placeholder="12500" required aria-label="Budget annuel s'il a été défini, sinon 0." value="0">
                         </li>
                         <input type="hidden" name="year" value="<?= $currentYear ?>">
                         <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
