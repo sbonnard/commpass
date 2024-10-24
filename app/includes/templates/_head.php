@@ -19,7 +19,7 @@ function fetchHead(string $title): string
     <!-- <script type="module" src="http://localhost:5173/js/script.js"></script> -->
 
     <!-- Production -->
-    <link rel="stylesheet" href="assets/assets/script-BpDJ3HXF.css">
+    <link rel="stylesheet" href="assets/assets/script-Y86oXvxe.css">
     <script type="module" src="assets/assets/script-BpDJ3HXF.js"></script>
 
     <!-- C3 CSS -->
@@ -108,7 +108,7 @@ function fetchHeadErrorsPage(string $title): string
     <!-- <script type="module" src="http://localhost:5173/js/script.js"></script> -->
 
     <!-- Production -->
-    <link rel="stylesheet" href="../assets/assets/script-BpDJ3HXF.css">
+    <link rel="stylesheet" href="../assets/assets/script-Y86oXvxe.css">
     <script type="module" src="../assets/assets/script-BpDJ3HXF.js"></script>
 
     <!-- C3 CSS -->
