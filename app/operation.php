@@ -97,11 +97,20 @@ if (!isset($_GET['myo'])) {
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="operation_description">Description de l'opération</label>
-                            <textarea class="form__input form__textarea" type="" name="operation_description" id="operation_description" placeholder="Flocage d'un véhicule..." required aria-label="Saississez la description de l'opération." autofocus><?= $operation['description']; ?></textarea>
+                            <textarea class="form__input form__textarea" type="" name="operation_description" id="operation_description" placeholder="Flocage d'un véhicule..." required aria-label="Saississez la description de l'opération." autofocus><?php
+                                                                                                                                                                                                                                                            echo $operation['description'];
+                                                                                                                                                                                                                                                            if (isset($_SESSION['form_data']['description'])) {
+                                                                                                                                                                                                                                                                echo $_SESSION['form_data']['description'];
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                            ?></textarea>
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="operation_amount">Prix de l'opération (sans €)</label>
-                            <input class="form__input form__input--number" type="text" name="operation_amount" id="operation_amount" placeholder="12500" required value="<?= $operation['price']; ?>" aria-label="Fixe le montant d'une opération.">
+                            <input class="form__input form__input--number" type="text" name="operation_amount" id="operation_amount" placeholder="12500" required value="<?php echo $operation['price'];
+                                                                                                                                                                            if (isset($_SESSION['form_data']['price']) && $_SESSION['form_data']['price'] >= 0) {
+                                                                                                                                                                                echo $_SESSION['form_data']['price'];
+                                                                                                                                                                            }
+                                                                                                                                                                            ?>" aria-label="Fixe le montant d'une opération.">
                         </li>
 
                         <li class="form__itm form__itm--app">
@@ -130,7 +139,11 @@ if (!isset($_GET['myo'])) {
 
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="date">Date de l'opération</label>
-                            <input class="form__input form__input--date" type="date" name="date" id="date" required aria-label="Sélectionner la date de l'opération" value="<?= $operation['operation_date']; ?>">
+                            <input class="form__input form__input--date" type="date" name="date" id="date" required aria-label="Sélectionner la date de l'opération" value="<?php echo $operation['operation_date'];
+                            if(isset($_SESSION['form_data']['date'])) {
+                                echo $_SESSION['form_data']['date'];
+                            }
+                            ?>">
                         </li>
 
                         <?php
@@ -167,7 +180,7 @@ if (!isset($_GET['myo'])) {
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 <input type="hidden" name="action" value="add-media">
             </form>
-            
+
             <!-- Formulaire de création d'un nouveau partenaire si absent de la liste dans le select.  -->
             <form class="form" action="api" method="post" id="new-partner-form" aria-label="Création d'un nouveau partenaire si absent de la liste précédente.">
                 <ul class="form__lst">
