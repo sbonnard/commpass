@@ -63,12 +63,12 @@ $jsonData = json_encode($chartData);
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
+        echo fetchHeader('dashboard', 'Mon tableau de bord');
         ?>
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
-        <?= fetchNav($_SESSION, $companies, '', 'nav__itm--active') ?>
+        <?= fetchNav($_SESSION, $companies, 'nav__itm--active') ?>
     </nav>
 
     <main class="container container--campaigns container__flex" id="pdfContent">
@@ -85,7 +85,7 @@ $jsonData = json_encode($chartData);
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 echo
-                '<a class="button--edit" href="new-campaign.php?myc=' . $selectedCampaign['id_campaign'] . '&client='. $_SESSION['filter']['id_company'] .'" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
+                '<a class="button--edit" href="new-campaign?myc=' . $selectedCampaign['id_campaign'] . '&client='. $_SESSION['filter']['id_company'] .'" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
                 |' . deleteCampaignButton($selectedCampaign, $_SESSION);
             }
             ?>
@@ -154,7 +154,7 @@ $jsonData = json_encode($chartData);
                 <?php
 
                 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                    echo '<div class="operation__button"><a href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '" class="button button--add" aria-label="Créer une nouvelle opération">Ajouter opération</a></div>';
+                    echo '<div class="operation__button"><a href="operation?myc=' . $selectedCampaign['id_campaign'] . '" class="button button--add" aria-label="Créer une nouvelle opération">Ajouter opération</a></div>';
                 }
                 ?>
                 <ul>
@@ -164,7 +164,7 @@ $jsonData = json_encode($chartData);
         </div>
     </main>
     <div class="card">
-        <form id="formPDF" action="rapport_pdf.php" method="post">
+        <form id="formPDF" action="rapport_pdf" method="post">
             <input type="hidden" id="htmlContent" name="htmlContent" value="">
             <input type="hidden" id="chartImage" name="chartImage" value="">
             <button class="button button--pdf" type="submit" id="generatePDF"></button>
