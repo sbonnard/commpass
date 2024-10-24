@@ -253,7 +253,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 
         <h2 class="ttl lineUp" id="client-campaigns">Les campagnes <?= $currentYear ?></h2>
         <div class="card">
-            <form class="card__section" action="actions-filter" method="post" id="filter-form" aria-label="formulaire de filtre">
+            <form class="card__section" action="actions-filter.php" method="post" id="filter-form" aria-label="formulaire de filtre">
                 <ul class="form__lst form__lst--row">
                     <div class="form__lst--flex">
                         <li class="form__itm">
