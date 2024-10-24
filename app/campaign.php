@@ -37,6 +37,10 @@ if (!isset($_GET['myc'])) {
     header('Location: dashboard.php');
 }
 
+if(isset($_GET['client']) && intval($_GET['client'])) {
+    $_SESSION['filter']['id_company'] = $_GET['client'];
+}
+
 $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
 $brandsSpendings = mergeResults($campaignResults);
 

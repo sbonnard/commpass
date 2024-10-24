@@ -307,7 +307,7 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $session): strin
         $campaignId = $campaign['id_campaign'];
 
         $campaignList .= '
-        <a href="/campaign.php?myc=' . $campaignId . '">
+        <a href="/campaign.php?myc=' . $campaignId . '&client=' . $campaign['id_company'] . '">
             <div class="card__section" data-card="">
                 <div class="campaign__ttl">
                     <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>
@@ -378,7 +378,7 @@ function getCampaignTemplateByCompany(PDO $dbCo, array $campaigns, array $sessio
 
                 $companyCampaigns .= '
                     <li>
-                    <a href="/campaign.php?myc=' . $campaignId . '">
+                    <a href="/campaign.php?myc=' . $campaignId . '&client=' . $campaign['id_company'] . '">
                         <div class="card__section" data-card="">
                             <div class="campaign__ttl">
                                     <h3 class="ttl ttl--small">' . $campaign['campaign_name'] . '</h3>
