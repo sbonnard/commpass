@@ -80,7 +80,7 @@ if (!isset($_GET['client']) || !intval($_GET['client'])) {
 
 
             <section class="card__section" aria-labelledby="new-campaign-ttl">
-                <form class="form" action="actions-campaign" method="post" aria-label="Formulaire de création d'une nouvelle campagne">
+                <form class="form" action="actions-campaign.php" method="post" aria-label="Formulaire de création d'une nouvelle campagne">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="campaign_name">Nom de la campagne</label>
