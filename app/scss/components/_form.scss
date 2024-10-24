@@ -186,3 +186,19 @@
         top: 55%;
     }
 }
+
+#new-partner-form {
+    position: fixed;
+    width: fit-content;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    border: 1px solid $secondary60;
+}
+
+#new-media-form {
+    position: fixed;
+    width: fit-content;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    border: 1px solid $secondary60;
+}
