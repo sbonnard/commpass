@@ -40,7 +40,7 @@ if (
     || !intval($_GET['client'])
     || !is_array(getAllCompanyDatas($dbCo, $_GET)) || getAllCompanyDatas($dbCo, $_GET) == false
 ) {
-    redirectTo('errors/403.php');
+    redirectTo('errors/403');
     exit;
 }
 
