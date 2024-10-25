@@ -81,31 +81,40 @@ unsetFilters($_SESSION);
             $companyDatas = '';
             if (!empty($companies) && is_array($companies)) {
                 foreach ($companies as $company) {
+                    // Vérification des variables de $_SESSION. Cette page n'étant accessible qu'à un utilisateur pro.
+                    // Si l'entreprise correspond à l'id en $_SESSION, on affiche cette entreprise.
                     if ($company['id_company'] === $_SESSION['id_company']) {
                         $companyDatas .= '
         <div class="card" data-card="">
             <section class="card__section card__section--company" aria-labelledby="company_name' . $company['id_company'] . '">
                 <h3 class="client__ttl" id="company_name' . $company['id_company'] . '" style="color:#44277A;">Utilisateurs</h3>
                 <ul class="client__lst gradient-border gradient-border--top">';
+
+                // Vérification de l'existence d'utilisateurs dans l'entreprise. 
                         $userFound = false;
 
                         foreach ($users as $user) {
                             if ($user['id_company'] === $company['id_company']) {
+                                // Si un utilisateur est trouvé, on affiche le ou les noms.
                                 $userFound = true;
                                 $companyDatas .= '<li class="client__name ';
 
+                                // Si l'utilisateur est gérant de l'entreprise, un style particulier est appliqué. 
                                 if ($user['boss'] === 1) {
                                     $companyDatas .= ' user--boss ';
                                 }
 
                                 $companyDatas .= '"';
 
+                                // Si un utilisateur est désactivé, son nom est grisé. 
                                 if ($user['enabled'] === 0) {
                                     $companyDatas .= ' style="color: #b5b5b5c9;"';
                                 }
 
+                                // Affichage du nom de l'utilisateur.
                                 $companyDatas .= '>' . $user['firstname'] . ' ' . $user['lastname'];
 
+                                // Si un utilisateur est autorisé, un bouton désactiver est affiché.
                                 if ($user['enabled'] === 1) {
                                     $companyDatas .=
                                         '<form class="client__disabled-form" method="post" action="actions" onsubmit="return confirmDisable()">
@@ -115,6 +124,7 @@ unsetFilters($_SESSION);
                                     <input type="hidden" name="client-user" value="' . $user['id_user'] . '">
                                 </form>';
                                 } else {
+                                // Si un utilisateur est bloqué, un bouton activer est affiché.
                                     $companyDatas .=
                                         '<form class="client__enable-form" method="post" action="actions" onsubmit="return confirmEnable()">
                                     <button type="submit" class="client--enable-btn" data-client-enable="' . $user['id_user'] . '"></button>
@@ -138,6 +148,7 @@ unsetFilters($_SESSION);
                     }
                 }
             } else {
+                // Si aucun collaborateur, message affiché. 
                 echo '
                 <div class="card card__section">
                 <p class="big-text">Aucun collaborateur pour l\'instant !</p>
