@@ -87,31 +87,39 @@ unsetFilters($_SESSION);
             if (!empty($companies) && is_array($companies)) {
                 foreach ($companies as $company) {
                     if ($company['id_company'] !== $_SESSION['id_company']) {
+                        // Génère une carte d'une entreprise cliente.
                         $companyDatas .= '
         <div class="card" data-card="">
             <section class="card__section card__section--company" aria-labelledby="company_name' . $company['id_company'] . '">
                 <a href="my-client.php?client=' . $company['id_company'] . '"><h3 class="client__ttl" id="company_name' . $company['id_company'] . '">' . $company['company_name'] . '</h3></a>
                 <ul class="client__lst gradient-border gradient-border--top">';
+
+                        // Vérifie si on trouve un utilisateur dans cette entreprise
                         $userFound = false;
 
+                        // Boucle pour afficher tous les utilisateurs liés à l'entreprise. 
                         foreach ($users as $user) {
                             if ($user['id_company'] === $company['id_company']) {
                                 $userFound = true;
                                 $companyDatas .= '<li class="client__name ';
 
                                 if ($user['boss'] === 1) {
+                                    // Si l'utilisateur est gérant de l'entreprise cliente, on applique un style particulier à son nom 
                                     $companyDatas .= ' user--boss ';
                                 }
 
                                 $companyDatas .= '"';
 
                                 if ($user['enabled'] === 0) {
+                                    // Si l'utilisateur a été désactivé, son nom s'affiche en gris.
                                     $companyDatas .= ' style="color: #b5b5b5c9;"';
                                 }
 
+                                // Affichage du prénom et nom de l'utilisateur.
                                 $companyDatas .= '>' . $user['firstname'] . ' ' . $user['lastname'];
 
                                 if ($user['enabled'] === 1) {
+                                    // Si l'utilisateur est autorisé, bouton de désactivation affiché. 
                                     $companyDatas .=
                                         '<form class="client__disabled-form" method="post" action="actions.php" onsubmit="return confirmDisable()">
                                     <button type="submit" class="client--disable-btn" data-client-disable="' . $user['id_user'] . '"></button>
@@ -120,6 +128,7 @@ unsetFilters($_SESSION);
                                     <input type="hidden" name="client-user" value="' . $user['id_user'] . '">
                                 </form>';
                                 } else {
+                                    // Si l'utilisateur n'est pas autorisé, bouton d'activation affiché. 
                                     $companyDatas .=
                                         '<form class="client__enable-form" method="post" action="actions.php" onsubmit="return confirmEnable()">
                                     <button type="submit" class="client--enable-btn" data-client-enable="' . $user['id_user'] . '"></button>
@@ -134,6 +143,7 @@ unsetFilters($_SESSION);
                         }
 
                         if (!$userFound) {
+                            // Si aucun utilisateur dans l'entreprise, affiche un texte.
                             $companyDatas .= '<li>Aucun interlocuteur pour cette entreprise.</li>';
                         }
 
@@ -145,19 +155,24 @@ unsetFilters($_SESSION);
                             <a class="button--plus" href="/new-brand.php?comp=' . $company['id_company'] . '" title="Ajouter une marque pour ' . $company['company_name'] . '"></a>
                         </div>';
 
+                        // Boucle sur les marques de l'entreprise pour les afficher. 
                         foreach ($allbrands as $brand) {
                             if ($brand['id_company'] === $company['id_company']) {
                                 $companyDatas .= '<li class="campaign__legend"><span class="campaign__legend-square" style="background-color:' . $brand['legend_colour_hex'] . '"></span>' . $brand['brand_name'] . '</li>';
-                            } else if (empty($allbrands)) {
-                                echo '<li>Aucune marque pour cette entreprise.</li>';
                             }
                         }
+
+                        if (empty($allbrands)) {
+                            $companyDatas .= '<li>Aucune marque pour cette entreprise.</li>';
+                        }
+
                         $companyDatas .= '</ul>';
 
                         $companyDatas .= '</section></div>';
                     }
                 }
             } else {
+                // Si Toile de Com n'a aucun client, message affiché. 
                 echo '
                 <div class="card card__section">
                 <p class="big-text">Aucun client pour l\'instant !</p>
