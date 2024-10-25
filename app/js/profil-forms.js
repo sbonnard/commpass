@@ -6,7 +6,7 @@ const buttonEmail = document.getElementById('button-email');
 const buttonPWD = document.getElementById('button-pwd');
 const buttonTel = document.getElementById('button-tel');
 
-console.log(buttonEmail, buttonPWD, buttonTel);
+// console.log(buttonEmail, buttonPWD, buttonTel);
 
 //FORMS
 
@@ -14,7 +14,7 @@ const formEmail = document.getElementById('email_form');
 const formPWD = document.getElementById('pwd_form');
 const formTel = document.getElementById('phone_form');
 
-console.log(formEmail, formPWD, formTel);
+// console.log(formEmail, formPWD, formTel);
 
 // LISTENERS
 
