@@ -37,7 +37,7 @@ if (!isset($_GET['myc'])) {
     header('Location: dashboard.php');
 }
 
-if(isset($_GET['client']) && intval($_GET['client'])) {
+if (isset($_GET['client']) && intval($_GET['client'])) {
     $_SESSION['filter']['id_company'] = $_GET['client'];
 }
 
@@ -85,7 +85,7 @@ $jsonData = json_encode($chartData);
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 echo
-                '<a class="button--edit" href="new-campaign.php?myc=' . $selectedCampaign['id_campaign'] . '&client='. $_SESSION['filter']['id_company'] .'" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
+                '<a class="button--edit" href="new-campaign.php?myc=' . $selectedCampaign['id_campaign'] . '&client=' . $_SESSION['filter']['id_company'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
                 |' . deleteCampaignButton($selectedCampaign, $_SESSION);
             }
             ?>
