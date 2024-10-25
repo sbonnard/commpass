@@ -305,7 +305,7 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $session): strin
 
     foreach ($campaigns as $campaign) {
         $campaignId = $campaign['id_campaign'];
-        
+
         if (isset($session['client']) && $session['client'] === 0) {
             $campaign['id_company'] = $session['filter']['id_company'];
         } else if (isset($session['client']) && $session['client'] === 1) {
@@ -942,36 +942,6 @@ function getSpendingByBrandByCampaign(PDO $dbCo, array $campaigns, array $get): 
     return $results;
 }
 
-
-// function filterCampaigns(PDO $dbCo, array $campaigns)
-// {
-//     if (!isset($_POST['date-from'], $_POST['date-to'])) {
-//         addError('>ko');
-//         redirectTo();
-//         exit;
-//     }
-
-//     $dateFrom = sanitizeInput($_POST['date-from']);
-//     $dateTo = sanitizeInput($_POST['date-to']);
-
-//     $queryFilter = $dbCo->prepare(
-//         'SELECT * 
-//         FROM campaigns 
-//         WHERE date 
-//         BETWEEN :dateFrom AND :dateTo;'
-//     );
-
-//     $bindValues = [
-//         'dateFrom' => $dateFrom,
-//         'dateTo' => $dateTo
-//     ];
-
-//     $queryFilter->execute($bindValues);
-
-//     $campaigns = $queryFilter->fetchAll();
-
-//     echo json_encode($campaigns);
-// }
 
 /**
  * Fetch all 3 objectives for a communication campaign.
