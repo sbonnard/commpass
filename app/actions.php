@@ -151,14 +151,14 @@ if ($_POST['action'] === 'modify-pwd') {
             } else {
                 $dbCo->rollBack();
                 addError('operation_creation_ko');
-                redirectTo('campaign.php?myc=' . $_POST['id_campaign']);
+                redirectTo();
             }
         }
     } catch (PDOException $e) {
         $dbCo->rollBack();
         addError('operation_creation_ko');
     }
-} elseif ($_POST['action'] === 'edit-operation') {
+} else if ($_POST['action'] === 'edit-operation') {
 
     $_SESSION['form_data'] = [
         'description' => strip_tags($_POST['operation_description']),
