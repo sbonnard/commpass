@@ -602,26 +602,6 @@ function getHistoryCampaignTemplateClient(PDO $dbCo, array $campaigns, array $se
     return $campaignList;
 }
 
-
-//  Not working for now.
-// function getCampaignsByYear(array $campaigns, array $session, string $date)
-// {
-//     $campaignList = '';
-
-//     foreach ($campaigns as $campaign) {
-//             if(str_contains($campaign['date'], $date)) {
-//                 $campaignList .= '
-//                     <h2 class="ttl ttl--secondary">
-//                         Campagnes ' . $date . '
-//                     </h2>'
-//                     . getCampaignTemplate($campaign, $session);
-//             }
-//         }
-
-//     return $campaignList;
-// }
-
-
 /**
  * Get a message if you don't have any campaign on your dashboard
  *
