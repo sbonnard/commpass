@@ -90,7 +90,7 @@ setTimeout(function () {
         var chartImage = canvas.toDataURL('image/png');
         document.getElementById('chartImage').value = chartImage;  // Stocke l'image du graphique
     };
-    
+
     img.src = 'data:image/svg+xml;base64,' + btoa(svgData);
 }, 1000);
 

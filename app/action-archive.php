@@ -22,5 +22,4 @@ if (!isset($_REQUEST['action'])) {
 preventFromCSRF();
 
 if ($_POST['action'] === 'archive-year') {
-    
 }

@@ -133,11 +133,11 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0 && $_GET['client'] =
                         </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="phone">Téléphone</label>
-                            <input class="form__input" type="tel" name="phone" id="phone" placeholder="0688120668" required aria-label="Entrez le numéro de téléphone de l'utilisateur."  value="<?php 
-                            if(isset($_SESSION['form_data']['phone'])) {
-                                echo $_SESSION['form_data']['phone'];
-                            }
-                            ?>">
+                            <input class="form__input" type="tel" name="phone" id="phone" placeholder="0688120668" required aria-label="Entrez le numéro de téléphone de l'utilisateur." value="<?php
+                                                                                                                                                                                                if (isset($_SESSION['form_data']['phone'])) {
+                                                                                                                                                                                                    echo $_SESSION['form_data']['phone'];
+                                                                                                                                                                                                }
+                                                                                                                                                                                                ?>">
                         </li>
 
                         <input type="hidden" name="status" id="status" value="<?php if (isset($_SESSION['client']) && $_SESSION['client'] === 0 && $_GET['client'] == $_SESSION['id_company']) {

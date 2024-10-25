@@ -5,7 +5,7 @@
     border-radius: 0.5rem;
     width: 100%;
     border-collapse: collapse;
-    
+
     @media screen and (min-width: 768px) {
         min-width: 27.25rem;
     }
@@ -19,7 +19,7 @@
 
     &__cell {
         padding: 0.5rem 1rem;
-        border : 1px solid $primary;
+        border: 1px solid $primary;
         text-align: center;
     }
 }

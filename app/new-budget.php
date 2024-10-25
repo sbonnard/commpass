@@ -82,12 +82,12 @@ unsetFilters($_SESSION);
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="budget">Fixer le budget<?php
-                                if (isset($_GET['myc']) && intval($_GET['myc'])) {
-                                    echo '';
-                                } else if(isset($_SESSION['filter']['id_company']) && intval($_SESSION['filter']['id_company'])) {
-                                    echo ' annuel pour ' . $currentYear;
-                                }
-                            ?></label>
+                                                                                    if (isset($_GET['myc']) && intval($_GET['myc'])) {
+                                                                                        echo '';
+                                                                                    } else if (isset($_SESSION['filter']['id_company']) && intval($_SESSION['filter']['id_company'])) {
+                                                                                        echo ' annuel pour ' . $currentYear;
+                                                                                    }
+                                                                                    ?></label>
                             <input class="form__input" type="text" id="budget" name="budget" placeholder="35000" value="<?php
                                                                                                                         if (isset($_GET['myc']) && intval($_GET['myc'])) {
                                                                                                                             echo $selectedCampaign['budget'];

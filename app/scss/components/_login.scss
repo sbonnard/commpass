@@ -29,15 +29,15 @@
     }
 
     &__section {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 1.5rem;
     }
 
     @media screen and (max-width: 768px) {
-    &__ttl {
-        display: none;
+        &__ttl {
+            display: none;
+        }
     }
-}
 }

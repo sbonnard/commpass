@@ -35,7 +35,7 @@ checkUserClientStatus($_SESSION);
 
 // unsetFilters($_SESSION);
 
-if(isset($_GET['comp']) && intval($_GET['comp'])) {
+if (isset($_GET['comp']) && intval($_GET['comp'])) {
     $_SESSION['filter']['id_company'] = $_GET['comp'];
 }
 ?>

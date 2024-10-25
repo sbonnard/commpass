@@ -73,10 +73,10 @@ buttonTel.addEventListener('click', function () {
 
 // COLOR FORM 
 
-document.getElementById('profil_brand').addEventListener('change', function() {
+document.getElementById('profil_brand').addEventListener('change', function () {
     var selectedOption = this.options[this.selectedIndex];
     var colorHex = selectedOption.getAttribute('data-color');
-    
+
     if (colorHex) {
         document.getElementById('color').value = colorHex;
     } else {

@@ -4,7 +4,7 @@
     @media screen and (max-width: 768px) {
         width: 2.125rem;
         height: 1.6875rem;
-  
+
         &__menu {
             z-index: 5;
             min-width: 100%;
@@ -22,7 +22,7 @@
             border-image-slice: 1;
             overflow-y: auto;
         }
-    
+
         &__menu.overlay {
             visibility: visible;
             opacity: 1;
@@ -30,7 +30,7 @@
             line-height: 4;
         }
     }
-    
+
     @media screen and (min-width: 764px) {
         & {
             display: none;

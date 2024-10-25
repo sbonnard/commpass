@@ -36,7 +36,7 @@ if (isset($_POST['htmlContent'])) {
     $chart = '<img class="chart-png" src="' . $chartImage . '">';
 
     // Le nom du fichier une fois téléchargé.
-    $fileName = "rapport_tdc_$today.pdf"; 
+    $fileName = "rapport_tdc_$today.pdf";
 
     // Le CSS pour styliser le PDF.
     $css = "

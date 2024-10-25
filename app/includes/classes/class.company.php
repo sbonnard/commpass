@@ -447,8 +447,9 @@ function getOneCompanyDatasFilteredHistory(PDO $dbCo, array $session)
  * @param array $get - Superglobal GET
  * @return array|bool Array with company datas
  */
-function getAllCompanyDatas(PDO $dbCo, array $get):array|bool {
-    
+function getAllCompanyDatas(PDO $dbCo, array $get): array|bool
+{
+
     $query = $dbCo->prepare(
         'SELECT id_company, company_name
         FROM company

@@ -73,7 +73,6 @@ function deleteOperation(PDO $dbCo, $inputData)
             } else {
                 addError('delete_operation_ko');
             }
-
         } catch (Exception $error) {
             addError('delete_operation_ko');
             $_SESSION['errors'] = "Erreur lors de la suppression : " . $error->getMessage();

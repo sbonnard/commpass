@@ -79,7 +79,8 @@ function preventFromCSRFAPI(array $inputData): void
  * @param array $session - $_SESSION super global.
  * @return void
  */
-function checkConnection(array $session) {
+function checkConnection(array $session)
+{
     if (!isset($session['username'])) {
         redirectTo('index.php');
         addError('please_connect');
@@ -110,7 +111,8 @@ function generateToken()
  *
  * @return void
  */
-function checkOperationFormDatas():void {
+function checkOperationFormDatas(): void
+{
     if (!isset($_POST['operation_description']) || strlen($_POST['operation_description']) > 255) {
         addError('operation_description_ko');
         redirectTo();
@@ -153,7 +155,8 @@ function sanitizeInput(string $input): string
  * @param array $session - $_SESSION super global.
  * @return void 
  */
-function checkUserClientStatus(array $session) {
+function checkUserClientStatus(array $session)
+{
     if (!isset($session['client']) || $session['client'] === 1) {
         addError('authorization_ko');
         redirectTo('dashboard.php');
@@ -166,7 +169,8 @@ function checkUserClientStatus(array $session) {
  *
  * @param $post - $_POST Request.
  */
-function checkFormCampaignInputs($post) {
+function checkFormCampaignInputs($post)
+{
     if (!isset($post['campaign_name']) || empty($post['campaign_name'])) {
         addError('campaign_name_ko');
         redirectTo();

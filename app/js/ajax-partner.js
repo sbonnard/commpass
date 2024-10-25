@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     },
                     body: JSON.stringify({
                         id: partnerId,
-                        action : 'delete_partner'
+                        action: 'delete_partner'
                     })
                 })
                     .then(response => response.json())
