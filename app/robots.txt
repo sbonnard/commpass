@@ -1,0 +1,31 @@
+# Bloquer les robots uniquement sur un dossier spécifique
+# Permet d'optimiser le temps d'indexation de dossiers inutiles en SEO
+User-agent: *
+Disallow: /bin/
+Disallow: /img/
+Disallow: /includes/
+Disallow: /js/
+Disallow: /node_modules/
+Disallow: /temp/
+Disallow: /vendor/
+Disallow: /docs-bdd/
+Disallow: /sql/
+
+# Empêcher l'indexation de certaines pages
+# Permet d'optimiser le temps d'indexation de pages inutiles en SEO
+User-agent: *
+Disallow: /.env
+Disallow: /.env.example
+Disallow: /.gitignore
+Disallow: /.action-archive.php
+Disallow: /.action-filter.php
+Disallow: /.actions.php
+Disallow: /.api.php
+Disallow: /composer.json
+Disallow: /composer.lock
+Disallow: /login.php
+Disallow: /logout.php
+Disallow: /package-lock.json
+Disallow: /package.json
+Disallow: /rapport_pdf.php
+Disallow: /vite.config.js
