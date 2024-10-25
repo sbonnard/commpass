@@ -17,10 +17,11 @@ User-agent: *
 Disallow: /.env
 Disallow: /.env.example
 Disallow: /.gitignore
-Disallow: /.action-archive.php
-Disallow: /.action-filter.php
-Disallow: /.actions.php
-Disallow: /.api.php
+Disallow: /.htaccess
+Disallow: /action-archive.php
+Disallow: /action-filter.php
+Disallow: /actions.php
+Disallow: /api.php
 Disallow: /composer.json
 Disallow: /composer.lock
 Disallow: /login.php
