@@ -34,21 +34,25 @@ generateToken();
 checkConnection($_SESSION);
 
 if (!isset($_GET['myc'])) {
-    header('Location: dashboard.php');
+    // REDIRIGE SI AUCUNE CAMPAGNE SÉLECTIONNÉE
+    header('Location: dashboard');
 }
 
 if (isset($_GET['client']) && intval($_GET['client'])) {
+    // FILTRE PAR CLIENT
     $_SESSION['filter']['id_company'] = $_GET['client'];
 }
 
 $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
 $brandsSpendings = mergeResults($campaignResults);
 
+// DONNÉES POUR LES GRAPHIQUES DONUTS
 $chartData = [];
 foreach ($brandsSpendings as $row) {
     $chartData[] = [$row['brand_name'], floatval($row['total_spent']), $row['legend_colour_hex']];
 }
 
+// ENCODAGE DES DONNÉES EN JSON POUR LE SCRIPT JAVACRIPT C3 ET D3
 $jsonData = json_encode($chartData);
 ?>
 
@@ -83,6 +87,7 @@ $jsonData = json_encode($chartData);
         <div class="flex-row">
             <h2 class="ttl lineUp ttl--tertiary"><?= $selectedCampaign['campaign_name'] ?></h2>
             <?php
+            // SI L'UTILISATEUR N'EST PAS CLIENT, IL VOIT DES BOUTONS DE SUPPRESSION ET DE MODIFICATION DE CAMPAGNE
             if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 echo
                 '<a class="button--edit" href="new-campaign?myc=' . $selectedCampaign['id_campaign'] . '&client=' . $_SESSION['filter']['id_company'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
@@ -180,6 +185,7 @@ $jsonData = json_encode($chartData);
 <script type="module" src="js/burger.js"></script>
 
 <?php
+// LE SCRIPT DE DROPDOWN N'EST UTILE QUE POUR LES UTILISATEURS NON-CLIENTS
 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
     echo '<script type="module" src="js/dropdown-menu.js"></script>';
 }
