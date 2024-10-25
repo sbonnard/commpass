@@ -195,7 +195,7 @@ unset($_SESSION['filter']);
 
                                 if ($user['enabled'] === 1) {
                                     $companyDatas .=
-                                        '<form class="client__disabled-form" method="post" action="actions" onsubmit="return confirmDisable()">
+                                        '<form class="client__disabled-form" method="post" action="actions.php" onsubmit="return confirmDisable()">
                                     <button type="submit" class="client--disable-btn" data-client-disable="' . $user['id_user'] . '"></button>
                                     <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
                                     <input type="hidden" name="action" value="disable-client">
@@ -203,7 +203,7 @@ unset($_SESSION['filter']);
                                 </form>';
                                 } else {
                                     $companyDatas .=
-                                        '<form class="client__enable-form" method="post" action="actions" onsubmit="return confirmEnable()">
+                                        '<form class="client__enable-form" method="post" action="actions.php" onsubmit="return confirmEnable()">
                                     <button type="submit" class="client--enable-btn" data-client-enable="' . $user['id_user'] . '"></button>
                                     <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
                                     <input type="hidden" name="action" value="enable-client">

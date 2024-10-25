@@ -76,7 +76,7 @@ if(isset($_GET['comp']) && intval($_GET['comp'])) {
             </h2>
 
             <section class="card__section" aria-labelledby="new-budget-ttl">
-                <form class="form" method="post" action="actions">
+                <form class="form" method="post" action="actions.php">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="budget">Nom de la marque</label>
