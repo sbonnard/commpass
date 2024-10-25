@@ -44,8 +44,6 @@ if (
     exit;
 }
 
-// unsetFilters($_SESSION);
-
 // Récupérer les données d'une entreprise. 
 
 $selectedCompany = getAllCompanyDatas($dbCo, $_GET);
@@ -120,8 +118,6 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         $jsonBrandChartColors = json_encode($brandChartColors);
     }
 }
-
-
 ?>
 
 <!DOCTYPE html>
