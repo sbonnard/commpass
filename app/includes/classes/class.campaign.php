@@ -305,7 +305,12 @@ function getCampaignTemplate(PDO $dbCo, array $campaigns, array $session): strin
 
     foreach ($campaigns as $campaign) {
         $campaignId = $campaign['id_campaign'];
-        $campaign['id_company'] = $_SESSION['filter']['id_company'];
+
+        if (isset($session['client']) && $session['client'] === 0) {
+            $campaign['id_company'] = $session['filter']['id_company'];
+        } else if (isset($session['client']) && $session['client'] === 1) {
+            $campaign['id_company'] = $session['id_company'];
+        }
 
         $campaignList .= '
         <a href="/campaign.php?myc=' . $campaignId . '&client=' . $campaign['id_company'] . '">
