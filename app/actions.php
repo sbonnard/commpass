@@ -233,7 +233,7 @@ if ($_POST['action'] === 'modify-pwd') {
             } else {
                 $dbCo->rollBack();
                 addError('operation_update_ko');
-                redirectTo('campaign?myc=' . $_POST['id_campaign']);
+                redirectTo();
             }
         }
     } catch (PDOException $e) {
