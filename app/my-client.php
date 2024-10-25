@@ -320,7 +320,12 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/burger.js"></script>
-<script type="module" src="js/dropdown-menu.js"></script>
+<?php
+// LE SCRIPT DE DROPDOWN N'EST UTILE QUE POUR LES UTILISATEURS NON-CLIENTS
+if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+    echo '<script type="module" src="js/dropdown-menu.js"></script>';
+}
+?>
 <script type="module" src="js/cards.js"></script>
 <script type="module" src="js/vignette.js"></script>
 <script type="module" src="js/client-menu.js"></script>

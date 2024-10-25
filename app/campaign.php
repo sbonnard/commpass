@@ -180,6 +180,7 @@ $jsonData = json_encode($chartData);
 <script type="module" src="js/burger.js"></script>
 
 <?php
+// LE SCRIPT DE DROPDOWN N'EST UTILE QUE POUR LES UTILISATEURS NON-CLIENTS
 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
     echo '<script type="module" src="js/dropdown-menu.js"></script>';
 }

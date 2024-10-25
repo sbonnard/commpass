@@ -211,7 +211,12 @@ if (!isset($_GET['client']) || !intval($_GET['client'])) {
 
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/burger.js"></script>
-<script type="module" src="js/dropdown-menu.js"></script>
+<?php
+// LE SCRIPT DE DROPDOWN N'EST UTILE QUE POUR LES UTILISATEURS NON-CLIENTS
+if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+    echo '<script type="module" src="js/dropdown-menu.js"></script>';
+}
+?>
 <script type="module" src="js/ajax.js"></script>
 
 </html>
