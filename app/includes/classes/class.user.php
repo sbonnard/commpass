@@ -119,7 +119,7 @@ function fetchInterlocutors(PDO $dbCo, array $session): array
  * @param array $interlocutors - Interlocutors array.
  * @return string - Interlocutors as HTML options.
  */
-function getInterlocutorsAsOptions(array $interlocutors):string
+function getInterlocutorsAsOptions(array $interlocutors): string
 {
     $options = '';
     foreach ($interlocutors as $interlocutor) {

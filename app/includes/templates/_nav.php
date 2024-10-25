@@ -50,19 +50,19 @@ function displayNetworkLinkIfTDC(array $session, string $newCampaignActive, stri
 {
     if (isset($session['client']) && $session['client'] === 0) {
         return '
-       <li class="nav__itm '. $clientActive .' dropdown">
+       <li class="nav__itm ' . $clientActive . ' dropdown">
     <button class="nav__lnk nav__lnk--network dropdown__button" aria-label="Menu déroulant" id="dropdown-btn-client">Mes clients<span class="nav__arrow">▼</span></button>
     <ul class="dropdown__child dropdown__grid" id="dropdown-child-client">
         <li class="dropdown__child-itm">
             <a href="/clients" class="dropdown__child-lnk" aria-label="Lien vers mes clients">Tous mes clients</a>
         </li>
-        '. getAllClientsAsLnk($companies) .'
+        ' . getAllClientsAsLnk($companies) . '
     </ul>
 </li>
-<li class="nav__itm '. $newCampaignActive .'">
+<li class="nav__itm ' . $newCampaignActive . '">
     <a href="/new-campaign" class="nav__lnk nav__lnk--new-campaign" aria-label="Redirige vers un formulaire de création de campagne">Nouvelle campagne</a>
 </li>
-<li class="nav__itm '. $myAgencyActive .' dropdown">
+<li class="nav__itm ' . $myAgencyActive . ' dropdown">
     <button class="nav__lnk nav__lnk--agency dropdown__button" aria-label="Menu déroulant" id="dropdown-btn-agency">Mon agence<span class="nav__arrow">▼</span></button>
     <ul class="dropdown__child" id="dropdown-child-agency">
         <li class="dropdown__child-itm">

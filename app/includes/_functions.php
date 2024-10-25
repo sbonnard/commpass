@@ -308,7 +308,7 @@ function getMessageIfNoHistory(array $history, array $session): string
                 </div>
                 ';
     }
-    
+
     return '<div class="card">
                 <section class="card__section">
                     <p class="big-text">Pas d\'historique disponible.</p>
