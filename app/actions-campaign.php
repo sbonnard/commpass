@@ -21,7 +21,8 @@ if (!isset($_REQUEST['action'])) {
 // Check CSRF
 preventFromCSRF();
 
-if ($_POST['action'] === 'create-campaign') {
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if ($_POST['action'] === 'create-campaign') { // Action de création d'une campagne sur new-campaign.php //
 
     $_SESSION['form_data'] = [
         'name' => strip_tags($_POST['campaign_name']),
@@ -98,7 +99,9 @@ if ($_POST['action'] === 'create-campaign') {
     } else {
         addError('campaign_creation_ko');
     }
-} else if ($_POST['action'] === 'modify-campaign') {
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+else if ($_POST['action'] === 'modify-campaign') { // Action de modification d'une campagne sur new-campaign.php //
     if (!isset($_POST['campaign_name']) || empty($_POST['campaign_name'])) {
         addError('campaign_name_ko');
         redirectTo();
@@ -168,7 +171,9 @@ if ($_POST['action'] === 'create-campaign') {
     } else {
         addError('campaign_update_ko');
     }
-} elseif ($_POST['action'] === 'delete-campaign') {
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+elseif ($_POST['action'] === 'delete-campaign') { // Action de suppression d'une campagne sur campaign.php //
     try {
         $dbCo->beginTransaction();
 
@@ -213,7 +218,9 @@ if ($_POST['action'] === 'create-campaign') {
         addError('campaign_deletion_ko');
         redirectTo();
     }
-} else if ($_POST['action'] === 'set_campaign_budget') {
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+else if ($_POST['action'] === 'set_campaign_budget') { // Action de fixer le budget d'une campagne sur new-budget.php //
     if (!isset($_POST['budget']) || !is_numeric($_POST['budget'])) {
         addError('budget_ko');
         redirectTo();
@@ -240,7 +247,9 @@ if ($_POST['action'] === 'create-campaign') {
         addError('budget_update_ko');
         redirectTo();
     }
-} else if ($_POST['action'] === 'set_annual_budget') {
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+else if ($_POST['action'] === 'set_annual_budget') { // Action de fixer le budget annuel d'une entreprise sur new-budget.php //
     if (!isset($_POST['budget']) || !is_numeric($_POST['budget'])) {
         addError('budget_ko');
         redirectTo();
