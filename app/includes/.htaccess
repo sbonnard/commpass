@@ -1,6 +1,6 @@
-ErrorDocument 403 ../errors/403.php
+ErrorDocument 403 /errors/403.php
 
-ErrorDocument 404 ../errors/404.php
+ErrorDocument 404 /errors/404.php
 
 # Interdire l'accès aux fichiers sensibles
 <Files _config.php>
