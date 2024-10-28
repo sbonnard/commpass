@@ -1,10 +1,4 @@
 <?php
-require_once '../../assets/.vite/manifest.json';
-
-$manifest = json_decode(file_get_contents('manifest.json'), true);
-
-var_dump($manifest);
-
 /**
  * Template for head.
  *
