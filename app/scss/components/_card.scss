@@ -43,6 +43,7 @@
 
         &--row {
             flex-direction: row;
+            gap: 3rem;
         }
     }
 
@@ -70,5 +71,9 @@
     &__legal {
         margin-top: 2rem;
         margin-bottom: 5rem;
+    }
+
+    &--interlocutor {
+        align-items: flex-start;
     }
 }
