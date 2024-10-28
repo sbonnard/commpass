@@ -327,26 +327,21 @@ unset($_SESSION['filter']);
     </div>';
         }
         ?>
-        <h2 class="ttl lineUp">Mes campagnes <?= $currentYear ?></h2>
-        <section class="card <?php
-                                if (!empty($companyCurrentYearCampaigns) || $_SESSION['client'] === 0) {
-                                    echo 'campaign';
-                                }
-                                ?>">
+
+        <?php
+        if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
+        ?>
+            <h2 class="ttl lineUp">Mes campagnes <?= $currentYear ?></h2>
+            <section class="card <?php
+                                    if (!empty($companyCurrentYearCampaigns) || $_SESSION['client'] === 0) {
+                                        echo 'campaign';
+                                    }
+                                    ?>">
+
+            <?php } ?>
             <?php
 
-            if (!isset($_SESSION['filter']) && $_SESSION['client'] === 0) {
-                // CAS ACCESSIBLE UNIQUEMENT POUR UN PROFIL NON-CLIENT
-                echo getCampaignTemplateByCompany($dbCo, $currentYearCampaigns, $_SESSION, $companies);
-                echo getMessageIfNoCampaign($currentYearCampaigns);
-                // var_dump('Cas 1');
-            } else if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) && $_SESSION['client'] === 0) {
-                // CAS ACCESSIBLE UNIQUEMENT POUR UN PROFIL NON-CLIENT
-                $currentYearCampaigns = getCompanyFilteredCampaigns($dbCo, $_SESSION);
-                echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
-                echo getMessageIfNoCampaign($currentYearCampaigns);
-                // var_dump('Cas 2');
-            } else if ($_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
+            if ($_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
                 // CAS ACCESSIBLE POUR UN PROFIL CLIENT ET GÉRANT
                 $currentYearCampaigns = getCompanyFilteredCampaigns($dbCo, $_SESSION);
                 echo getMessageIfNoCampaign($currentYearCampaigns);
@@ -358,10 +353,10 @@ unset($_SESSION['filter']);
                 echo getCampaignTemplate($dbCo, $currentYearCampaigns, $_SESSION);
                 // var_dump('Cas 4');
             } else {
-                echo 'Aucun bloc atteint';
+                // echo 'Aucun bloc atteint';
             }
             ?>
-        </section>
+            </section>
     </main>
 
     <a class="button--up" href="#" aria-label="Renvoie en haut de la page." id="scrollTop">
