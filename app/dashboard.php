@@ -387,7 +387,17 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
 ?>
 <script type="module" src="js/cards.js"></script>
 <script type="module" src="js/vignette.js"></script>
-<script type="module" src="js/functions.js"></script>
+<script>
+    // Confirmation de blocage d'un utilisateur.
+    function confirmDisable() {
+        return confirm("Êtes-vous sûr de vouloir rendre ce compte utilisateur inactif ?");
+    }
+
+    // Confirmation de déblocage d'un utilisateur.
+    function confirmEnable() {
+        return confirm("Êtes-vous sûr de vouloir réactiver ce compte utilisateur ?");
+    }
+</script>
 
 <!-- Script pour les multiple graphiques de campagne. -->
 <script>
