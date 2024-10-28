@@ -79,7 +79,9 @@ $jsonData = json_encode($chartData);
             ?>
         </div>
 
-        <a href="my-client.php?client=<?= $_SESSION['filter']['id_company'] ?>"><h2 class="ttl lineUp client__ttl"><?= $selectedCampaign['company_name'] ?><br></h2></a>
+        <a href="my-client.php?client=<?= $_SESSION['filter']['id_company'] ?>">
+            <h2 class="ttl lineUp client__ttl"><?= $selectedCampaign['company_name'] ?><br></h2>
+        </a>
         <div class="flex-row">
             <h2 class="ttl lineUp ttl--tertiary"><?= $selectedCampaign['campaign_name'] ?></h2>
             <?php
@@ -133,14 +135,14 @@ $jsonData = json_encode($chartData);
         <div class="card card--grid">
 
             <div class="card">
-                <h2 class="ttl lineUp">Répartition du budget dépensé<br> par marque</h2>
+                <h2 class="ttl lineUp">Répartition du budget par marque</h2>
                 <!-- GRAPHIQUES DONUT  -->
                 <section class="card__section">
                     <div id="chart"></div>
                 </section>
             </div>
             <div class="card">
-                <h2 class="ttl lineUp">Budget attribué<br> par marque</h2>
+                <h2 class="ttl lineUp">Budget par marque</h2>
                 <!-- TABLEAU DES DÉPENSES PAR MARQUES -->
                 <section class="card__section">
                     <?= generateTableFromDatas($brandsSpendings); ?>
