@@ -18,16 +18,16 @@
         // align-items: center;
         gap: 0.75rem;
         font-size: 1.25rem;
-    
+
         @media screen and (min-width: 768px) {
             // align-items: center;
             justify-content: center;
         }
-        
+
         &--profile::before {
             content: url(../../img/profile-lnk.svg);
         }
-    
+
         &--dashboard::before {
             content: url(../../img/dashboard-lnk.svg);
         }
@@ -39,11 +39,11 @@
         &--network::before {
             content: url(../../img/lnk-network.svg);
         }
-    
+
         &--history::before {
             content: url(../../img/history-lnk.svg);
         }
-    
+
         &--logout::before {
             content: url(../../img/logout-lnk.svg);
         }
@@ -82,6 +82,13 @@
             justify-content: center;
             gap: 5rem;
             padding: 0.5rem;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        &__lst {
+            max-height: 30rem;
+            overflow-y: scroll;
         }
     }
 
