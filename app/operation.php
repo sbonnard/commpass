@@ -72,6 +72,7 @@ if (!isset($_GET['myo'])) {
     <main class="container container--campaigns container__flex">
         <div class="notifs">
             <?php
+            var_dump($operation);
             echo getErrorMessage($errors);
             echo getSuccessMessage($messages);
             ?>
@@ -118,7 +119,7 @@ if (!isset($_GET['myo'])) {
                             <select class="form__input form__input--select" type="text" name="operation_brand" id="operation_brand" required aria-label="Sélectionner la marque concernée">
                                 <option value="">- Sélectionner une marque -</option>
                                 <option value="0">Toutes les marques</option>
-                                <?= getCompanyBrandsAsHTMLOptions(getCompanyBrands($dbCo, $selectedCampaign)); ?>
+                                <?= getCompanyBrandsAsHTMLOptions(getCompanyBrands($dbCo, $selectedCampaign), $operation, $_GET); ?>
                             </select>
                         </li>
 
@@ -133,7 +134,7 @@ if (!isset($_GET['myo'])) {
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="operation_partner">Partenaire (optionnel)</label>
                             <select class="form__input form__input--select" type="text" name="operation_partner" id="operation_partner" aria-label="Sélectionner un partenaire de l'opération s'il y en a un.">
-                                <?= getPartnersAsHTMLOptions($partners) ?>
+                                <?= getPartnersAsHTMLOptions($partners, $operation, $_GET) ?>
                             </select>
                             <button type="button" class="create-lnk" style="text-align:left;" id="partner-lnk">+ Créer un partenaire</button>
                         </li>
@@ -206,14 +207,12 @@ if (!isset($_GET['myo'])) {
 
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/burger.js"></script>
-
 <?php
 // LE SCRIPT DE DROPDOWN N'EST UTILE QUE POUR LES UTILISATEURS NON-CLIENTS
 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
     echo '<script type="module" src="js/dropdown-menu.js"></script>';
 }
 ?>
-
 <script type="module" src="js/ajax-new-media-partner.js"></script>
 
 <?php
