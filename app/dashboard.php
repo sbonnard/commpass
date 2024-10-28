@@ -221,11 +221,7 @@ unset($_SESSION['filter']);
 
                             $companyDatas .= '</ul>';
                             $companyDatas .= '<ul>';
-                            $companyDatas .= '
-                        <div class="client__brands-ttl">
-                            <h4 class="client__subttl">Les marques</h4>
-                            <a class="button--plus" href="/new-brand.php?comp=' . $company['id_company'] . '" title="Ajouter une marque pour ' . $company['company_name'] . '"></a>
-                        </div>';
+                            $companyDatas .= '<h4 class="client__subttl">Les marques</h4>';
 
                             foreach ($allbrands as $brand) {
                                 if ($brand['id_company'] === $company['id_company']) {

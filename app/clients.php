@@ -149,11 +149,8 @@ unsetFilters($_SESSION);
 
                         $companyDatas .= '</ul>';
                         $companyDatas .= '<ul>';
-                        $companyDatas .= '
-                        <div class="client__brands-ttl">
-                            <h4 class="client__subttl">Les marques</h4>
-                            <a class="button--plus" href="/new-brand.php?comp=' . $company['id_company'] . '" title="Ajouter une marque pour ' . $company['company_name'] . '"></a>
-                        </div>';
+                        $companyDatas .= '<h4 class="client__subttl">Les marques</h4>';
+
 
                         // Boucle sur les marques de l'entreprise pour les afficher. 
                         foreach ($allbrands as $brand) {
