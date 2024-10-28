@@ -34,25 +34,21 @@ generateToken();
 checkConnection($_SESSION);
 
 if (!isset($_GET['myc'])) {
-    // REDIRIGE SI AUCUNE CAMPAGNE SÉLECTIONNÉE
     header('Location: dashboard');
 }
 
 if (isset($_GET['client']) && intval($_GET['client'])) {
-    // FILTRE PAR CLIENT
     $_SESSION['filter']['id_company'] = $_GET['client'];
 }
 
 $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
 $brandsSpendings = mergeResults($campaignResults);
 
-// DONNÉES POUR LES GRAPHIQUES DONUTS
 $chartData = [];
 foreach ($brandsSpendings as $row) {
     $chartData[] = [$row['brand_name'], floatval($row['total_spent']), $row['legend_colour_hex']];
 }
 
-// ENCODAGE DES DONNÉES EN JSON POUR LE SCRIPT JAVACRIPT C3 ET D3
 $jsonData = json_encode($chartData);
 ?>
 
@@ -83,13 +79,12 @@ $jsonData = json_encode($chartData);
             ?>
         </div>
 
-        <a href="my-client.php?client=<?= $_SESSION['filter']['id_company'] ?>">
+        <a href="my-client?client=<?= $_SESSION['filter']['id_company'] ?>">
             <h2 class="ttl lineUp client__ttl"><?= $selectedCampaign['company_name'] ?><br></h2>
         </a>
         <div class="flex-row">
             <h2 class="ttl lineUp ttl--tertiary"><?= $selectedCampaign['campaign_name'] ?></h2>
             <?php
-            // SI L'UTILISATEUR N'EST PAS CLIENT, IL VOIT DES BOUTONS DE SUPPRESSION ET DE MODIFICATION DE CAMPAGNE
             if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 echo
                 '<a class="button--edit" href="new-campaign?myc=' . $selectedCampaign['id_campaign'] . '&client=' . $_SESSION['filter']['id_company'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
@@ -140,14 +135,14 @@ $jsonData = json_encode($chartData);
         <div class="card card--grid">
 
             <div class="card">
-                <h2 class="ttl lineUp">Répartition du budget dépensé<br> par marque</h2>
+                <h2 class="ttl lineUp">Répartition du budget par marque</h2>
                 <!-- GRAPHIQUES DONUT  -->
                 <section class="card__section">
                     <div id="chart"></div>
                 </section>
             </div>
             <div class="card">
-                <h2 class="ttl lineUp">Budget attribué<br> par marque</h2>
+                <h2 class="ttl lineUp">Budget par marque</h2>
                 <!-- TABLEAU DES DÉPENSES PAR MARQUES -->
                 <section class="card__section">
                     <?= generateTableFromDatas($brandsSpendings); ?>
