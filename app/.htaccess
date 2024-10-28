@@ -6,3 +6,21 @@ RewriteRule ^([^.]+)$ $1.php [NC,L]
 ErrorDocument 403 /errors/403.php
 
 ErrorDocument 404 /errors/404.php
+
+# Interdire l'accès aux fichiers sensibles
+<Files .env>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Interdire l'accès à des fichiers et dossiers
+<FilesMatch "\.(ini|log|sql)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Bloquer l'accès aux répertoires
+<FilesMatch ".*">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>

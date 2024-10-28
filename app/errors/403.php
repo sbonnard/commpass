@@ -34,7 +34,7 @@ generateToken();
 <body>
 
     <main class="container--error container__flex">
-        <h1 class="ttl ttl--huge lineUp">403<br><span class="ttl--tertiary">Forbidden</span></h1>
+        <h1 class="ttl ttl--huge lineUp">403<br><span class="ttl--tertiary">Accès interdit</span></h1>
         <p class="ttl">VOUS N’AVEZ PAS LA PERMISSION D’ACCÉDER<br>A CETTE RESSOURCE !</p>
         <p class="medium-text">Cliquez sur la boussole pour retrouver votre chemin</p>
         <div class="compass">
