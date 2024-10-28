@@ -72,7 +72,6 @@ if (!isset($_GET['myo'])) {
     <main class="container container--campaigns container__flex">
         <div class="notifs">
             <?php
-            var_dump($operation);
             echo getErrorMessage($errors);
             echo getSuccessMessage($messages);
             ?>
