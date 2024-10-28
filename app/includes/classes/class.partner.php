@@ -22,12 +22,18 @@ function fetchAllPartners(PDO $dbCo): array
  * @param array $partners - Array of partners datas.
  * @return string - HTML options.
  */
-function getPartnersAsHTMLOptions(array $partners): string
+function getPartnersAsHTMLOptions(array $partners, array $operation, array $get): string
 {
     $htmlOptions = '<option value="">- Pas de partenaire -</option>';
 
     foreach ($partners as $partner) {
-        $htmlOptions .= '<option class="form__input--select-option" value="' . intval($partner['id_partner']) . '">' . $partner['partner_name'] . '</option>';
+        $htmlOptions .= '<option class="form__input--select-option" value="' . intval($partner['id_partner']) . '"';
+
+        if (isset($get['myo']) && $partner['id_partner'] === $operation['id_partner']) {
+            $htmlOptions .= ' selected';
+        }
+
+        $htmlOptions .= '>' . $partner['partner_name'] . '</option>';
     }
 
     return $htmlOptions;

@@ -29,7 +29,7 @@ function getMediaAsHTMLOptions(array $mediaDatas, array $operation = []): string
     foreach ($mediaDatas as $media) {
         $mediaHTML .= '<option class="form__input--select-option" value="' . $media['id_media'] . '"';
 
-        if (isset($operation['media']) && $media['id_media'] === $operation['id_media']) {
+        if (isset($_GET['myo']) && $media['id_media'] === $operation['id_media']) {
             $mediaHTML .= ' selected';
         }
 

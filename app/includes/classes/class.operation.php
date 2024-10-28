@@ -14,9 +14,10 @@ function getAllOperationsFromACampaign(PDO $dbCo, array $get): array
     }
 
     $query = $dbCo->prepare(
-        'SELECT *
+        'SELECT operation.id_operation, description, price, operation_date, id_campaign, id_company, id_media, operation.id_partner, id_brand
         FROM operation
-        WHERE id_operation = :id_operation;'
+            JOIN operation_brand ON operation_brand.id_operation = operation.id_operation
+        WHERE operation.id_operation = :id_operation;'
     );
 
     $bindValues = [
