@@ -1,0 +1,34 @@
+ErrorDocument 403 ../errors/403.php
+
+ErrorDocument 404 ../errors/404.php
+
+# Interdire l'accès aux fichiers sensibles
+<Files _config.php>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files _database.php>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files _datas.php>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files _functions.php>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files _message.php>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files _security.php>
+    Order Allow,Deny
+    Deny from all
+</Files>
