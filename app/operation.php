@@ -139,7 +139,7 @@ if (!isset($_GET['myo'])) {
                         </li>
 
                         <li class="form__itm form__itm--app">
-                            <label class="form__label" for="date">Date de l'opération</label>
+                            <label class="form__label" for="date">Date de démarrage</label>
                             <input class="form__input form__input--date" type="date" name="date" id="date" required aria-label="Sélectionner la date de l'opération" value="<?php echo $operation['operation_date'];
                                                                                                                                                                             if (isset($_SESSION['form_data']['date'])) {
                                                                                                                                                                                 echo $_SESSION['form_data']['date'];
