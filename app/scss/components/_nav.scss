@@ -63,6 +63,14 @@
         &--agency::before {
             content: url(../../img/agency-lnk.svg);
         }
+
+        &--user-plus::before {
+            content: url(../../img/user-plus.svg);
+        }
+
+        &--new-brand::before {
+            content: url(../../img/brand.svg);
+        }
     }
 
     @media screen and (min-width: 768px) {
