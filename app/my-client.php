@@ -44,6 +44,8 @@ if (
     exit;
 }
 
+// unsetFilters($_SESSION);
+
 // Récupérer les données d'une entreprise. 
 
 $selectedCompany = getAllCompanyDatas($dbCo, $_GET);
@@ -118,6 +120,8 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         $jsonBrandChartColors = json_encode($brandChartColors);
     }
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -173,7 +177,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             }
 
             echo
-            '<div class="card" id="budgets">
+            '<div class="card">
                 <section class="card__section">
                     <h3 class="ttl ttl--budget">Budgets de ' . $currentYear . '</h3>
                     <div class="vignettes-section vignettes-section--row">
@@ -210,14 +214,14 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             echo
             '<div class="card card--grid">
         <div class="card">
-            <h2 class="ttl lineUp">Répartition du budget annuel<br> dépensé par objectif</h2>
+            <h2 class="ttl lineUp">Répartition annuelle par objectif</h2>
             <!-- GRAPHIQUES DONUT  -->
             <section class="card__section">
                 <div id="chart-target"></div>
             </section>
         </div>
         <div class="card">
-            <h2 class="ttl lineUp">Budget annuel attribué<br> par objectif</h2>
+            <h2 class="ttl lineUp">Budget annuel par objectif</h2>
             <!-- TABLEAU DES DÉPENSES PAR OBJECTIF -->
             <section class="card__section">'
                 . generateTableFromTargetDatas($targetAnnualSpendings) .
@@ -230,14 +234,14 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
             echo
             '<div class="card card--grid card--reverse">
         <div class="card">
-            <h2 class="ttl lineUp">Répartition du budget annuel<br> dépensé par marque</h2>
+            <h2 class="ttl lineUp">Répartition annuelle par marque</h2>
             <!-- GRAPHIQUES DONUT  -->
             <section class="card__section">
                 <div id="chart-brand"></div>
             </section>
         </div>
         <div class="card">
-            <h2 class="ttl lineUp">Budget annuel attribué<br> par marque</h2>
+            <h2 class="ttl lineUp">Budget annuel par marque</h2>
             <!-- TABLEAU DES DÉPENSES PAR MARQUE -->
             <section class="card__section">'
                 . generateTableFromDatas($brandsAnnualSpendings) .
@@ -248,7 +252,8 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         ?>
 
         <h2 class="ttl lineUp" id="client-campaigns">Les campagnes <?= $currentYear ?></h2>
-        <div class="card">
+        <!-- USELESS FILTERS  -->
+        <!-- <div class="card">
             <form class="card__section" action="actions-filter" method="post" id="filter-form" aria-label="formulaire de filtre">
                 <ul class="form__lst form__lst--row">
                     <div class="form__lst--flex">
@@ -268,7 +273,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 <input type="hidden" name="action" value="filter-reinit">
             </form>
-        </div>
+        </div> -->
         <section class="card <?php
                                 if (!empty($companyCurrentYearCampaigns) || $_SESSION['client'] === 0) {
                                     echo 'campaign';
@@ -316,14 +321,12 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/burger.js"></script>
-
 <?php
 // LE SCRIPT DE DROPDOWN N'EST UTILE QUE POUR LES UTILISATEURS NON-CLIENTS
 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
     echo '<script type="module" src="js/dropdown-menu.js"></script>';
 }
 ?>
-
 <script type="module" src="js/cards.js"></script>
 <script type="module" src="js/vignette.js"></script>
 <script type="module" src="js/client-menu.js"></script>
