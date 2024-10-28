@@ -21,6 +21,6 @@ if (!isset($_REQUEST['action'])) {
 // Check CSRF
 preventFromCSRF();
 
+////////////////////////////////////////////// PAGE INUTILE POUR L'INSTANT ////////////////////////////////////////////////////////////
 if ($_POST['action'] === 'archive-year') {
-    
 }
