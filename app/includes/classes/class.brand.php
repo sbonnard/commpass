@@ -98,12 +98,18 @@ function getCompanyBrands(PDO $dbCo, array $selectedCampaign): array
  * @param array $companyBrands - list of brand
  * @return string - A list of brand names as HTML options.
  */
-function getCompanyBrandsAsHTMLOptions(array $companyBrands): string
+function getCompanyBrandsAsHTMLOptions(array $companyBrands, array $operation, array $get): string
 {
     $brandOptions = '';
 
     foreach ($companyBrands as $brand) {
-        $brandOptions .= '<option data-color="' . $brand['legend_colour_hex'] . '" value="' . $brand['id_brand'] . '">' . $brand['brand_name'] . '</option>';
+        $brandOptions .= '<option data-color="' . $brand['legend_colour_hex'] . '" value="' . $brand['id_brand'] . '"';
+
+        if (isset($_GET['myo']) && $brand['id_brand'] === $operation['id_brand']) {
+            $brandOptions .= ' selected';
+        }
+
+        $brandOptions .= '>' . $brand['brand_name'] . '</option>';
     }
 
     return $brandOptions;
