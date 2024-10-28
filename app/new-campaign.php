@@ -173,7 +173,7 @@ if (!isset($_GET['client']) || !intval($_GET['client'])) {
                                                                                                                                                                                             }  ?>">
                         </li>
                         <li class="form__itm form__itm--app">
-                            <label class="form__label" for="budget">Budget investi (sans €)</label>
+                            <label class="form__label" for="budget">Budget attribué (sans €)</label>
                             <input class="form__input form__input--number" type="number" name="budget" id="budget" placeholder="12500" required aria-label="Saississez le budget de la nouvelle campagne ou 0 si il n'a pas encore été défini." value="<?php
                                                                                                                                                                                                                                                         if (isset($_GET['myc']) && intval($_GET['myc'])) {
                                                                                                                                                                                                                                                             echo $selectedCampaign['budget'];
