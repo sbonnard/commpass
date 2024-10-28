@@ -83,7 +83,9 @@ $jsonData = json_encode($chartData);
             ?>
         </div>
 
-        <h2 class="ttl lineUp"><?= $selectedCampaign['company_name'] ?><br></h2>
+        <a href="my-client.php?client=<?= $_SESSION['filter']['id_company'] ?>">
+            <h2 class="ttl lineUp client__ttl"><?= $selectedCampaign['company_name'] ?><br></h2>
+        </a>
         <div class="flex-row">
             <h2 class="ttl lineUp ttl--tertiary"><?= $selectedCampaign['campaign_name'] ?></h2>
             <?php
