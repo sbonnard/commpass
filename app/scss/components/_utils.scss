@@ -40,6 +40,11 @@
 .flex-column {
     display: flex;
     flex-direction: column;
+    gap: 2rem;
+}
+
+.space-between {
+    gap: 5rem;
 }
 
 #filter-form {

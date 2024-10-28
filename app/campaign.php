@@ -79,26 +79,38 @@ $jsonData = json_encode($chartData);
             ?>
         </div>
 
-        <a href="my-client.php?client=<?= $_SESSION['filter']['id_company'] ?>">
-            <h2 class="ttl lineUp client__ttl"><?= $selectedCampaign['company_name'] ?><br></h2>
-        </a>
-        <div class="flex-row">
-            <h2 class="ttl lineUp ttl--tertiary"><?= $selectedCampaign['campaign_name'] ?></h2>
+        <div class="flex-row space-between">
+            <div class="flex-column">
+                <a href="my-client.php?client=<?= $_SESSION['filter']['id_company'] ?>">
+                    <h2 class="ttl lineUp client__ttl"><?= $selectedCampaign['company_name'] ?><br></h2>
+                </a>
+            </div>
+            <div class="flex-row">
+                <h2 class="ttl lineUp ttl--tertiary"><?= $selectedCampaign['campaign_name'] ?></h2>
+                <?php
+                if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+                    echo
+                    '<a class="button--edit" href="new-campaign.php?myc=' . $selectedCampaign['id_campaign'] . '&client=' . $_SESSION['filter']['id_company'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
+                    |' . deleteCampaignButton($selectedCampaign, $_SESSION);
+                }
+                ?>
+            </div>
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                echo
-                '<a class="button--edit" href="new-campaign.php?myc=' . $selectedCampaign['id_campaign'] . '&client=' . $_SESSION['filter']['id_company'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
-                |' . deleteCampaignButton($selectedCampaign, $_SESSION);
+                echo '<div class="operation__button"><a href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '" class="button button--add" aria-label="Créer une nouvelle opération">Ajouter opération</a></div>';
             }
             ?>
         </div>
-
+        
         <div class="card">
-            <section class="card__section">
+            <section class="card__section card__section--row">
                 <p class="campaign__interlocutor">Interlocuteur : <?= $selectedCampaign['firstname'] . ' ' . $selectedCampaign['lastname'] ?></p>
+                <span>|</span>
                 <p class="campaign__interlocutor">Objectif : <?= $selectedCampaign['target_com'] ?></p>
             </section>
         </div>
+
+
 
         <h2 class="ttl lineUp">Données globales</h2>
 
@@ -153,12 +165,6 @@ $jsonData = json_encode($chartData);
             <h2 class="ttl lineUp">Opérations</h2>
             <!-- OPÉRATIONS DE LA CAMPAGNE DE COMMUNICATION  -->
             <section class="card__section card__section--operations">
-                <?php
-
-                if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                    echo '<div class="operation__button"><a href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '" class="button button--add" aria-label="Créer une nouvelle opération">Ajouter opération</a></div>';
-                }
-                ?>
                 <ul>
                     <?= getCampaignOperationsAsList($campaignOperations, $_SESSION, $selectedCampaign); ?>
                 </ul>
