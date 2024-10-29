@@ -68,7 +68,7 @@ if (!empty($partnerChartColors)) {
 $partnerChartData = [];
 $partnerChartColors = [];
 
-foreach ($partnerAnnualSpendingsClient as $partnerData) {
+foreach ($partnerAnnualSpendings as $partnerData) {
     $partnerName = $partnerData['partner_name'];
     $totalSpent = $partnerData['annual_spendings'];
     $partnerHex = $partnerData['partner_colour'];
