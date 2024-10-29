@@ -98,7 +98,7 @@ function getCompanyBrands(PDO $dbCo, array $selectedCampaign): array
  * @param array $companyBrands - list of brand
  * @return string - A list of brand names as HTML options.
  */
-function getCompanyBrandsAsHTMLOptions(array $companyBrands, array $operation, array $get): string
+function getCompanyBrandsAsHTMLOptions(array $companyBrands, array $operation): string
 {
     $brandOptions = '';
 
