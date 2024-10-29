@@ -180,9 +180,16 @@
     }
 
     &__plus {
-        position: absolute;
-        right: 3%;
-        top: 55%;
+        width: 1.5rem;
+        aspect-ratio: 1;
+    }
+
+    &__partner {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
     }
 }
 
