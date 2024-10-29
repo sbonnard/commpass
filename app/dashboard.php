@@ -134,7 +134,7 @@ unset($_SESSION['filter']);
         </div>
 
         <div class="flex-row">
-            <a href="my-agency.php"><img class="client__logo" src="<?= getCompanyLogoUrl($dbCo, $_SESSION) ?>" alt=""></a>
+            <a href="my-agency.php"><img class="client__logo" src="<?= getCompanyLogoUrl($dbCo, $_SESSION) ?>" alt="Logo de l'entreprise <?= getCompanyName($dbCo, $_SESSION) ?>"></a>
             <h2 class="ttl lineUp">
                 Bonjour <?= $user['firstname'] ?><br>
                 <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
