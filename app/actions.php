@@ -14,7 +14,7 @@ require_once "includes/_message.php";
 
 
 if (!isset($_REQUEST['action'])) {
-    redirectTo('dashboard.php');
+    redirectTo('dashboard');
     exit;
 }
 
@@ -24,7 +24,7 @@ preventFromCSRF();
 if ($_POST['action'] === 'modify-pwd') {
     if (!isset($_POST['password']) || !isset($_POST['password-confirm']) || $_POST['password'] !== $_POST['password-confirm']) {
         addError('unmatched_pwd');
-        redirectTo('profil.php');
+        redirectTo('profil');
         exit;
     }
 
@@ -45,7 +45,7 @@ if ($_POST['action'] === 'modify-pwd') {
 } else if ($_POST['action'] === 'modify-email') {
     if (!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
         addError('invalid_email');
-        redirectTo('profil.php');
+        redirectTo('profil');
         exit;
     }
 
@@ -60,17 +60,17 @@ if ($_POST['action'] === 'modify-pwd') {
 
     if ($isUpdateOk) {
         addMessage('update_ok_email');
-        redirectTo('profil.php');
+        redirectTo('profil');
         exit;
     } else {
         addError('update_ko_email');
-        redirectTo('profil.php');
+        redirectTo('profil');
         exit;
     }
 } else if ($_POST['action'] === 'modify-phone') {
     if (!isset($_POST['phone']) || !preg_match('/^[0-9]{10}$/', $_POST['phone'])) {
         addError('invalid_phone');
-        redirectTo('profil.php');
+        redirectTo('profil');
         exit;
     }
 
@@ -85,11 +85,11 @@ if ($_POST['action'] === 'modify-pwd') {
 
     if ($isUpdateOk) {
         addMessage('update_ok_phone');
-        redirectTo('profil.php');
+        redirectTo('profil');
         exit;
     } else {
         addError('update_ko_phone');
-        redirectTo('profil.php');
+        redirectTo('profil');
         exit;
     }
 } else if ($_POST['action'] === 'create-operation') {
@@ -147,7 +147,7 @@ if ($_POST['action'] === 'modify-pwd') {
 
                 addMessage('operation_created_ok');
 
-                redirectTo('campaign.php?myc=' . $_POST['id_campaign']);
+                redirectTo('campaign?myc=' . $_POST['id_campaign']);
             } else {
                 $dbCo->rollBack();
                 addError('operation_creation_ko');
@@ -229,7 +229,7 @@ if ($_POST['action'] === 'modify-pwd') {
 
                 addMessage('operation_update_ok');
 
-                redirectTo('campaign.php?myc=' . $_POST['id_campaign']);
+                redirectTo('campaign?myc=' . $_POST['id_campaign']);
             } else {
                 $dbCo->rollBack();
                 addError('operation_update_ko');
@@ -243,13 +243,13 @@ if ($_POST['action'] === 'modify-pwd') {
 } else if ($_POST['action'] === 'modify-colour') {
     if (!isset($_POST['profile_brand'])) {
         addError('brand_ko');
-        redirectTo('profil.php');
+        redirectTo('profil');
         exit;
     }
 
     if (!isset($_POST['color'])) {
         addError('colour_ko');
-        redirectTo('profil.php');
+        redirectTo('profil');
         exit;
     }
 
@@ -272,17 +272,17 @@ if ($_POST['action'] === 'modify-pwd') {
 
         if ($isUpdateOk) {
             addMessage('update_ok_colour');
-            redirectTo('profil.php');
+            redirectTo('profil');
             exit;
         } else {
             addError('update_ko_colour');
-            redirectTo('profil.php');
+            redirectTo('profil');
             exit;
         }
     } else {
         // Si la couleur n'est pas valide
         addError('invalid_colour_format');
-        redirectTo('profil.php');
+        redirectTo('profil');
         exit;
     }
 } else if ($_POST['action'] === 'new_brand') {
@@ -343,6 +343,8 @@ if ($_POST['action'] === 'modify-pwd') {
         redirectTo();
         exit;
     }
+
+    // var_dump($_POST);
 
     // Gestion du fichier attaché
     $attachmentFileName = 'default.webp'; // Valeur par défaut
@@ -515,7 +517,7 @@ if ($_POST['action'] === 'modify-pwd') {
     if ($isInsertUserOk) {
         unset($_SESSION['form_data']);
         addMessage('new_user_created_ok');
-        redirectTo('my-client.php?client=' . $_SESSION['filter']['id_company']);
+        redirectTo('my-client?client=' . $_SESSION['filter']['id_company']);
     } else {
         addError('new_user_creation_ko');
     }
