@@ -481,13 +481,20 @@ if ($_POST['action'] === 'modify-pwd') {
         exit;
     }
 
+    if (!isset($_POST['partner_colour']) || empty($_POST['partner_colour']) || !is_string($_POST['partner_colour']) || strlen($_POST['partner_colour']) > 255) {
+        addError('partner_colour_ko');
+        redirectTo();
+        exit;
+    }
+
     $queryNewPartner = $dbCo->prepare(
-        'INSERT INTO partner (partner_name)
-        VALUES (:partner_name);'
+        'INSERT INTO partner (partner_name, partner_colour)
+        VALUES (:partner_name, :partner_colour);'
     );
 
     $bindValues = [
-        'partner_name' => htmlspecialchars($_POST['partner_name'])
+        'partner_name' => htmlspecialchars($_POST['partner_name']),
+        'partner_colour' => htmlspecialchars($_POST['partner_colour'])
     ];
 
     $isInsertPartnerOk = $queryNewPartner->execute($bindValues);

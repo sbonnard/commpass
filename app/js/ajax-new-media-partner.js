@@ -69,7 +69,7 @@ const newPartnerLnk = document.getElementById('partner-lnk');
 const newPartnerForm = document.getElementById('new-partner-form');
 const partnerSelectElement = document.getElementById('operation_partner');
 const addPartnerInput = document.getElementById('add-partner');
-
+const colorInput = document.getElementById('partner_colour');
 
 // FERMER L'OVERLAY SI ON CLIC EN DEHORS DE CELUI-CI.
 document.addEventListener('click', function (event) {
@@ -91,6 +91,9 @@ newPartnerForm.addEventListener('submit', function (event) {
     event.preventDefault(); // Empêche le comportement par défaut de soumission du formulaire
 
     let addPartner = addPartnerInput.value; // Récupère la valeur du champ input
+    let partnerColour = colorInput.value; // Récupère la valeur de la couleur
+
+    console.log('Valeur de partnerColour:', partnerColour);
 
     fetch('../api.php', {
         method: 'POST',
@@ -100,6 +103,7 @@ newPartnerForm.addEventListener('submit', function (event) {
         },
         body: JSON.stringify({
             'add-partner': addPartner,
+            'partner_colour': partnerColour, // Ajoutez la couleur ici
             'action': 'add-partner'
         })
     })

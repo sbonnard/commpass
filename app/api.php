@@ -66,10 +66,12 @@ if (isset($_POST['id_company'])) {
         }
 
         $partnerName = htmlspecialchars($inputData['add-partner']);
+        $partnerColour =$inputData['partner_colour'];
 
         try {
-            $query = $dbCo->prepare('INSERT INTO partner (partner_name) VALUES (:partner_name);');
+            $query = $dbCo->prepare('INSERT INTO partner (partner_name, partner_colour) VALUES (:partner_name, :partner_colour);');
             $query->bindValue(':partner_name', $partnerName);
+            $query->bindValue(':partner_colour', $partnerColour);
             $query->execute();
 
             $lastPartnerId = $dbCo->lastInsertId();

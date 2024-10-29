@@ -103,7 +103,7 @@ $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChar
 
                 $partnersDatas .= '<ul>';
                 foreach ($partners as $partner) {
-                    $partnersDatas .= '<li class="partner medium-text" data-js-partner="partner">' . $partner['partner_name'] . '</li>';
+                    $partnersDatas .= '<li class="partner medium-text" data-js-partner="partner"><span class="campaign__legend-square" style="background-color:' . $partner['partner_colour'] . '"></span>' . $partner['partner_name'] . '</li>';
                 }
                 $partnersDatas .= '</ul>';
 
@@ -115,6 +115,10 @@ $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChar
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="partner_name">Ajouter un partenaire</label>
                             <input class="form__input" type="text" name="partner_name" id="partner_name" placeholder="Tendance Ouest" required>
+                        </li>
+                        <li class="form__itm form__itm--app">
+                            <label class="form__label" for="partner_colour">Couleur du partenaire</label>
+                            <input class="form__input--colour" type="color" name="partner_colour" id="partner_colour" required>
                         </li>
                         <input class="button button--partner" type="submit" value="Créer partenaire">
                         <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
