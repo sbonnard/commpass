@@ -15,7 +15,7 @@ function fetchAllCompanies(PDO $dbCo, array $session): array
     if (isset($session['client']) && $session['client'] === 0) {
         try {
             $query = $dbCo->prepare(
-                'SELECT id_company, company_name
+                'SELECT id_company, company_name, unique_brand
                 FROM company
                 ORDER BY company_name ASC;'
             );
