@@ -148,21 +148,25 @@ unsetFilters($_SESSION);
                         }
 
                         $companyDatas .= '</ul>';
-                        $companyDatas .= '<ul>';
-                        $companyDatas .= '<h4 class="client__subttl">Les marques</h4>';
 
-                        // Boucle sur les marques de l'entreprise pour les afficher. 
-                        foreach ($allbrands as $brand) {
-                            if ($brand['id_company'] === $company['id_company']) {
-                                $companyDatas .= '<li class="campaign__legend"><span class="campaign__legend-square" style="background-color:' . $brand['legend_colour_hex'] . '"></span>' . $brand['brand_name'] . '</li>';
+                        if ($company['unique_brand'] === 0) {
+                            $companyDatas .= '<ul>';
+                            $companyDatas .= '<h4 class="client__subttl">Les marques</h4>';
+
+
+                            // Boucle sur les marques de l'entreprise pour les afficher. 
+                            foreach ($allbrands as $brand) {
+                                if ($brand['id_company'] === $company['id_company']) {
+                                    $companyDatas .= '<li class="campaign__legend"><span class="campaign__legend-square" style="background-color:' . $brand['legend_colour_hex'] . '"></span>' . $brand['brand_name'] . '</li>';
+                                }
                             }
-                        }
 
-                        if (empty($allbrands)) {
-                            $companyDatas .= '<li>Aucune marque pour cette entreprise.</li>';
-                        }
+                            if (empty($allbrands)) {
+                                $companyDatas .= '<li>Aucune marque pour cette entreprise.</li>';
+                            }
 
-                        $companyDatas .= '</ul>';
+                            $companyDatas .= '</ul>';
+                        }
 
                         $companyDatas .= '</section></div>';
                     }
@@ -191,7 +195,6 @@ unsetFilters($_SESSION);
 
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/burger.js"></script>
-
 <?php
 // LE SCRIPT DE DROPDOWN N'EST UTILE QUE POUR LES UTILISATEURS NON-CLIENTS
 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
