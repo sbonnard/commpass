@@ -255,24 +255,26 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
     </div>';
 
 
-            // DISPLAY TABLE & DONUT CHART FOR BRANDS
-            echo
-            '<div class="card card--grid card--reverse">
-        <div class="card">
-            <h2 class="ttl lineUp">Répartition annuelle par marque</h2>
-            <!-- GRAPHIQUES DONUT  -->
-            <section class="card__section">
-                <div id="chart-brand"></div>
-            </section>
-        </div>
-        <div class="card">
-            <h2 class="ttl lineUp">Budget annuel par marque</h2>
-            <!-- TABLEAU DES DÉPENSES PAR MARQUE -->
-            <section class="card__section">'
-                . generateTableFromDatas($brandsAnnualSpendings) .
-                '</section>
-        </div>
-    </div>';
+            if ($selectedCompany['unique_brand'] === 0) {
+                // DISPLAY TABLE & DONUT CHART FOR BRANDS
+                echo
+                '<div class="card card--grid card--reverse">
+            <div class="card">
+                <h2 class="ttl lineUp">Répartition annuelle par marque</h2>
+                <!-- GRAPHIQUES DONUT  -->
+                <section class="card__section">
+                    <div id="chart-brand"></div>
+                </section>
+            </div>
+            <div class="card">
+                <h2 class="ttl lineUp">Budget annuel par marque</h2>
+                <!-- TABLEAU DES DÉPENSES PAR MARQUE -->
+                <section class="card__section">'
+                    . generateTableFromDatas($brandsAnnualSpendings) .
+                    '</section>
+            </div>
+        </div>';
+            }
 
             // DISPLAY TABLE & DONUT CHART FOR PARTNERS
             echo
@@ -296,28 +298,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
         ?>
 
         <h2 class="ttl lineUp" id="client-campaigns">Les campagnes <?= $currentYear ?></h2>
-        <!-- USELESS FILTERS  -->
-        <!-- <div class="card">
-            <form class="card__section" action="actions-filter.php" method="post" id="filter-form" aria-label="formulaire de filtre">
-                <ul class="form__lst form__lst--row">
-                    <div class="form__lst--flex">
-                        <li class="form__itm">
-                            <label for="target-filter">Objectifs de la campagne (optionnel)</label>
-                            <select class="form__input form__input--select" type="date" name="target-filter" id="target-filter">
-                                <?= getTargetsAsHTMLOptions($communicationObjectives) ?>
-                            </select>
-                        </li>
-                    </div>
-                    <input type="submit" class="button button--filter" id="filter-button" aria-label="Filtrer les données entrées" value="Filtrer">
-                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                    <input type="hidden" name="action" value="filter-campaigns">
-            </form>
-            <form action="actions-filter.php" method="post" id="reinit-form">
-                <input type="submit" class="button button--reinit" id="filter-reinit" aria-label="Réinitialise tous les filtres" value="" title="Réinitialiser les filtres">
-                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                <input type="hidden" name="action" value="filter-reinit">
-            </form>
-        </div> -->
+
         <section class="card <?php
                                 if (!empty($companyCurrentYearCampaigns) || $_SESSION['client'] === 0) {
                                     echo 'campaign';

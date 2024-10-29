@@ -166,24 +166,23 @@ $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChar
             </section>
         </div>
 
-        <div class="card card--grid">
+            <div class="card card--grid">
 
-            <div class="card">
-                <h2 class="ttl lineUp">Répartition du budget par marque</h2>
-                <!-- GRAPHIQUES DONUT  -->
-                <section class="card__section">
-                    <div id="chart"></div>
-                </section>
+                <div class="card">
+                    <h2 class="ttl lineUp">Répartition du budget par marque</h2>
+                    <!-- GRAPHIQUES DONUT  -->
+                    <section class="card__section">
+                        <div id="chart"></div>
+                    </section>
+                </div>
+                <div class="card">
+                    <h2 class="ttl lineUp">Budget par marque</h2>
+                    <!-- TABLEAU DES DÉPENSES PAR MARQUES -->
+                    <section class="card__section">
+                        <?= generateTableFromDatas($brandsSpendings); ?>
+                    </section>
+                </div>
             </div>
-            <div class="card">
-                <h2 class="ttl lineUp">Budget par marque</h2>
-                <!-- TABLEAU DES DÉPENSES PAR MARQUES -->
-                <section class="card__section">
-                    <?= generateTableFromDatas($brandsSpendings); ?>
-                </section>
-            </div>
-        </div>
-
         <div class="card card--grid">
             <div class="card">
                 <h2 class="ttl lineUp">Répartition du budget par partenaire</h2>
