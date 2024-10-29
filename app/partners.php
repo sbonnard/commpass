@@ -45,7 +45,7 @@ $partnerAnnualSpendings = getAnnualBudgetPerPartner($dbCo);
 
 // Préparer les données et les couleurs pour le graphique
 $partnerChartData = [];
-$partnerchartColors = [];
+$partnerChartColors = [];
 
 foreach ($partnerAnnualSpendings as $partnerData) {
     $partnerName = $partnerData['partner_name'];
@@ -61,30 +61,7 @@ foreach ($partnerAnnualSpendings as $partnerData) {
 
 // Convertir les données en JSON pour les transmettre à JavaScript
 $jsonPartnerChartData = json_encode($partnerChartData);
-if (!empty($partnerChartColors)) {
-    $jsonPartnerChartColors = json_encode($partnerChartColors);
-}
-
-$partnerChartData = [];
-$partnerChartColors = [];
-
-foreach ($partnerAnnualSpendings as $partnerData) {
-    $partnerName = $partnerData['partner_name'];
-    $totalSpent = $partnerData['annual_spendings'];
-    $partnerHex = $partnerData['partner_colour'];
-
-    // Ajouter les données pour chaque marque
-    $partnerChartData[] = [$partnerName, $totalSpent];
-
-    // Associer la couleur hexadécimale de la marque
-    $partnerChartColors[$partnerName] = $partnerHex;
-}
-
-// Convertir les données en JSON pour les transmettre à JavaScript
-$jsonPartnerChartData = json_encode($partnerChartData);
-if (!empty($partnerChartColors)) {
-    $jsonPartnerChartColors = json_encode($partnerChartColors);
-}
+$jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChartColors) : '';
 ?>
 
 <!DOCTYPE html>
@@ -98,7 +75,7 @@ if (!empty($partnerChartColors)) {
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard', 'Mon tableau de bord');
+        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -133,7 +110,7 @@ if (!empty($partnerChartColors)) {
                 echo $partnersDatas;
                 ?>
 
-                <form action="actions" method="post" class="form gradient-border gradient-border--top" aria-label="Formulaire d'ajout d'un nouveau partenaire.">
+                <form action="actions.php" method="post" class="form gradient-border gradient-border--top" aria-label="Formulaire d'ajout d'un nouveau partenaire.">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="partner_name">Ajouter un partenaire</label>
