@@ -218,7 +218,7 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 left: 20
             },
             donut: {
-                title: "Aucune opération"
+                title: "Aucun partenariat"
             }
         });
     } else {
