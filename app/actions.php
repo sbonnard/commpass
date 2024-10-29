@@ -319,7 +319,7 @@ if ($_POST['action'] === 'modify-pwd') {
 
     if ($isInsertOk) {
         addMessage('brand_created_ok');
-        redirectTo('my-client.php?client=' . $_SESSION['filter']['id_company']);
+        redirectTo('my-client?client=' . $_SESSION['filter']['id_company']);
     } else {
         addError('brand_creation_ko');
         redirectTo('');
@@ -390,10 +390,11 @@ if ($_POST['action'] === 'modify-pwd') {
         $dbCo->beginTransaction();
 
         // Préparation de la requête pour insérer le client
-        $queryNewClient = $dbCo->prepare('INSERT INTO company (company_name, logo_url) VALUES (:company_name, :logo_url);');
+        $queryNewClient = $dbCo->prepare('INSERT INTO company (company_name, logo_url, unique_brand) VALUES (:company_name, :logo_url, :unique_brand);');
         $bindValuesClient = [
             'company_name' => htmlspecialchars($_POST['company_name']),
-            'logo_url' => 'logo/' . $attachmentFileName // Utiliser le nom du fichier téléchargé
+            'logo_url' => 'logo/' . $attachmentFileName, // Utiliser le nom du fichier téléchargé
+            'unique_brand' => isset($_POST['unique_brand']) ? intval($_POST['unique_brand']) : 0
         ];
 
         $isInsertClientOk = $queryNewClient->execute($bindValuesClient);
@@ -417,7 +418,7 @@ if ($_POST['action'] === 'modify-pwd') {
             if ($isAnnualBudgetInsertOk) {
                 $dbCo->commit();
                 addMessage('new_client_created_ok');
-                redirectTo('my-client.php?client=' . $lastInsertClient);
+                redirectTo('my-client?client=' . $lastInsertClient);
                 exit;
             } else {
                 throw new PDOException('Failed to insert annual budget');
