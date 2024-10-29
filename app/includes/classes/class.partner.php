@@ -89,7 +89,13 @@ function getAnnualBudgetPerPartner(PDO $dbCo): array
     return $query->fetchAll();
 }
 
-function generatePartnerTable(array $partnerAnnualSpendings)
+/**
+ * Generate a table for partner spendings.
+ *
+ * @param array $partnerAnnualSpendings - Partner array
+ * @return string - A table containing all datas.
+ */
+function generatePartnerTable(array $partnerAnnualSpendings):string
 {
     $htmlTable = '<table class="table">';
 
