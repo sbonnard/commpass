@@ -40,7 +40,7 @@ if (
     || !intval($_GET['client'])
     || !is_array(getAllCompanyDatas($dbCo, $_GET)) || getAllCompanyDatas($dbCo, $_GET) == false
 ) {
-    redirectTo('errors/403.php');
+    redirectTo('errors/403');
     exit;
 }
 
@@ -186,7 +186,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
 <body>
 
     <header class="header">
-        <?= fetchHeader('dashboard.php', 'Mon tableau de bord') ?>
+        <?= fetchHeader('dashboard', 'Mon tableau de bord') ?>
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
@@ -206,15 +206,15 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
         </h2>
 
         <div class="button__section">
-            <a href="/new-campaign.php?client=<?= $selectedCompany['id_company'] ?>" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>
+            <a href="/new-campaign?client=<?= $selectedCompany['id_company'] ?>" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>
         </div>
 
         <div class="button__section">
             <ul class="button__section space-between" data-client-menu="" aria-label="Options multiples d'ajout d'interlocuteur ou de marque">
                 <li class="history-lnk"><a class="nav__lnk nav__lnk--new-campaign" href="#client-campaigns" aria-label="Vous amène directement aux campagnes clients">Campagnes ▼</a></li>
-                <li class="history-lnk"><a class="nav__lnk nav__lnk--history" href="history.php?client=<?= $selectedCompany['id_company'] ?>" aria-label="Consulter l'historique de <?= $selectedCompany['company_name'] ?>">Historique</a></li>
-                <li class="history-lnk"><a class="nav__lnk nav__lnk--user-plus" href="new-user.php?client=<?= $_SESSION['filter']['id_company'] ?>" aria-label="Lien vers un formulaire de création d'interlocuteur pour l'entreprise <?= $selectedCompany['company_name'] ?>">Créer interlocuteur</a></li>
-                <li class="history-lnk"><a class="nav__lnk nav__lnk--new-brand" href="new-brand.php?client=<?= $_SESSION['filter']['id_company'] ?>" aria-label="Lien vers un formulaire de création de marque pour l'entreprise <?= $selectedCompany['company_name'] ?>">Créer marque</a></li>
+                <li class="history-lnk"><a class="nav__lnk nav__lnk--history" href="history?client=<?= $selectedCompany['id_company'] ?>" aria-label="Consulter l'historique de <?= $selectedCompany['company_name'] ?>">Historique</a></li>
+                <li class="history-lnk"><a class="nav__lnk nav__lnk--user-plus" href="new-user?client=<?= $_SESSION['filter']['id_company'] ?>" aria-label="Lien vers un formulaire de création d'interlocuteur pour l'entreprise <?= $selectedCompany['company_name'] ?>">Créer interlocuteur</a></li>
+                <li class="history-lnk"><a class="nav__lnk nav__lnk--new-brand" href="new-brand?client=<?= $_SESSION['filter']['id_company'] ?>" aria-label="Lien vers un formulaire de création de marque pour l'entreprise <?= $selectedCompany['company_name'] ?>">Créer marque</a></li>
             </ul>
         </div>
 
@@ -322,7 +322,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
         <h2 class="ttl lineUp" id="client-campaigns">Les campagnes <?= $currentYear ?></h2>
         <!-- USELESS FILTERS  -->
         <!-- <div class="card">
-            <form class="card__section" action="actions-filter.php" method="post" id="filter-form" aria-label="formulaire de filtre">
+            <form class="card__section" action="actions-filter" method="post" id="filter-form" aria-label="formulaire de filtre">
                 <ul class="form__lst form__lst--row">
                     <div class="form__lst--flex">
                         <li class="form__itm">
@@ -336,7 +336,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
                     <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                     <input type="hidden" name="action" value="filter-campaigns">
             </form>
-            <form action="actions-filter.php" method="post" id="reinit-form">
+            <form action="actions-filter" method="post" id="reinit-form">
                 <input type="submit" class="button button--reinit" id="filter-reinit" aria-label="Réinitialise tous les filtres" value="" title="Réinitialiser les filtres">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 <input type="hidden" name="action" value="filter-reinit">

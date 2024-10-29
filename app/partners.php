@@ -98,7 +98,7 @@ if (!empty($partnerChartColors)) {
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
+        echo fetchHeader('dashboard', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -133,7 +133,7 @@ if (!empty($partnerChartColors)) {
                 echo $partnersDatas;
                 ?>
 
-                <form action="actions.php" method="post" class="form gradient-border gradient-border--top" aria-label="Formulaire d'ajout d'un nouveau partenaire.">
+                <form action="actions" method="post" class="form gradient-border gradient-border--top" aria-label="Formulaire d'ajout d'un nouveau partenaire.">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="partner_name">Ajouter un partenaire</label>
