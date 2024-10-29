@@ -64,7 +64,7 @@ function getAnnualBudgetPerPartnerPerCompany(PDO $dbCo, array $session): array
 
         $query->execute($bindValues);
 
-        return $query->fetchAll();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
     return [];
 }
@@ -87,9 +87,7 @@ function getAnnualBudgetPerPartner(PDO $dbCo): array
         GROUP BY partner.id_partner, year;'
     );
 
-    $query->execute();
-
-    return $query->fetchAll();
+    return $query->fetchAll(PDO::FETCH_ASSOC);
 }
 
 /**
@@ -117,7 +115,7 @@ function getCampaignBudgetPerPartner(PDO $dbCo, array $selectedCampaign, array $
 
         $query->execute($bindValues);
 
-        return $query->fetchAll();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     return [];
