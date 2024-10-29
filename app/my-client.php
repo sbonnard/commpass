@@ -40,7 +40,7 @@ if (
     || !intval($_GET['client'])
     || !is_array(getAllCompanyDatas($dbCo, $_GET)) || getAllCompanyDatas($dbCo, $_GET) == false
 ) {
-    redirectTo('errors/403');
+    redirectTo('errors/403.php');
     exit;
 }
 
@@ -122,6 +122,58 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 }
 
 
+// $jsonPartnerChartData = json_encode($partnerChartData);
+// $jsonPartnerChartColors = json_encode($partnerChartColors);
+
+if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
+    // Récupérer les dépenses annuelles par partenaire
+    $partnerAnnualSpendings = getAnnualBudgetPerPartnerPerCompany($dbCo, $_SESSION);
+
+    // Préparer les données et les couleurs pour le graphique
+    $partnerChartData = [];
+    $partnerchartColors = [];
+
+    foreach ($partnerAnnualSpendings as $partnerData) {
+        $partnerName = $partnerData['partner_name'];
+        $totalSpent = $partnerData['annual_spendings'];
+        $partnerHex = $partnerData['partner_colour'];
+
+        // Ajouter les données pour chaque partenaire
+        $partnerChartData[] = [$partnerName, $totalSpent];
+
+        // Associer la couleur hexadécimale du partenaire
+        $partnerChartColors[$partnerName] = $partnerHex;
+    }
+
+    // Convertir les données en JSON pour les transmettre à JavaScript
+    $jsonPartnerChartData = json_encode($partnerChartData);
+    if (!empty($partnerChartColors)) {
+        $jsonPartnerChartColors = json_encode($partnerChartColors);
+    }
+
+    $partnerChartData = [];
+    $partnerChartColors = [];
+
+    foreach ($partnerAnnualSpendingsClient as $partnerData) {
+        $partnerName = $partnerData['partner_name'];
+        $totalSpent = $partnerData['annual_spendings'];
+        $partnerHex = $partnerData['partner_colour'];
+
+        // Ajouter les données pour chaque marque
+        $partnerChartData[] = [$partnerName, $totalSpent];
+
+        // Associer la couleur hexadécimale de la marque
+        $partnerChartColors[$partnerName] = $partnerHex;
+    }
+
+    // Convertir les données en JSON pour les transmettre à JavaScript
+    $jsonPartnerChartData = json_encode($partnerChartData);
+    if (!empty($partnerChartColors)) {
+        $jsonPartnerChartColors = json_encode($partnerChartColors);
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -134,7 +186,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 <body>
 
     <header class="header">
-        <?= fetchHeader('dashboard', 'Mon tableau de bord') ?>
+        <?= fetchHeader('dashboard.php', 'Mon tableau de bord') ?>
     </header>
 
     <nav class="nav hamburger__menu" id="menu" aria-label="Navigation principale du site">
@@ -154,8 +206,9 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         </h2>
 
         <div class="button__section">
-            <a href="/new-campaign?client=<?= $selectedCompany['id_company'] ?>" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>
+            <a href="/new-campaign.php?client=<?= $selectedCompany['id_company'] ?>" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>
         </div>
+
         <div class="button__section">
             <ul class="button__section space-between" data-client-menu="" aria-label="Options multiples d'ajout d'interlocuteur ou de marque">
                 <li class="history-lnk"><a class="nav__lnk nav__lnk--new-campaign" href="#client-campaigns" aria-label="Vous amène directement aux campagnes clients">Campagnes ▼</a></li>
@@ -244,13 +297,32 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                 '</section>
         </div>
     </div>';
+
+            // DISPLAY TABLE & DONUT CHART FOR PARTNERS
+            echo
+            '<div class="card card--grid">
+        <div class="card">
+            <h2 class="ttl lineUp">Répartition annuelle par partenaire</h2>
+            <!-- GRAPHIQUES DONUT  -->
+            <section class="card__section">
+                <div id="chart-partner"></div>
+            </section>
+        </div>
+        <div class="card">
+            <h2 class="ttl lineUp">Budget annuel par partenaire</h2>
+            <!-- TABLEAU DES DÉPENSES PAR PARTENAIRE -->
+            <section class="card__section">'
+                . generatePartnerTable($partnerAnnualSpendingsClient) .
+                '</section>
+        </div>
+    </div>';
         }
         ?>
 
         <h2 class="ttl lineUp" id="client-campaigns">Les campagnes <?= $currentYear ?></h2>
         <!-- USELESS FILTERS  -->
         <!-- <div class="card">
-            <form class="card__section" action="actions-filter" method="post" id="filter-form" aria-label="formulaire de filtre">
+            <form class="card__section" action="actions-filter.php" method="post" id="filter-form" aria-label="formulaire de filtre">
                 <ul class="form__lst form__lst--row">
                     <div class="form__lst--flex">
                         <li class="form__itm">
@@ -264,7 +336,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                     <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                     <input type="hidden" name="action" value="filter-campaigns">
             </form>
-            <form action="actions-filter" method="post" id="reinit-form">
+            <form action="actions-filter.php" method="post" id="reinit-form">
                 <input type="submit" class="button button--reinit" id="filter-reinit" aria-label="Réinitialise tous les filtres" value="" title="Réinitialiser les filtres">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 <input type="hidden" name="action" value="filter-reinit">
@@ -437,6 +509,65 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 columns: brandChartData,
                 type: 'donut',
                 colors: brandChartColors // Appliquer les couleurs des objectifs
+            },
+            size: {
+                width: width,
+                height: height
+            },
+            padding: {
+                right: 20,
+                left: 20
+            },
+            donut: {
+                title: ""
+            }
+        });
+    }
+</script>
+
+<!-- Script pour le graphique donut des dépenses par partenaire. -->
+<script type="module">
+    // Récupérer les données PHP encodées en JSON
+    var partnerChartData = <?php echo $jsonPartnerChartData ?? '[]'; ?>;
+    var partnerChartColors = <?php echo $jsonPartnerChartColors ?? '{}'; ?>;
+
+    // Vérifier si des données sont disponibles pour générer le graphique
+    if (partnerChartData.length === 0) {
+        var width = window.innerWidth < 768 ? 495 : 495;
+        var height = window.innerWidth < 768 ? 330 : 330;
+
+        // Si aucune donnée, on affiche un donut grisé
+        var chart = c3.generate({
+            bindto: '#chart-partner',
+            data: {
+                columns: [
+                    ['En attente d\'opération', 1] // Donut "Aucune donnée"
+                ],
+                type: 'donut',
+                colors: {
+                    'En attente d\'opération': '#d3d3d3' // Couleur grise pour "Aucune donnée"
+                }
+            },
+            size: {
+                width: width,
+                height: height
+            },
+            padding: {
+                right: 20,
+                left: 20
+            },
+            donut: {
+                title: "Aucune opération"
+            }
+        });
+    } else {
+        // Générer le graphique avec les données et couleurs
+        var chart = c3.generate({
+            bindto: '#chart-partner',
+            data: {
+                columns: partnerChartData,
+                type: 'donut',
+                colors: partnerChartColors // Appliquer les couleurs des objectifs
             },
             size: {
                 width: width,
