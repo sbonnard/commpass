@@ -81,6 +81,11 @@ unsetFilters($_SESSION);
                             <p class="small-text">Le budget annuel peut être défini plus tard</p>
                             <input class="form__input form__input--number" type="text" name="annual_budget" id="annual_budget" placeholder="12500" required aria-label="Budget annuel s'il a été défini, sinon 0." value="0">
                         </li>
+                        <li class="form__itm form__itm--app form__itm--checkbox">
+                            <label class="form__label form__label--root" for="unique_brand">Le client a plusieurs marques</label>
+                            <input type="hidden" name="unique_brand" value="1">
+                            <input class="form__input--checkbox" type="checkbox" name="unique_brand" id="unique_brand" aria-label="Cocher si le client a plusieurs marques" value="0">
+                        </li>
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="attachment">Logo du client</label>
                             <input type="file" name="attachment" id="attachment" accept=".pdf, .png, .jpeg, .jpg, .doc, .docx, .xls, .xlsx" capture="environment" multiple>
