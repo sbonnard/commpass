@@ -119,7 +119,7 @@ $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChar
             </div>
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                echo '<div class="operation__button"><a href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '" class="button button--add" aria-label="Créer une nouvelle opération">Ajouter opération</a></div>';
+                echo '<div class="operation__button"><a href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '&client=' . $_SESSION['filter']['id_company'] . '" class="button button--add" aria-label="Créer une nouvelle opération">Ajouter opération</a></div>';
             }
             ?>
         </div>
@@ -166,23 +166,23 @@ $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChar
             </section>
         </div>
 
-            <div class="card card--grid">
+        <div class="card card--grid">
 
-                <div class="card">
-                    <h2 class="ttl lineUp">Répartition du budget par marque</h2>
-                    <!-- GRAPHIQUES DONUT  -->
-                    <section class="card__section">
-                        <div id="chart"></div>
-                    </section>
-                </div>
-                <div class="card">
-                    <h2 class="ttl lineUp">Budget par marque</h2>
-                    <!-- TABLEAU DES DÉPENSES PAR MARQUES -->
-                    <section class="card__section">
-                        <?= generateTableFromDatas($brandsSpendings); ?>
-                    </section>
-                </div>
+            <div class="card">
+                <h2 class="ttl lineUp">Répartition du budget par marque</h2>
+                <!-- GRAPHIQUES DONUT  -->
+                <section class="card__section">
+                    <div id="chart"></div>
+                </section>
             </div>
+            <div class="card">
+                <h2 class="ttl lineUp">Budget par marque</h2>
+                <!-- TABLEAU DES DÉPENSES PAR MARQUES -->
+                <section class="card__section">
+                    <?= generateTableFromDatas($brandsSpendings); ?>
+                </section>
+            </div>
+        </div>
         <div class="card card--grid">
             <div class="card">
                 <h2 class="ttl lineUp">Répartition du budget par partenaire</h2>
