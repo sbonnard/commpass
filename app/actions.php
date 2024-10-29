@@ -344,6 +344,8 @@ if ($_POST['action'] === 'modify-pwd') {
         exit;
     }
 
+    // var_dump($_POST);
+
     // Gestion du fichier attaché
     $attachmentFileName = 'default.webp'; // Valeur par défaut
     if (isset($_FILES['attachment']) && !empty($_FILES['attachment']['name'])) {
