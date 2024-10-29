@@ -464,3 +464,27 @@ function getAllCompanyDatas(PDO $dbCo, array $get): array|bool
 
     return $query->fetch();
 }
+
+
+/**
+ * Get companies logo from session.
+ *
+ * @param PDO $dbCo - PDO connection
+ * @param array $session - superglobal session
+ * @return string Array with company logo url
+ */
+function getCompanyLogoUrl(PDO $dbCo, array $session):string {
+    $query = $dbCo->prepare(
+        'SELECT logo_url 
+        FROM company
+        WHERE id_company = :id_company;'
+    );
+
+    $bindValues = [
+        'id_company' => $session['id_company']
+    ];
+
+    $query->execute($bindValues);
+
+    return implode($query->fetch());
+}

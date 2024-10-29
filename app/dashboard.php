@@ -133,10 +133,13 @@ unset($_SESSION['filter']);
             ?>
         </div>
 
-        <h2 class="ttl lineUp">
-            Bonjour <?= $user['firstname'] ?><br>
-            <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
-        </h2>
+        <div class="flex-row">
+            <a href="my-agency.php"><img class="client__logo" src="<?= getCompanyLogoUrl($dbCo, $_SESSION) ?>" alt=""></a>
+            <h2 class="ttl lineUp">
+                Bonjour <?= $user['firstname'] ?><br>
+                <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
+            </h2>
+        </div>
 
         <!-- <div class="button__section">
             <?php
