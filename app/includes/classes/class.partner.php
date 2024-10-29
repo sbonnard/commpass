@@ -38,3 +38,79 @@ function getPartnersAsHTMLOptions(array $partners, array $operation, array $get)
 
     return $htmlOptions;
 }
+
+
+/**
+ * Get annual budget spent by partner for each company.
+ *
+ * @param PDO $dbCo - PDO connection.
+ * @param array $session - Superglobal $_SESSION.
+ * @return array - An array containing all datas from partner per company
+ */
+function getAnnualBudgetPerPartnerPerCompany(PDO $dbCo, array $session): array
+{
+    $query = $dbCo->prepare(
+        'SELECT partner.id_partner, partner_name, partner_colour, SUM(price) AS annual_spendings, YEAR(operation_date) AS year
+        FROM partner
+            JOIN operation ON partner.id_partner = operation.id_partner
+        WHERE YEAR(operation_date) = YEAR(CURDATE()) AND id_company = :id_company
+        GROUP BY partner.id_partner, year;'
+    );
+
+    $bindValues = [
+        'id_company' => intval($session['filter']['id_company'])
+    ];
+
+    $query->execute($bindValues);
+
+    return $query->fetchAll();
+}
+
+
+/**
+ * Get annual budget spent by partner.
+ *
+ * @param PDO $dbCo - PDO connection.
+ * @param array $session - Superglobal $_SESSION.
+ * @return array - An array containing all datas from partner per company
+ */
+function getAnnualBudgetPerPartner(PDO $dbCo): array
+{
+    $query = $dbCo->query(
+        'SELECT partner.id_partner, partner_name, partner_colour, SUM(price) AS annual_spendings, YEAR(operation_date) AS year
+        FROM partner
+            JOIN operation ON partner.id_partner = operation.id_partner
+        WHERE YEAR(operation_date) = YEAR(CURDATE())
+        GROUP BY partner.id_partner, year;'
+    );
+
+    $query->execute();
+
+    return $query->fetchAll();
+}
+
+/**
+ * Generate a table for partner spendings.
+ *
+ * @param array $partnerAnnualSpendings - Partner array
+ * @return string - A table containing all datas.
+ */
+function generatePartnerTable(array $partnerAnnualSpendings):string
+{
+    $htmlTable = '<table class="table">';
+
+    $htmlTable .= '<thead><tr><th class="table__head">Partenaire</th><th class="table__head">Dépenses H.T.</th></tr></thead>';
+    $htmlTable .= '<tbody>';
+
+    foreach ($partnerAnnualSpendings as $partner) {
+        $htmlTable .= '<tr>';
+        $htmlTable .= '<td class="table__cell" aria-label="Cellule du partenaire ' . $partner['partner_name'] . '"><span class="campaign__legend-square campaign__legend-square--long" style="background-color:' . $partner['partner_colour'] . '"></span>' . htmlspecialchars($partner['partner_name']) . '</td>';
+        $htmlTable .= '<td class="table__cell" aria-label="Cellule de dépenses pour le partenaire ' . $partner['partner_name'] . '">' . formatPrice($partner['annual_spendings'], '€') . '</td>';
+        $htmlTable .= '</tr>';
+    }
+
+    $htmlTable .= '</tbody>';
+    $htmlTable .= '</table>';
+
+    return $htmlTable;
+}
