@@ -473,16 +473,23 @@ function getAllCompanyDatas(PDO $dbCo, array $get): array|bool
  * @param array $session - superglobal session
  * @return string Array with company logo url
  */
-function getCompanyLogoUrl(PDO $dbCo, array $session):string {
+function getCompanyLogoUrl(PDO $dbCo, array $session): string
+{
     $query = $dbCo->prepare(
         'SELECT logo_url 
         FROM company
         WHERE id_company = :id_company;'
     );
 
-    $bindValues = [
-        'id_company' => $session['id_company']
-    ];
+    if (!isset($session['filter']['id_company'])) {
+        $bindValues = [
+            'id_company' => $session['id_company']
+        ];
+    } else {
+        $bindValues = [
+            'id_company' => $session['filter']['id_company']
+        ];
+    }
 
     $query->execute($bindValues);
 
