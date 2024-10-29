@@ -76,7 +76,7 @@ $historySpentBudget = calculateHistorySpentBudget($dbCo, $_SESSION);
 
 // PARTNERS 
 
-$partnerAnnualSpendingsClient = getAnnualBudgetPerPartnerPerCompany($dbCo, $_SESSION);
+$partnerAnnualSpendingsClient = getAnnualBudgetPerPartnerPerCompany($dbCo, $_SESSION, $_GET);
 
 $partnerAnnualSpendings = getAnnualBudgetPerPartner($dbCo);
 

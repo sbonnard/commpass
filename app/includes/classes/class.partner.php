@@ -47,7 +47,7 @@ function getPartnersAsHTMLOptions(array $partners, array $operation, array $get)
  * @param array $session - Superglobal $_SESSION.
  * @return array - An array containing all datas from partner per company
  */
-function getAnnualBudgetPerPartnerPerCompany(PDO $dbCo, array $session): array
+function getAnnualBudgetPerPartnerPerCompany(PDO $dbCo, array $session, array $get): array
 {
     if (isset($session['filter']['id_company'])) {
         $query = $dbCo->prepare(
@@ -59,12 +59,12 @@ function getAnnualBudgetPerPartnerPerCompany(PDO $dbCo, array $session): array
         );
 
         $bindValues = [
-            'id_company' => intval($session['filter']['id_company'])
+            'id_company' => intval($session['filter']['id_company']) ? $get['client'] : null
         ];
 
         $query->execute($bindValues);
 
-        return $query->fetchAll();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
     return [];
 }
@@ -87,9 +87,7 @@ function getAnnualBudgetPerPartner(PDO $dbCo): array
         GROUP BY partner.id_partner, year;'
     );
 
-    $query->execute();
-
-    return $query->fetchAll();
+    return $query->fetchAll(PDO::FETCH_ASSOC);
 }
 
 /**
@@ -117,7 +115,7 @@ function getCampaignBudgetPerPartner(PDO $dbCo, array $selectedCampaign, array $
 
         $query->execute($bindValues);
 
-        return $query->fetchAll();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     return [];

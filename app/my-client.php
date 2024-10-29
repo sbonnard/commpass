@@ -121,16 +121,13 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
     }
 }
 
-// $jsonPartnerChartData = json_encode($partnerChartData);
-// $jsonPartnerChartColors = json_encode($partnerChartColors);
-
 if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
     // Récupérer les dépenses annuelles par partenaire
-    $partnerAnnualSpendings = getAnnualBudgetPerPartnerPerCompany($dbCo, $_SESSION);
+    $partnerAnnualSpendings = getAnnualBudgetPerPartnerPerCompany($dbCo, $_SESSION, $_GET);
 
     // Préparer les données et les couleurs pour le graphique
     $partnerChartData = [];
-    $partnerchartColors = [];
+    $partnerChartColors = [];
 
     foreach ($partnerAnnualSpendings as $partnerData) {
         $partnerName = $partnerData['partner_name'];
@@ -146,30 +143,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
 
     // Convertir les données en JSON pour les transmettre à JavaScript
     $jsonPartnerChartData = json_encode($partnerChartData);
-    if (!empty($partnerChartColors)) {
-        $jsonPartnerChartColors = json_encode($partnerChartColors);
-    }
-
-    $partnerChartData = [];
-    $partnerChartColors = [];
-
-    foreach ($partnerAnnualSpendingsClient as $partnerData) {
-        $partnerName = $partnerData['partner_name'];
-        $totalSpent = $partnerData['annual_spendings'];
-        $partnerHex = $partnerData['partner_colour'];
-
-        // Ajouter les données pour chaque marque
-        $partnerChartData[] = [$partnerName, $totalSpent];
-
-        // Associer la couleur hexadécimale de la marque
-        $partnerChartColors[$partnerName] = $partnerHex;
-    }
-
-    // Convertir les données en JSON pour les transmettre à JavaScript
-    $jsonPartnerChartData = json_encode($partnerChartData);
-    if (!empty($partnerChartColors)) {
-        $jsonPartnerChartColors = json_encode($partnerChartColors);
-    }
+    $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChartColors) : '';
 }
 
 
