@@ -103,7 +103,8 @@ $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChar
         <div class="flex-row space-between">
             <div class="flex-column">
                 <a href="my-client.php?client=<?= $_SESSION['filter']['id_company'] ?>">
-                    <h2 class="ttl lineUp client__ttl"><?= $selectedCampaign['company_name'] ?><br></h2>
+                    <img class="client__logo" src="<?= getCompanyLogoUrl($dbCo, $_SESSION) ?>" alt="">
+                    <!-- <h2 class="ttl lineUp client__ttl"><?= $selectedCampaign['company_name'] ?><br></h2> -->
                 </a>
             </div>
             <div class="flex-row">
