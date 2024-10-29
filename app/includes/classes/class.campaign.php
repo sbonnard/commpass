@@ -602,6 +602,26 @@ function getHistoryCampaignTemplateClient(PDO $dbCo, array $campaigns, array $se
     return $campaignList;
 }
 
+
+//  Not working for now.
+// function getCampaignsByYear(array $campaigns, array $session, string $date)
+// {
+//     $campaignList = '';
+
+//     foreach ($campaigns as $campaign) {
+//             if(str_contains($campaign['date'], $date)) {
+//                 $campaignList .= '
+//                     <h2 class="ttl ttl--secondary">
+//                         Campagnes ' . $date . '
+//                     </h2>'
+//                     . getCampaignTemplate($campaign, $session);
+//             }
+//         }
+
+//     return $campaignList;
+// }
+
+
 /**
  * Get a message if you don't have any campaign on your dashboard
  *
@@ -942,6 +962,36 @@ function getSpendingByBrandByCampaign(PDO $dbCo, array $campaigns, array $get): 
     return $results;
 }
 
+
+// function filterCampaigns(PDO $dbCo, array $campaigns)
+// {
+//     if (!isset($_POST['date-from'], $_POST['date-to'])) {
+//         addError('>ko');
+//         redirectTo();
+//         exit;
+//     }
+
+//     $dateFrom = sanitizeInput($_POST['date-from']);
+//     $dateTo = sanitizeInput($_POST['date-to']);
+
+//     $queryFilter = $dbCo->prepare(
+//         'SELECT * 
+//         FROM campaigns 
+//         WHERE date 
+//         BETWEEN :dateFrom AND :dateTo;'
+//     );
+
+//     $bindValues = [
+//         'dateFrom' => $dateFrom,
+//         'dateTo' => $dateTo
+//     ];
+
+//     $queryFilter->execute($bindValues);
+
+//     $campaigns = $queryFilter->fetchAll();
+
+//     echo json_encode($campaigns);
+// }
 
 /**
  * Fetch all 3 objectives for a communication campaign.
