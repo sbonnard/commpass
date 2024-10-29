@@ -59,14 +59,6 @@ function getCompanyName(PDO $dbCo, array $session): string
 };
 
 
-/**
- * Get client name.
- *
- * @param PDO $dbCo - Connection to database
- * @param array $session - Superglobal $_SESSION.
- * @param array $selectedCampaign - Campagne sélectionnée.
- * @return string - The name of the company.
- */
 function getClientName(PDO $dbCo, array $session, array $selectedCampaign = []): string
 {
     $query = $dbCo->prepare(
@@ -108,13 +100,6 @@ function getCompanyNameIfTDC(array $campaigns, array $session): string
 }
 
 
-/**
- * Get the company name for new brand page.
- *
- * @param PDO $dbCo - PDO connection
- * @param array $get - Superglobal $_GET.
- * @return void 
- */
 function getCompanyNameForNewBrand(PDO $dbCo, array $get)
 {
     if (isset($get['myc'])) {
@@ -466,7 +451,7 @@ function getAllCompanyDatas(PDO $dbCo, array $get): array|bool
 {
 
     $query = $dbCo->prepare(
-        'SELECT id_company, company_name
+        'SELECT id_company, company_name, logo_url
         FROM company
         WHERE id_company = :id_company;'
     );
