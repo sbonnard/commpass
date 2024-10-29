@@ -50,7 +50,7 @@ function getPartnersAsHTMLOptions(array $partners, array $operation, array $get)
 function getAnnualBudgetPerPartnerPerCompany(PDO $dbCo, array $session): array
 {
     $query = $dbCo->prepare(
-        'SELECT partner.id_partner, partner_name, SUM(price) AS annual_spendings, YEAR(operation_date) AS year
+        'SELECT partner.id_partner, partner_name, partner_colour, SUM(price) AS annual_spendings, YEAR(operation_date) AS year
         FROM partner
             JOIN operation ON partner.id_partner = operation.id_partner
         WHERE YEAR(operation_date) = YEAR(CURDATE()) AND id_company = :id_company
@@ -77,7 +77,7 @@ function getAnnualBudgetPerPartnerPerCompany(PDO $dbCo, array $session): array
 function getAnnualBudgetPerPartner(PDO $dbCo): array
 {
     $query = $dbCo->query(
-        'SELECT partner.id_partner, partner_name, SUM(price) AS annual_spendings, YEAR(operation_date) AS year
+        'SELECT partner.id_partner, partner_name, partner_colour, SUM(price) AS annual_spendings, YEAR(operation_date) AS year
         FROM partner
             JOIN operation ON partner.id_partner = operation.id_partner
         WHERE YEAR(operation_date) = YEAR(CURDATE())
@@ -98,7 +98,7 @@ function generatePartnerTable(array $partnerAnnualSpendings)
 
     foreach ($partnerAnnualSpendings as $partner) {
         $htmlTable .= '<tr>';
-        $htmlTable .= '<td class="table__cell" aria-label="Cellule du partenaire ' . $partner['partner_name'] . '">' . htmlspecialchars($partner['partner_name']) . '</td>';
+        $htmlTable .= '<td class="table__cell" aria-label="Cellule du partenaire ' . $partner['partner_name'] . '"><span class="campaign__legend-square campaign__legend-square--long" style="background-color:' . $partner['partner_colour'] . '"></span>' . htmlspecialchars($partner['partner_name']) . '</td>';
         $htmlTable .= '<td class="table__cell" aria-label="Cellule de dépenses pour le partenaire ' . $partner['partner_name'] . '">' . formatPrice($partner['annual_spendings'], '€') . '</td>';
         $htmlTable .= '</tr>';
     }

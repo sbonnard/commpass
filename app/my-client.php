@@ -122,6 +122,58 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
 }
 
 
+// $jsonPartnerChartData = json_encode($partnerChartData);
+// $jsonPartnerChartColors = json_encode($partnerChartColors);
+
+if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
+    // Récupérer les dépenses annuelles par partenaire
+    $partnerAnnualSpendings = getAnnualBudgetPerPartnerPerCompany($dbCo, $_SESSION);
+
+    // Préparer les données et les couleurs pour le graphique
+    $partnerChartData = [];
+    $partnerchartColors = [];
+
+    foreach ($partnerAnnualSpendings as $partnerData) {
+        $partnerName = $partnerData['partner_name'];
+        $totalSpent = $partnerData['annual_spendings'];
+        $partnerHex = $partnerData['partner_colour'];
+
+        // Ajouter les données pour chaque partenaire
+        $partnerChartData[] = [$partnerName, $totalSpent];
+
+        // Associer la couleur hexadécimale du partenaire
+        $partnerChartColors[$partnerName] = $partnerHex;
+    }
+
+    // Convertir les données en JSON pour les transmettre à JavaScript
+    $jsonPartnerChartData = json_encode($partnerChartData);
+    if (!empty($partnerChartColors)) {
+        $jsonPartnerChartColors = json_encode($partnerChartColors);
+    }
+
+    $partnerChartData = [];
+    $partnerChartColors = [];
+
+    foreach ($partnerAnnualSpendingsClient as $partnerData) {
+        $partnerName = $partnerData['partner_name'];
+        $totalSpent = $partnerData['annual_spendings'];
+        $partnerHex = $partnerData['partner_colour'];
+
+        // Ajouter les données pour chaque marque
+        $partnerChartData[] = [$partnerName, $totalSpent];
+
+        // Associer la couleur hexadécimale de la marque
+        $partnerChartColors[$partnerName] = $partnerHex;
+    }
+
+    // Convertir les données en JSON pour les transmettre à JavaScript
+    $jsonPartnerChartData = json_encode($partnerChartData);
+    if (!empty($partnerChartColors)) {
+        $jsonPartnerChartColors = json_encode($partnerChartColors);
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -457,6 +509,65 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 columns: brandChartData,
                 type: 'donut',
                 colors: brandChartColors // Appliquer les couleurs des objectifs
+            },
+            size: {
+                width: width,
+                height: height
+            },
+            padding: {
+                right: 20,
+                left: 20
+            },
+            donut: {
+                title: ""
+            }
+        });
+    }
+</script>
+
+<!-- Script pour le graphique donut des dépenses par partenaire. -->
+<script type="module">
+    // Récupérer les données PHP encodées en JSON
+    var partnerChartData = <?php echo $jsonPartnerChartData ?? '[]'; ?>;
+    var partnerChartColors = <?php echo $jsonPartnerChartColors ?? '{}'; ?>;
+
+    // Vérifier si des données sont disponibles pour générer le graphique
+    if (partnerChartData.length === 0) {
+        var width = window.innerWidth < 768 ? 495 : 495;
+        var height = window.innerWidth < 768 ? 330 : 330;
+
+        // Si aucune donnée, on affiche un donut grisé
+        var chart = c3.generate({
+            bindto: '#chart-partner',
+            data: {
+                columns: [
+                    ['En attente d\'opération', 1] // Donut "Aucune donnée"
+                ],
+                type: 'donut',
+                colors: {
+                    'En attente d\'opération': '#d3d3d3' // Couleur grise pour "Aucune donnée"
+                }
+            },
+            size: {
+                width: width,
+                height: height
+            },
+            padding: {
+                right: 20,
+                left: 20
+            },
+            donut: {
+                title: "Aucune opération"
+            }
+        });
+    } else {
+        // Générer le graphique avec les données et couleurs
+        var chart = c3.generate({
+            bindto: '#chart-partner',
+            data: {
+                columns: partnerChartData,
+                type: 'donut',
+                colors: partnerChartColors // Appliquer les couleurs des objectifs
             },
             size: {
                 width: width,
