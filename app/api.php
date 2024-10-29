@@ -10,7 +10,7 @@ header("Access-Control-Allow-Methods: POST"); // Méthodes HTTP autorisées
 header("Access-Control-Allow-Headers: Content-Type"); // En-têtes autorisés
 
 
-if (isset($_POST['id_company'])) { // AJAX dans new-campaign.php //
+if (isset($_POST['id_company'])) {
 
     // Si une entreprise est définie dans le formulaire de création de campagne,
     // récupération des membres de l'entreprise en question avec une requête vers le serveur
@@ -33,15 +33,12 @@ if (isset($_POST['id_company'])) { // AJAX dans new-campaign.php //
 
     // Encodage en json pour JavaScript (AJAX).
     echo json_encode($users);
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-else if ($_SERVER['REQUEST_METHOD'] === 'POST') { // AJAX dans new-campaign.php //
+} else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Décodage du corps JSON envoyé par fetch
     $inputData = json_decode(file_get_contents('php://input'), true);
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Vérifie si l'action est définie
-    if (isset($inputData['action']) && $inputData['action'] === 'add-media') { // AJAX dans operation.php d'ajout de média //
+    if (isset($inputData['action']) && $inputData['action'] === 'add-media') {
         if (empty($inputData['add-media'])) {
             echo json_encode(['status' => 'error', 'message' => 'Le champ "Ajouter un média" ne peut pas être vide.']);
             exit; // Arrête le script si une erreur est rencontrée
@@ -62,19 +59,19 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST') { // AJAX dans new-campaign.php 
             // Gestion des erreurs de base de données
             echo json_encode(['status' => 'error', 'message' => 'Erreur lors de l\'ajout du média : ' . $e->getMessage()]);
         }
-    }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    else if (isset($inputData['action']) && $inputData['action'] === 'add-partner') { // AJAX dans operation.php d'ajout de partenaire //
+    } else if (isset($inputData['action']) && $inputData['action'] === 'add-partner') {
         if (empty($inputData['add-partner'])) {
             echo json_encode(['status' => 'error', 'message' => 'Le champ "Ajouter un partenaire" ne peut pas être vide.']);
             exit; // Arrête le script si une erreur est rencontrée
         }
 
         $partnerName = htmlspecialchars($inputData['add-partner']);
+        $partnerColour =$inputData['partner_colour'];
 
         try {
-            $query = $dbCo->prepare('INSERT INTO partner (partner_name) VALUES (:partner_name);');
+            $query = $dbCo->prepare('INSERT INTO partner (partner_name, partner_colour) VALUES (:partner_name, :partner_colour);');
             $query->bindValue(':partner_name', $partnerName);
+            $query->bindValue(':partner_colour', $partnerColour);
             $query->execute();
 
             $lastPartnerId = $dbCo->lastInsertId();
@@ -86,9 +83,7 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST') { // AJAX dans new-campaign.php 
             echo json_encode(['status' => 'error', 'message' => 'Erreur lors de l\'ajout du partenaire : ' . $e->getMessage()]);
         }
     }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') { // AJAX dans campaign.php de suppression d'opération //
+} else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
     $inputData = json_decode(file_get_contents('php://input'), true);
 
