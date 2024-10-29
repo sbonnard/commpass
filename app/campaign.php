@@ -69,7 +69,7 @@ foreach ($partnerCampaignSpendings as $partnerData) {
 }
 
 // Convertir les données en JSON pour les transmettre à JavaScript
-$jsonPartnerChartData = json_encode($partnerChartData);
+// $jsonPartnerChartData = json_encode($partnerChartData);
 if (!empty($partnerChartColors)) {
     $jsonPartnerChartColors = json_encode($partnerChartColors);
 }
