@@ -72,3 +72,10 @@ $history = getOneCompanyDatasFilteredHistory($dbCo, $_SESSION);
 $historyBudget = fetchAnnualBudgetPerYearPerCompany($dbCo, $_SESSION);
 
 $historySpentBudget = calculateHistorySpentBudget($dbCo, $_SESSION);
+
+
+// PARTNERS 
+
+$partnerAnnualSpendingsClient = getAnnualBudgetPerPartnerPerCompany($dbCo, $_SESSION);
+
+$partnerAnnualSpendings = getAnnualBudgetPerPartner($dbCo);

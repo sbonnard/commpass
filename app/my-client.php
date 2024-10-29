@@ -245,6 +245,25 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
                 '</section>
         </div>
     </div>';
+
+            // DISPLAY TABLE & DONUT CHART FOR PARTNERS
+            echo
+            '<div class="card card--grid">
+        <div class="card">
+            <h2 class="ttl lineUp">Répartition annuelle par partenaire</h2>
+            <!-- GRAPHIQUES DONUT  -->
+            <section class="card__section">
+                <div id="chart-partner"></div>
+            </section>
+        </div>
+        <div class="card">
+            <h2 class="ttl lineUp">Budget annuel par partenaire</h2>
+            <!-- TABLEAU DES DÉPENSES PAR PARTENAIRE -->
+            <section class="card__section">'
+                . generatePartnerTable($partnerAnnualSpendingsClient) .
+                '</section>
+        </div>
+    </div>';
         }
         ?>
 
