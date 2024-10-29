@@ -34,7 +34,7 @@ generateToken();
 
 checkConnection($_SESSION);
 
-if (!isset($_GET['myc'])) {
+if (!isset($_GET['myc']) || !isset($_GET['client'])) {
     header('Location: dashboard');
     exit;
 }
@@ -48,6 +48,8 @@ if (!isset($_GET['myo'])) {
         "operation_date" => ""
     ];
 }
+
+$selectedCompany = getAllCompanyDatas($dbCo, $_GET);
 ?>
 
 <!DOCTYPE html>
@@ -113,14 +115,22 @@ if (!isset($_GET['myo'])) {
                                                                                                                                                                             ?>" aria-label="Fixe le montant d'une opération.">
                         </li>
 
-                        <li class="form__itm form__itm--app">
-                            <label class="form__label" for="operation_brand">Marque(s)</label>
-                            <select class="form__input form__input--select" type="text" name="operation_brand" id="operation_brand" required aria-label="Sélectionner la marque concernée">
-                                <option value="">- Sélectionner une marque -</option>
-                                <option value="0">Toutes les marques</option>
-                                <?= getCompanyBrandsAsHTMLOptions(getCompanyBrands($dbCo, $selectedCampaign), $operation, $_GET); ?>
-                            </select>
-                        </li>
+                        <?php
+                        if ($selectedCompany['unique_brand'] === 1) {
+                            echo '<input type="hidden" name="operation_brand" value="0">';
+                        } else {
+                        ?>
+
+                            <li class="form__itm form__itm--app">
+                                <label class="form__label" for="operation_brand">Marque(s)</label>
+                                <select class="form__input form__input--select" type="text" name="operation_brand" id="operation_brand" required aria-label="Sélectionner la marque concernée">
+                                    <option value="">- Sélectionner une marque -</option>
+                                    <option value="0">Toutes les marques</option>
+                                    <?= getCompanyBrandsAsHTMLOptions(getCompanyBrands($dbCo, $selectedCampaign), $operation, $_GET); ?>
+                                </select>
+                            </li>
+
+                        <?php } ?>
 
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="operation_media" aria-label="Sélectionner le media utilisé">Média</label>
