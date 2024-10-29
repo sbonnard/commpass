@@ -121,7 +121,6 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
     }
 }
 
-
 // $jsonPartnerChartData = json_encode($partnerChartData);
 // $jsonPartnerChartColors = json_encode($partnerChartColors);
 

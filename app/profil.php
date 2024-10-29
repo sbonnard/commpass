@@ -88,7 +88,7 @@ unsetFilters($_SESSION);
                                 <label class="form__label" for="profile_brand" aria-label="Sélectionner la marque concernée">Sélectionnez la marque à modifier</label>
                                 <select class="form__input form__input--select" type="text" name="profile_brand" id="profile_brand" required aria-label="Sélectionner l\'entreprise lançant une nouvelle campagne">
                                     <option value="">- Sélectionner une marque -</option>
-                                    ' . getCompanyBrandsAsHTMLOptions(fetchCompanyBrands($dbCo, $_SESSION)) . '
+                                    ' . getCompanyBrandsAsHTMLOptions(fetchCompanyBrands($dbCo, $_SESSION), $operation) . '
                                 </select>
                             </li>
                             <li class="form__itm form__itm--app">
