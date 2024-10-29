@@ -36,6 +36,55 @@ checkConnection($_SESSION);
 checkUserClientStatus($_SESSION);
 
 unsetFilters($_SESSION);
+
+// $jsonPartnerChartData = json_encode($partnerChartData);
+// $jsonPartnerChartColors = json_encode($partnerChartColors);
+
+// Récupérer les dépenses annuelles par partenaire
+$partnerAnnualSpendings = getAnnualBudgetPerPartner($dbCo);
+
+// Préparer les données et les couleurs pour le graphique
+$partnerChartData = [];
+$partnerchartColors = [];
+
+foreach ($partnerAnnualSpendings as $partnerData) {
+    $partnerName = $partnerData['partner_name'];
+    $totalSpent = $partnerData['annual_spendings'];
+    $partnerHex = $partnerData['partner_colour'];
+
+    // Ajouter les données pour chaque partenaire
+    $partnerChartData[] = [$partnerName, $totalSpent];
+
+    // Associer la couleur hexadécimale du partenaire
+    $partnerChartColors[$partnerName] = $partnerHex;
+}
+
+// Convertir les données en JSON pour les transmettre à JavaScript
+$jsonPartnerChartData = json_encode($partnerChartData);
+if (!empty($partnerChartColors)) {
+    $jsonPartnerChartColors = json_encode($partnerChartColors);
+}
+
+$partnerChartData = [];
+$partnerChartColors = [];
+
+foreach ($partnerAnnualSpendingsClient as $partnerData) {
+    $partnerName = $partnerData['partner_name'];
+    $totalSpent = $partnerData['annual_spendings'];
+    $partnerHex = $partnerData['partner_colour'];
+
+    // Ajouter les données pour chaque marque
+    $partnerChartData[] = [$partnerName, $totalSpent];
+
+    // Associer la couleur hexadécimale de la marque
+    $partnerChartColors[$partnerName] = $partnerHex;
+}
+
+// Convertir les données en JSON pour les transmettre à JavaScript
+$jsonPartnerChartData = json_encode($partnerChartData);
+if (!empty($partnerChartColors)) {
+    $jsonPartnerChartColors = json_encode($partnerChartColors);
+}
 ?>
 
 <!DOCTYPE html>
@@ -98,6 +147,23 @@ unsetFilters($_SESSION);
             </section>
         </div>
 
+        <div class="card card--grid">
+            <div class="card">
+                <h2 class="ttl lineUp">Répartition annuelle par partenaire</h2>
+                <!-- GRAPHIQUES DONUT  -->
+                <section class="card__section">
+                    <div id="chart-partner"></div>
+                </section>
+            </div>
+            <div class="card">
+                <h2 class="ttl lineUp">Budget annuel par partenaire</h2>
+                <!-- TABLEAU DES DÉPENSES PAR PARTENAIRE -->
+                <section class="card__section">
+                    <?= generatePartnerTable($partnerAnnualSpendings) ?>
+                </section>
+            </div>
+        </div>
+
     </main>
 
     <a class="button--up" href="#" aria-label="Renvoie en haut de la page." id="scrollTop">
@@ -111,13 +177,70 @@ unsetFilters($_SESSION);
 
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/burger.js"></script>
-
 <?php
 // LE SCRIPT DE DROPDOWN N'EST UTILE QUE POUR LES UTILISATEURS NON-CLIENTS
 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
     echo '<script type="module" src="js/dropdown-menu.js"></script>';
 }
 ?>
-
 <script type="module" src="js/cards.js"></script>
 <script type="module" src="js/ajax-partner.js"></script>
+
+<!-- Script pour le graphique donut des dépenses par partenaire. -->
+<script type="module">
+    // Récupérer les données PHP encodées en JSON
+    var partnerChartData = <?php echo $jsonPartnerChartData ?? '[]'; ?>;
+    var partnerChartColors = <?php echo $jsonPartnerChartColors ?? '{}'; ?>;
+
+    // Vérifier si des données sont disponibles pour générer le graphique
+    if (partnerChartData.length === 0) {
+        var width = window.innerWidth < 768 ? 495 : 495;
+        var height = window.innerWidth < 768 ? 330 : 330;
+
+        // Si aucune donnée, on affiche un donut grisé
+        var chart = c3.generate({
+            bindto: '#chart-partner',
+            data: {
+                columns: [
+                    ['En attente d\'opération', 1] // Donut "Aucune donnée"
+                ],
+                type: 'donut',
+                colors: {
+                    'En attente d\'opération': '#d3d3d3' // Couleur grise pour "Aucune donnée"
+                }
+            },
+            size: {
+                width: width,
+                height: height
+            },
+            padding: {
+                right: 20,
+                left: 20
+            },
+            donut: {
+                title: "Aucune opération"
+            }
+        });
+    } else {
+        // Générer le graphique avec les données et couleurs
+        var chart = c3.generate({
+            bindto: '#chart-partner',
+            data: {
+                columns: partnerChartData,
+                type: 'donut',
+                colors: partnerChartColors // Appliquer les couleurs des objectifs
+            },
+            size: {
+                width: width,
+                height: height
+            },
+            padding: {
+                right: 20,
+                left: 20
+            },
+            donut: {
+                title: ""
+            }
+        });
+    }
+</script>
