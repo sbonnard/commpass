@@ -81,6 +81,10 @@ unsetFilters($_SESSION);
                             <p class="small-text">Le budget annuel peut être défini plus tard</p>
                             <input class="form__input form__input--number" type="text" name="annual_budget" id="annual_budget" placeholder="12500" required aria-label="Budget annuel s'il a été défini, sinon 0." value="0">
                         </li>
+                        <li class="form__itm form__itm--app">
+                            <label class="form__label" for="attachment">Logo du client</label>
+                            <input type="file" name="attachment" id="attachment" accept=".pdf, .png, .jpeg, .jpg, .doc, .docx, .xls, .xlsx" capture="environment" multiple>
+                        </li>
                         <input type="hidden" name="year" value="<?= $currentYear ?>">
                         <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                         <input type="hidden" name="action" value="create_client">

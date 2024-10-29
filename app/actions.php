@@ -325,6 +325,7 @@ if ($_POST['action'] === 'modify-pwd') {
         redirectTo('');
     }
 } else if ($_POST['action'] === 'create_client') {
+    // Vérifications des champs requis
     if (!isset($_POST['company_name']) || empty($_POST['company_name']) || !is_string($_POST['company_name']) || strlen($_POST['company_name']) > 100) {
         addError('company_name_ko');
         redirectTo();
@@ -343,22 +344,65 @@ if ($_POST['action'] === 'modify-pwd') {
         exit;
     }
 
+    // Gestion du fichier attaché
+    $attachmentFileName = 'default.webp'; // Valeur par défaut
+    if (isset($_FILES['attachment']) && !empty($_FILES['attachment']['name'])) {
+
+        $uploadDir = __DIR__ . '/logo/'; // Dossier de destination
+
+        // Vérification que le dossier existe, sinon le créer
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0775, true);
+        }
+
+        // Récupérer les informations du fichier
+        $fileName = basename($_FILES['attachment']['name']);
+        $uploadFile = $uploadDir . $fileName;
+        $relativePath = 'logo/' . $fileName;
+
+        // Vérification de l'erreur de téléchargement
+        if ($_FILES['attachment']['error'] === UPLOAD_ERR_OK) {
+            // Vérification des types de fichiers autorisés
+            $allowedTypes = [
+                'image/png',
+                'image/jpeg',
+                'image/jpg',
+                'image/webp'
+            ];
+            $fileType = mime_content_type($_FILES['attachment']['tmp_name']);
+
+            if (in_array($fileType, $allowedTypes)) {
+                // Déplacer le fichier vers le dossier de destination
+                if (move_uploaded_file($_FILES['attachment']['tmp_name'], $uploadFile)) {
+                    $attachmentFileName = htmlspecialchars($fileName); // Mettez à jour le nom du fichier
+                } else {
+                    echo "Erreur lors du téléchargement de $fileName.<br>";
+                }
+            } else {
+                echo "Type de fichier non autorisé pour $fileName.<br>";
+            }
+        } else {
+            echo "Erreur de téléchargement pour le fichier $fileName.<br>";
+        }
+    }
+
     try {
         $dbCo->beginTransaction();
 
-        $queryNewClient = $dbCo->prepare('INSERT INTO company (company_name) VALUES (:company_name);');
-
+        // Préparation de la requête pour insérer le client
+        $queryNewClient = $dbCo->prepare('INSERT INTO company (company_name, logo_url) VALUES (:company_name, :logo_url);');
         $bindValuesClient = [
-            'company_name' => htmlspecialchars($_POST['company_name'])
+            'company_name' => htmlspecialchars($_POST['company_name']),
+            'logo_url' => 'logo/' . $attachmentFileName // Utiliser le nom du fichier téléchargé
         ];
 
         $isInsertClientOk = $queryNewClient->execute($bindValuesClient);
-
         $lastInsertClient = $dbCo->lastInsertId();
 
         if ($isInsertClientOk) {
-            $companyId = $dbCo->lastInsertId();
+            $companyId = $lastInsertClient;
 
+            // Insertion du budget
             $queryAnnualBudget = $dbCo->prepare(
                 'INSERT INTO budgets (year, annual_budget, id_company)
                 VALUES (:year, :annual_budget, :id_company);'
