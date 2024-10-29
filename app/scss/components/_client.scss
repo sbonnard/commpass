@@ -119,5 +119,10 @@
         max-width: 5rem;
         aspect-ratio: 1;
         border-radius: 100%;
+        border: 3px solid $tertiary;
+
+        &:hover {
+            border-color: $primary;
+        }
     }
 }
