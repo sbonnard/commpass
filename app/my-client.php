@@ -174,9 +174,12 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
             ?>
         </div>
 
-        <h2 class="ttl lineUp">Tableau de bord
-            <br><span class="ttl--tertiary"><?= $selectedCompany['company_name'] ?></span>
-        </h2>
+        <div class="flex-row">
+            <img class="client__logo" src="<?= $selectedCompany['logo_url'] ?>" alt="">
+            <h2 class="ttl lineUp">Tableau de bord
+                <br><span class="ttl--tertiary"><?= $selectedCompany['company_name'] ?></span>
+            </h2>
+        </div>
 
         <div class="button__section">
             <a href="/new-campaign?client=<?= $selectedCompany['id_company'] ?>" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>
