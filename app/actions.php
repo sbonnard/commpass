@@ -14,18 +14,17 @@ require_once "includes/_message.php";
 
 
 if (!isset($_REQUEST['action'])) {
-    redirectTo('dashboard');
+    redirectTo('dashboard.php');
     exit;
 }
 
 // Check CSRF
 preventFromCSRF();
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if ($_POST['action'] === 'modify-pwd') { // Action de modification de mot de passe depuis le profil //
+if ($_POST['action'] === 'modify-pwd') {
     if (!isset($_POST['password']) || !isset($_POST['password-confirm']) || $_POST['password'] !== $_POST['password-confirm']) {
         addError('unmatched_pwd');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     }
 
@@ -43,12 +42,10 @@ if ($_POST['action'] === 'modify-pwd') { // Action de modification de mot de pas
     } else {
         addError('update_ko_pwd');
     }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-else if ($_POST['action'] === 'modify-email') { // Action de modification d'email depuis le profil //
+} else if ($_POST['action'] === 'modify-email') {
     if (!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
         addError('invalid_email');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     }
 
@@ -63,19 +60,17 @@ else if ($_POST['action'] === 'modify-email') { // Action de modification d'emai
 
     if ($isUpdateOk) {
         addMessage('update_ok_email');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     } else {
         addError('update_ko_email');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-else if ($_POST['action'] === 'modify-phone') { // Action de modification du numéro de téléphone depuis le profil //
+} else if ($_POST['action'] === 'modify-phone') {
     if (!isset($_POST['phone']) || !preg_match('/^[0-9]{10}$/', $_POST['phone'])) {
         addError('invalid_phone');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     }
 
@@ -90,16 +85,14 @@ else if ($_POST['action'] === 'modify-phone') { // Action de modification du num
 
     if ($isUpdateOk) {
         addMessage('update_ok_phone');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     } else {
         addError('update_ko_phone');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-else if ($_POST['action'] === 'create-operation') { // Action de création d'opération depuis operation.php //
+} else if ($_POST['action'] === 'create-operation') {
 
     $_SESSION['form_data'] = [
         'description' => strip_tags($_POST['operation_description']),
@@ -154,7 +147,7 @@ else if ($_POST['action'] === 'create-operation') { // Action de création d'op�
 
                 addMessage('operation_created_ok');
 
-                redirectTo('campaign?myc=' . $_POST['id_campaign']);
+                redirectTo('campaign.php?myc=' . $_POST['id_campaign']);
             } else {
                 $dbCo->rollBack();
                 addError('operation_creation_ko');
@@ -165,9 +158,7 @@ else if ($_POST['action'] === 'create-operation') { // Action de création d'op�
         $dbCo->rollBack();
         addError('operation_creation_ko');
     }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-elseif ($_POST['action'] === 'edit-operation') { // Action d'édition d'opération depuis operation.php //
+} else if ($_POST['action'] === 'edit-operation') {
 
     $_SESSION['form_data'] = [
         'description' => strip_tags($_POST['operation_description']),
@@ -238,7 +229,7 @@ elseif ($_POST['action'] === 'edit-operation') { // Action d'édition d'opérati
 
                 addMessage('operation_update_ok');
 
-                redirectTo('campaign?myc=' . $_POST['id_campaign']);
+                redirectTo('campaign.php?myc=' . $_POST['id_campaign']);
             } else {
                 $dbCo->rollBack();
                 addError('operation_update_ko');
@@ -249,18 +240,16 @@ elseif ($_POST['action'] === 'edit-operation') { // Action d'édition d'opérati
         $dbCo->rollBack();
         addError('operation_update_ko');
     }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-else if ($_POST['action'] === 'modify-colour') { // Action de modification de couleur d'une marque depuis le profil d'un client. 
+} else if ($_POST['action'] === 'modify-colour') {
     if (!isset($_POST['profile_brand'])) {
         addError('brand_ko');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     }
 
     if (!isset($_POST['color'])) {
         addError('colour_ko');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     }
 
@@ -283,22 +272,20 @@ else if ($_POST['action'] === 'modify-colour') { // Action de modification de co
 
         if ($isUpdateOk) {
             addMessage('update_ok_colour');
-            redirectTo('profil');
+            redirectTo('profil.php');
             exit;
         } else {
             addError('update_ko_colour');
-            redirectTo('profil');
+            redirectTo('profil.php');
             exit;
         }
     } else {
         // Si la couleur n'est pas valide
         addError('invalid_colour_format');
-        redirectTo('profil');
+        redirectTo('profil.php');
         exit;
     }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-else if ($_POST['action'] === 'new_brand') { // Action de création d'une nouvelle marque sur new-brand.php //
+} else if ($_POST['action'] === 'new_brand') {
     if (!isset($_POST['brand_name']) || empty($_POST['brand_name']) || strlen($_POST['brand_name']) > 100) {
         addError('brand_name_ko');
         redirectTo('');
@@ -332,14 +319,12 @@ else if ($_POST['action'] === 'new_brand') { // Action de création d'une nouvel
 
     if ($isInsertOk) {
         addMessage('brand_created_ok');
-        redirectTo('my-client?client=' . $_SESSION['filter']['id_company']);
+        redirectTo('my-client.php?client=' . $_SESSION['filter']['id_company']);
     } else {
         addError('brand_creation_ko');
         redirectTo('');
     }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-else if ($_POST['action'] === 'create_client') { // Action de création d'un client sur new-client.php //
+} else if ($_POST['action'] === 'create_client') {
     if (!isset($_POST['company_name']) || empty($_POST['company_name']) || !is_string($_POST['company_name']) || strlen($_POST['company_name']) > 100) {
         addError('company_name_ko');
         redirectTo();
@@ -388,7 +373,7 @@ else if ($_POST['action'] === 'create_client') { // Action de création d'un cli
             if ($isAnnualBudgetInsertOk) {
                 $dbCo->commit();
                 addMessage('new_client_created_ok');
-                redirectTo('my-client?client=' . $lastInsertClient);
+                redirectTo('my-client.php?client=' . $lastInsertClient);
                 exit;
             } else {
                 throw new PDOException('Failed to insert annual budget');
@@ -402,9 +387,7 @@ else if ($_POST['action'] === 'create_client') { // Action de création d'un cli
         redirectTo();
         exit;
     }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-else if ($_POST['action'] === 'create_user') { // Action de création d'un nouvel utilisateur sur new-user.php //
+} else if ($_POST['action'] === 'create_user') {
 
     $_SESSION['form_data'] = [
         'username' => htmlspecialchars($_POST['username']),
@@ -487,26 +470,31 @@ else if ($_POST['action'] === 'create_user') { // Action de création d'un nouve
     if ($isInsertUserOk) {
         unset($_SESSION['form_data']);
         addMessage('new_user_created_ok');
-        redirectTo('my-client?client=' . $_SESSION['filter']['id_company']);
+        redirectTo('my-client.php?client=' . $_SESSION['filter']['id_company']);
     } else {
         addError('new_user_creation_ko');
     }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-else if ($_POST['action'] === 'create_partner') { // Action de création d'un nouveau partenaire sur partners.php //
+} else if ($_POST['action'] === 'create_partner') {
     if (!isset($_POST['partner_name']) || empty($_POST['partner_name']) || !is_string($_POST['partner_name']) || strlen($_POST['partner_name']) > 255) {
         addError('partner_name_ko');
         redirectTo();
         exit;
     }
 
+    if (!isset($_POST['partner_colour']) || empty($_POST['partner_colour']) || !is_string($_POST['partner_colour']) || strlen($_POST['partner_colour']) > 255) {
+        addError('partner_colour_ko');
+        redirectTo();
+        exit;
+    }
+
     $queryNewPartner = $dbCo->prepare(
-        'INSERT INTO partner (partner_name)
-        VALUES (:partner_name);'
+        'INSERT INTO partner (partner_name, partner_colour)
+        VALUES (:partner_name, :partner_colour);'
     );
 
     $bindValues = [
-        'partner_name' => htmlspecialchars($_POST['partner_name'])
+        'partner_name' => htmlspecialchars($_POST['partner_name']),
+        'partner_colour' => htmlspecialchars($_POST['partner_colour'])
     ];
 
     $isInsertPartnerOk = $queryNewPartner->execute($bindValues);
@@ -517,9 +505,7 @@ else if ($_POST['action'] === 'create_partner') { // Action de création d'un no
     } else {
         addError('partner_created_ko');
     }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-else if ($_POST['action'] === 'disable-client') { // Action de "blocage" d'un utilisateur sur dashboard.php, clients.php ou my-agency.php //
+} else if ($_POST['action'] === 'disable-client') {
     if (!isset($_POST['client-user'])) {
         addError('client_ko');
         redirectTo();
@@ -543,9 +529,7 @@ else if ($_POST['action'] === 'disable-client') { // Action de "blocage" d'un ut
     } else {
         addError('client_disabled_ko');
     }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-else if ($_POST['action'] === 'enable-client') { // Action de "déblocage" d'un utilisateur sur dashboard.php, clients.php ou my-agency.php //
+} else if ($_POST['action'] === 'enable-client') {
     if (!isset($_POST['client-user'])) {
         addError('client_ko');
         redirectTo();
