@@ -49,21 +49,24 @@ function getPartnersAsHTMLOptions(array $partners, array $operation, array $get)
  */
 function getAnnualBudgetPerPartnerPerCompany(PDO $dbCo, array $session): array
 {
-    $query = $dbCo->prepare(
-        'SELECT partner.id_partner, partner_name, partner_colour, SUM(price) AS annual_spendings, YEAR(operation_date) AS year
+    if (isset($session['filter']['id_company'])) {
+        $query = $dbCo->prepare(
+            'SELECT partner.id_partner, partner_name, partner_colour, SUM(price) AS annual_spendings, YEAR(operation_date) AS year
         FROM partner
             JOIN operation ON partner.id_partner = operation.id_partner
         WHERE YEAR(operation_date) = YEAR(CURDATE()) AND id_company = :id_company
         GROUP BY partner.id_partner, year;'
-    );
+        );
 
-    $bindValues = [
-        'id_company' => intval($session['filter']['id_company'])
-    ];
+        $bindValues = [
+            'id_company' => intval($session['filter']['id_company'])
+        ];
 
-    $query->execute($bindValues);
+        $query->execute($bindValues);
 
-    return $query->fetchAll();
+        return $query->fetchAll();
+    }
+    return [];
 }
 
 
@@ -90,12 +93,43 @@ function getAnnualBudgetPerPartner(PDO $dbCo): array
 }
 
 /**
+ * Get annual budget spent by partner for a campaign.
+ *
+ * @param PDO $dbCo - PDO connection.
+ * @param array $session - Superglobal $_SESSION.
+ * @return array - An array containing all datas from partner per company
+ */
+function getCampaignBudgetPerPartner(PDO $dbCo, array $selectedCampaign, array $get): array
+{
+    if (isset($get['myc'])) {
+        $query = $dbCo->prepare(
+            'SELECT partner.id_partner, partner_name, partner_colour, SUM(price) AS annual_spendings, campaign.id_campaign
+            FROM partner
+                JOIN operation ON partner.id_partner = operation.id_partner
+                JOIN campaign ON operation.id_campaign = campaign.id_campaign
+            WHERE YEAR(operation_date) = YEAR(CURDATE()) AND campaign.id_campaign = :id_campaign
+            GROUP BY partner.id_partner, id_campaign;'
+        );
+
+        $bindValues = [
+            'id_campaign' => intval($selectedCampaign['id_campaign'])
+        ];
+
+        $query->execute($bindValues);
+
+        return $query->fetchAll();
+    }
+
+    return [];
+}
+
+/**
  * Generate a table for partner spendings.
  *
  * @param array $partnerAnnualSpendings - Partner array
  * @return string - A table containing all datas.
  */
-function generatePartnerTable(array $partnerAnnualSpendings):string
+function generatePartnerTable(array $partnerAnnualSpendings): string
 {
     $htmlTable = '<table class="table">';
 
