@@ -451,7 +451,7 @@ function getAllCompanyDatas(PDO $dbCo, array $get): array|bool
 {
 
     $query = $dbCo->prepare(
-        'SELECT id_company, company_name
+        'SELECT id_company, company_name, logo_url
         FROM company
         WHERE id_company = :id_company;'
     );
