@@ -61,7 +61,7 @@ if (!isset($_GET['myo'])) {
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
+        echo fetchHeader('dashboard', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -93,7 +93,7 @@ if (!isset($_GET['myo'])) {
             </h2>
 
             <section class="card__section" aria-labelledby="new-operation-ttl">
-                <form class="form" action="actions.php" method="post" aria-label="Formulaire de création d'une nouvelle opération">
+                <form class="form" action="actions" method="post" aria-label="Formulaire de création d'une nouvelle opération">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="operation_description">Description de l'opération</label>
