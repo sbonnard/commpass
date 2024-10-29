@@ -156,13 +156,12 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
         <div class="button__section">
             <a href="/new-campaign?client=<?= $selectedCompany['id_company'] ?>" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>
         </div>
-
         <div class="button__section">
-            <ul class="flex-row space-between" data-client-menu="" aria-label="Options multiples d'ajout d'interlocuteur ou de marque">
+            <ul class="button__section space-between" data-client-menu="" aria-label="Options multiples d'ajout d'interlocuteur ou de marque">
                 <li class="history-lnk"><a class="nav__lnk nav__lnk--new-campaign" href="#client-campaigns" aria-label="Vous amène directement aux campagnes clients">Campagnes ▼</a></li>
-                <li class="history-lnk"><a class="nav__lnk nav__lnk--history" href="history?client=<?= $selectedCompany['id_company'] ?>" aria-label="Consulter l'historique de <?= $selectedCompany['company_name'] ?>">Historique</a></li>
-                <li class="history-lnk"><a class="nav__lnk nav__lnk--user-plus" href="new-user?client=<?= $_SESSION['filter']['id_company'] ?>" aria-label="Lien vers un formulaire de création d'interlocuteur pour l'entreprise <?= $selectedCompany['company_name'] ?>">Créer interlocuteur</a></li>
-                <li class="history-lnk"><a class="nav__lnk nav__lnk--new-brand" href="new-brand?client=<?= $_SESSION['filter']['id_company'] ?>" aria-label="Lien vers un formulaire de création de marque pour l'entreprise <?= $selectedCompany['company_name'] ?>">Créer marque</a></li>
+                <li class="history-lnk"><a class="nav__lnk nav__lnk--history" href="history.php?client=<?= $selectedCompany['id_company'] ?>" aria-label="Consulter l'historique de <?= $selectedCompany['company_name'] ?>">Historique</a></li>
+                <li class="history-lnk"><a class="nav__lnk nav__lnk--user-plus" href="new-user.php?client=<?= $_SESSION['filter']['id_company'] ?>" aria-label="Lien vers un formulaire de création d'interlocuteur pour l'entreprise <?= $selectedCompany['company_name'] ?>">Créer interlocuteur</a></li>
+                <li class="history-lnk"><a class="nav__lnk nav__lnk--new-brand" href="new-brand.php?client=<?= $_SESSION['filter']['id_company'] ?>" aria-label="Lien vers un formulaire de création de marque pour l'entreprise <?= $selectedCompany['company_name'] ?>">Créer marque</a></li>
             </ul>
         </div>
 
