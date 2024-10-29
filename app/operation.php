@@ -61,7 +61,7 @@ if (!isset($_GET['myo'])) {
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard', 'Mon tableau de bord');
+        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -93,7 +93,7 @@ if (!isset($_GET['myo'])) {
             </h2>
 
             <section class="card__section" aria-labelledby="new-operation-ttl">
-                <form class="form" action="actions" method="post" aria-label="Formulaire de création d'une nouvelle opération">
+                <form class="form" action="actions.php" method="post" aria-label="Formulaire de création d'une nouvelle opération">
                     <ul class="form__lst form__lst--app">
                         <li class="form__itm form__itm--app">
                             <label class="form__label" for="operation_description">Description de l'opération</label>
@@ -184,12 +184,16 @@ if (!isset($_GET['myo'])) {
 
             <!-- Formulaire de création d'un nouveau partenaire si absent de la liste dans le select.  -->
             <form class="form hidden" action="api" method="post" id="new-partner-form" aria-label="Création d'un nouveau partenaire si absent de la liste précédente.">
-                <ul class="form__lst">
+                <ul class="form__partner">
                     <li class="form__itm form__itm--small">
                         <label for="add-partner" class="text-small">Créer un partenaire</label>
                         <input class="form__input form__input--small" type="text" name="add-partner" id="add-partner" placeholder="Nouveau partenaire">
-                        <input class="button--plus form__plus" type="submit" value="">
                     </li>
+                    <li class="form__itm form__itm--app">
+                        <label class="text-small" for="partner_colour">Couleur du partenaire</label>
+                        <input class="form__input--colour" type="color" name="partner_colour" id="partner_colour" value="" required>
+                    </li>
+                    <input class="button--plus form__plus" type="submit" value="">
                 </ul>
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 <input type="hidden" name="action" value="add-partner">
