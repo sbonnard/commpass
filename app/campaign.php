@@ -34,7 +34,7 @@ generateToken();
 checkConnection($_SESSION);
 
 if (!isset($_GET['myc'])) {
-    header('Location: dashboard');
+    header('Location: dashboard.php');
 }
 
 if (isset($_GET['client']) && intval($_GET['client'])) {
@@ -54,7 +54,7 @@ $jsonData = json_encode($chartData);
 
 // Préparer les données et les couleurs pour le graphique
 $partnerChartData = [];
-$partnerchartColors = [];
+$partnerChartColors = [];
 
 foreach ($partnerCampaignSpendings as $partnerData) {
     $partnerName = $partnerData['partner_name'];
@@ -69,31 +69,8 @@ foreach ($partnerCampaignSpendings as $partnerData) {
 }
 
 // Convertir les données en JSON pour les transmettre à JavaScript
-// $jsonPartnerChartData = json_encode($partnerChartData);
-if (!empty($partnerChartColors)) {
-    $jsonPartnerChartColors = json_encode($partnerChartColors);
-}
-
-$partnerChartData = [];
-$partnerChartColors = [];
-
-foreach ($partnerCampaignSpendings as $partnerData) {
-    $partnerName = $partnerData['partner_name'];
-    $totalSpent = $partnerData['annual_spendings'];
-    $partnerHex = $partnerData['partner_colour'];
-
-    // Ajouter les données pour chaque marque
-    $partnerChartData[] = [$partnerName, $totalSpent];
-
-    // Associer la couleur hexadécimale de la marque
-    $partnerChartColors[$partnerName] = $partnerHex;
-}
-
-// Convertir les données en JSON pour les transmettre à JavaScript
 $jsonPartnerChartData = json_encode($partnerChartData);
-if (!empty($partnerChartColors)) {
-    $jsonPartnerChartColors = json_encode($partnerChartColors);
-}
+$jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChartColors) : '';
 ?>
 
 <!DOCTYPE html>
@@ -107,7 +84,7 @@ if (!empty($partnerChartColors)) {
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard', 'Mon tableau de bord');
+        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -125,7 +102,7 @@ if (!empty($partnerChartColors)) {
 
         <div class="flex-row space-between">
             <div class="flex-column">
-                <a href="my-client?client=<?= $_SESSION['filter']['id_company'] ?>">
+                <a href="my-client.php?client=<?= $_SESSION['filter']['id_company'] ?>">
                     <h2 class="ttl lineUp client__ttl"><?= $selectedCampaign['company_name'] ?><br></h2>
                 </a>
             </div>
@@ -134,14 +111,14 @@ if (!empty($partnerChartColors)) {
                 <?php
                 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                     echo
-                    '<a class="button--edit" href="new-campaign?myc=' . $selectedCampaign['id_campaign'] . '&client=' . $_SESSION['filter']['id_company'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
+                    '<a class="button--edit" href="new-campaign.php?myc=' . $selectedCampaign['id_campaign'] . '&client=' . $_SESSION['filter']['id_company'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
                     |' . deleteCampaignButton($selectedCampaign, $_SESSION);
                 }
                 ?>
             </div>
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                echo '<div class="operation__button"><a href="operation?myc=' . $selectedCampaign['id_campaign'] . '" class="button button--add" aria-label="Créer une nouvelle opération">Ajouter opération</a></div>';
+                echo '<div class="operation__button"><a href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '" class="button button--add" aria-label="Créer une nouvelle opération">Ajouter opération</a></div>';
             }
             ?>
         </div>
@@ -303,7 +280,7 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 left: 20
             },
             donut: {
-                title: "Aucune partenariat"
+                title: "Aucun partenariat"
             }
         });
     } else {
