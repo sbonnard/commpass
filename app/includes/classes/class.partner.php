@@ -49,7 +49,7 @@ function getPartnersAsHTMLOptions(array $partners, array $operation, array $get)
  */
 function getAnnualBudgetPerPartnerPerCompany(PDO $dbCo, array $session, array $get): array
 {
-    if (isset($session['filter']['id_company'])) {
+    if (isset($session['filter']['id_company']) && isset($get['client'])) {
         $query = $dbCo->prepare(
             'SELECT partner.id_partner, partner_name, partner_colour, SUM(price) AS annual_spendings, YEAR(operation_date) AS year
         FROM partner
