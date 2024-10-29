@@ -175,7 +175,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
         </div>
 
         <div class="flex-row">
-            <img class="client__logo" src="<?= $selectedCompany['logo_url'] ?>" alt="">
+            <img class="client__logo" src="<?= $selectedCompany['logo_url'] ?>" alt="Logo de l'entreprise <?= $selectedCompany['company_name'] ?>">
             <h2 class="ttl lineUp">Tableau de bord
                 <br><span class="ttl--tertiary"><?= $selectedCompany['company_name'] ?></span>
             </h2>
