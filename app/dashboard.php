@@ -222,18 +222,24 @@ unset($_SESSION['filter']);
                                 $companyDatas .= '<li>Aucun interlocuteur pour cette entreprise.</li>';
                             }
 
-                            $companyDatas .= '</ul>';
-                            $companyDatas .= '<ul>';
-                            $companyDatas .= '<h4 class="client__subttl">Les marques</h4>';
+                            if ($company['unique_brand'] === 0) {
+                                $companyDatas .= '<ul>';
+                                $companyDatas .= '<h4 class="client__subttl">Les marques</h4>';
 
-                            foreach ($allbrands as $brand) {
-                                if ($brand['id_company'] === $company['id_company']) {
-                                    $companyDatas .= '<li class="campaign__legend"><span class="campaign__legend-square" style="background-color:' . $brand['legend_colour_hex'] . '"></span>' . $brand['brand_name'] . '</li>';
-                                } else if (empty($allbrands)) {
-                                    echo '<li>Aucune marque pour cette entreprise.</li>';
+
+                                // Boucle sur les marques de l'entreprise pour les afficher. 
+                                foreach ($allbrands as $brand) {
+                                    if ($brand['id_company'] === $company['id_company']) {
+                                        $companyDatas .= '<li class="campaign__legend"><span class="campaign__legend-square" style="background-color:' . $brand['legend_colour_hex'] . '"></span>' . $brand['brand_name'] . '</li>';
+                                    }
                                 }
+
+                                if (empty($allbrands)) {
+                                    $companyDatas .= '<li>Aucune marque pour cette entreprise.</li>';
+                                }
+
+                                $companyDatas .= '</ul>';
                             }
-                            $companyDatas .= '</ul>';
 
                             $companyDatas .= '</section></div>';
                         }
