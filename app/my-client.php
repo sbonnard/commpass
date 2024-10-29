@@ -255,24 +255,26 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
     </div>';
 
 
-            // DISPLAY TABLE & DONUT CHART FOR BRANDS
-            echo
-            '<div class="card card--grid card--reverse">
-        <div class="card">
-            <h2 class="ttl lineUp">Répartition annuelle par marque</h2>
-            <!-- GRAPHIQUES DONUT  -->
-            <section class="card__section">
-                <div id="chart-brand"></div>
-            </section>
-        </div>
-        <div class="card">
-            <h2 class="ttl lineUp">Budget annuel par marque</h2>
-            <!-- TABLEAU DES DÉPENSES PAR MARQUE -->
-            <section class="card__section">'
-                . generateTableFromDatas($brandsAnnualSpendings) .
-                '</section>
-        </div>
-    </div>';
+            if ($selectedCompany['unique_brand'] === 0) {
+                // DISPLAY TABLE & DONUT CHART FOR BRANDS
+                echo
+                '<div class="card card--grid card--reverse">
+                    <div class="card">
+                        <h2 class="ttl lineUp">Répartition annuelle par marque</h2>
+                        <!-- GRAPHIQUES DONUT  -->
+                        <section class="card__section">
+                            <div id="chart-brand"></div>
+                        </section>
+                    </div>
+                    <div class="card">
+                        <h2 class="ttl lineUp">Budget annuel par marque</h2>
+                        <!-- TABLEAU DES DÉPENSES PAR MARQUE -->
+                        <section class="card__section">'
+                    . generateTableFromDatas($brandsAnnualSpendings) .
+                    '</section>
+                    </div>
+                </div>';
+            }
 
             // DISPLAY TABLE & DONUT CHART FOR PARTNERS
             echo
