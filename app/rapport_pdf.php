@@ -226,6 +226,10 @@ p {
 .client__logo {
     display: none;
 }
+
+#partner-section {
+    display: none;
+}
 </style>
 ";
 
