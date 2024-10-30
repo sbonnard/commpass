@@ -122,6 +122,35 @@ function getCampaignBudgetPerPartner(PDO $dbCo, array $selectedCampaign, array $
 }
 
 /**
+ * Get annual budget spent by partner for each company.
+ *
+ * @param PDO $dbCo - PDO connection.
+ * @param array $session - Superglobal $_SESSION.
+ * @return array - An array containing all datas from partner per company
+ */
+function getAnnualPartnerBudgetForClient(PDO $dbCo, array $session): array
+{
+    if (isset($session['id_company'])) {
+        $query = $dbCo->prepare(
+            'SELECT partner.id_partner, partner_name, partner_colour, SUM(price) AS annual_spendings, YEAR(operation_date) AS year
+        FROM partner
+            JOIN operation ON partner.id_partner = operation.id_partner
+        WHERE YEAR(operation_date) = YEAR(CURDATE()) AND id_company = :id_company
+        GROUP BY partner.id_partner, year;'
+        );
+
+        $bindValues = [
+            'id_company' => intval($session['id_company'])
+        ];
+
+        $query->execute($bindValues);
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    return [];
+}
+
+/**
  * Generate a table for partner spendings.
  *
  * @param array $partnerAnnualSpendings - Partner array
