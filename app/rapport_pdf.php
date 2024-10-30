@@ -39,19 +39,19 @@ if (isset($_POST['htmlContent'])) {
 }
 
 body {
-        font-family: Helvetica, sans-serif;
-        margin: 0;
-        padding: 20px;
-        text-align: center;
+    font-family: Helvetica, sans-serif;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
 }
 
  h1, h2, h3 {
-        color: #DA428F;
+    color: #DA428F;
 }
 
 p {
-        font-size: 16px;
-        color: #555;
+    font-size: 16px;
+    color: #555;
 }
 
 .flex-row {
@@ -91,6 +91,11 @@ p {
 
 .card__section--operations {
     width: 100%;
+}
+
+.card__section--row {
+    flex-direction: row;
+    gap: 3rem;
 }
 
 .campaign__company {
@@ -165,25 +170,26 @@ p {
         width: 14.875rem;
         gap: 1.5rem;
         font-size: 1.25rem;
-    }
+}
 
 .vignette--primary {
         background-color: #44277A;
-    }
+}
 
 .vignette--secondary {
         background-color: #842078;
-    }
+}
 
 .vignette--tertiary {
         background-color: #DA428F;
-    }
+}
 
 .vignette--bigger {
         width: 14.875rem;
         gap: 1.5rem;
         font-size: 1.5rem;
 }
+
 .vignettes-PDF {
     display: flex;
     justify-content: center;
@@ -197,12 +203,14 @@ p {
     border-collapse: collapse;
     min-width: 27.25rem;
 }
+
 .table__head {
     font-size: 1.25rem;
     text-transform: uppercase;
     color: #44277A;
     padding: 0.5rem 1rem;
 }
+
 .table__cell {
     padding: 0.5rem 1rem;
     border : 1px solid #44277A;
@@ -213,6 +221,10 @@ p {
 .c3 {
     background-color: #FFF;
     margin-left: 12rem;
+}
+
+.client__logo {
+    display: none;
 }
 </style>
 ";
