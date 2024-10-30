@@ -37,6 +37,9 @@ document.getElementById('generatePDF').addEventListener('click', function (event
 });
 
 
+/////////////////////////////////////////////////////////////////////////////////
+// LE CODE CI-DESSOUS PERMET DE SUPPRIMER OU CACHER DES ÉLÉMENTS GÊNANTS SUR LE PDF.
+
 const gRects = document.querySelectorAll('.c3-event-rects');
 console.log(gRects);
 
@@ -88,3 +91,7 @@ console.log(legendsText);
 legendsText.forEach(legendText => {
     legendText.style.fontSize = '11px';
 });
+
+
+// LE CODE CI-DESSUS PERMET DE SUPPRIMER OU CACHER DES ÉLÉMENTS GÊNANTS SUR LE PDF.
+/////////////////////////////////////////////////////////////////////////////////
