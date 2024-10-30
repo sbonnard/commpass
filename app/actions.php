@@ -10,9 +10,6 @@ require_once "includes/_functions.php";
 require_once "includes/_security.php";
 require_once "includes/_message.php";
 
-// header('Content-type:application/json');
-
-
 if (!isset($_REQUEST['action'])) {
     redirectTo('dashboard.php');
     exit;
@@ -21,7 +18,8 @@ if (!isset($_REQUEST['action'])) {
 // Check CSRF
 preventFromCSRF();
 
-if ($_POST['action'] === 'modify-pwd') {
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if ($_POST['action'] === 'modify-pwd') { // Update password on profil.php.
     if (!isset($_POST['password']) || !isset($_POST['password-confirm']) || $_POST['password'] !== $_POST['password-confirm']) {
         addError('unmatched_pwd');
         redirectTo('profil.php');
@@ -42,7 +40,9 @@ if ($_POST['action'] === 'modify-pwd') {
     } else {
         addError('update_ko_pwd');
     }
-} else if ($_POST['action'] === 'modify-email') {
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+else if ($_POST['action'] === 'modify-email') { // Update email on profil.php
     if (!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
         addError('invalid_email');
         redirectTo('profil.php');
@@ -67,7 +67,9 @@ if ($_POST['action'] === 'modify-pwd') {
         redirectTo('profil.php');
         exit;
     }
-} else if ($_POST['action'] === 'modify-phone') {
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+else if ($_POST['action'] === 'modify-phone') { // update phone number on profil.php
     if (!isset($_POST['phone']) || !preg_match('/^[0-9]{10}$/', $_POST['phone'])) {
         addError('invalid_phone');
         redirectTo('profil.php');
@@ -92,8 +94,11 @@ if ($_POST['action'] === 'modify-pwd') {
         redirectTo('profil.php');
         exit;
     }
-} else if ($_POST['action'] === 'create-operation') {
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+else if ($_POST['action'] === 'create-operation') { // Create an operation on operation.php
 
+    // Pour conserver les saisies dans les inputs en cas d'erreur de l'utilisateur 
     $_SESSION['form_data'] = [
         'description' => strip_tags($_POST['operation_description']),
         'price' => floatval($_POST['operation_amount']),
@@ -158,8 +163,11 @@ if ($_POST['action'] === 'modify-pwd') {
         $dbCo->rollBack();
         addError('operation_creation_ko');
     }
-} else if ($_POST['action'] === 'edit-operation') {
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+else if ($_POST['action'] === 'edit-operation') { // Éditer une operation sur operation.php.
 
+    // Pour conserver les saisies dans les inputs en cas d'erreur de l'utilisateur 
     $_SESSION['form_data'] = [
         'description' => strip_tags($_POST['operation_description']),
         'price' => floatval($_POST['operation_amount']),
@@ -240,7 +248,9 @@ if ($_POST['action'] === 'modify-pwd') {
         $dbCo->rollBack();
         addError('operation_update_ko');
     }
-} else if ($_POST['action'] === 'modify-colour') {
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+else if ($_POST['action'] === 'modify-colour') { // Update brand colour on profil.php if you're a client boss.
     if (!isset($_POST['profile_brand'])) {
         addError('brand_ko');
         redirectTo('profil.php');
@@ -285,7 +295,9 @@ if ($_POST['action'] === 'modify-pwd') {
         redirectTo('profil.php');
         exit;
     }
-} else if ($_POST['action'] === 'new_brand') {
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+else if ($_POST['action'] === 'new_brand') { // Create a new brand on new-brand.php.
     if (!isset($_POST['brand_name']) || empty($_POST['brand_name']) || strlen($_POST['brand_name']) > 100) {
         addError('brand_name_ko');
         redirectTo('');
@@ -324,7 +336,9 @@ if ($_POST['action'] === 'modify-pwd') {
         addError('brand_creation_ko');
         redirectTo('');
     }
-} else if ($_POST['action'] === 'create_client') {
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+else if ($_POST['action'] === 'create_client') { // Create a new client on dashboard.php or clients.php
     // Vérifications des champs requis
     if (!isset($_POST['company_name']) || empty($_POST['company_name']) || !is_string($_POST['company_name']) || strlen($_POST['company_name']) > 100) {
         addError('company_name_ko');
@@ -358,8 +372,8 @@ if ($_POST['action'] === 'modify-pwd') {
         // Récupérer les informations du fichier
         $fileName = pathinfo($_FILES['attachment']['name'], PATHINFO_FILENAME);
         $fileExtension = pathinfo($_FILES['attachment']['name'], PATHINFO_EXTENSION);
-        
-        // Ajouter l'horodatage pour un nom unique
+
+        // time() pour assurer un nom de fichier unique.
         $attachmentFileName = $fileName . '_' . time() . '.' . $fileExtension;
         $uploadFile = $uploadDir . $attachmentFileName;
         $relativePath = 'logo/' . $attachmentFileName;
@@ -436,7 +450,9 @@ if ($_POST['action'] === 'modify-pwd') {
         redirectTo();
         exit;
     }
-} else if ($_POST['action'] === 'create_user') {
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+else if ($_POST['action'] === 'create_user') { // Create a new user on new-user.php.
 
     $_SESSION['form_data'] = [
         'username' => htmlspecialchars($_POST['username']),
@@ -523,7 +539,9 @@ if ($_POST['action'] === 'modify-pwd') {
     } else {
         addError('new_user_creation_ko');
     }
-} else if ($_POST['action'] === 'create_partner') {
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+else if ($_POST['action'] === 'create_partner') { // Create a new partner on partner.php.
     if (!isset($_POST['partner_name']) || empty($_POST['partner_name']) || !is_string($_POST['partner_name']) || strlen($_POST['partner_name']) > 255) {
         addError('partner_name_ko');
         redirectTo();
@@ -554,7 +572,9 @@ if ($_POST['action'] === 'modify-pwd') {
     } else {
         addError('partner_created_ko');
     }
-} else if ($_POST['action'] === 'disable-client') {
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+else if ($_POST['action'] === 'disable-client') { // Disable user account on dashboard.php or clients.php
     if (!isset($_POST['client-user'])) {
         addError('client_ko');
         redirectTo();
@@ -578,7 +598,9 @@ if ($_POST['action'] === 'modify-pwd') {
     } else {
         addError('client_disabled_ko');
     }
-} else if ($_POST['action'] === 'enable-client') {
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+else if ($_POST['action'] === 'enable-client') { // Enable user account on dashboard.php or clients.php
     if (!isset($_POST['client-user'])) {
         addError('client_ko');
         redirectTo();
@@ -604,4 +626,5 @@ if ($_POST['action'] === 'modify-pwd') {
     }
 }
 
+// Redirige vers la dernière page si pas d'autres redirection préalable.
 redirectTo();
