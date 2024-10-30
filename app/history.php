@@ -112,6 +112,8 @@ if (
         $jsonBrandChartColors = json_encode($brandChartColors);
     }
 }
+
+$selectedCompany = getAllCompanyDatas($dbCo, $_GET);
 ?>
 
 <!DOCTYPE html>
@@ -141,8 +143,11 @@ if (
             ?>
         </div>
 
-        <h2 class="ttl lineUp">Historique</h2>
-
+        <div class="flex-row">
+            <img class="client__logo" src="<?= $selectedCompany['logo_url'] ?>" alt="Logo de <?= $selectedCompany['company_name'] ?>">
+            <h2 class="ttl lineUp">Historique</h2>
+        </div>
+        
         <div class="card">
             <form class="card__section" action="actions-filter.php" method="post" id="filter-form">
                 <ul class="form__lst form__lst--row">
