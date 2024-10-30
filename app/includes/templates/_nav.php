@@ -91,7 +91,7 @@ function displayHistoryLinkIfPermissionOK(array $session, string $historyActive)
     if (isset($session['client']) && $session['client'] === 1 && $session['boss'] === 1) {
         return '
             <li class="nav__itm ' . $historyActive . '">
-                <a href="/history" class="nav__lnk nav__lnk--history" aria-label="Lien vers l\'historique des campagnes">Historique</a>
+                <a href="/history?client=' . $session['id_company'] . '" class="nav__lnk nav__lnk--history" aria-label="Lien vers l\'historique des campagnes">Historique</a>
             </li>';
     } else {
         return '';
