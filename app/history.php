@@ -159,9 +159,8 @@ $selectedCompany = getAllCompanyDatas($dbCo, $_GET);
                             <label class="form__label" for="year">Sélectionner une année</label>
                             <select class="form__input form__input--select" name="year" id="year" required>
                                 <option value="">- Sélectionner une année -</option>
+                                <option value="2024">2024</option>
                                 <option value="2023">2023</option>
-                                <option value="2022">2022</option>
-                                <option value="2021">2021</option>
                             </select>
                         </li>
                     </div>
