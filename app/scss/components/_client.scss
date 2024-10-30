@@ -120,11 +120,14 @@
         aspect-ratio: 1;
         border-radius: 100%;
         border: 3px solid $tertiary;
-        cursor: pointer;
-
-        &:hover {
-            border-color: $primary;
-            opacity: 0.75;
+        
+        &--lnk {
+            cursor: pointer;
+            
+            &:hover {
+                border-color: $primary;
+                opacity: 0.75;
+            }
         }
     }
 }
