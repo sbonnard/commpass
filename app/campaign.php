@@ -183,7 +183,7 @@ $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChar
                 </section>
             </div>
         </div>
-        <div class="card card--grid">
+        <div class="card card--grid" id="partner-section">
             <div class="card">
                 <h2 class="ttl lineUp">Répartition du budget par partenaire</h2>
                 <!-- GRAPHIQUES DONUT  -->
