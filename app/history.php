@@ -159,9 +159,6 @@ $selectedCompany = getAllCompanyDatas($dbCo, $_GET);
                             <label class="form__label" for="year">Sélectionner une année</label>
                             <select class="form__input form__input--select" name="year" id="year" required>
                                 <option value="">- Sélectionner une année -</option>
-                                <option value="2023">2023</option>
-                                <option value="2022">2022</option>
-                                <option value="2021">2021</option>
                             </select>
                         </li>
                     </div>
@@ -350,16 +347,15 @@ $selectedCompany = getAllCompanyDatas($dbCo, $_GET);
 
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/burger.js"></script>
-
 <?php
 // LE SCRIPT DE DROPDOWN N'EST UTILE QUE POUR LES UTILISATEURS NON-CLIENTS
 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
     echo '<script type="module" src="js/dropdown-menu.js"></script>';
 }
 ?>
-
 <script type="module" src="js/cards.js"></script>
 <script type="module" src="js/vignette.js"></script>
+<script type="module" src="js/history.js"></script>
 
 <script>
     // Récupération des données PHP
