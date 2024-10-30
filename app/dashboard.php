@@ -141,14 +141,6 @@ unset($_SESSION['filter']);
             </h2>
         </div>
 
-        <!-- <div class="button__section">
-            <?php
-            // if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-            //     echo '<a href="/new-campaign" class="button button--new-campaign" aria-label="Redirige vers un formulaire de création de campagne de com">Nouvelle campagne</a>';
-            // }
-            ?>
-        </div> -->
-
         <h2 class="ttl lineUp">Tableau de bord</h2>
 
         <?php
