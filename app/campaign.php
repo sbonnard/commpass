@@ -211,7 +211,7 @@ $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChar
         </div>
     </main>
     <div class="card">
-        <form id="formPDF" action="rapport_pdf" method="post">
+        <form id="formPDF" action="rapport_pdf.php" method="post">
             <input type="hidden" id="htmlContent" name="htmlContent" value="">
             <input type="hidden" id="chartImage" name="chartImage" value="">
             <button class="button button--pdf" type="submit" id="generatePDF"></button>

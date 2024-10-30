@@ -93,6 +93,11 @@ p {
     width: 100%;
 }
 
+.card__section--row {
+    flex-direction: row;
+    gap: 3rem;
+}
+
 .campaign__company {
     font-family: 'jura';
     font-size: 1.875rem;
@@ -197,6 +202,7 @@ p {
     border-collapse: collapse;
     min-width: 27.25rem;
 }
+
 .table__head {
     font-size: 1.25rem;
     text-transform: uppercase;
@@ -213,6 +219,10 @@ p {
 .c3 {
     background-color: #FFF;
     margin-left: 12rem;
+}
+
+.client__logo {
+    display: none;
 }
 </style>
 ";
