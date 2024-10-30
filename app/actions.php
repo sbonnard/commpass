@@ -344,8 +344,6 @@ if ($_POST['action'] === 'modify-pwd') {
         exit;
     }
 
-    // var_dump($_POST);
-
     // Gestion du fichier attaché
     $attachmentFileName = 'default.webp'; // Valeur par défaut
     if (isset($_FILES['attachment']) && !empty($_FILES['attachment']['name'])) {
@@ -358,9 +356,13 @@ if ($_POST['action'] === 'modify-pwd') {
         }
 
         // Récupérer les informations du fichier
-        $fileName = basename($_FILES['attachment']['name']);
-        $uploadFile = $uploadDir . $fileName;
-        $relativePath = 'logo/' . $fileName;
+        $fileName = pathinfo($_FILES['attachment']['name'], PATHINFO_FILENAME);
+        $fileExtension = pathinfo($_FILES['attachment']['name'], PATHINFO_EXTENSION);
+        
+        // Ajouter l'horodatage pour un nom unique
+        $attachmentFileName = $fileName . '_' . time() . '.' . $fileExtension;
+        $uploadFile = $uploadDir . $attachmentFileName;
+        $relativePath = 'logo/' . $attachmentFileName;
 
         // Vérification de l'erreur de téléchargement
         if ($_FILES['attachment']['error'] === UPLOAD_ERR_OK) {
@@ -376,15 +378,15 @@ if ($_POST['action'] === 'modify-pwd') {
             if (in_array($fileType, $allowedTypes)) {
                 // Déplacer le fichier vers le dossier de destination
                 if (move_uploaded_file($_FILES['attachment']['tmp_name'], $uploadFile)) {
-                    $attachmentFileName = htmlspecialchars($fileName); // Mettez à jour le nom du fichier
+                    $attachmentFileName = htmlspecialchars($attachmentFileName); // Nom du fichier téléchargé
                 } else {
-                    echo "Erreur lors du téléchargement de $fileName.<br>";
+                    echo "Erreur lors du téléchargement de $attachmentFileName.<br>";
                 }
             } else {
-                echo "Type de fichier non autorisé pour $fileName.<br>";
+                echo "Type de fichier non autorisé pour $attachmentFileName.<br>";
             }
         } else {
-            echo "Erreur de téléchargement pour le fichier $fileName.<br>";
+            echo "Erreur de téléchargement pour le fichier $attachmentFileName.<br>";
         }
     }
 
