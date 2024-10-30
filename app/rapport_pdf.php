@@ -170,25 +170,26 @@ p {
         width: 14.875rem;
         gap: 1.5rem;
         font-size: 1.25rem;
-    }
+}
 
 .vignette--primary {
         background-color: #44277A;
-    }
+}
 
 .vignette--secondary {
         background-color: #842078;
-    }
+}
 
 .vignette--tertiary {
         background-color: #DA428F;
-    }
+}
 
 .vignette--bigger {
         width: 14.875rem;
         gap: 1.5rem;
         font-size: 1.5rem;
 }
+
 .vignettes-PDF {
     display: flex;
     justify-content: center;
@@ -209,6 +210,7 @@ p {
     color: #44277A;
     padding: 0.5rem 1rem;
 }
+
 .table__cell {
     padding: 0.5rem 1rem;
     border : 1px solid #44277A;
