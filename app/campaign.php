@@ -102,10 +102,16 @@ $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChar
 
         <div class="flex-row space-between">
             <div class="flex-column">
-                <a href="my-client.php?client=<?= $_SESSION['filter']['id_company'] ?>">
-                    <img class="client__logo client__logo--lnk" src="<?= getCompanyLogoUrl($dbCo, $_SESSION) ?>" alt="Logo de <?= $selectedCampaign['company_name'] ?>">
-                    <!-- <h2 class="ttl lineUp client__ttl"><?= $selectedCampaign['company_name'] ?><br></h2> -->
-                </a>
+                <?php
+                if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+                ?>
+                    <a href="my-client.php?client=<?= $_SESSION['filter']['id_company'] ?>">
+                        <img class="client__logo client__logo--lnk" src="<?= getCompanyLogoUrl($dbCo, $_SESSION) ?>" alt="Logo de <?= $selectedCampaign['company_name'] ?>">
+                        <!-- <h2 class="ttl lineUp client__ttl"><?= $selectedCampaign['company_name'] ?><br></h2> -->
+                    </a>
+                <?php } else { ?>
+                    <img class="client__logo" src="<?= getCompanyLogoUrl($dbCo, $_SESSION) ?>" alt="Logo de <?= $selectedCampaign['company_name'] ?>">
+                <?php } ?>
             </div>
             <div class="flex-row">
                 <h2 class="ttl lineUp ttl--tertiary"><?= $selectedCampaign['campaign_name'] ?></h2>
