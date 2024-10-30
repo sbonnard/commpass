@@ -151,6 +151,52 @@ function getAnnualPartnerBudgetForClient(PDO $dbCo, array $session): array
 }
 
 /**
+ * Get annual budget spent by partner for each company.
+ *
+ * @param PDO $dbCo - PDO connection.
+ * @param array $session - Superglobal $_SESSION.
+ * @return array - An array containing all datas from partner per company
+ */
+function getAnnualPartnerBudgetForClientHistory(PDO $dbCo, array $session): array
+{
+    if (isset($session['id_company'])) {
+        $queryStr = 
+            'SELECT 
+                partner.id_partner, 
+                partner_name, 
+                partner_colour, 
+                SUM(price) AS annual_spendings, 
+                YEAR(operation_date) AS year
+            FROM partner
+            JOIN operation ON partner.id_partner = operation.id_partner
+            WHERE id_company = :id_company 
+              AND YEAR(operation_date) = YEAR(CURDATE())
+            GROUP BY partner.id_partner, YEAR(operation_date)';
+        
+        // Ajout de la clause HAVING uniquement si l'année est précisée
+        if (isset($session['filter']['year'])) {
+            $queryStr .= ' HAVING year = :year';
+        }
+
+        $query = $dbCo->prepare($queryStr);
+
+        // Gestion des valeurs de liaison
+        $bindValues = [
+            'id_company' => intval($session['client'] === 1 ? $session['id_company'] : $session['filter']['id_company']),
+        ];
+
+        if (isset($session['filter']['year'])) {
+            $bindValues['year'] = intval($session['filter']['year']);
+        }
+
+        $query->execute($bindValues);
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+    return [];
+}
+
+/**
  * Generate a table for partner spendings.
  *
  * @param array $partnerAnnualSpendings - Partner array

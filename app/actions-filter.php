@@ -42,7 +42,7 @@ if ($_POST['action'] === 'filter-campaigns') {
         $_SESSION['filter']['id_target'] = intval($_POST['target-filter']);
     }
 } else if (isset($_POST['action']) && $_POST['action'] === 'filter-reinit') {
-    unset($_SESSION['filter']);
+    unset($_SESSION['filter']['year']);
 }
 
 redirectTo();
