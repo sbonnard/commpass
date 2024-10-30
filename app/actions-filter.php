@@ -48,7 +48,7 @@ else if ($_POST['action'] === 'filter-history') {
 } 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 else if (isset($_POST['action']) && $_POST['action'] === 'filter-reinit') { // Réinitialisation des filtres.
-    unset($_SESSION['filter']);
+    unset($_SESSION['filter']['year']);
 }
 
 redirectTo();
