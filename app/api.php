@@ -34,6 +34,7 @@ if (isset($_POST['id_company'])) {
     // Encodage en json pour JavaScript (AJAX).
     echo json_encode($users);
 }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Si la requête est de type POST les actions dans le else if peuvent s'exécuter.
 else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Décodage du corps JSON envoyé par fetch
@@ -63,7 +64,7 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode(['status' => 'error', 'message' => 'Erreur lors de l\'ajout du média : ' . $e->getMessage()]);
         }
     }
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Ajout d'un partenaire dans operation.php.
     else if (isset($inputData['action']) && $inputData['action'] === 'add-partner') {
         if (empty($inputData['add-partner'])) {
@@ -90,6 +91,7 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Si la requête est de type DELETE les actions dans le else if peuvent s'exécuter.
 else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     // Suppression d'une operation dans campaign.php
