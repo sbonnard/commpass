@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+// REDIRIGE L'UTILISATEUR SUR LE SITE EN HTTPS SI NON-RENSEIGNÉ DANS L'URL.
+if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
+    header("Location: https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+    exit;
+}
+
 //CONFIG AND CONNECTION
 require_once "includes/_config.php";
 require_once "includes/_database.php";
