@@ -170,11 +170,16 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
 
         <h2 class="ttl lineUp">Tableau de bord</h2>
 
-        <div class="button__section">
-            <ul class="button__section space-between" data-client-menu="" aria-label="Options multiples d'ajout d'interlocuteur ou de marque">
-                <li class="history-lnk"><a class="nav__lnk nav__lnk--new-campaign" href="#client-campaigns" aria-label="Vous amène directement aux campagnes clients">Campagnes ▼</a></li>
-            </ul>
-        </div>
+        <?php
+        if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
+            echo
+            '<div class="button__section">
+                <ul class="button__section space-between" data-client-menu="" aria-label="Options multiples d\'ajout d\'interlocuteur ou de marque">
+                    <li class="history-lnk"><a class="nav__lnk nav__lnk--new-campaign" href="#client-campaigns" aria-label="Vous amène directement aux campagnes clients">Campagnes ▼</a></li>
+                </ul>
+            </div>';
+        }
+        ?>
 
         <?php
         // var_dump($_SESSION);
