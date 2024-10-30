@@ -39,19 +39,19 @@ if (isset($_POST['htmlContent'])) {
 }
 
 body {
-        font-family: Helvetica, sans-serif;
-        margin: 0;
-        padding: 20px;
-        text-align: center;
+    font-family: Helvetica, sans-serif;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
 }
 
  h1, h2, h3 {
-        color: #DA428F;
+    color: #DA428F;
 }
 
 p {
-        font-size: 16px;
-        color: #555;
+    font-size: 16px;
+    color: #555;
 }
 
 .flex-row {
