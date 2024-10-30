@@ -37,13 +37,17 @@ document.getElementById('generatePDF').addEventListener('click', function (event
 });
 
 
-const gRect = document.querySelector('.c3-event-rects');
+const gRects = document.querySelectorAll('.c3-event-rects');
+console.log(gRects);
 
-gRect.style.opacity = '1';
-gRect.style.fillOpacity = '1';
-gRect.style.fill = 'white';
+gRects.forEach(gRect => {
+    gRect.style.opacity = '1';
+    gRect.style.fillOpacity = '1';
+    gRect.style.fill = 'white';
+});
 
 const legends = document.querySelectorAll('.c3-legend-item-event');
+console.log(legends);
 
 legends.forEach(legend => {
     legend.style.opacity = '0';
@@ -52,23 +56,34 @@ legends.forEach(legend => {
     // legend.style.margin = '16px';
 });
 
-const c3axis = document.querySelector('.c3-axis');
-const c3axisX = document.querySelector('.c3-axis-x');
+const c3axis = document.querySelectorAll('.c3-axis');
+const c3axisX = document.querySelectorAll('.c3-axis-x');
 
-c3axis.style.opacity = '0';
-c3axis.style.display = 'hidden';
-c3axis.style.color = '#FFFFFF';
-c3axisX.style.opacity = '0';
-c3axisX.style.display = 'hidden';
-c3axisX.style.color = '#FFFFFF';
+console.log(c3axis);
+console.log(c3axisX);
+
+c3axis.forEach(c3axis => {
+    c3axis.style.opacity = '0';
+    c3axis.style.display = 'hidden';
+    c3axis.style.color = '#FFFFFF';
+});
+
+c3axisX.forEach(c3axisX => {
+    c3axisX.style.opacity = '0';
+    c3axisX.style.display = 'hidden';
+    c3axisX.style.color = '#FFFFFF';
+});
 
 const ticks = document.querySelectorAll('.tick');
+console.log(ticks);
+
 
 ticks.forEach(tick => {
     tick.remove();
 });
 
 const legendsText = document.querySelectorAll('.c3-legend-item');
+console.log(legendsText);
 
 legendsText.forEach(legendText => {
     legendText.style.fontSize = '11px';
