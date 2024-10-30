@@ -134,7 +134,7 @@ unset($_SESSION['filter']);
         </div>
 
         <div class="flex-row">
-            <img class="client__logo" src="<?= getCompanyLogoUrl($dbCo, $_SESSION) ?>" alt="Logo de <?= getCompanyName($dbCo, $_SESSION) ?>">
+            <img class="client__logo" src="<?= getCompanyLogoUrl($dbCo, $_SESSION) ?>" alt="Logo de l'entreprise <?= getCompanyName($dbCo, $_SESSION) ?>">
             <h2 class="ttl lineUp">
                 Bonjour <?= $user['firstname'] ?><br>
                 <span class="ttl--tertiary"><?= getCompanyName($dbCo, $_SESSION) ?></span>
@@ -144,6 +144,8 @@ unset($_SESSION['filter']);
         <h2 class="ttl lineUp">Tableau de bord</h2>
 
         <?php
+        // var_dump($_SESSION);
+
         if (isset($_SESSION['client']) && $_SESSION['client'] === 0) { ?>
             <div class="button__section">
                 <a href="/new-client" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouveau client</a>
@@ -326,6 +328,7 @@ unset($_SESSION['filter']);
     </div>';
         }
         ?>
+
         <?php
         if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
         ?>
@@ -379,14 +382,12 @@ unset($_SESSION['filter']);
 
 <script type="module" src="js/script.js"></script>
 <script type="module" src="js/burger.js"></script>
-
 <?php
 // LE SCRIPT DE DROPDOWN N'EST UTILE QUE POUR LES UTILISATEURS NON-CLIENTS
 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
     echo '<script type="module" src="js/dropdown-menu.js"></script>';
 }
 ?>
-
 <script type="module" src="js/cards.js"></script>
 <script type="module" src="js/vignette.js"></script>
 <script>
