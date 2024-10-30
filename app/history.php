@@ -159,8 +159,6 @@ $selectedCompany = getAllCompanyDatas($dbCo, $_GET);
                             <label class="form__label" for="year">Sélectionner une année</label>
                             <select class="form__input form__input--select" name="year" id="year" required>
                                 <option value="">- Sélectionner une année -</option>
-                                <option value="2024">2024</option>
-                                <option value="2023">2023</option>
                             </select>
                         </li>
                     </div>
@@ -357,6 +355,7 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
 ?>
 <script type="module" src="js/cards.js"></script>
 <script type="module" src="js/vignette.js"></script>
+<script type="module" src="js/history.js"></script>
 
 <script>
     // Récupération des données PHP
