@@ -94,7 +94,7 @@ if ($_POST['action'] === 'create-campaign') {
         unset($_SESSION['form_data']);
         $_SESSION['filter']['id_company'] = intval($_POST['campaign_company']);
         addMessage('campaign_created_ok');
-        redirectTo('campaign?myc=' . $lastInsertID);
+        redirectTo('campaign.php?myc=' . $lastInsertID);
     } else {
         addError('campaign_creation_ko');
     }
