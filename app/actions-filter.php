@@ -21,7 +21,8 @@ if (!isset($_REQUEST['action'])) {
 // Check CSRF
 preventFromCSRF();
 
-if ($_POST['action'] === 'filter-campaigns') {
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if ($_POST['action'] === 'filter-campaigns') { // FILTRE INUTILE POUR L'INSTANT.
     if (
         isset($_POST['target-filter']) && intval($_POST['target-filter'])
         && intval($_POST['target-filter']) >= 1 && intval($_POST['target-filter']) <= 3
@@ -29,7 +30,10 @@ if ($_POST['action'] === 'filter-campaigns') {
         $_SESSION['filter']['id_target'] = intval($_POST['target-filter']);
         redirectTo('my-client?client=' . $_SESSION['filter']['id_company'] . '#client-campaigns');
     }
-} else if ($_POST['action'] === 'filter-history') {
+} 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FILTRE POUR L'HISTORIQUE. SEUL LE FILTRE DE 'year' EST ENCORE UTILE DEPUIS QUE L'HISTORIQUE EST ACCESSIBLE DEPUIS UN CLIENT.
+else if ($_POST['action'] === 'filter-history') {
     if (isset($_POST['client-filter']) && intval($_POST['client-filter'])) {
         $_SESSION['filter']['id_company'] = intval($_POST['client-filter']);
     }
@@ -41,7 +45,9 @@ if ($_POST['action'] === 'filter-campaigns') {
     if (isset($_POST['target-filter']) && intval($_POST['target-filter']) && intval($_POST['target-filter']) >= 1 && intval($_POST['target-filter']) <= 3) {
         $_SESSION['filter']['id_target'] = intval($_POST['target-filter']);
     }
-} else if (isset($_POST['action']) && $_POST['action'] === 'filter-reinit') {
+} 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+else if (isset($_POST['action']) && $_POST['action'] === 'filter-reinit') { // Réinitialisation des filtres.
     unset($_SESSION['filter']);
 }
 
