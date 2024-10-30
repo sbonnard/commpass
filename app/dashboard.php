@@ -281,6 +281,7 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
         <?php } ?>
 
         <?php
+        // VISUALISATION DES STATS DE L'ENTREPRISE SUR L'ANNÉE EN COURS CÔTÉ CLIENT GÉRANT UNIQUEMENT.
         if ($_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
 
             if ($companyAnnualBudget === 0) {
@@ -320,6 +321,7 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
         ?>
 
         <?php
+        // VISUALISATION DES STATS DE L'ENTREPRISE SUR L'ANNÉE EN COURS CÔTÉ CLIENT GÉRANT UNIQUEMENT.
         if (isset($_SESSION['client']) && $_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
             // DISPLAY TABLE & DONUT CHART FOR OBJECTIVES
             echo
@@ -405,6 +407,7 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
             //     echo getMessageIfNoCampaign($currentYearCampaigns);
             //     // var_dump('Cas 2');
             // } else 
+            
             if ($_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
                 // CAS ACCESSIBLE POUR UN PROFIL CLIENT ET GÉRANT
                 $currentYearCampaigns = getCompanyFilteredCampaigns($dbCo, $_SESSION);
