@@ -105,7 +105,34 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company']) || is
     }
 }
 
-unset($_SESSION['filter']);
+if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
+    // Récupérer les dépenses annuelles par partenaire
+    $partnerAnnualSpendingsClient = getAnnualPartnerBudgetForClient($dbCo, $_SESSION);
+
+    // Préparer les données et les couleurs pour le graphique
+    $partnerChartData = [];
+    $partnerChartColors = [];
+
+    foreach ($partnerAnnualSpendingsClient as $partnerData) {
+        $partnerName = $partnerData['partner_name'];
+        $totalSpent = $partnerData['annual_spendings'];
+        $partnerHex = $partnerData['partner_colour'];
+
+        // Ajouter les données pour chaque partenaire
+        $partnerChartData[] = [$partnerName, $totalSpent];
+
+        // Associer la couleur hexadécimale du partenaire
+        $partnerChartColors[$partnerName] = $partnerHex;
+    }
+
+    // Convertir les données en JSON pour les transmettre à JavaScript
+    $jsonPartnerChartData = json_encode($partnerChartData);
+    $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChartColors) : '';
+}
+
+if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
+    unset($_SESSION['filter']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -142,6 +169,12 @@ unset($_SESSION['filter']);
         </div>
 
         <h2 class="ttl lineUp">Tableau de bord</h2>
+
+        <div class="button__section">
+            <ul class="button__section space-between" data-client-menu="" aria-label="Options multiples d'ajout d'interlocuteur ou de marque">
+                <li class="history-lnk"><a class="nav__lnk nav__lnk--new-campaign" href="#client-campaigns" aria-label="Vous amène directement aux campagnes clients">Campagnes ▼</a></li>
+            </ul>
+        </div>
 
         <?php
         // var_dump($_SESSION);
@@ -326,13 +359,32 @@ unset($_SESSION['filter']);
                 '</section>
         </div>
     </div>';
+
+            // DISPLAY TABLE & DONUT CHART FOR PARTNERS
+            echo
+            '<div class="card card--grid">
+                <div class="card">
+                    <h2 class="ttl lineUp">Répartition annuelle par partenaire</h2>
+                    <!-- GRAPHIQUES DONUT  -->
+                    <section class="card__section">
+                        <div id="chart-partner"></div>
+                    </section>
+                </div>
+                <div class="card">
+                    <h2 class="ttl lineUp">Budget annuel par partenaire</h2>
+                    <!-- TABLEAU DES DÉPENSES PAR PARTENAIRE -->
+                    <section class="card__section">'
+                . generatePartnerTable($partnerAnnualSpendingsClient) .
+                '</section>
+                </div>
+            </div>';
         }
         ?>
 
         <?php
         if (isset($_SESSION['client']) && $_SESSION['client'] === 1) {
         ?>
-            <h2 class="ttl lineUp">Mes campagnes <?= $currentYear ?></h2>
+            <h2 class="ttl lineUp" id="client-campaigns">Mes campagnes <?= $currentYear ?></h2>
             <section class="card <?php
                                     if (!empty($companyCurrentYearCampaigns) || $_SESSION['client'] === 0) {
                                         echo 'campaign';
@@ -512,6 +564,65 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 columns: brandChartData,
                 type: 'donut',
                 colors: brandChartColors // Appliquer les couleurs des objectifs
+            },
+            size: {
+                width: width,
+                height: height
+            },
+            padding: {
+                right: 20,
+                left: 20
+            },
+            donut: {
+                title: ""
+            }
+        });
+    }
+</script>
+
+<!-- Script pour le graphique donut des dépenses par partenaire. -->
+<script type="module">
+    // Récupérer les données PHP encodées en JSON
+    var partnerChartData = <?php echo $jsonPartnerChartData ?? '[]'; ?>;
+    var partnerChartColors = <?php echo $jsonPartnerChartColors ?? '{}'; ?>;
+
+    // Vérifier si des données sont disponibles pour générer le graphique
+    if (partnerChartData.length === 0) {
+        var width = window.innerWidth < 768 ? 495 : 495;
+        var height = window.innerWidth < 768 ? 330 : 330;
+
+        // Si aucune donnée, on affiche un donut grisé
+        var chart = c3.generate({
+            bindto: '#chart-partner',
+            data: {
+                columns: [
+                    ['En attente d\'opération', 1] // Donut "Aucune donnée"
+                ],
+                type: 'donut',
+                colors: {
+                    'En attente d\'opération': '#d3d3d3' // Couleur grise pour "Aucune donnée"
+                }
+            },
+            size: {
+                width: width,
+                height: height
+            },
+            padding: {
+                right: 20,
+                left: 20
+            },
+            donut: {
+                title: "Aucun partenariat"
+            }
+        });
+    } else {
+        // Générer le graphique avec les données et couleurs
+        var chart = c3.generate({
+            bindto: '#chart-partner',
+            data: {
+                columns: partnerChartData,
+                type: 'donut',
+                colors: partnerChartColors // Appliquer les couleurs des objectifs
             },
             size: {
                 width: width,
