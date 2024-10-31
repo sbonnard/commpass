@@ -154,8 +154,6 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
     $jsonPartnerChartData = json_encode($partnerChartData);
     $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChartColors) : '';
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -183,7 +181,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
             ?>
         </div>
 
-        <div class="flex-row">
+        <div class="flex-row client__head">
             <img class="client__logo" src="<?= $selectedCompany['logo_url'] ?>" alt="Logo de <?= $selectedCompany['company_name'] ?>">
             <h2 class="ttl lineUp">Tableau de bord
                 <br><span class="ttl--tertiary"><?= $selectedCompany['company_name'] ?></span>
