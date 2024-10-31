@@ -195,8 +195,8 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                                     echo 'card--grid card--grid--3columns';
                                 }
                                 ?>">
-                <?php
 
+                <?php
                 // Récupérer les données des entreprises et les afficher sous forme de cartes.
                 $companyDatas = '';
                 if (!empty($companies) && is_array($companies)) {
@@ -331,41 +331,41 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
             // DISPLAY TABLE & DONUT CHART FOR OBJECTIVES
             echo
             '<div class="card card--grid">
-        <div class="card">
-            <h2 class="ttl lineUp">Répartition du budget annuel<br> dépensé par objectif</h2>
-            <!-- GRAPHIQUES DONUT  -->
-            <section class="card__section">
-                <div id="chart-target"></div>
-            </section>
-        </div>
-        <div class="card">
-            <h2 class="ttl lineUp">Budget annuel attribué<br> par objectif</h2>
-            <!-- TABLEAU DES DÉPENSES PAR OBJECTIF -->
-            <section class="card__section">'
+                <div class="card">
+                    <h2 class="ttl lineUp">Répartition du budget annuel<br> dépensé par objectif</h2>
+                    <!-- GRAPHIQUES DONUT  -->
+                    <section class="card__section">
+                        <div id="chart-target"></div>
+                    </section>
+                </div>
+                <div class="card">
+                    <h2 class="ttl lineUp">Budget annuel attribué<br> par objectif</h2>
+                    <!-- TABLEAU DES DÉPENSES PAR OBJECTIF -->
+                    <section class="card__section">'
                 . generateTableFromTargetDatas($targetAnnualSpendings) .
                 '</section>
-        </div>
-    </div>';
+                </div>
+            </div>';
 
 
             // DISPLAY TABLE & DONUT CHART FOR BRANDS
             echo
             '<div class="card card--grid card--reverse">
-        <div class="card">
-            <h2 class="ttl lineUp">Répartition du budget annuel<br> dépensé par marque</h2>
-            <!-- GRAPHIQUES DONUT  -->
-            <section class="card__section">
-                <div id="chart-brand"></div>
-            </section>
-        </div>
-        <div class="card">
-            <h2 class="ttl lineUp">Budget annuel attribué<br> par marque</h2>
-            <!-- TABLEAU DES DÉPENSES PAR MARQUE -->
-            <section class="card__section">'
+                <div class="card">
+                    <h2 class="ttl lineUp">Répartition du budget annuel<br> dépensé par marque</h2>
+                    <!-- GRAPHIQUES DONUT  -->
+                    <section class="card__section">
+                        <div id="chart-brand"></div>
+                    </section>
+                </div>
+                <div class="card">
+                    <h2 class="ttl lineUp">Budget annuel attribué<br> par marque</h2>
+                    <!-- TABLEAU DES DÉPENSES PAR MARQUE -->
+                    <section class="card__section">'
                 . generateTableFromDatas($brandsAnnualSpendings) .
                 '</section>
-        </div>
-    </div>';
+                </div>
+            </div>';
 
             // DISPLAY TABLE & DONUT CHART FOR PARTNERS
             echo
@@ -412,7 +412,7 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
             //     echo getMessageIfNoCampaign($currentYearCampaigns);
             //     // var_dump('Cas 2');
             // } else 
-            
+
             if ($_SESSION['client'] === 1 && $_SESSION['boss'] === 1) {
                 // CAS ACCESSIBLE POUR UN PROFIL CLIENT ET GÉRANT
                 $currentYearCampaigns = getCompanyFilteredCampaigns($dbCo, $_SESSION);
