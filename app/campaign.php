@@ -41,11 +41,9 @@ if ($_SESSION['client'] === 1) {
     }
 }
 
-if (isset($_GET['client']) && intval($_GET['client'])) {
-    $_SESSION['filter']['id_company'] = $_GET['client'];
-}
-
 $selectedCompany = getAllCompanyDatas($dbCo, $_SESSION, $_GET);
+
+$_SESSION['filter']['id_company'] = $selectedCompany['id_company'];
 
 $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
 $brandsSpendings = mergeResults($campaignResults);
