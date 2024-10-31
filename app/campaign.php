@@ -45,6 +45,8 @@ if (isset($_GET['client']) && intval($_GET['client'])) {
     $_SESSION['filter']['id_company'] = $_GET['client'];
 }
 
+$selectedCompany = getAllCompanyDatas($dbCo, $_SESSION, $_GET);
+
 $campaignResults = getSpendingByBrandByCampaign($dbCo, $campaigns, $_GET);
 $brandsSpendings = mergeResults($campaignResults);
 
@@ -110,11 +112,11 @@ $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChar
                 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 ?>
                     <a href="my-client.php?client=<?= $_SESSION['filter']['id_company'] ?>">
-                        <img class="client__logo client__logo--lnk" src="<?= getCompanyLogoUrl($dbCo, $_SESSION) ?>" alt="Logo de <?= $selectedCampaign['company_name'] ?>">
+                        <img class="client__logo client__logo--lnk" src="<?= $selectedCompany['logo_url'] ?>" alt="Logo de <?= $selectedCampaign['company_name'] ?>">
                         <!-- <h2 class="ttl lineUp client__ttl"><?= $selectedCampaign['company_name'] ?><br></h2> -->
                     </a>
                 <?php } else { ?>
-                    <img class="client__logo" src="<?= getCompanyLogoUrl($dbCo, $_SESSION) ?>" alt="Logo de <?= $selectedCampaign['company_name'] ?>">
+                    <img class="client__logo" src="<?= $selectedCompany['logo_url'] ?>" alt="Logo de <?= $selectedCampaign['company_name'] ?>">
                 <?php } ?>
             </div>
             <div class="flex-row">
