@@ -182,8 +182,6 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
         ?>
 
         <?php
-        // var_dump($_SESSION);
-
         if (isset($_SESSION['client']) && $_SESSION['client'] === 0) { ?>
             <div class="button__section">
                 <a href="/new-client.php" class="button button--add--solid" aria-label="Redirige vers un formulaire de création de client">Nouveau client</a>
@@ -195,8 +193,8 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                                     echo 'card--grid card--grid--3columns';
                                 }
                                 ?>">
-                <?php
 
+                <?php
                 // Récupérer les données des entreprises et les afficher sous forme de cartes.
                 $companyDatas = '';
                 if (!empty($companies) && is_array($companies)) {
@@ -329,41 +327,41 @@ if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
             // DISPLAY TABLE & DONUT CHART FOR OBJECTIVES
             echo
             '<div class="card card--grid">
-        <div class="card">
-            <h2 class="ttl lineUp">Répartition du budget annuel<br> dépensé par objectif</h2>
-            <!-- GRAPHIQUES DONUT  -->
-            <section class="card__section">
-                <div id="chart-target"></div>
-            </section>
-        </div>
-        <div class="card">
-            <h2 class="ttl lineUp">Budget annuel attribué<br> par objectif</h2>
-            <!-- TABLEAU DES DÉPENSES PAR OBJECTIF -->
-            <section class="card__section">'
+                <div class="card">
+                    <h2 class="ttl lineUp">Répartition du budget annuel<br> dépensé par objectif</h2>
+                    <!-- GRAPHIQUES DONUT  -->
+                    <section class="card__section">
+                        <div id="chart-target"></div>
+                    </section>
+                </div>
+                <div class="card">
+                    <h2 class="ttl lineUp">Budget annuel attribué<br> par objectif</h2>
+                    <!-- TABLEAU DES DÉPENSES PAR OBJECTIF -->
+                    <section class="card__section">'
                 . generateTableFromTargetDatas($targetAnnualSpendings) .
                 '</section>
-        </div>
-    </div>';
+                </div>
+            </div>';
 
 
             // DISPLAY TABLE & DONUT CHART FOR BRANDS
             echo
             '<div class="card card--grid card--reverse">
-        <div class="card">
-            <h2 class="ttl lineUp">Répartition du budget annuel<br> dépensé par marque</h2>
-            <!-- GRAPHIQUES DONUT  -->
-            <section class="card__section">
-                <div id="chart-brand"></div>
-            </section>
-        </div>
-        <div class="card">
-            <h2 class="ttl lineUp">Budget annuel attribué<br> par marque</h2>
-            <!-- TABLEAU DES DÉPENSES PAR MARQUE -->
-            <section class="card__section">'
+                <div class="card">
+                    <h2 class="ttl lineUp">Répartition du budget annuel<br> dépensé par marque</h2>
+                    <!-- GRAPHIQUES DONUT  -->
+                    <section class="card__section">
+                        <div id="chart-brand"></div>
+                    </section>
+                </div>
+                <div class="card">
+                    <h2 class="ttl lineUp">Budget annuel attribué<br> par marque</h2>
+                    <!-- TABLEAU DES DÉPENSES PAR MARQUE -->
+                    <section class="card__section">'
                 . generateTableFromDatas($brandsAnnualSpendings) .
                 '</section>
-        </div>
-    </div>';
+                </div>
+            </div>';
 
             // DISPLAY TABLE & DONUT CHART FOR PARTNERS
             echo
