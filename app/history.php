@@ -35,7 +35,7 @@ checkConnection($_SESSION);
 
 if (
     isset($_SESSION['client']) && $_SESSION['client'] === 1 && isset($_SESSION['boss']) && $_SESSION['boss'] === 0
-    || $_GET['client'] != $_SESSION['id_company'] && $_SESSION['client'] === 1
+    || isset($_GET['client']) && $_GET['client'] != $_SESSION['id_company'] && $_SESSION['client'] === 1
 ) {
     addError('authorization_ko');
     redirectTo('dashboard');
@@ -116,7 +116,7 @@ if (
     }
 }
 
-$selectedCompany = getAllCompanyDatas($dbCo, $_GET);
+$selectedCompany = getAllCompanyDatas($dbCo, $_SESSION, $_GET);
 ?>
 
 <!DOCTYPE html>
