@@ -34,7 +34,7 @@ generateToken();
 
 checkConnection($_SESSION);
 
-if (!isset($_GET['myc']) || !isset($_GET['client'])) {
+if (!isset($_GET['myc'])) {
     header('Location: dashboard');
     exit;
 }
