@@ -49,7 +49,7 @@ if (!isset($_GET['myo'])) {
     ];
 }
 
-$selectedCompany = getAllCompanyDatas($dbCo, $_GET);
+$selectedCompany = getAllCompanyDatas($dbCo, $_SESSION, $_GET);
 ?>
 
 <!DOCTYPE html>
