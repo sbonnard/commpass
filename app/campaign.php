@@ -33,8 +33,12 @@ generateToken();
 
 checkConnection($_SESSION);
 
-if (!isset($_GET['myc'])) {
-    header('Location: dashboard');
+if ($_SESSION['client'] === 1) {
+    if (!isset($_GET['myc']) || !isset($_GET['client']) || !intval($_GET['client']) || $_SESSION['id_company'] != $_GET['client']) {
+        addError('authorization_ko');
+        header('Location: dashboard.php');
+        exit;
+    }
 }
 
 if (isset($_GET['client']) && intval($_GET['client'])) {
@@ -84,7 +88,7 @@ $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChar
 
     <header class="header">
         <?php
-        echo fetchHeader('dashboard', 'Mon tableau de bord');
+        echo fetchHeader('dashboard.php', 'Mon tableau de bord');
         ?>
     </header>
 
@@ -102,7 +106,7 @@ $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChar
 
         <div class="flex-row space-between">
             <div class="flex-column">
-            <?php
+                <?php
                 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                 ?>
                     <a href="my-client.php?client=<?= $_SESSION['filter']['id_company'] ?>">
@@ -118,14 +122,14 @@ $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChar
                 <?php
                 if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
                     echo
-                    '<a class="button--edit" href="new-campaign?myc=' . $selectedCampaign['id_campaign'] . '&client=' . $_SESSION['filter']['id_company'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
+                    '<a class="button--edit" href="new-campaign.php?myc=' . $selectedCampaign['id_campaign'] . '&client=' . $_SESSION['filter']['id_company'] . '" title="éditer la campagne ' . $selectedCampaign['campaign_name'] . '"></a>
                     |' . deleteCampaignButton($selectedCampaign, $_SESSION);
                 }
                 ?>
             </div>
             <?php
             if (isset($_SESSION['client']) && $_SESSION['client'] === 0) {
-                echo '<div class="operation__button"><a href="operation?myc=' . $selectedCampaign['id_campaign'] . '&client=' . $_SESSION['filter']['id_company'] . '" class="button button--add" aria-label="Créer une nouvelle opération">Ajouter opération</a></div>';
+                echo '<div class="operation__button"><a href="operation.php?myc=' . $selectedCampaign['id_campaign'] . '&client=' . $_SESSION['filter']['id_company'] . '" class="button button--add" aria-label="Créer une nouvelle opération">Ajouter opération</a></div>';
             }
             ?>
         </div>
@@ -217,7 +221,7 @@ $jsonPartnerChartColors = !empty($partnerChartColors) ? json_encode($partnerChar
         </div>
     </main>
     <div class="card">
-        <form id="formPDF" action="rapport_pdf" method="post">
+        <form id="formPDF" action="rapport_pdf.php" method="post">
             <input type="hidden" id="htmlContent" name="htmlContent" value="">
             <input type="hidden" id="chartImage" name="chartImage" value="">
             <button class="button button--pdf" type="submit" id="generatePDF"></button>
