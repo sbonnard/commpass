@@ -444,10 +444,11 @@ function getOneCompanyDatasFilteredHistory(PDO $dbCo, array $session)
  * Get companyDatas for my-client page.
  *
  * @param PDO $dbCo - PDO connection
+ * @param array $session - Superglobal SESSION
  * @param array $get - Superglobal GET
  * @return array|bool Array with company datas
  */
-function getAllCompanyDatas(PDO $dbCo, array $get): array|bool
+function getAllCompanyDatas(PDO $dbCo, array $session, array $get): array|bool
 {
 
     $query = $dbCo->prepare(
@@ -456,9 +457,19 @@ function getAllCompanyDatas(PDO $dbCo, array $get): array|bool
         WHERE id_company = :id_company;'
     );
 
-    $bindValues = [
-        'id_company' => $get['client']
-    ];
+    if (isset($session['filter']['id_company'])) {
+        $bindValues = [
+            'id_company' => $session['filter']['id_company']
+        ];
+    } else if (isset($session['id_company']) && $session['client'] === 1) {
+        $bindValues = [
+            'id_company' => $session['id_company']
+        ];
+    } else {
+        $bindValues = [
+            'id_company' => $get['client']
+        ];
+    }
 
     $query->execute($bindValues);
 
