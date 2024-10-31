@@ -35,11 +35,19 @@ checkConnection($_SESSION);
 
 checkUserClientStatus($_SESSION);
 
+if (!isset($_GET['client'])) {
+    redirectTo('errors/403.php');
+    exit;
+}
+
+if(isset($_GET['client']) && intval($_GET['client'])) {
+    $_SESSION['filter']['id_company'] = $_GET['client'];
+}
+
 if (
     isset($_GET['client']) && $_GET['client'] == $_SESSION['id_company']
     || !intval($_GET['client'])
     || !is_array(getAllCompanyDatas($dbCo, $_SESSION, $_GET)) || getAllCompanyDatas($dbCo, $_SESSION, $_GET) == false 
-    || !isset($_GET['client'])
 ) {
     redirectTo('errors/403.php');
     exit;
@@ -47,8 +55,8 @@ if (
 
 // unsetFilters($_SESSION);
 
-// Récupérer les données d'une entreprise. 
 
+// Récupérer les données d'une entreprise. 
 $selectedCompany = getAllCompanyDatas($dbCo, $_SESSION, $_GET);
 
 // Le filtre permet de récupérer les données d'une entreprise en session.
