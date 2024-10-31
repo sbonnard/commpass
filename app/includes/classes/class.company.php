@@ -504,5 +504,11 @@ function getCompanyLogoUrl(PDO $dbCo, array $session): string
 
     $query->execute($bindValues);
 
-    return implode($query->fetch());
+    $result = $query->fetch();
+
+    if(is_array($result)) {
+        return implode($result);
+    } else {
+        return '';
+    }
 }
