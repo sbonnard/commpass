@@ -33,8 +33,12 @@ generateToken();
 
 checkConnection($_SESSION);
 
-if (!isset($_GET['myc'])) {
-    header('Location: dashboard.php');
+if ($_SESSION['client'] === 1) {
+    if (!isset($_GET['myc']) || !isset($_GET['client']) || !intval($_GET['client']) || $_SESSION['id_company'] != $_GET['client']) {
+        addError('authorization_ko');
+        header('Location: dashboard.php');
+        exit;
+    }
 }
 
 if (isset($_GET['client']) && intval($_GET['client'])) {
