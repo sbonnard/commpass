@@ -35,10 +35,19 @@ checkConnection($_SESSION);
 
 checkUserClientStatus($_SESSION);
 
+if (!isset($_GET['client'])) {
+    redirectTo('errors/403');
+    exit;
+}
+
+if(isset($_GET['client']) && intval($_GET['client'])) {
+    $_SESSION['filter']['id_company'] = $_GET['client'];
+}
+
 if (
     isset($_GET['client']) && $_GET['client'] == $_SESSION['id_company']
     || !intval($_GET['client'])
-    || !is_array(getAllCompanyDatas($dbCo, $_SESSION, $_GET)) || getAllCompanyDatas($dbCo, $_SESSION, $_GET) == false
+    || !is_array(getAllCompanyDatas($dbCo, $_SESSION, $_GET)) || getAllCompanyDatas($dbCo, $_SESSION, $_GET) == false 
 ) {
     redirectTo('errors/403');
     exit;
@@ -46,8 +55,8 @@ if (
 
 // unsetFilters($_SESSION);
 
-// Récupérer les données d'une entreprise. 
 
+// Récupérer les données d'une entreprise. 
 $selectedCompany = getAllCompanyDatas($dbCo, $_SESSION, $_GET);
 
 // Le filtre permet de récupérer les données d'une entreprise en session.
@@ -175,7 +184,7 @@ if (isset($_SESSION['filter']) && isset($_SESSION['filter']['id_company'])) {
         </div>
 
         <div class="flex-row">
-            <img class="client__logo" src="<?= $selectedCompany['logo_url'] ?>" alt="Logo de l'entreprise <?= $selectedCompany['company_name'] ?>">
+            <img class="client__logo" src="<?= $selectedCompany['logo_url'] ?>" alt="Logo de <?= $selectedCompany['company_name'] ?>">
             <h2 class="ttl lineUp">Tableau de bord
                 <br><span class="ttl--tertiary"><?= $selectedCompany['company_name'] ?></span>
             </h2>
