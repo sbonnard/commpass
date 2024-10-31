@@ -26,7 +26,7 @@ generateToken();
 </head>
 
 <header class="header">
-    <a href="../index" title="Retour vers le site commpass.toiledecom.fr" aria-label="Lien vers le site">
+    <a href="../index.php" title="Retour vers le site commpass.toiledecom.fr" aria-label="Lien vers le site">
         <h1 class="header__ttl">Commpass</h1>
     </a>
 </header>
@@ -38,7 +38,7 @@ generateToken();
         <p class="ttl">VOUS N’AVEZ PAS LA PERMISSION D’ACCÉDER<br>A CETTE RESSOURCE !</p>
         <p class="medium-text">Cliquez sur la boussole pour retrouver votre chemin</p>
         <div class="compass">
-            <a href="../index">
+            <a href="../index.php">
                 <img src="../img/compass-border.svg" alt="Une boussole rose">
                 <img class="compass__arrow" src="../img/compass-arrow.svg" alt="Flèche de boussole">
             </a>
