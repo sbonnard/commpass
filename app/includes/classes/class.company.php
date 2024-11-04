@@ -506,9 +506,30 @@ function getCompanyLogoUrl(PDO $dbCo, array $session): string
 
     $result = $query->fetch();
 
-    if(is_array($result)) {
+    if (is_array($result)) {
         return implode($result);
     } else {
         return '';
     }
+}
+
+
+function checkNewYearBudgetLink(PDO $dbCo, array $session):array|bool
+{
+    $queryCurrentBudget = $dbCo->prepare(
+        'SELECT * 
+        FROM budgets
+        WHERE id_company = :id_company AND year = :year;'
+    );
+
+    $bindValuesCurrentBudget = [
+        'id_company' => $session['filter']['id_company'],
+        'year' => date('Y')
+    ];
+
+    $queryCurrentBudget->execute($bindValuesCurrentBudget);
+
+    $currentBudget = $queryCurrentBudget->fetch();
+
+    return $currentBudget;
 }

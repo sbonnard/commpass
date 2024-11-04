@@ -35,6 +35,7 @@ checkUserClientStatus($_SESSION);
 
 unsetFilters($_SESSION);
 
+var_dump(checkNewYearBudgetLink($dbCo, $_SESSION));
 ?>
 
 <!DOCTYPE html>

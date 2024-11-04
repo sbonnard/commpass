@@ -10,6 +10,10 @@ require_once "includes/_functions.php";
 require_once "includes/_security.php";
 require_once "includes/_message.php";
 
+// CLASSES
+
+require_once "includes/classes/class.company.php";
+
 // header('Content-type:application/json');
 
 
@@ -247,25 +251,48 @@ if ($_POST['action'] === 'create-campaign') {
         exit;
     }
 
-    $queryBudget = $dbCo->prepare('
-        UPDATE budgets 
-        SET annual_budget = :budget
-        WHERE id_company = :id_company AND year = YEAR(CURDATE());
-    ');
+    if (checkNewYearBudgetLink($dbCo, $_SESSION) === false) {
+        $queryBudget = $dbCo->prepare(
+            'INSERT INTO budgets (year, annual_budget, id_company)
+            VALUES (:year, :annual_budget, :id_company);'
+        );
 
-    $bindValues = [
-        'budget' => floatval($_POST['budget']),
-        'id_company' => $_SESSION['filter']['id_company']
-    ];
+        $bindValues = [
+            'year' => date('Y'),
+            'annual_budget' => floatval($_POST['budget']),
+            'id_company' => intval($_SESSION['filter']['id_company'])
+        ];
 
-    $isUpdateOk = $queryBudget->execute($bindValues);
+        $isInsertOk = $queryBudget->execute($bindValues);
 
-    if ($isUpdateOk) {
-        addMessage('budget_update_ok');
-        redirectTo('dashboard.php');
+        if ($isInsertOk) {
+            addMessage('budget_update_ok');
+            redirectTo('my-client.php?client=' . $_SESSION['filter']['id_company']);
+        } else {
+            addError('budget_update_ko');
+            redirectTo();
+        }
     } else {
-        addError('budget_update_ko');
-        redirectTo();
+        $queryBudget = $dbCo->prepare('
+                UPDATE budgets 
+                SET annual_budget = :budget
+                WHERE id_company = :id_company AND year = YEAR(CURDATE());
+            ');
+
+        $bindValues = [
+            'budget' => floatval($_POST['budget']),
+            'id_company' => $_SESSION['filter']['id_company']
+        ];
+
+        $isUpdateOk = $queryBudget->execute($bindValues);
+
+        if ($isUpdateOk) {
+            addMessage('budget_update_ok');
+            redirectTo('my-client.php?client=' . $_SESSION['filter']['id_company']);
+        } else {
+            addError('budget_update_ko');
+            redirectTo();
+        }
     }
 }
 
