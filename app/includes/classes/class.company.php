@@ -514,6 +514,13 @@ function getCompanyLogoUrl(PDO $dbCo, array $session): string
 }
 
 
+/**
+ * Checks if company annual_budget exists. 
+ *
+ * @param PDO $dbCo - PDO connection object
+ * @param array $session - Superglobal $_SESSION.
+ * @return array|boolean - array with budgets infos or false.
+ */
 function checkNewYearBudgetLink(PDO $dbCo, array $session):array|bool
 {
     $queryCurrentBudget = $dbCo->prepare(
