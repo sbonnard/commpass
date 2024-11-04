@@ -32,9 +32,6 @@ generateToken();
 checkConnection($_SESSION);
 
 checkUserClientStatus($_SESSION);
-
-unsetFilters($_SESSION);
-
 ?>
 
 <!DOCTYPE html>
