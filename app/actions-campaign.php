@@ -10,6 +10,10 @@ require_once "includes/_functions.php";
 require_once "includes/_security.php";
 require_once "includes/_message.php";
 
+// CLASSES
+
+require_once "includes/classes/class.company.php";
+
 // header('Content-type:application/json');
 
 
@@ -21,8 +25,7 @@ if (!isset($_REQUEST['action'])) {
 // Check CSRF
 preventFromCSRF();
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if ($_POST['action'] === 'create-campaign') { // Action de création d'une campagne sur new-campaign.php //
+if ($_POST['action'] === 'create-campaign') {
 
     $_SESSION['form_data'] = [
         'name' => strip_tags($_POST['campaign_name']),
@@ -99,9 +102,7 @@ if ($_POST['action'] === 'create-campaign') { // Action de création d'une campa
     } else {
         addError('campaign_creation_ko');
     }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-else if ($_POST['action'] === 'modify-campaign') { // Action de modification d'une campagne sur new-campaign.php //
+} else if ($_POST['action'] === 'modify-campaign') {
     if (!isset($_POST['campaign_name']) || empty($_POST['campaign_name'])) {
         addError('campaign_name_ko');
         redirectTo();
@@ -167,13 +168,11 @@ else if ($_POST['action'] === 'modify-campaign') { // Action de modification d'u
 
     if ($isUpdateOk) {
         addMessage('campaign_updated_ok');
-        redirectTo('campaign.php?myc=' . $_POST['id_campaign'] . '&client=' . $_POST['campaign_company']);
+        redirectTo('campaign?myc=' . $_POST['id_campaign'] . '&client=' . $_POST['campaign_company']);
     } else {
         addError('campaign_update_ko');
     }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-elseif ($_POST['action'] === 'delete-campaign') { // Action de suppression d'une campagne sur campaign.php //
+} elseif ($_POST['action'] === 'delete-campaign') {
     try {
         $dbCo->beginTransaction();
 
@@ -218,9 +217,7 @@ elseif ($_POST['action'] === 'delete-campaign') { // Action de suppression d'une
         addError('campaign_deletion_ko');
         redirectTo();
     }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-else if ($_POST['action'] === 'set_campaign_budget') { // Action de fixer le budget d'une campagne sur new-budget.php //
+} else if ($_POST['action'] === 'set_campaign_budget') {
     if (!isset($_POST['budget']) || !is_numeric($_POST['budget'])) {
         addError('budget_ko');
         redirectTo();
@@ -247,34 +244,55 @@ else if ($_POST['action'] === 'set_campaign_budget') { // Action de fixer le bud
         addError('budget_update_ko');
         redirectTo();
     }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-else if ($_POST['action'] === 'set_annual_budget') { // Action de fixer le budget annuel d'une entreprise sur new-budget.php //
+} else if ($_POST['action'] === 'set_annual_budget') {
     if (!isset($_POST['budget']) || !is_numeric($_POST['budget'])) {
         addError('budget_ko');
         redirectTo();
         exit;
     }
 
-    $queryBudget = $dbCo->prepare('
-        UPDATE budgets 
-        SET annual_budget = :budget
-        WHERE id_company = :id_company AND year = YEAR(CURDATE());
-    ');
+    if (checkNewYearBudgetLink($dbCo, $_SESSION) === false) {
+        $queryBudget = $dbCo->prepare(
+            'INSERT INTO budgets (year, annual_budget, id_company)
+            VALUES (:year, :annual_budget, :id_company);'
+        );
 
-    $bindValues = [
-        'budget' => floatval($_POST['budget']),
-        'id_company' => $_SESSION['filter']['id_company']
-    ];
+        $bindValues = [
+            'year' => date('Y'),
+            'annual_budget' => floatval($_POST['budget']),
+            'id_company' => intval($_SESSION['filter']['id_company'])
+        ];
 
-    $isUpdateOk = $queryBudget->execute($bindValues);
+        $isInsertOk = $queryBudget->execute($bindValues);
 
-    if ($isUpdateOk) {
-        addMessage('budget_update_ok');
-        redirectTo('my-client?client=' . $_SESSION['filter']['id_company'] . '#budgets');
+        if ($isInsertOk) {
+            addMessage('budget_update_ok');
+            redirectTo('my-client?client=' . $_SESSION['filter']['id_company']);
+        } else {
+            addError('budget_update_ko');
+            redirectTo();
+        }
     } else {
-        addError('budget_update_ko');
-        redirectTo();
+        $queryBudget = $dbCo->prepare('
+                UPDATE budgets 
+                SET annual_budget = :budget
+                WHERE id_company = :id_company AND year = YEAR(CURDATE());
+            ');
+
+        $bindValues = [
+            'budget' => floatval($_POST['budget']),
+            'id_company' => $_SESSION['filter']['id_company']
+        ];
+
+        $isUpdateOk = $queryBudget->execute($bindValues);
+
+        if ($isUpdateOk) {
+            addMessage('budget_update_ok');
+            redirectTo('my-client?client=' . $_SESSION['filter']['id_company']);
+        } else {
+            addError('budget_update_ko');
+            redirectTo();
+        }
     }
 }
 
